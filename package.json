@@ -1,0 +1,28 @@
+{
+  "name": "web-agent",
+  "version": "1.0.0",
+  "description": "Browser-based agent development for educational purposes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenedictWilkins/web-agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenedictWilkins/web-agent/issues"
+  },
+  "homepage": "https://github.com/BenedictWilkins/web-agent#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "codemirror": "^6.0.1",
+    "jquery": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
+  }
+}
