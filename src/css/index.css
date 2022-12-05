@@ -1,41 +1,26 @@
+
+.close_button {
+    display: inline-block;
+    cursor: pointer;
+    border: 0px solid #fff;
+    font-weight: 700;
+    background: inherit;
+    padding: 0 0 0 0px;
+    font-size: 13px;
+    border-radius: 4px;
+    color: rgb(29, 28, 29);
+    height: 28px;
+    min-width: 0px;
+}
+.close_button:hover {
+    background-color: rgb(199, 199, 199);
+}
+
+
 body {
     font-family: Arial;
     color: black;
-  }
-  
-  .split {
-    height: 100%;
-    width: 50%;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-  }
-  
-  .left {
-    left: 0;
-    background-color: #111;
-  }
-  
-  .right {
-    right: 0;
-    background-color: red;
-  }
-  
-  .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  
-  .centered img {
-    width: 150px;
-    border-radius: 50%;
-  }
-
+}
 
 .hidden {
     display: none;

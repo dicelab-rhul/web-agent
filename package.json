@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/BenedictWilkins/web-agent#readme",
   "dependencies": {
+    "@codemirror/state": "^6.1.4",
     "bootstrap": "^5.2.3",
     "codemirror": "^6.0.1",
     "jquery": "^3.6.1"
