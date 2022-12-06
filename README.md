@@ -2,19 +2,20 @@
 
 Browser-based agent development for educational purposes.
 
-### Possible code editors
+## notes
+
+Possible code editors
 
 https://github.com/codemirror/CodeMirror
+
 https://csplayground.io/how-to-build-website-like-codecademy
 
-### Yacc/Bison for javascript for the interpreter
+Yacc/Bison for javascript for the interpreter
 
 https://gerhobbelt.github.io/jison/docs/ 
 
-bootstrap library CSS
 
-
-
+## Teleora
 
 // goals are evaluated in order.
 `G(X) : X < 1 -> action1` // take `action1` if `X < 1`
