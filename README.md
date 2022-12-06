@@ -1,6 +1,8 @@
 # web-agent
 
-Browser-based agent development for educational purposes.
+WE ARE FINALLY DOING IT. 
+
+Browser-based teleoreactive agent development.
 
 ## notes
 
@@ -16,6 +18,8 @@ https://gerhobbelt.github.io/jison/docs/
 
 
 ## Teleora
+
+At some point soon I (ben) will write a proper program spec for this, I need to dig out an old version of it.
 
 // goals are evaluated in order.
 `G(X) : X < 1 -> action1` // take `action1` if `X < 1`
