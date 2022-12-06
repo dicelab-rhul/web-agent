@@ -1,6 +1,8 @@
 # web-agent
 
-Browser-based agent development for educational purposes.
+WE ARE FINALLY DOING IT. 
+
+Browser-based teleoreactive agent development.
 
 ## notes
 
