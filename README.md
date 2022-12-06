@@ -19,6 +19,8 @@ https://gerhobbelt.github.io/jison/docs/
 
 ## Teleora
 
+At some point soon I (ben) will write a proper program spec for this, I need to dig out an old version of it.
+
 // goals are evaluated in order.
 `G(X) : X < 1 -> action1` // take `action1` if `X < 1`
 `G(_) -> action2` // default condition (always true) take `action2`
