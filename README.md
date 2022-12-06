@@ -4,7 +4,11 @@ WE ARE FINALLY DOING IT.
 
 Browser-based teleoreactive agent development.
 
+
 ## notes
+
+developer run `parcel index.html`
+install parcel with npm! (its good)
 
 Possible code editors
 
