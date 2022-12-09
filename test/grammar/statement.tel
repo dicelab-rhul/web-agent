@@ -1,0 +1,15 @@
+/* 
+    this is a simple test file for the teleora language :) 
+    (multi-line comment)
+
+    the test can be run with the following commands:
+
+    jison src/grammar/teleora.jison                  // compile parser
+    node teleora.js test/grammar/statement.tel       // parse this file
+*/
+
+perceive(X, abc) : c1(X), c2(Y) -> a1(X);
+perceive(X) -> a2(X); // comment
+
+c1(1);
+c2(X) : X;

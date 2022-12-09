@@ -1,0 +1,16 @@
+body :
+    conditions ARROW actions;
+
+conditions :
+    ATOM
+
+actions :
+    ATOM;
+
+args : 
+      arg ','
+    | arg;
+    
+arg : 
+      ATOM
+    | VARIABLE;
