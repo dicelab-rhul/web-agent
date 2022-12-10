@@ -1,6 +1,5 @@
-/* 
-    this is a simple test file for the teleora language :) 
-    (multi-line comment)
+/*  multi-line comment
+    This is a simple test file for the teleora languages
 
     the test can be run with the following commands:
 
@@ -8,8 +7,22 @@
     node teleora.js test/grammar/statement.tel       // parse this file
 */
 
-perceive(X, abc) : c1(X), c2(Y) -> a1(X);
-perceive(X) -> a2(X); // comment
+// testing default goal heads
+p() -> a;
+p(X) -> a;
+p(X,Y) -> a;
+p(X()) -> a;
 
+p(a,X) -> X;
+p(1.1, 1) -> a;
+
+// testing conditional operators
+perceive(X, abc) : c1(X), c2(Y) -> a1(X);
+perceive(X) : X -> a2(X);
+perceive(X) -> a3(X); // default
+
+// forms that conditions can take
 c1(1);
-c2(X) : X;
+c2(X);
+
+c3; // this is just "true"
