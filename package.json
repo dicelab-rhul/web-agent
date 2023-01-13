@@ -8,20 +8,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BenedictWilkins/web-agent.git"
+    "url": "git+https://github.com/dicelab-rhul/web-agent.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BenedictWilkins/web-agent/issues"
+    "url": "https://github.com/dicelab-rhul/web-agent/issues"
   },
-  "homepage": "https://github.com/BenedictWilkins/web-agent#readme",
+  "homepage": "https://github.com/dicelab-rhul/web-agent#readme",
   "dependencies": {
     "@codemirror/state": "^6.1.4",
     "bootstrap": "^5.2.3",
     "codemirror": "^6.0.1",
-    "jquery": "^3.6.1"
+    "jquery": "^3.6.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.14",
