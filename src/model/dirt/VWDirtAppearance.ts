@@ -1,7 +1,7 @@
-import { Appearance } from "../common/Appearance";
+import { VWAppearance } from "../common/VWAppearance";
 import { VWColour } from "../common/VWColour";
 
-export class VWDirtAppearance implements Appearance {
+export class VWDirtAppearance implements VWAppearance {
     private dirtID: string;
     private colour: VWColour;
 

@@ -1,8 +1,8 @@
-import { AbstractIdentifiable } from "../common/AbstractIdentifiable";
+import { VWAbstractIdentifiable } from "../common/VWAbstractIdentifiable";
 import { VWColour } from "../common/VWColour";
 import { VWDirtAppearance } from "./VWDirtAppearance";
 
-export class VWDirt extends AbstractIdentifiable {
+export class VWDirt extends VWAbstractIdentifiable {
     private colour: VWColour;
 
     public constructor(colour: VWColour) {

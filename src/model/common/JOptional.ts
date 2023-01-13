@@ -1,3 +1,5 @@
+// TODO: should this class be moved to a separate package?
+
 export class JOptional<T> {
     private value: T | null | undefined;
 

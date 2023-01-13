@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Identifiable } from './Identifiable';
+import { VWIdentifiable } from './VWIdentifiable';
 
-export class AbstractIdentifiable implements Identifiable {
+export class VWAbstractIdentifiable implements VWIdentifiable {
     private id: string;
 
     public constructor() {
@@ -19,7 +19,7 @@ export class AbstractIdentifiable implements Identifiable {
         else if (this === other) {
             return true;
         }
-        else if (!(other instanceof AbstractIdentifiable)) {
+        else if (!(other instanceof VWAbstractIdentifiable)) {
             return false;
         }
         else {

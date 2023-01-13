@@ -1,8 +1,8 @@
-import { Appearance } from "../../common/Appearance";
+import { VWAppearance } from "../../common/VWAppearance";
 import { VWColour } from "../../common/VWColour";
 import { VWOrientation } from "../../common/VWOrientation";
 
-export class VWActorAppearance implements Appearance {
+export class VWActorAppearance implements VWAppearance {
     private actorID: string;
     private colour: VWColour;
     private orientation: VWOrientation;
