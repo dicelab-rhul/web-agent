@@ -8,6 +8,19 @@ export abstract class VWAbstractMind implements VWMind {
     private core: VWMindCore;
     private nextActions: VWAction[];
 
+    public constructor(core: VWMindCore) {
+        this.core = VWAbstractMind.validateCore(core);
+        this.nextActions = [];
+    }
+
+    private static validateCore(core: VWMindCore): VWMindCore {
+        if (core === null || core === undefined) {
+            throw new Error("The mind core cannot be null or undefined.");
+        }
+
+        return core;
+    }
+
     public perceive(observation: VWObservation, messages: VWMessage[]): void {
         this.core.perceive(observation, messages);
     }

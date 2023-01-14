@@ -2,14 +2,14 @@
 
 ## TO IMPLEMENT
 
-- `VWActorFactory`
 - `VWSaveStateManager`
 - `VWConfigManager`
 - `VacuumWorld`
 - All the action executors.
 - `VWLocation.fromJsonObject()`
 - `VWEnvironment`
-- `VWAmbient`
+- `VWCleaningAgentMind.loadFromFile()`
+- `VWUserMind.loadFromFile()`
 
 ## TO CHANGE
 

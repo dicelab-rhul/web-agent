@@ -79,6 +79,16 @@ export class VWLocation {
         }
     }
 
+    public popActor(): JOptional<VWActor> {
+        const actor: JOptional<VWActor> = this.getActor();
+
+        if (actor.isPresent()) {
+            this.removeActor();
+        }
+
+        return actor;
+    }
+
     public hasDirt(): boolean {
         return this.dirt.isPresent();
     }
@@ -153,5 +163,6 @@ export class VWLocation {
 
     public static fromJsonObject(jsonObject: any): VWLocation {
         // TODO: Implement this method.
+        throw new Error("Not yet implemented.");
     }
 }
