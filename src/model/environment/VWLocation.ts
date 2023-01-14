@@ -150,4 +150,8 @@ export class VWLocation {
             return new VWLocationAppearance(this.coord, this.wall);
         }
     }
+
+    public static fromJsonObject(jsonObject: any): VWLocation {
+        // TODO: Implement this method.
+    }
 }

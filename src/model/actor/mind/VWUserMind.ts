@@ -1,5 +1,3 @@
-import { VWABstractMind } from "./VWAbstractMind";
+import { VWAbstractMind } from "./VWAbstractMind";
 
-export class VWUserMind extends VWABstractMind {
-    // TODO: Implement.
-}
+export class VWUserMind extends VWAbstractMind {}

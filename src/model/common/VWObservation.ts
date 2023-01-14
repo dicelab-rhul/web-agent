@@ -9,12 +9,13 @@ import { VWPosition } from "./VWPosition";
 
 export class VWObservation extends VWPerception {
     private locations: Map<VWPosition, VWLocationAppearance>;
-    private actionResults: Array<VWActionResult>;
+    private actionResults: VWActionResult[];
 
-    public constructor(locations: Map<VWPosition, VWLocationAppearance>) {
+    public constructor(locations: Map<VWPosition, VWLocationAppearance>, actionResults: VWActionResult[]) {
         super();
 
         this.locations = new Map<VWPosition, VWLocationAppearance>();
+        this.actionResults = this.validateActionResults(actionResults);
 
         for (const position of locations.keys()) {
             if (position === null || position === undefined) {
@@ -26,6 +27,21 @@ export class VWObservation extends VWPerception {
             else {
                 this.locations.set(position, locations.get(position)!);
             }
+        }
+    }
+
+    private validateActionResults(actionResults: VWActionResult[]): VWActionResult[] {
+        if (actionResults === null || actionResults === undefined) {
+            throw new Error("The action results cannot be null or undefined.");
+        }
+        else if (actionResults.some((actionResult: VWActionResult) => actionResult === null || actionResult === undefined)) {
+            throw new Error("The action results array cannot contain null or undefined elements.");
+        }
+        else if (actionResults.length === 0) {
+            throw new Error("The action results array cannot be empty.");
+        }
+        else {
+            return actionResults;
         }
     }
 
@@ -82,7 +98,7 @@ export class VWObservation extends VWPerception {
         return this.getCenter().orElseThrow().getCoord();
     }
 
-    public getActionResults(): Array<VWActionResult> {
+    public getActionResults(): VWActionResult[] {
         return this.actionResults;
     }
 }
