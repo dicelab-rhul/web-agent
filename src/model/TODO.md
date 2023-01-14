@@ -5,9 +5,10 @@
 - `VWSaveStateManager`
 - `VWConfigManager`
 - `VacuumWorld`
-- All the action executors.
+- Most of the action executors.
 - `VWLocation.fromJsonObject()`
-- `VWEnvironment`
+- `VWEnvironment.cycle()`
+- `VWEnvironment.fromJsonObject()`
 - `VWCleaningAgentMind.loadFromFile()`
 - `VWUserMind.loadFromFile()`
 

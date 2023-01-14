@@ -25,5 +25,11 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
 
     public abstract perform(action: VWAction, env: VWEnvironment): VWActionResult;
 
-    public abstract succeeded(action: VWAction, env: VWEnvironment): boolean;   
+    public abstract succeeded(action: VWAction, env: VWEnvironment): boolean;
+
+    public isActorInEnv(actorID: string, env: VWEnvironment): boolean {
+        return env.getActorByID(actorID).isPresent();
+    }
+
+    public abstract checkInvariants(action: VWAction, env: VWEnvironment): boolean;
 }

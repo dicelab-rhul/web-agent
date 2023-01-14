@@ -9,10 +9,10 @@ export class VWAmbient {
     private grid: Map<VWCoord, VWLocation>;
 
     public constructor(grid: Map<VWCoord, VWLocation>) {
-        this.grid = this.validateGrid(grid);
+        this.grid = VWAmbient.validateGrid(grid);
     }
 
-    private validateGrid(grid: Map<VWCoord, VWLocation>): Map<VWCoord, VWLocation> {
+    private static validateGrid(grid: Map<VWCoord, VWLocation>): Map<VWCoord, VWLocation> {
         if (grid == null || grid == undefined) {
             throw new Error("The grid cannot be null or undefined.");
         }
@@ -59,6 +59,33 @@ export class VWAmbient {
         return this.getLocation(coord).flatMap(location => location.getActor());
     }
 
+    public getActorCoordByID(id: string): JOptional<VWCoord> {
+        for (let [coord, location] of this.grid) {
+            const actor = location.getActor();
+
+            if (actor.isPresent() && actor.orElseThrow().getID() === id) {
+                return JOptional.of(coord);
+            }
+        }
+
+        return JOptional.empty();
+    }
+
+    public addActorToLocation(coord: VWCoord, actor: VWActor): void {
+        if (coord == null || coord == undefined) {
+            throw new Error("The coordinates of the location cannot be null or undefined.");
+        }
+        else if (actor == null || actor == undefined) {
+            throw new Error("The actor cannot be null or undefined.");
+        }
+        else if (this.getActorByCoord(coord).isPresent()) {
+            throw new Error("There is already an actor at the location.");
+        }
+        else {
+            this.getLocation(coord).ifPresent(location => location.addActor(actor));
+        }
+    }
+
     public popActorByCoord(coord: VWCoord): JOptional<VWActor> {
         return this.getLocation(coord).flatMap(location => location.popActor());
     }
@@ -101,7 +128,7 @@ export class VWAmbient {
         }
     }
 
-    public getDirtIDs(): string[] {
+    public getDirtsIDs(): string[] {
         const dirtIDs: string[] = [];
 
         for (let [_, location] of this.grid) {
@@ -131,6 +158,18 @@ export class VWAmbient {
         return this.getLocation(coord).flatMap(location => location.getDirt());
     }
 
+    public getDirtCoordByID(id: string): JOptional<VWCoord> {
+        for (let [coord, location] of this.grid) {
+            const dirt = location.getDirt();
+
+            if (dirt.isPresent() && dirt.orElseThrow().getID() === id) {
+                return JOptional.of(coord);
+            }
+        }
+
+        return JOptional.empty();
+    }
+
     public cleanDirtByCoord(coord: VWCoord): void {
         if (coord == null || coord == undefined) {
             throw new Error("The coordinates of the dirt location cannot be null or undefined.");
@@ -142,6 +181,21 @@ export class VWAmbient {
             const location = this.getLocation(coord).orElseThrow();
 
             location.removeDirt();
+        }
+    }
+
+    public addDirtToLocation(coord: VWCoord, dirt: VWDirt): void {
+        if (coord == null || coord == undefined) {
+            throw new Error("The coordinates of the location cannot be null or undefined.");
+        }
+        else if (dirt == null || dirt == undefined) {
+            throw new Error("The dirt cannot be null or undefined.");
+        }
+        else if (this.getDirtByCoord(coord).isPresent()) {
+            throw new Error("There is already a dirt at the location.");
+        }
+        else {
+            this.getLocation(coord).ifPresent(location => location.addDirt(dirt));
         }
     }
 }
