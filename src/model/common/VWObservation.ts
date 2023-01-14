@@ -4,13 +4,16 @@ import { VWActionResult } from "./VWActionResult";
 import { VWColour } from "./VWColour";
 import { VWCoord } from "./VWCoord";
 import { VWOrientation } from "./VWOrientation";
+import { VWPerception } from "./VWPerception";
 import { VWPosition } from "./VWPosition";
 
-export class VWObservation {
+export class VWObservation extends VWPerception {
     private locations: Map<VWPosition, VWLocationAppearance>;
     private actionResults: Array<VWActionResult>;
 
     public constructor(locations: Map<VWPosition, VWLocationAppearance>) {
+        super();
+
         this.locations = new Map<VWPosition, VWLocationAppearance>();
 
         for (const position of locations.keys()) {

@@ -1,9 +1,13 @@
-export class VWMessage {
+import { VWPerception } from "./VWPerception";
+
+export class VWMessage extends VWPerception {
     private content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>;
     private senderID: string;
     private recipientID: string;
 
     public constructor(content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>, senderID: string, recipientIDs: string) {
+        super();
+
         this.content = this.validateContent(content);
         this.senderID = this.validateSenderID(senderID);
         this.recipientID = this.validateRecipientID(recipientIDs);
