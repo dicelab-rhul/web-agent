@@ -1,3 +1,5 @@
+import { VWOrientation } from "./VWOrientation";
+
 export class VWCoord {
     private x: bigint;
     private y: bigint;
@@ -33,6 +35,27 @@ export class VWCoord {
 
     public clone(): VWCoord {
         return new VWCoord(this.x, this.y);
+    }
+
+    public getForwardCoord(orientation: VWOrientation): VWCoord {
+        if (orientation === null || orientation === undefined) {
+            throw new Error("The orientation cannot be null or undefined.");
+        }
+        else if (orientation === VWOrientation.NORTH) {
+            return new VWCoord(this.x, this.y - 1n);
+        }
+        else if (orientation === VWOrientation.EAST) {
+            return new VWCoord(this.x + 1n, this.y);
+        }
+        else if (orientation === VWOrientation.SOUTH) {
+            return new VWCoord(this.x, this.y + 1n);
+        }
+        else if (orientation === VWOrientation.WEST) {
+            return new VWCoord(this.x - 1n, this.y);
+        }
+        else {
+            throw new Error("The orientation is invalid.");
+        }
     }
 
     public sum(other: VWCoord): VWCoord {

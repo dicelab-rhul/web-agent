@@ -10,6 +10,10 @@ export class VWDropDirtAction extends VWPhysicalAction {
         this.colour = this.validateColour(colour);
     }
 
+    public getColour(): VWColour {
+        return this.colour;
+    }
+
     private validateColour(colour: VWColour): VWColour {
         if (colour === null || colour === undefined) {
             throw new Error("The dirt colour cannot be null or undefined.");

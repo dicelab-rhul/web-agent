@@ -5,15 +5,34 @@ import { VWEnvironment } from "../VWEnvironment";
 import { VWAbstractExecutor } from "./VWAbstractExecutor";
 
 export class VWIdleExecutor extends VWAbstractExecutor {
-    public isPossible(_: VWIdleAction, __: VWEnvironment): boolean {
-        return true;
+    protected isPossible(action: VWIdleAction, env: VWEnvironment): boolean {
+        try {
+            return this.isActorInEnv(action.getActorID(), env);
+        }
+        catch (e) {
+            return false;
+        }
     }
 
-    public perform(action: VWIdleAction, _: VWEnvironment): VWActionResult {
-        return new VWActionResult(VWActionOutcome.SUCCESS, action);
+    protected perform(action: VWIdleAction, _: VWEnvironment): VWActionResult {
+        try {
+            return new VWActionResult(VWActionOutcome.SUCCESS, action);
+        }
+        catch (e) {
+            return new VWActionResult(VWActionOutcome.FAILURE, action);
+        }
     }
 
-    public succeeded(_: VWIdleAction, __: VWEnvironment): boolean {
-        return true;
+    protected succeeded(action: VWIdleAction, env: VWEnvironment): boolean {
+        try {
+            return this.checkInvariants(action, env);
+        }
+        catch (e) {
+            return false;
+        }
+    }
+
+    protected checkInvariants(action: VWIdleAction, env: VWEnvironment): boolean {
+        return this.checkAllInvariants(action, env);
     }
 }

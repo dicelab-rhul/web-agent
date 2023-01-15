@@ -1,3 +1,4 @@
+import { VWCommunicativeAction } from "../actions/VWCommunicativeAction";
 import { VWActor } from "../actor/VWActor";
 import { JOptional } from "../common/JOptional";
 import { VWCoord } from "../common/VWCoord";
@@ -83,6 +84,10 @@ export class VWEnvironment {
     }
 
     public cycle(): void {
+        throw new Error("Method not yet implemented."); // TODO: Implement this.
+    }
+
+    public sendMessageToRecipients(action: VWCommunicativeAction): boolean {
         throw new Error("Method not yet implemented."); // TODO: Implement this.
     }
 

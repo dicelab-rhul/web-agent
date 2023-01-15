@@ -1,19 +1,13 @@
 import { VWTurnAction } from "../../actions/VWTurnAction";
 import { VWActionOutcome } from "../../common/VWActionOutcome";
 import { VWActionResult } from "../../common/VWActionResult";
-import { VWColour } from "../../common/VWColour";
-import { VWCoord } from "../../common/VWCoord";
 import { VWDirection } from "../../common/VWDirection";
 import { VWOrientation } from "../../common/VWOrientation";
 import { VWEnvironment } from "../VWEnvironment";
 import { VWAbstractExecutor } from "./VWAbstractExecutor";
 
 export class VWTurnExecutor extends VWAbstractExecutor {
-    private actorColourBeforeTurn: VWColour;
-    private actorOrientationBeforeTurn: VWOrientation;
-    private actorCoordBeforeTurn: VWCoord;
-
-    public isPossible(action: VWTurnAction, env: VWEnvironment): boolean {
+    protected isPossible(action: VWTurnAction, env: VWEnvironment): boolean {
         try {
             return this.isActorInEnv(action.getActorID(), env);
         }
@@ -22,15 +16,9 @@ export class VWTurnExecutor extends VWAbstractExecutor {
         }
     }
 
-    public perform(action: VWTurnAction, env: VWEnvironment): VWActionResult {
+    protected perform(action: VWTurnAction, env: VWEnvironment): VWActionResult {
         try {
-            const actor = env.getActorByID(action.getActorID()).orElseThrow();
-
-            this.actorColourBeforeTurn = actor.getColour();
-            this.actorOrientationBeforeTurn = actor.getOrientation();
-            this.actorCoordBeforeTurn = env.getActorCoordByID(action.getActorID()).orElseThrow();
-
-            env.turnActor(this.actorCoordBeforeTurn, action.getTurningDirection());
+            env.turnActor(this.getActorCoordBeforeAction(), action.getTurningDirection());
 
             return new VWActionResult(VWActionOutcome.SUCCESS, action);
         }
@@ -39,7 +27,7 @@ export class VWTurnExecutor extends VWAbstractExecutor {
         }
     }
 
-    public succeeded(action: VWTurnAction, env: VWEnvironment): boolean {
+    protected succeeded(action: VWTurnAction, env: VWEnvironment): boolean {
         try {
             return this.checkInvariants(action, env) && this.checkOrientationAfterTurn(action, env);
         }
@@ -48,19 +36,8 @@ export class VWTurnExecutor extends VWAbstractExecutor {
         }
     }
 
-    public checkInvariants(action: VWTurnAction, env: VWEnvironment): boolean {
-        if(!this.isActorInEnv(action.getActorID(), env)) {
-            return false;
-        }
-        else if (this.actorColourBeforeTurn !== env.getActorByID(action.getActorID()).orElseThrow().getColour()) {
-            return false;
-        }
-        else if (this.actorCoordBeforeTurn !== env.getActorCoordByID(action.getActorID()).orElseThrow()) {
-            return false;
-        }
-        else {
-            return true;
-        }
+    protected checkInvariants(action: VWTurnAction, env: VWEnvironment): boolean {
+        return this.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkCoordAfterAction(action, env) && this.checkDirtAfterAction(env);
     }
 
     private checkOrientationAfterTurn(action: VWTurnAction, env: VWEnvironment): boolean {
@@ -78,16 +55,16 @@ export class VWTurnExecutor extends VWAbstractExecutor {
     }
 
     private checkOrientationAfterLeftTurn(newOrientation: VWOrientation): boolean {
-        if (this.actorOrientationBeforeTurn === VWOrientation.NORTH) {
+        if (this.getActorOrientationBeforeAction() === VWOrientation.NORTH) {
             return newOrientation === VWOrientation.WEST;
         }
-        else if (this.actorOrientationBeforeTurn === VWOrientation.EAST) {
+        else if (this.getActorOrientationBeforeAction() === VWOrientation.EAST) {
             return newOrientation === VWOrientation.NORTH;
         }
-        else if (this.actorOrientationBeforeTurn === VWOrientation.SOUTH) {
+        else if (this.getActorOrientationBeforeAction() === VWOrientation.SOUTH) {
             return newOrientation === VWOrientation.EAST;
         }
-        else if (this.actorOrientationBeforeTurn === VWOrientation.WEST) {
+        else if (this.getActorOrientationBeforeAction() === VWOrientation.WEST) {
             return newOrientation === VWOrientation.SOUTH;
         }
         else {
@@ -96,16 +73,16 @@ export class VWTurnExecutor extends VWAbstractExecutor {
     }
 
     private checkOrientationAfterRightTurn(newOrientation: VWOrientation): boolean {
-        if (this.actorOrientationBeforeTurn === VWOrientation.NORTH) {
+        if (this.getActorOrientationBeforeAction() === VWOrientation.NORTH) {
             return newOrientation === VWOrientation.EAST;
         }
-        else if (this.actorOrientationBeforeTurn === VWOrientation.EAST) {
+        else if (this.getActorOrientationBeforeAction() === VWOrientation.EAST) {
             return newOrientation === VWOrientation.SOUTH;
         }
-        else if (this.actorOrientationBeforeTurn === VWOrientation.SOUTH) {
+        else if (this.getActorOrientationBeforeAction() === VWOrientation.SOUTH) {
             return newOrientation === VWOrientation.WEST;
         }
-        else if (this.actorOrientationBeforeTurn === VWOrientation.WEST) {
+        else if (this.getActorOrientationBeforeAction() === VWOrientation.WEST) {
             return newOrientation === VWOrientation.NORTH;
         }
         else {
