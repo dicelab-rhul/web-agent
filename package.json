@@ -23,7 +23,8 @@
     "codemirror": "^6.0.1",
     "jquery": "^3.6.2",
     "queue-typescript": "^1.0.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "fs": "0.0.1-security"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.14",

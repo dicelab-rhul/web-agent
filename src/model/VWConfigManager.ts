@@ -1,3 +1,9 @@
+import { config } from "./config.json";
+
 export class VWConfigManager {
-    // TODO: Implement.
+    private constructor() {}
+
+    public static loadConfig(): object {
+        return config;
+    }
 }
