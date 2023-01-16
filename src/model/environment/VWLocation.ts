@@ -161,8 +161,88 @@ export class VWLocation {
         }
     }
 
-    public static fromJsonObject(jsonObject: any): VWLocation {
-        // TODO: Implement this method.
-        throw new Error("Not yet implemented.");
+    public toJsonObject(actorMindCorePath?: string): object {
+        const data: object = {
+            "coord": this.coord.toString(),
+            "wall": {
+                "north": this.hasWallOnNorth(),
+                "east": this.hasWallOnEast(),
+                "south": this.hasWallOnSouth(),
+                "west": this.hasWallOnWest()
+            }
+        };
+
+        if (this.hasActor()) {
+            data["actor"] = this.getActor().orElseThrow().toJsonObject(actorMindCorePath);
+        }
+
+        if (this.hasDirt()) {
+            data["dirt"] = this.getDirt().orElseThrow().toJsonObject();
+        }
+
+        return data;
+    }
+
+    public static fromJsonObject(data: object): VWLocation {
+        if (data === null || data === undefined) {
+            throw new Error("The JSON representation of a `VWLocation` cannot be null or undefined.");
+        }
+        else if (data["wall"] === null || data["wall"] === undefined) {
+            throw new Error("The JSON representation of a `VWLocation` must have a `wall` property.");
+        }
+        else if (data["coord"] === null || data["coord"] === undefined) {
+            throw new Error("The JSON representation of a `VWLocation` must have a `coord` property.");
+        }
+        else {
+            return VWLocation.fromJsonObjectHelper(data["coord"], data["wall"], data["actor"], data["dirt"]);
+        }
+    }
+
+    private static fromJsonObjectHelper(coordData: string, wallData: object, actorData: object, dirtData: object): VWLocation {
+        const wall: Map<VWOrientation, boolean> = VWLocation.validateWall(wallData);
+        const coord: VWCoord = VWCoord.fromString(coordData);
+        const actor: JOptional<VWActor> = actorData === null || actorData === undefined ? JOptional.empty() : JOptional.of(VWActor.fromJsonObject(actorData));
+        const dirt: JOptional<VWDirt> = dirtData === null || dirtData === undefined ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
+
+        if (actor.isPresent() && dirt.isPresent()) {
+            return new VWLocation(coord, wall, actor.orElseThrow(), dirt.orElseThrow());
+        }
+        else if (actor.isPresent()) {
+            return new VWLocation(coord, wall, actor.orElseThrow(), undefined);
+        }
+        else if (dirt.isPresent()) {
+            return new VWLocation(coord, wall, undefined, dirt.orElseThrow());
+        }
+        else {
+            return new VWLocation(coord, wall);
+        }
+    }
+
+    private static validateWall(wallData: object): Map<VWOrientation, boolean> {
+        const wall: Map<VWOrientation, boolean> = new Map<VWOrientation, boolean>();
+
+        if (wallData === null || wallData === undefined) {
+            throw new Error("The wall cannot be null or undefined.");
+        }
+        else if (wallData["north"] === null || wallData["north"] === undefined) {
+            throw new Error("The wall must have a `north` property.");
+        }
+        else if (wallData["east"] === null || wallData["east"] === undefined) {
+            throw new Error("The wall must have an `east` property.");
+        }
+        else if (wallData["south"] === null || wallData["south"] === undefined) {
+            throw new Error("The wall must have a `south` property.");
+        }
+        else if (wallData["west"] === null || wallData["west"] === undefined) {
+            throw new Error("The wall must have a `west` property.");
+        }
+        else {
+            wall.set(VWOrientation.NORTH, wallData["north"]);
+            wall.set(VWOrientation.EAST, wallData["east"]);
+            wall.set(VWOrientation.SOUTH, wallData["south"]);
+            wall.set(VWOrientation.WEST, wallData["west"]);
+
+            return wall;
+        }
     }
 }

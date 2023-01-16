@@ -2,15 +2,14 @@
 
 ## TO IMPLEMENT
 
-- `VWSaveStateManager`
-- `VWConfigManager`
-- `VacuumWorld`
-- `VWLocation.fromJsonObject()`
-- `VWLocation.toJsonObject()`
-- `VWEnvironment.cycle()`
-- `VWEnvironment.fromJsonObject()`
-- `VWEnvironment.toJsonObject()`
-- `VWEnvironment.sendMessageToRecipients()`
+- The entire `VWSaveStateManager` class
+- The entire `VWConfigManager` class
+- The entire `VacuumWorld` class (the entry point of the application + arguments validation)
+- `VWEnvironment.cycle()` and sub-methods
+- `VWEnvironment.validateGrid()`
+- `VWEnvironment.getActorMindCorePath()`
+- `VWEnvironment.sendMessageToRecipients()` and sub-methods
+- `VWEnvironment.newEmptyVWEnvironment()`
 - `VWCleaningAgentMind.loadFromFile()`
 - `VWUserMind.loadFromFile()`
 

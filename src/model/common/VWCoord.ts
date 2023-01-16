@@ -92,4 +92,19 @@ export class VWCoord {
             return this.x === other.x && this.y === other.y;
         }
     }
+
+    public static fromString(coordString: string): VWCoord {
+        if (coordString === null || coordString === undefined) {
+            throw new Error("The coordinate string cannot be null or undefined.");
+        }
+        else if (coordString.length < 5) {
+            throw new Error("The coordinate string is invalid.");
+        }
+        else {
+            const xString: string = coordString.substring(1, coordString.indexOf(","));
+            const yString: string = coordString.substring(coordString.indexOf(",") + 2, coordString.length - 1);
+
+            return new VWCoord(BigInt(xString), BigInt(yString));
+        }
+    }
 }

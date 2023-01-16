@@ -36,4 +36,8 @@ export abstract class VWAbstractMind implements VWMind {
     public execute(): VWAction[] {
         return this.nextActions;
     }
+
+    public getMindCore(): VWMindCore {
+        return this.core;
+    }
 }

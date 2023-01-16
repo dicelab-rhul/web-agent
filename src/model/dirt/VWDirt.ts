@@ -41,4 +41,25 @@ export class VWDirt extends VWAbstractIdentifiable {
     public getAppearance(): VWDirtAppearance {
         return new VWDirtAppearance(this.getID(), this.colour);
     }
+
+    public toJsonObject(): object {
+        // The ID is not included in the JSON object because it is not needed.
+        // A fresh ID will be generated when the dirt is deserialized.
+        return {
+            "colour": this.getColour().toString()
+        };
+    }
+
+    public static fromJsonObject(data: object): VWDirt {
+        if (data === null || data === undefined) {
+            throw new Error("The dirt JSON object cannot be null or undefined.");
+        }
+        else if (data["colour"] === null || data["colour"] === undefined) {
+            throw new Error("The colour of a `VWDirt` cannot be null or undefined.");
+        }
+
+        const colour: VWColour = VWColour[data["colour"]]
+
+        return new VWDirt(colour);
+    }
 }

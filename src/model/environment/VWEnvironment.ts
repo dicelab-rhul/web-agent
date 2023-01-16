@@ -1,5 +1,6 @@
 import { VWCommunicativeAction } from "../actions/VWCommunicativeAction";
 import { VWActor } from "../actor/VWActor";
+import { VWMindCore } from "../actor/mind/core/VWMindCore";
 import { JOptional } from "../common/JOptional";
 import { VWCoord } from "../common/VWCoord";
 import { VWDirection } from "../common/VWDirection";
@@ -91,7 +92,89 @@ export class VWEnvironment {
         throw new Error("Method not yet implemented."); // TODO: Implement this.
     }
 
-    public fromJsonObject(data: any): void {
+    public toJsonObject(): object {
+        return {
+            "locations": this.serialiseLocations()
+        }
+    }
+
+    private serialiseLocations(): object[] {
+        let locations: object[] = [];
+
+        for (let location of this.ambient.getGrid().values()) {
+            locations.push(this.serialiseLocation(location));
+        }
+
+        return locations;
+    }
+
+    private serialiseLocation(location: VWLocation): object {
+        if (location == null || location == undefined) {
+            throw new Error("The location cannot be null or undefined.");
+        }
+        else if (!location.hasActor()) {
+            return location.toJsonObject();
+        }
+        else {
+            const actorMindCorePath: string = this.getActorMindCorePath(location.getActor().orElseThrow().getMind().getMindCore());
+
+            return location.toJsonObject(actorMindCorePath);
+        }
+    }
+
+    private getActorMindCorePath(mindCore: VWMindCore): string {
+        throw new Error("Method not yet implemented."); // TODO: Implement this.
+    }
+
+    public fromJsonObject(data: object, config: object): VWEnvironment {
+        if (data == null || data == undefined) {
+            throw new Error("The data cannot be null or undefined.");
+        }
+        else if (data["locations"] == null || data["locations"] == undefined) {
+            throw new Error("The data must contain a 'locations' property.");
+        }
+        else if (!Array.isArray(data["locations"])) {
+            throw new Error("The 'locations' property must be an array.");
+        }
+        else if (data["locations"].some((location: object) => location == null || location == undefined)) {
+            throw new Error("The 'locations' array cannot contain null or undefined values.");
+        }
+        else if (config == null || config == undefined) {
+            throw new Error("The config cannot be null or undefined.");
+        }
+        else {
+            return this.fromJsonObjectHelper(data, config);
+        }
+    }
+
+    private fromJsonObjectHelper(data: object, config: object): VWEnvironment {
+        const grid: Map<VWCoord, VWLocation> = this.loadLocations(data["locations"]);
+
+        VWEnvironment.validateGrid(grid, config);
+
+        return new VWEnvironment(new VWAmbient(grid));
+    }
+
+    private loadLocations(locations: object[]): Map<VWCoord, VWLocation> {
+        const grid: Map<VWCoord, VWLocation> = new Map<VWCoord, VWLocation>();
+
+        for (const location of locations) {
+            if (location["coord"] == null || location["coord"] == undefined) {
+                throw new Error("The location coordinates cannot be null or undefined.");
+            }
+            else {
+                grid.set(VWCoord.fromString(location["coord"]), VWLocation.fromJsonObject(location));
+            }
+        }
+
+        return grid;
+    }
+
+    private static validateGrid(grid: Map<VWCoord, VWLocation>, config: object): void {
+        throw new Error("Method not yet implemented."); // TODO: Implement this.
+    }
+
+    public static newEmptyVWEnvironment(gridSize: number): VWEnvironment {
         throw new Error("Method not yet implemented."); // TODO: Implement this.
     }
 }

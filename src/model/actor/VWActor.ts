@@ -218,6 +218,19 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         }
     }
 
+    public toJsonObject(actorMindCorePath?: string): object {
+        const data: object = {
+            "colour": this.getColour(),
+            "orientation": this.getOrientation()
+        };
+
+        if (actorMindCorePath !== null && actorMindCorePath !== undefined) {
+            data["mind"] = actorMindCorePath;
+        }
+
+        return data;
+    }
+
     public static fromJsonObject(jsonObject: any): VWActor {
         return VWActorFactory.createVWActorFromJSONObject(jsonObject);
     }
