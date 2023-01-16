@@ -245,4 +245,15 @@ export class VWLocation {
             return wall;
         }
     }
+
+    public static generateWallFromCoordAndGridSize(coord: VWCoord, gridSize: bigint): Map<VWOrientation, boolean> {
+        const wall: Map<VWOrientation, boolean> = new Map<VWOrientation, boolean>();
+
+        wall.set(VWOrientation.NORTH, coord.getY() === 0n);
+        wall.set(VWOrientation.EAST, coord.getX() === BigInt(gridSize) - 1n);
+        wall.set(VWOrientation.SOUTH, coord.getY() === BigInt(gridSize) - 1n);
+        wall.set(VWOrientation.WEST, coord.getX() === 0n);
+
+        return wall;
+    }
 }

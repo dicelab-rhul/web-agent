@@ -29,6 +29,20 @@ export class VWAmbient {
         return JOptional.ofNullable(this.grid.get(coord));
     }
 
+    public getActors(): VWActor[] {
+        const actors: VWActor[] = [];
+
+        for (const [_, location] of this.grid) {
+            const actor = location.getActor();
+
+            if (actor.isPresent()) {
+                actors.push(actor.orElseThrow());
+            }
+        }
+
+        return actors;
+    }
+
     public getActorsIDs(): string[] {
         const actorIDs: string[] = [];
 

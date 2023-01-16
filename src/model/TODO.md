@@ -5,11 +5,10 @@
 - The entire `VWSaveStateManager` class
 - The entire `VWConfigManager` class
 - The entire `VacuumWorld` class (the entry point of the application + arguments validation)
-- `VWEnvironment.cycle()` and sub-methods
-- `VWEnvironment.validateGrid()`
+- `VWEnvironment.forceInitialPerceptionToActors()`
+- `VWEnvironment.executeActorActions()`
 - `VWEnvironment.getActorMindCorePath()`
 - `VWEnvironment.sendMessageToRecipients()` and sub-methods
-- `VWEnvironment.newEmptyVWEnvironment()`
 - `VWCleaningAgentMind.loadFromFile()`
 - `VWUserMind.loadFromFile()`
 
