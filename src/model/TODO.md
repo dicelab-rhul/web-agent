@@ -6,8 +6,10 @@
 - `VWConfigManager`
 - `VacuumWorld`
 - `VWLocation.fromJsonObject()`
+- `VWLocation.toJsonObject()`
 - `VWEnvironment.cycle()`
 - `VWEnvironment.fromJsonObject()`
+- `VWEnvironment.toJsonObject()`
 - `VWEnvironment.sendMessageToRecipients()`
 - `VWCleaningAgentMind.loadFromFile()`
 - `VWUserMind.loadFromFile()`

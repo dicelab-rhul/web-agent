@@ -1,4 +1,5 @@
 import { VWLocationAppearance } from "../environment/VWLocationAppearance";
+import { VWOrientationUtils } from "../utils/VWOrientationUtils";
 import { JOptional } from "./JOptional";
 import { VWActionResult } from "./VWActionResult";
 import { VWColour } from "./VWColour";
@@ -100,5 +101,41 @@ export class VWObservation extends VWPerception {
 
     public getActionResults(): VWActionResult[] {
         return this.actionResults;
+    }
+
+    public isWallImmediatelyAhead(): boolean {
+        return this.getCenter().orElseThrow().hasWallOn(this.getOwnOrientation());
+    }
+
+    public isWallOneStepAhead(): boolean {
+        return !this.isWallImmediatelyAhead() && this.getForward().orElseThrow().hasWallOn(this.getOwnOrientation());
+    }
+
+    public isWallVisibleSomewhereAhead(): boolean {
+        return this.isWallImmediatelyAhead() || this.isWallOneStepAhead();
+    }
+
+    public isWallImmediatelyToTheLeft(): boolean {
+        return this.getCenter().orElseThrow().hasWallOn(VWOrientationUtils.getLeft(this.getOwnOrientation()));
+    }
+
+    public isWallOneStepToTheLeft(): boolean {
+        return !this.isWallImmediatelyToTheLeft() && this.getLeft().orElseThrow().hasWallOn(VWOrientationUtils.getLeft(this.getOwnOrientation()));
+    }
+
+    public isWallVisibleSomewhereToTheLeft(): boolean {
+        return this.isWallImmediatelyToTheLeft() || this.isWallOneStepToTheLeft();
+    }
+
+    public isWallImmediatelyToTheRight(): boolean {
+        return this.getCenter().orElseThrow().hasWallOn(VWOrientationUtils.getRight(this.getOwnOrientation()));
+    }
+
+    public isWallOneStepToTheRight(): boolean {
+        return !this.isWallImmediatelyToTheRight() && this.getRight().orElseThrow().hasWallOn(VWOrientationUtils.getRight(this.getOwnOrientation()));
+    }
+
+    public isWallVisibleSomewhereToTheRight(): boolean {
+        return this.isWallImmediatelyToTheRight() || this.isWallOneStepToTheRight();
     }
 }
