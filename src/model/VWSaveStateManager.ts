@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path-browserify";
 
 export class VWSaveStateManager {
     private constructor() {}
@@ -12,7 +13,16 @@ export class VWSaveStateManager {
                 name += ".json";
             }
 
-            return JSON.parse(fs.readFileSync(`../saved_states/${name}`, "utf-8"))
+            const savesStatesDir = path.join(path.resolve(".."), "saved_states");
+
+            if (!fs.existsSync(savesStatesDir)) {
+                throw new Error("The path to the supposed saved states parent directory points to a non-existent directory.");
+            }
+            else if (!fs.lstatSync(savesStatesDir).isDirectory()) {
+                throw new Error("The path to the supposed saved states parent directory does not point to a directory.");
+            }
+
+            return JSON.parse(fs.readFileSync(path.join(savesStatesDir, name), "utf-8"))
         }
         catch (e) {
             console.log("Could not load the state because of:");
@@ -34,7 +44,16 @@ export class VWSaveStateManager {
                 throw new Error("Invalid state");
             }
 
-            fs.writeFileSync(`../saved_states/${name}`, JSON.stringify(state))
+            const savesStatesDir = path.join(path.resolve(".."), "saved_states");
+
+            if (!fs.existsSync(savesStatesDir)) {
+                fs.mkdirSync(savesStatesDir);
+            }
+            else if (!fs.lstatSync(savesStatesDir).isDirectory()) {
+                throw new Error("The path to the supposed saved states parent directory does not point to a directory.");
+            }
+
+            fs.writeFileSync(`${savesStatesDir}${path.sep}${name}`, JSON.stringify(state))
         }
         catch (e) {
             console.log("Could not save the state because of:");
