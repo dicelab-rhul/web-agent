@@ -10,21 +10,21 @@ import { VWAbstractExecutor } from "./VWAbstractExecutor";
 export class VWMoveExecutor extends VWAbstractExecutor {
     protected isPossible(action: VWMoveAction, env: VWEnvironment): boolean {
         try {
-            return this.isActorInEnv(action.getActorID(), env) && this.targetExists(action, env) && this.targetHasNoActor(action, env);
+            return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && VWMoveExecutor.targetExists(action, env) && VWMoveExecutor.targetHasNoActor(action, env);
         }
         catch (e) {
             return false;
         }
     }
 
-    private targetExists(action: VWMoveAction, env: VWEnvironment): boolean {
+    private static targetExists(action: VWMoveAction, env: VWEnvironment): boolean {
         const actorCoord: JOptional<VWCoord> = env.getActorCoordByID(action.getActorID());
         const actorOrientation: VWOrientation = env.getActorByID(action.getActorID()).orElseThrow().getOrientation();
 
         return actorCoord.isPresent() && !env.getLocation(actorCoord.orElseThrow()).orElseThrow().hasWallOn(actorOrientation);
     }
 
-    private targetHasNoActor(action: VWMoveAction, env: VWEnvironment): boolean {
+    private static targetHasNoActor(action: VWMoveAction, env: VWEnvironment): boolean {
         try {
             const actorCoord: JOptional<VWCoord> = env.getActorCoordByID(action.getActorID());
 
@@ -55,7 +55,7 @@ export class VWMoveExecutor extends VWAbstractExecutor {
 
     protected succeeded(action: VWMoveAction, env: VWEnvironment): boolean {
         try {
-            return this.checkInvariants(action, env) && this.checkOriginalLocation(action, env) && this.checkTargetLocation(action, env);
+            return this.checkInvariants(action, env) && this.checkOriginalLocation(action, env) && VWMoveExecutor.checkTargetLocation(action, env);
         }
         catch (e) {
             return false;
@@ -63,7 +63,7 @@ export class VWMoveExecutor extends VWAbstractExecutor {
     }
 
     protected checkInvariants(action: VWMoveAction, env: VWEnvironment): boolean {
-        return this.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkDirtAfterAction(env);
+        return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkDirtAfterAction(env);
     }
 
     private checkOriginalLocation(action: VWMoveAction, env: VWEnvironment): boolean {
@@ -78,7 +78,7 @@ export class VWMoveExecutor extends VWAbstractExecutor {
         return env.getLocation(this.getActorCoordBeforeAction()).orElseThrow().hasActor() && env.getLocation(this.getActorCoordBeforeAction()).orElseThrow().getActor().orElseThrow().getID() !== actorID;
     }
 
-    private checkTargetLocation(action: VWMoveAction, env: VWEnvironment): boolean {
+    private static checkTargetLocation(action: VWMoveAction, env: VWEnvironment): boolean {
         const actorCoord: JOptional<VWCoord> = env.getActorCoordByID(action.getActorID());
 
         return actorCoord.isPresent() && env.getLocation(actorCoord.orElseThrow()).orElseThrow().hasActor() && env.getLocation(actorCoord.orElseThrow()).orElseThrow().getActor().orElseThrow().getID() === action.getActorID();

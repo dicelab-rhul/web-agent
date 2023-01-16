@@ -57,6 +57,20 @@ export class VWAmbient {
         return actorIDs;
     }
 
+    public getActorsIDsExcept(id: string): string[] {
+        const actorIDs: string[] = [];
+
+        for (let [_, location] of this.grid) {
+            const actor = location.getActor();
+
+            if (actor.isPresent() && actor.orElseThrow().getID() !== id) {
+                actorIDs.push(actor.orElseThrow().getID());
+            }
+        }
+
+        return actorIDs;
+    }
+
     public getActorByID(id: string): JOptional<VWActor> {
         for (let [_, location] of this.grid) {
             const actor = location.getActor();

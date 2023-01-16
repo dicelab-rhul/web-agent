@@ -9,12 +9,12 @@ export abstract class VWCommunicativeAction extends VWAction {
     public constructor(actorID: string, content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>, recipientsIDs?: Array<string>) {
         super(actorID);
 
-        this.content = this.validateContent(content);
+        this.content = VWCommunicativeAction.validateContent(content);
         this.recipientsIDs = recipientsIDs === null || recipientsIDs === undefined ? [] : recipientsIDs;
     }
 
 
-    private validateContent(content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>): number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string> {
+    private static validateContent(content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>): number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string> {
         if (content === null || content === undefined) {
             throw new Error("The content cannot be null or undefined.");
         }

@@ -192,7 +192,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     }
 
     private actRandomly(dropGreenWeight: number, dropOrangeWeight: number, moveWeight: number, turnLeftWeight: number, turnRightWeight: number): VWAction[] {
-        this.validateWeights([dropGreenWeight, dropOrangeWeight, moveWeight, turnLeftWeight, turnRightWeight]);
+        VWUserMindCore.validateWeights([dropGreenWeight, dropOrangeWeight, moveWeight, turnLeftWeight, turnRightWeight]);
 
         const randomValue = Math.random();
         const cumulativeSum = (sum => (value: number) => sum += value)(0);
@@ -218,7 +218,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
         }
     }
 
-    private validateWeights(weights: number[]): void {
+    private static validateWeights(weights: number[]): void {
         if (weights === null || weights === undefined) {
             throw new Error("Weights cannot be null or undefined.");
         }
@@ -232,11 +232,11 @@ export class VWUserMindCore extends VWAbstractMindCore {
             throw new Error("Weights cannot be greater than 1.0.");
         }
         else {
-            this.validateWeightsSum(weights.reduce((partialSum, elm) => partialSum + elm, 0));
+            VWUserMindCore.validateWeightsSum(weights.reduce((partialSum, elm) => partialSum + elm, 0));
         }
     }
 
-    private validateWeightsSum(weightsSum: number): void {
+    private static validateWeightsSum(weightsSum: number): void {
         if (weightsSum < 1.0) {
             throw new Error("Weights cannot sum to less than 1.0.");
         }

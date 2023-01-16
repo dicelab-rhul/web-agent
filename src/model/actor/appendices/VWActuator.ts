@@ -8,4 +8,6 @@ export interface VWActuator<A extends VWAction> {
     source() : A;
 
     sourceAll() : A[];
+
+    hasPendingActions(): boolean;
 }

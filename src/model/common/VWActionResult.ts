@@ -6,11 +6,11 @@ export class VWActionResult {
     private action: VWAction;
 
     public constructor(actionOutcome: VWActionOutcome, action: VWAction) {
-        this.actionOutcome = this.validateActionOutcome(actionOutcome);
-        this.action = this.validateAction(action);
+        this.actionOutcome = VWActionResult.validateActionOutcome(actionOutcome);
+        this.action = VWActionResult.validateAction(action);
     }
 
-    private validateActionOutcome(actionOutcome: VWActionOutcome): VWActionOutcome {
+    private static validateActionOutcome(actionOutcome: VWActionOutcome): VWActionOutcome {
         if (actionOutcome === null || actionOutcome === undefined) {
             throw new Error("The action outcome cannot be null or undefined.");
         }
@@ -18,7 +18,7 @@ export class VWActionResult {
         return actionOutcome;
     }
 
-    private validateAction(action: VWAction): VWAction {
+    private static validateAction(action: VWAction): VWAction {
         if (action === null || action === undefined) {
             throw new Error("The action cannot be null or undefined.");
         }

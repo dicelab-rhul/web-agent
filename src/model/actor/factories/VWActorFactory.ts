@@ -12,6 +12,8 @@ import { VWCleaningAgentMind } from "../mind/VWCleaningAgentMind";
 import { VWUserMind } from "../mind/VWUserMind";
 
 export class VWActorFactory {
+    private constructor() {}
+
     public static createVWActorFromJSONObject(data: object): VWActor {
         if (data === null || data === undefined) {
             throw new Error("The JSON representation of a `VWActor` cannot be null or undefined.");

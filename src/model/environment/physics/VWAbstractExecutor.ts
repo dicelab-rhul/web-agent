@@ -100,14 +100,14 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
 
     protected abstract succeeded(action: VWAction, env: VWEnvironment): boolean;
 
-    protected isActorInEnv(actorID: string, env: VWEnvironment): boolean {
+    protected static isActorInEnv(actorID: string, env: VWEnvironment): boolean {
         return env.getActorByID(actorID).isPresent();
     }
 
     protected abstract checkInvariants(action: VWAction, env: VWEnvironment): boolean;
 
     protected checkAllInvariants(action: VWAction, env: VWEnvironment): boolean {
-        return this.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkCoordAfterAction(action, env) && this.checkDirtAfterAction(env);
+        return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkCoordAfterAction(action, env) && this.checkDirtAfterAction(env);
     }
 
     protected checkColourAfterAction(action: VWAction, env: VWEnvironment): boolean {

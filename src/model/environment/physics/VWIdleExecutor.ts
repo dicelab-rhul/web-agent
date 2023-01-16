@@ -7,7 +7,7 @@ import { VWAbstractExecutor } from "./VWAbstractExecutor";
 export class VWIdleExecutor extends VWAbstractExecutor {
     protected isPossible(action: VWIdleAction, env: VWEnvironment): boolean {
         try {
-            return this.isActorInEnv(action.getActorID(), env);
+            return VWAbstractExecutor.isActorInEnv(action.getActorID(), env);
         }
         catch (e) {
             return false;

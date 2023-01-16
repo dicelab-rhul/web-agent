@@ -16,7 +16,7 @@ export class VWObservation extends VWPerception {
         super();
 
         this.locations = new Map<VWPosition, VWLocationAppearance>();
-        this.actionResults = this.validateActionResults(actionResults);
+        this.actionResults = VWObservation.validateActionResults(actionResults);
 
         for (const position of locations.keys()) {
             if (position === null || position === undefined) {
@@ -31,7 +31,7 @@ export class VWObservation extends VWPerception {
         }
     }
 
-    private validateActionResults(actionResults: VWActionResult[]): VWActionResult[] {
+    private static validateActionResults(actionResults: VWActionResult[]): VWActionResult[] {
         if (actionResults === null || actionResults === undefined) {
             throw new Error("The action results cannot be null or undefined.");
         }

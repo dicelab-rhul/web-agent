@@ -8,4 +8,8 @@ export interface VWMindCore {
     revise(): void;
 
     decide(): VWAction[];
+
+    getCumulativeEffort(): bigint;
+
+    incrementEffort(effort: bigint): void;
 }

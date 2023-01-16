@@ -9,7 +9,7 @@ import { VWAbstractExecutor } from "./VWAbstractExecutor";
 export class VWTurnExecutor extends VWAbstractExecutor {
     protected isPossible(action: VWTurnAction, env: VWEnvironment): boolean {
         try {
-            return this.isActorInEnv(action.getActorID(), env);
+            return VWAbstractExecutor.isActorInEnv(action.getActorID(), env);
         }
         catch (e) {
             return false;
@@ -37,7 +37,7 @@ export class VWTurnExecutor extends VWAbstractExecutor {
     }
 
     protected checkInvariants(action: VWTurnAction, env: VWEnvironment): boolean {
-        return this.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkCoordAfterAction(action, env) && this.checkDirtAfterAction(env);
+        return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkCoordAfterAction(action, env) && this.checkDirtAfterAction(env);
     }
 
     private checkOrientationAfterTurn(action: VWTurnAction, env: VWEnvironment): boolean {

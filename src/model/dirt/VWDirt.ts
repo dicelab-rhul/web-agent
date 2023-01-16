@@ -8,10 +8,10 @@ export class VWDirt extends VWAbstractIdentifiable {
     public constructor(colour: VWColour) {
         super();
 
-        this.colour = this.validateColour(colour);
+        this.colour = VWDirt.validateColour(colour);
     }
 
-    private validateColour(colour: VWColour): VWColour {
+    private static validateColour(colour: VWColour): VWColour {
         if (colour === null || colour === undefined) {
             throw new Error("The dirt colour cannot be null or undefined.");
         }

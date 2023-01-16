@@ -10,27 +10,27 @@ import { VWAbstractExecutor } from "./VWAbstractExecutor";
 export class VWCleanExecutor extends VWAbstractExecutor {
     protected isPossible(action: VWCleanAction, env: VWEnvironment): boolean {
         try {
-            return this.isActorInEnv(action.getActorID(), env) && this.isActorCleaningAgent(action, env) && this.actorLocationHasCompatibleDirt(action, env);
+            return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && VWCleanExecutor.isActorCleaningAgent(action, env) && VWCleanExecutor.actorLocationHasCompatibleDirt(action, env);
         }
         catch (e) {
             return false;
         }
     }
 
-    private isActorCleaningAgent(action: VWCleanAction, env: VWEnvironment): boolean {
+    private static isActorCleaningAgent(action: VWCleanAction, env: VWEnvironment): boolean {
         const actorColour: VWColour = env.getActorByID(action.getActorID()).orElseThrow().getColour();
 
         return Object.values(VWColour).includes(actorColour) && actorColour !== VWColour.USER;
     }
 
-    private actorLocationHasCompatibleDirt(action: VWCleanAction, env: VWEnvironment): boolean {
+    private static actorLocationHasCompatibleDirt(action: VWCleanAction, env: VWEnvironment): boolean {
         const actorCoord: JOptional<VWCoord> = env.getActorCoordByID(action.getActorID());
         const actorColour: VWColour = env.getActorByID(action.getActorID()).orElseThrow().getColour();
 
-        return actorCoord.isPresent() && env.getLocation(actorCoord.orElseThrow()).orElseThrow().hasDirt() && this.canClean(actorColour, actorCoord, env);
+        return actorCoord.isPresent() && env.getLocation(actorCoord.orElseThrow()).orElseThrow().hasDirt() && VWCleanExecutor.canClean(actorColour, actorCoord, env);
     }
 
-    private canClean(actorColour: VWColour, actorCoord: JOptional<VWCoord>, env: VWEnvironment): boolean {
+    private static canClean(actorColour: VWColour, actorCoord: JOptional<VWCoord>, env: VWEnvironment): boolean {
         return actorColour === VWColour.WHITE || actorColour === env.getLocation(actorCoord.orElseThrow()).orElseThrow().getDirt().orElseThrow().getColour();
     }
 
@@ -55,7 +55,7 @@ export class VWCleanExecutor extends VWAbstractExecutor {
     }
 
     protected checkInvariants(action: VWCleanAction, env: VWEnvironment): boolean {
-        return this.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkCoordAfterAction(action, env);
+        return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkCoordAfterAction(action, env);
     }
 
     private checkDirtRemoved(env: VWEnvironment): boolean {

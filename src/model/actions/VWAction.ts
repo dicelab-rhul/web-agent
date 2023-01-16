@@ -4,10 +4,10 @@ export abstract class VWAction {
     private actorID: string;
 
     public constructor(actorID: string) {
-        this.actorID = this.validateActorID(actorID);
+        this.actorID = VWAction.validateActorID(actorID);
     }
 
-    private validateActorID(actorID: string): string {
+    private static validateActorID(actorID: string): string {
         if (actorID === null || actorID === undefined) {
             throw new Error("The actor ID cannot be null or undefined.");
         }

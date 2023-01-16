@@ -8,12 +8,12 @@ export class VWActorAppearance implements VWAppearance {
     private orientation: VWOrientation;
 
     constructor(actorID: string, colour: VWColour, orientation: VWOrientation) {
-        this.actorID = this.validateActorID(actorID);
-        this.colour = this.validateColour(colour);
-        this.orientation = this.validateOrientation(orientation);
+        this.actorID = VWActorAppearance.validateActorID(actorID);
+        this.colour = VWActorAppearance.validateColour(colour);
+        this.orientation = VWActorAppearance.validateOrientation(orientation);
     }
 
-    private validateActorID(actorID: string): string {
+    private static validateActorID(actorID: string): string {
         if (actorID === null || actorID === undefined) {
             throw new Error("The actor ID cannot be null or undefined.");
         }
@@ -21,7 +21,7 @@ export class VWActorAppearance implements VWAppearance {
         return actorID;
     }
 
-    private validateColour(colour: VWColour): VWColour {
+    private static validateColour(colour: VWColour): VWColour {
         if (colour === null || colour === undefined) {
             throw new Error("The actor colour cannot be null or undefined.");
         }
@@ -29,7 +29,7 @@ export class VWActorAppearance implements VWAppearance {
         return colour;
     }
 
-    private validateOrientation(orientation: VWOrientation): VWOrientation {
+    private static validateOrientation(orientation: VWOrientation): VWOrientation {
         if (orientation === null || orientation === undefined) {
             throw new Error("The actor orientation cannot be null or undefined.");
         }

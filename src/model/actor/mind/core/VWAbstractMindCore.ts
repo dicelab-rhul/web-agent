@@ -9,6 +9,7 @@ import { VWMindCore } from "./VWMindCore";
 export abstract class VWAbstractMindCore implements VWMindCore {
     private observation: VWObservation;
     private messages: VWMessage[];
+    private cumulativeEffort: bigint = 0n;
 
     public getLatestObservation(): VWObservation {
         return this.observation;
@@ -35,11 +36,11 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     }
 
     public perceive(observation: VWObservation, messages: VWMessage[]): void {
-        this.observation = this.validateObservation(observation);
-        this.messages = this.validateMessages(messages);
+        this.observation = VWAbstractMindCore.validateObservation(observation);
+        this.messages = VWAbstractMindCore.validateMessages(messages);
     }
 
-    private validateObservation(observation: VWObservation): VWObservation {
+    private static validateObservation(observation: VWObservation): VWObservation {
         if (observation === null || observation === undefined) {
             throw new Error("The observation cannot be null or undefined.");
         }
@@ -47,7 +48,7 @@ export abstract class VWAbstractMindCore implements VWMindCore {
         return observation;
     }
 
-    private validateMessages(messages: VWMessage[]): VWMessage[] {
+    private static validateMessages(messages: VWMessage[]): VWMessage[] {
         if (messages === null || messages === undefined) {
             throw new Error("The messages cannot be null or undefined.");
         }
@@ -58,4 +59,17 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     public abstract revise(): void; // TODO: integrate Teleora.
 
     public abstract decide(): VWAction[]; // TODO: integrate Teleora.
+
+    public getCumulativeEffort(): bigint {
+        return this.cumulativeEffort;
+    }
+
+    public incrementEffort(effort: bigint): void {
+        if (this.cumulativeEffort === null || this.cumulativeEffort === undefined) {
+            throw new Error("The cumulative effort cannot be null or undefined.");
+        }
+        else {
+            this.cumulativeEffort += effort;
+        }
+    }
 }

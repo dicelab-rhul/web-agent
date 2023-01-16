@@ -7,10 +7,10 @@ export class VWTurnAction extends VWPhysicalAction {
     public constructor(actorID: string, turningDirection: VWDirection) {
         super(actorID);
 
-        this.turningDirection = this.validateTurningDirection(turningDirection);
+        this.turningDirection = VWTurnAction.validateTurningDirection(turningDirection);
     }
 
-    private validateTurningDirection(direction: VWDirection): VWDirection {
+    private static validateTurningDirection(direction: VWDirection): VWDirection {
         if (direction === null || direction === undefined) {
             throw new Error("The turning direction cannot be null or undefined.");
         }

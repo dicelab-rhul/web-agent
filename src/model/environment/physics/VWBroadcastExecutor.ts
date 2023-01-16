@@ -7,7 +7,7 @@ import { VWAbstractExecutor } from "./VWAbstractExecutor";
 export class VWBroadcastExecutor extends VWAbstractExecutor {
     protected isPossible(action: VWBroadcastAction, env: VWEnvironment): boolean {
         try {
-            return this.isActorInEnv(action.getActorID(), env) && env.getActorByID(action.getActorID()).orElseThrow().getCommunicativeActuator().isPresent();
+            return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && env.getActorByID(action.getActorID()).orElseThrow().getCommunicativeActuator().isPresent();
         }
         catch (e) {
             return false;

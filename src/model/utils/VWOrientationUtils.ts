@@ -1,6 +1,8 @@
 import { VWOrientation } from "../common/VWOrientation";
 
 export class VWOrientationUtils {
+    private constructor() {}
+
     public static getLeft(orientation: VWOrientation): VWOrientation {
         switch (orientation) {
             case VWOrientation.NORTH:

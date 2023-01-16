@@ -13,13 +13,13 @@ export class VWLocationAppearance implements VWAppearance {
     private wall: Map<VWOrientation, boolean>;
 
     public constructor(coord: VWCoord, wall: Map<VWOrientation, boolean>, actorAppearance?: VWActorAppearance, dirtAppearance?: VWDirtAppearance) {
-        this.coord = this.validateCoord(coord);
-        this.wall = this.validateWall(wall);
+        this.coord = VWLocationAppearance.validateCoord(coord);
+        this.wall = VWLocationAppearance.validateWall(wall);
         this.actorAppearance = JOptional.ofNullable(actorAppearance);
         this.dirtAppearance = JOptional.ofNullable(dirtAppearance);
     }
 
-    private validateCoord(coord: VWCoord): VWCoord {
+    private static validateCoord(coord: VWCoord): VWCoord {
         if (coord === null || coord === undefined) {
             throw new Error("The coordinates cannot be null or undefined.");
         }
@@ -27,7 +27,7 @@ export class VWLocationAppearance implements VWAppearance {
         return coord;
     }
 
-    private validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
+    private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
         if (wall == null || wall == undefined) {
             throw new Error("The wall cannot be null or undefined.");
         }

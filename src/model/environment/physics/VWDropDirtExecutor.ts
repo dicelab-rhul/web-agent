@@ -11,18 +11,18 @@ import { VWAbstractExecutor } from "./VWAbstractExecutor";
 export class VWDropDirtExecutor extends VWAbstractExecutor {
     protected isPossible(action: VWDropDirtAction, env: VWEnvironment): boolean {
         try {
-            return this.isActorInEnv(action.getActorID(), env) && this.isActorUser(action, env) && this.actorLocationHasNoDirt(action, env);
+            return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && VWDropDirtExecutor.isActorUser(action, env) && VWDropDirtExecutor.actorLocationHasNoDirt(action, env);
         }
         catch (e) {
             return false;
         }
     }
 
-    private isActorUser(action: VWDropDirtAction, env: VWEnvironment): boolean {
+    private static isActorUser(action: VWDropDirtAction, env: VWEnvironment): boolean {
         return env.getActorByID(action.getActorID()).orElseThrow().getColour() === VWColour.USER;
     }
 
-    private actorLocationHasNoDirt(action: VWDropDirtAction, env: VWEnvironment): boolean {
+    private static actorLocationHasNoDirt(action: VWDropDirtAction, env: VWEnvironment): boolean {
         const actorCoord: JOptional<VWCoord> = env.getActorCoordByID(action.getActorID());
 
         return actorCoord.isPresent() && !env.getLocation(actorCoord.orElseThrow()).orElseThrow().hasDirt();
@@ -49,7 +49,7 @@ export class VWDropDirtExecutor extends VWAbstractExecutor {
     }
 
     protected checkInvariants(action: VWDropDirtAction, env: VWEnvironment): boolean {
-        return this.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkCoordAfterAction(action, env);
+        return VWAbstractExecutor.isActorInEnv(action.getActorID(), env) && this.checkColourAfterAction(action, env) && this.checkOrientationAfterAction(action, env) && this.checkCoordAfterAction(action, env);
     }
 
     private checkDirtAdded(action: VWDropDirtAction, env: VWEnvironment): boolean {

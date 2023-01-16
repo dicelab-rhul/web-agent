@@ -9,10 +9,10 @@ import { VWCleaningAgentMind } from "./mind/VWCleaningAgentMind";
 
 export class VWCleaningAgent extends VWActor {
     public constructor(colour: VWColour, orientation: VWOrientation, mind: VWCleaningAgentMind, observationSensor: VWObservationSensor, listeningSensor: VWListeningSensor, physicalActuator: VWCleaningAgentPhysicalActuator, communicativeActuator: VWCommunicativeActuator) {
-        super(VWCleaningAgent.validateColour(colour), orientation, mind, observationSensor, listeningSensor, physicalActuator, communicativeActuator);
+        super(VWCleaningAgent.validateColourForCleaningAgent(colour), orientation, mind, observationSensor, listeningSensor, physicalActuator, communicativeActuator);
     }
 
-    private static validateColour(colour: VWColour): VWColour {
+    protected static validateColourForCleaningAgent(colour: VWColour): VWColour {
         if (colour === null || colour === undefined) {
             throw new Error("The colour cannot be null or undefined.");
         }

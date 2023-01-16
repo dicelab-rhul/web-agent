@@ -50,4 +50,8 @@ export abstract class VWAbstractActuator<A extends VWAction> implements VWActuat
             return actions;
         }
     }
+
+    public hasPendingActions(): boolean {
+        return !this.actions.isEmpty()
+    }
 }

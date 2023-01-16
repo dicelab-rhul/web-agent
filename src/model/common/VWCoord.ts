@@ -5,11 +5,11 @@ export class VWCoord {
     private y: bigint;
 
     public constructor(x: bigint, y: bigint) {
-        this.x = this.validateX(x);
-        this.y = this.validateY(y);
+        this.x = VWCoord.validateX(x);
+        this.y = VWCoord.validateY(y);
     }
 
-    private validateX(x: bigint): bigint {
+    private static validateX(x: bigint): bigint {
         if (x === null || x === undefined) {
             throw new Error("The x coordinate cannot be null or undefined.");
         }
@@ -17,7 +17,7 @@ export class VWCoord {
         return x;
     }
 
-    private validateY(y: bigint): bigint {
+    private static validateY(y: bigint): bigint {
         if (y === null || y === undefined) {
             throw new Error("The y coordinate cannot be null or undefined.");
         }
@@ -52,6 +52,90 @@ export class VWCoord {
         }
         else if (orientation === VWOrientation.WEST) {
             return new VWCoord(this.x - 1n, this.y);
+        }
+        else {
+            throw new Error("The orientation is invalid.");
+        }
+    }
+
+    public getLeftCoord(orientation: VWOrientation): VWCoord {
+        if (orientation === null || orientation === undefined) {
+            throw new Error("The orientation cannot be null or undefined.");
+        }
+        else if (orientation === VWOrientation.NORTH) {
+            return new VWCoord(this.x - 1n, this.y);
+        }
+        else if (orientation === VWOrientation.EAST) {
+            return new VWCoord(this.x, this.y - 1n);
+        }
+        else if (orientation === VWOrientation.SOUTH) {
+            return new VWCoord(this.x + 1n, this.y);
+        }
+        else if (orientation === VWOrientation.WEST) {
+            return new VWCoord(this.x, this.y + 1n);
+        }
+        else {
+            throw new Error("The orientation is invalid.");
+        }
+    }
+
+    public getRightCoord(orientation: VWOrientation): VWCoord {
+        if (orientation === null || orientation === undefined) {
+            throw new Error("The orientation cannot be null or undefined.");
+        }
+        else if (orientation === VWOrientation.NORTH) {
+            return new VWCoord(this.x + 1n, this.y);
+        }
+        else if (orientation === VWOrientation.EAST) {
+            return new VWCoord(this.x, this.y + 1n);
+        }
+        else if (orientation === VWOrientation.SOUTH) {
+            return new VWCoord(this.x - 1n, this.y);
+        }
+        else if (orientation === VWOrientation.WEST) {
+            return new VWCoord(this.x, this.y - 1n);
+        }
+        else {
+            throw new Error("The orientation is invalid.");
+        }
+    }
+
+    public getForwardLeftCoord(orientation: VWOrientation): VWCoord {
+        if (orientation === null || orientation === undefined) {
+            throw new Error("The orientation cannot be null or undefined.");
+        }
+        else if (orientation === VWOrientation.NORTH) {
+            return new VWCoord(this.x - 1n, this.y - 1n);
+        }
+        else if (orientation === VWOrientation.EAST) {
+            return new VWCoord(this.x + 1n, this.y - 1n);
+        }
+        else if (orientation === VWOrientation.SOUTH) {
+            return new VWCoord(this.x + 1n, this.y + 1n);
+        }
+        else if (orientation === VWOrientation.WEST) {
+            return new VWCoord(this.x - 1n, this.y + 1n);
+        }
+        else {
+            throw new Error("The orientation is invalid.");
+        }
+    }
+
+    public getForwardRightCoord(orientation: VWOrientation): VWCoord {
+        if (orientation === null || orientation === undefined) {
+            throw new Error("The orientation cannot be null or undefined.");
+        }
+        else if (orientation === VWOrientation.NORTH) {
+            return new VWCoord(this.x + 1n, this.y - 1n);
+        }
+        else if (orientation === VWOrientation.EAST) {
+            return new VWCoord(this.x + 1n, this.y + 1n);
+        }
+        else if (orientation === VWOrientation.SOUTH) {
+            return new VWCoord(this.x - 1n, this.y + 1n);
+        }
+        else if (orientation === VWOrientation.WEST) {
+            return new VWCoord(this.x - 1n, this.y - 1n);
         }
         else {
             throw new Error("The orientation is invalid.");

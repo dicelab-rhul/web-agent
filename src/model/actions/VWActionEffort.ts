@@ -7,6 +7,8 @@ import { VWSpeakAction } from "./VWSpeakAction";
 import { VWTurnAction } from "./VWTurnAction";
 
 export class VWActionEffort {
+    private constructor() {}
+
     private static ACTION_EFFORTS: Map<string, bigint> = VWActionEffort.loadDefaultActionEfforts();
 
     private static loadDefaultActionEfforts(): Map<string, bigint> {

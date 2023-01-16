@@ -13,13 +13,13 @@ export class VWLocation {
     private wall: Map<VWOrientation, boolean>;
 
     public constructor(coord: VWCoord, wall: Map<VWOrientation, boolean>, actor?: VWActor, dirt?: VWDirt) {
-        this.coord = this.validateCoord(coord);
-        this.wall = this.validateWall(wall);
+        this.coord = VWLocation.validateCoord(coord);
+        this.wall = VWLocation.validateWall(wall);
         this.actor = JOptional.ofNullable(actor);
         this.dirt = JOptional.ofNullable(dirt);
     }
 
-    private validateCoord(coord: VWCoord): VWCoord {
+    private static validateCoord(coord: VWCoord): VWCoord {
         if (coord == null || coord == undefined) {
             throw new Error("The coordinates cannot be null or undefined.");
         }
@@ -27,7 +27,7 @@ export class VWLocation {
         return coord;
     }
 
-    private validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
+    private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
         if (wall == null || wall == undefined) {
             throw new Error("The wall cannot be null or undefined.");
         }
@@ -199,7 +199,7 @@ export class VWLocation {
     }
 
     private static fromJsonObjectHelper(coordData: string, wallData: object, actorData: object, dirtData: object): VWLocation {
-        const wall: Map<VWOrientation, boolean> = VWLocation.validateWall(wallData);
+        const wall: Map<VWOrientation, boolean> = VWLocation.constructWallFromData(wallData);
         const coord: VWCoord = VWCoord.fromString(coordData);
         const actor: JOptional<VWActor> = actorData === null || actorData === undefined ? JOptional.empty() : JOptional.of(VWActor.fromJsonObject(actorData));
         const dirt: JOptional<VWDirt> = dirtData === null || dirtData === undefined ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
@@ -218,7 +218,7 @@ export class VWLocation {
         }
     }
 
-    private static validateWall(wallData: object): Map<VWOrientation, boolean> {
+    private static constructWallFromData(wallData: object): Map<VWOrientation, boolean> {
         const wall: Map<VWOrientation, boolean> = new Map<VWOrientation, boolean>();
 
         if (wallData === null || wallData === undefined) {

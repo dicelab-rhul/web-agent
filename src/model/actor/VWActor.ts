@@ -9,6 +9,7 @@ import { VWDirection } from "../common/VWDirection";
 import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWOrientation } from "../common/VWOrientation";
+import { VWEnvironment } from "../environment/VWEnvironment";
 import { VWActorAppearance } from "./appearance/VWActorAppearance";
 import { VWCommunicativeActuator } from "./appendices/VWCommunicativeActuator";
 import { VWListeningSensor } from "./appendices/VWListeningSensor";
@@ -29,16 +30,16 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     public constructor(colour: VWColour, orientation: VWOrientation, mind: VWMind, observationSensor?: VWObservationSensor, listeningSensor?: VWListeningSensor, physicalActuator?: VWPhysicalActuator, communicativeActuator?: VWCommunicativeActuator) {
         super();
 
-        this.colour = this.validateColour(colour);
-        this.orientation = this.validateOrientation(orientation);
-        this.mind = this.validateMind(mind);
+        this.colour = VWActor.validateColour(colour);
+        this.orientation = VWActor.validateOrientation(orientation);
+        this.mind = VWActor.validateMind(mind);
         this.observationSensor = observationSensor === null || observationSensor === undefined ? JOptional.empty() : JOptional.of(observationSensor);
         this.listeningSensor = listeningSensor === null || listeningSensor === undefined ? JOptional.empty() : JOptional.of(listeningSensor);
         this.physicalActuator = physicalActuator === null || physicalActuator === undefined ? JOptional.empty() : JOptional.of(physicalActuator);
         this.CommunicativeActuator = communicativeActuator === null || communicativeActuator === undefined ? JOptional.empty() : JOptional.of(communicativeActuator);
     }
 
-    private validateColour(colour: VWColour): VWColour {
+    private static validateColour(colour: VWColour): VWColour {
         if (colour === null || colour === undefined) {
             throw new Error("The colour cannot be null or undefined.");
         }
@@ -46,7 +47,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         return colour;
     }
 
-    private validateOrientation(orientation: VWOrientation): VWOrientation {
+    private static validateOrientation(orientation: VWOrientation): VWOrientation {
         if (orientation === null || orientation === undefined) {
             throw new Error("The orientation cannot be null or undefined.");
         }
@@ -54,7 +55,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         return orientation;
     }
 
-    private validateMind(mind: VWMind): VWMind {
+    private static validateMind(mind: VWMind): VWMind {
         if (mind === null || mind === undefined) {
             throw new Error("The mind cannot be null or undefined.");
         }
@@ -147,7 +148,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
 
     public cycle(): void {
         const observations: VWObservation[] = this.getObservationSensor().orElseThrow().sourceAll();
-        const observation: VWObservation = this.mergeObservations(observations);
+        const observation: VWObservation = VWActor.mergeObservations(observations);
         const messages: VWMessage[] = this.getListeningSensor().orElseThrow().sourceAll();
 
         this.getMind().perceive(observation, messages);
@@ -156,11 +157,12 @@ export abstract class VWActor extends VWAbstractIdentifiable {
 
         const nextActions: VWAction[] = this.getMind().execute();
 
-        this.validateActions(nextActions);
+        VWEnvironment.validateActions(nextActions);
+
         this.executeActions(nextActions);
     }
 
-    private mergeObservations(observations: VWObservation[]): VWObservation {
+    private static mergeObservations(observations: VWObservation[]): VWObservation {
         if (observations === null || observations === undefined) {
             throw new Error("The observations array cannot be null or undefined.");
         }
@@ -180,27 +182,6 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         }
         else {
             throw new Error("At most two observations can be present.");
-        }
-    }
-
-    private validateActions(actions: VWAction[]): void {
-        if (actions === null || actions === undefined) {
-            throw new Error("The actions array cannot be null or undefined.");
-        }
-        else if (actions.some((action: VWAction) => action === null || action === undefined)) {
-            throw new Error("The actions array cannot contain null or undefined actions.");
-        }
-        else if (actions.length === 0) {
-            throw new Error("At least one action per cycle must by attempted by each actor.");
-        }
-        else if (actions.length > 2) {
-            throw new Error("At most two actions per cycle can be attempted by each actor.");
-        }
-        else if (actions.length === 2 && actions[0] instanceof VWPhysicalAction && actions[1] instanceof VWPhysicalAction) {
-            throw new Error("At most one physical action per cycle can be attempted by each actor.");
-        }
-        else if (actions.length === 2 && actions[0] instanceof VWCommunicativeAction && actions[1] instanceof VWCommunicativeAction) {
-            throw new Error("At most one communicative action per cycle can be attempted by each actor.");
         }
     }
 

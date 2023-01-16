@@ -6,11 +6,11 @@ export class VWDirtAppearance implements VWAppearance {
     private colour: VWColour;
 
     public constructor(dirtID: string, colour: VWColour) {
-        this.dirtID = this.validateDirtID(dirtID);
-        this.colour = this.validateColour(colour);
+        this.dirtID = VWDirtAppearance.validateDirtID(dirtID);
+        this.colour = VWDirtAppearance.validateColour(colour);
     }
 
-    private validateDirtID(dirtID: string): string {
+    private static validateDirtID(dirtID: string): string {
         if (dirtID === null || dirtID === undefined) {
             throw new Error("The dirt ID cannot be null or undefined.");
         }
@@ -18,7 +18,7 @@ export class VWDirtAppearance implements VWAppearance {
         return dirtID;
     }
 
-    private validateColour(colour: VWColour): VWColour {
+    private static validateColour(colour: VWColour): VWColour {
         if (colour === null || colour === undefined) {
             throw new Error("The dirt colour cannot be null or undefined.");
         }
