@@ -4,6 +4,24 @@ WE ARE FINALLY DOING IT.
 
 Browser-based teleoreactive agent development.
 
+## How to run the system
+
+### Install dependencies
+
+```console
+user@machine:~$ npm install -D live-server webpack webpack-cli typescript ts-loader
+```
+
+### Build the system
+
+```console
+user@machine:~$ cd vacuumworld-ts && npm run build
+```
+
+```console
+user@machine:~$ live-server
+```
+
 ## Notes
 
 developer run `parcel index.html`

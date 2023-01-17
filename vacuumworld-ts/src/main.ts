@@ -6,7 +6,7 @@ import { VacuumWorld } from "./model/VacuumWorld"
  * 
  */
 document.addEventListener("DOMContentLoaded", function() {
-    const vacuumworld: VacuumWorld = new VacuumWorld(); // TODO: Add parameters (speed, etc.).
+    const vacuumworld: VacuumWorld = new VacuumWorld();
 
     vacuumworld.run();
 });
