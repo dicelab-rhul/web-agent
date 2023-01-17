@@ -16,3 +16,11 @@
     padding-bottom: 1%;
     margin: 5pt;
 }
+
+#options_dialog_ok_button {
+    margin: 5pt;
+}
+
+#options_dialog_cancel_button {
+    margin: 5pt;
+}

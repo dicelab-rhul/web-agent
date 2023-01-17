@@ -2,7 +2,11 @@
 
 ## TO IMPLEMENT (some discussion regarding the integration with Teleora is needed for all of these)
 
-- The entire `VacuumWorld` class (the entry point of the application + arguments validation)
+- `VacuumWorld.startSimulation()`
 - `VWEnvironment.getActorMindCorePath()`
 - `VWCleaningAgentMind.loadFromFile()`
 - `VWUserMind.loadFromFile()`
+
+## TO FIX
+
+- All the other occurrences of `TODO` in `VacuumWorld`
