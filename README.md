@@ -18,6 +18,8 @@ user@machine:~$ npm install -D live-server webpack webpack-cli typescript ts-loa
 user@machine:~$ cd vacuumworld-ts && npm run build
 ```
 
+### Run the system
+
 ```console
 user@machine:~$ live-server
 ```
