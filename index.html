@@ -6,13 +6,49 @@
     <body>
         <script type="module" src="/vacuumworld-ts/dist/main.js"></script>
         <div id="simulation_div" class="center-aligned">
+            <!-- The initial view will be placed here -->
             <div id="initial_view_div" class="center-aligned" hidden></div>
+
+            <!-- The initial view buttons will be placed here -->
             <div id="initial_view_buttons_div" class="center-aligned" hidden></div>
-            <!-- The grid will be placed here -->
+
+            <!-- The options dialog will be placed here -->
+            <div id="options_dialog_div" class="center-aligned" hidden>
+                <dialog id="options_dialog">
+                    <div id="speed_selector_div">
+                        <label for="speed_selector">Speed</label>
+                        <select name="speed_values" id="speed_values"></select>
+                    </div>
+                    <div id="autoplay_selector_div">
+                        <label for="autoplay_selector">Autoplay</label>
+                    </div>
+                    <div id="state_to_load_selector_div">
+                        <label for="state_to_load_selector">State</label>
+                    </div>
+                    <div id="tooltips_selector_div">
+                        <label for="tooltips_selector">Tooltips</label>
+                    </div>
+                    <div id="max_number_of_cycles_selector_div">
+                        <label for="max_number_of_cycles_selector">Cycles</label>
+                    </div>
+                    <div id="efforts_selector_div">
+                        <label for="efforts_selector">Efforts</label>
+                    </div>
+                    <div id="teleora_selector_div">
+                        <label for="teleora_selector">Teleora mind core</label>
+                    </div>
+                    <button id="options_dialog_ok_button">OK</button>
+                    <button id="options_dialog_cancel_button">Cancel</button>
+                </dialog>
+            </div>
+
+            <!-- The grid will be placed here. -->
             <div id="grid_div" hidden></div>
-            <!-- The draggable bodies will be placed here when the simulation is stopped or has not been started yet -->
-            <div id="bodies_div" hidden></div>
-            <!-- The buttons will be placed here (they will vary depending on the state of the simulation) -->
+
+            <!-- The draggable bodies will be placed here when the simulation is stopped or has not been started yet. -->
+            <div id="draggable_bodies_div" hidden></div>
+    
+            <!-- The simulation control buttons will be placed here. -->
             <div id="simulation_controls_div" hidden></div>
         </div>
     </body>
