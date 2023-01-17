@@ -1,11 +1,12 @@
-import { v4 as uuidv4 } from 'uuid';
 import { VWIdentifiable } from './VWIdentifiable';
+
+const uuid = require("uuid");
 
 export class VWAbstractIdentifiable implements VWIdentifiable {
     private id: string;
 
     public constructor() {
-        this.id = uuidv4();
+        this.id = uuid.v4();
     }
 
     public getID(): string {

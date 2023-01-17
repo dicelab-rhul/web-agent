@@ -18,6 +18,12 @@ import { VWPhysicalActuator } from "./appendices/VWPhysicalActuator";
 import { VWActorFactory } from "./factories/VWActorFactory";
 import { VWMind } from "./mind/VWMind";
 
+export type VWActorJSON = {
+    colour: VWColour;
+    orientation: VWOrientation;
+    mind: string;
+}
+
 export abstract class VWActor extends VWAbstractIdentifiable {
     private colour: VWColour;
     private orientation: VWOrientation;
@@ -199,20 +205,19 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         }
     }
 
-    public toJsonObject(actorMindCorePath?: string): object {
-        const data: object = {
-            "colour": this.getColour(),
-            "orientation": this.getOrientation()
-        };
-
-        if (actorMindCorePath !== null && actorMindCorePath !== undefined) {
-            data["mind"] = actorMindCorePath;
+    public toJsonObject(actorMindCorePath?: string): VWActorJSON {
+        if (actorMindCorePath === null || actorMindCorePath === undefined) {
+            throw new Error("The actor mind core path cannot be null or undefined.");
         }
 
-        return data;
+        return {
+            "colour": this.getColour(),
+            "orientation": this.getOrientation(),
+            "mind": actorMindCorePath
+        };
     }
 
-    public static fromJsonObject(jsonObject: any): VWActor {
+    public static fromJsonObject(jsonObject: VWActorJSON): VWActor {
         return VWActorFactory.createVWActorFromJSONObject(jsonObject);
     }
 }

@@ -1,10 +1,24 @@
-import { VWActor } from "../actor/VWActor";
+import { VWActor, VWActorJSON } from "../actor/VWActor";
 import { JOptional } from "../common/JOptional";
 import { VWColour } from "../common/VWColour";
 import { VWCoord } from "../common/VWCoord";
 import { VWOrientation } from "../common/VWOrientation";
-import { VWDirt } from "../dirt/VWDirt";
+import { VWDirt, VWDirtJSON } from "../dirt/VWDirt";
 import { VWLocationAppearance } from "./VWLocationAppearance";
+
+export type VWWallJSON = {
+    north: boolean;
+    east: boolean;
+    south: boolean;
+    west: boolean;
+}
+
+export type VWLocationJSON = {
+    coord: VWCoord;
+    wall: VWWallJSON;
+    actor?: VWActorJSON;
+    dirt?: VWDirtJSON;
+}
 
 export class VWLocation {
     private coord: VWCoord;
@@ -20,7 +34,7 @@ export class VWLocation {
     }
 
     private static validateCoord(coord: VWCoord): VWCoord {
-        if (coord == null || coord == undefined) {
+        if (coord === null || coord === undefined) {
             throw new Error("The coordinates cannot be null or undefined.");
         }
 
@@ -161,9 +175,9 @@ export class VWLocation {
         }
     }
 
-    public toJsonObject(actorMindCorePath?: string): object {
-        const data: object = {
-            "coord": this.coord.toString(),
+    public toJsonObject(actorMindCorePath?: string): VWLocationJSON {
+        const data: VWLocationJSON = {
+            "coord": this.coord,
             "wall": {
                 "north": this.hasWallOnNorth(),
                 "east": this.hasWallOnEast(),
@@ -183,7 +197,7 @@ export class VWLocation {
         return data;
     }
 
-    public static fromJsonObject(data: object): VWLocation {
+    public static fromJsonObject(data: VWLocationJSON): VWLocation {
         if (data === null || data === undefined) {
             throw new Error("The JSON representation of a `VWLocation` cannot be null or undefined.");
         }
@@ -198,9 +212,8 @@ export class VWLocation {
         }
     }
 
-    private static fromJsonObjectHelper(coordData: string, wallData: object, actorData: object, dirtData: object): VWLocation {
+    private static fromJsonObjectHelper(coord: VWCoord, wallData: VWWallJSON, actorData: VWActorJSON, dirtData: VWDirtJSON): VWLocation {
         const wall: Map<VWOrientation, boolean> = VWLocation.constructWallFromData(wallData);
-        const coord: VWCoord = VWCoord.fromString(coordData);
         const actor: JOptional<VWActor> = actorData === null || actorData === undefined ? JOptional.empty() : JOptional.of(VWActor.fromJsonObject(actorData));
         const dirt: JOptional<VWDirt> = dirtData === null || dirtData === undefined ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
 
@@ -218,7 +231,7 @@ export class VWLocation {
         }
     }
 
-    private static constructWallFromData(wallData: object): Map<VWOrientation, boolean> {
+    private static constructWallFromData(wallData: VWWallJSON): Map<VWOrientation, boolean> {
         const wall: Map<VWOrientation, boolean> = new Map<VWOrientation, boolean>();
 
         if (wallData === null || wallData === undefined) {

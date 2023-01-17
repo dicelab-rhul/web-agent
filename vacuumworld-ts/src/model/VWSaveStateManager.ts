@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path-browserify";
+const fs = require("fs");
+const path = require("path-browserify");
 
 export class VWSaveStateManager {
     private constructor() {}

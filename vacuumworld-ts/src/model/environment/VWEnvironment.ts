@@ -22,7 +22,7 @@ import { VWObservation } from "../common/VWObservation";
 import { VWPosition } from "../common/VWPosition";
 import { VWDirt } from "../dirt/VWDirt";
 import { VWAmbient } from "./VWAmbient";
-import { VWLocation } from "./VWLocation";
+import { VWLocation, VWLocationJSON } from "./VWLocation";
 import { VWLocationAppearance } from "./VWLocationAppearance";
 import { VWAbstractExecutor } from "./physics/VWAbstractExecutor";
 import { VWBroadcastExecutor } from "./physics/VWBroadcastExecutor";
@@ -32,6 +32,10 @@ import { VWIdleExecutor } from "./physics/VWIdleExecutor";
 import { VWMoveExecutor } from "./physics/VWMoveExecutor";
 import { VWSpeakExecutor } from "./physics/VWSpeakExecutor";
 import { VWTurnExecutor } from "./physics/VWTurnExecutor";
+
+export type VWEnvironmentJSON = {
+    locations: VWLocationJSON[];
+}
 
 export class VWEnvironment {
     private ambient: VWAmbient;
@@ -283,14 +287,14 @@ export class VWEnvironment {
         this.getActorByID(recipientID).ifPresent((actor: VWActor) => actor.getListeningSensor().ifPresent((sensor: VWListeningSensor) => sensor.sink(new VWMessage(action.getContent(), action.getActorID(), recipientID))));
     }
 
-    public toJsonObject(): object {
+    public toJsonObject(): VWEnvironmentJSON {
         return {
             "locations": this.serialiseLocations()
         }
     }
 
-    private serialiseLocations(): object[] {
-        let locations: object[] = [];
+    private serialiseLocations(): VWLocationJSON[] {
+        let locations: VWLocationJSON[] = [];
 
         for (let location of this.ambient.getGrid().values()) {
             locations.push(this.serialiseLocation(location));
@@ -299,7 +303,7 @@ export class VWEnvironment {
         return locations;
     }
 
-    private serialiseLocation(location: VWLocation): object {
+    private serialiseLocation(location: VWLocation): VWLocationJSON {
         if (location == null || location == undefined) {
             throw new Error("The location cannot be null or undefined.");
         }
@@ -317,7 +321,7 @@ export class VWEnvironment {
         throw new Error("Method not yet implemented."); // TODO: Implement this.
     }
 
-    public static fromJsonObject(data: object, config: object): VWEnvironment {
+    public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {
         if (data == null || data == undefined) {
             throw new Error("The data cannot be null or undefined.");
         }
@@ -338,7 +342,7 @@ export class VWEnvironment {
         }
     }
 
-    private static fromJsonObjectHelper(data: object, config: object): VWEnvironment {
+    private static fromJsonObjectHelper(data: VWEnvironmentJSON, config: any): VWEnvironment {
         const grid: Map<VWCoord, VWLocation> = VWEnvironment.loadLocations(data["locations"]);
 
         VWEnvironment.validateGrid(grid, config);
@@ -346,7 +350,7 @@ export class VWEnvironment {
         return new VWEnvironment(new VWAmbient(grid));
     }
 
-    private static loadLocations(locations: object[]): Map<VWCoord, VWLocation> {
+    private static loadLocations(locations: VWLocationJSON[]): Map<VWCoord, VWLocation> {
         const grid: Map<VWCoord, VWLocation> = new Map<VWCoord, VWLocation>();
 
         for (const location of locations) {
@@ -354,14 +358,14 @@ export class VWEnvironment {
                 throw new Error("The location coordinates cannot be null or undefined.");
             }
             else {
-                grid.set(VWCoord.fromString(location["coord"]), VWLocation.fromJsonObject(location));
+                grid.set(location["coord"], VWLocation.fromJsonObject(location));
             }
         }
 
         return grid;
     }
 
-    private static validateGrid(grid: Map<VWCoord, VWLocation>, config: object): void {
+    private static validateGrid(grid: Map<VWCoord, VWLocation>, config: any): void {
         if (grid == null || grid == undefined) {
             throw new Error("The grid cannot be null or undefined.");
         }
@@ -379,13 +383,13 @@ export class VWEnvironment {
         }
     }
 
-    private static validateGridHelper(grid: Map<VWCoord, VWLocation>, config: object): void {
+    private static validateGridHelper(grid: Map<VWCoord, VWLocation>, config: any): void {
         const gridSize: number = Math.sqrt(grid.size);
 
         VWEnvironment.validateGridSize(gridSize, config);
     }
 
-    private static validateGridSize(gridSize: number, config: object): void {
+    private static validateGridSize(gridSize: number, config: any): void {
         const gridSizeInt: number = Math.floor(gridSize);
 
         if (gridSize != gridSizeInt) {
@@ -399,7 +403,7 @@ export class VWEnvironment {
         }
     }
 
-    public static newEmptyVWEnvironment(config: object, gridSize?: bigint): VWEnvironment {
+    public static newEmptyVWEnvironment(config: any, gridSize?: bigint): VWEnvironment {
         if (config == null || config == undefined) {
             throw new Error("The config cannot be null or undefined.");
         }
@@ -408,7 +412,7 @@ export class VWEnvironment {
         }
     }
 
-    private static newEmptyVWEnvironmentHelper(config: object, gridSize?: bigint): VWEnvironment {
+    private static newEmptyVWEnvironmentHelper(config: any, gridSize?: bigint): VWEnvironment {
         const realGridSize: bigint = gridSize == null || gridSize == undefined ? BigInt(config["initial_environment_dim"]) : gridSize;
 
         VWEnvironment.validateGridSize(Number(realGridSize), config);

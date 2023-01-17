@@ -2,6 +2,10 @@ import { VWAbstractIdentifiable } from "../common/VWAbstractIdentifiable";
 import { VWColour } from "../common/VWColour";
 import { VWDirtAppearance } from "./VWDirtAppearance";
 
+export type VWDirtJSON = {
+    colour: VWColour;
+}
+
 export class VWDirt extends VWAbstractIdentifiable {
     private colour: VWColour;
 
@@ -42,15 +46,15 @@ export class VWDirt extends VWAbstractIdentifiable {
         return new VWDirtAppearance(this.getID(), this.colour);
     }
 
-    public toJsonObject(): object {
+    public toJsonObject(): VWDirtJSON {
         // The ID is not included in the JSON object because it is not needed.
         // A fresh ID will be generated when the dirt is deserialized.
         return {
-            "colour": this.getColour().toString()
+            "colour": this.getColour()
         };
     }
 
-    public static fromJsonObject(data: object): VWDirt {
+    public static fromJsonObject(data: VWDirtJSON): VWDirt {
         if (data === null || data === undefined) {
             throw new Error("The dirt JSON object cannot be null or undefined.");
         }
@@ -58,7 +62,7 @@ export class VWDirt extends VWAbstractIdentifiable {
             throw new Error("The colour of a `VWDirt` cannot be null or undefined.");
         }
 
-        const colour: VWColour = VWColour[data["colour"]]
+        const colour: VWColour = data["colour"]
 
         return new VWDirt(colour);
     }

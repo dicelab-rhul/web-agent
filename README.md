@@ -21,7 +21,7 @@ Yacc/Bison for javascript for the interpreter
 
 ## Teleora
 
-At some point soon I (ben) will write a proper program spec for this, I need to dig out an old version of it.
+At some point soon I (Ben) will write a proper program spec for this, I need to dig out an old version of it.
 
 // goals are evaluated in order.
 `G(X) : X < 1 -> action1` // take `action1` if `X < 1`

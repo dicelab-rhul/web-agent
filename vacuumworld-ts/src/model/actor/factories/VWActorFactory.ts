@@ -1,6 +1,6 @@
 import { VWColour } from "../../common/VWColour";
 import { VWOrientation } from "../../common/VWOrientation";
-import { VWActor } from "../VWActor";
+import { VWActor, VWActorJSON } from "../VWActor";
 import { VWCleaningAgent } from "../VWCleaningAgent";
 import { VWUser } from "../VWUser";
 import { VWCleaningAgentPhysicalActuator } from "../appendices/VWCleaningAgentPhysicalActuator";
@@ -14,7 +14,7 @@ import { VWUserMind } from "../mind/VWUserMind";
 export class VWActorFactory {
     private constructor() {}
 
-    public static createVWActorFromJSONObject(data: object): VWActor {
+    public static createVWActorFromJSONObject(data: VWActorJSON): VWActor {
         if (data === null || data === undefined) {
             throw new Error("The JSON representation of a `VWActor` cannot be null or undefined.");
         }
@@ -32,7 +32,7 @@ export class VWActorFactory {
         }
     }
 
-    public static createVWCleaningAgentFromJSONObject(data: object): VWCleaningAgent {
+    public static createVWCleaningAgentFromJSONObject(data: VWActorJSON): VWCleaningAgent {
         if (data === null || data === undefined) {
             throw new Error("The JSON representation of a `VWCleaningAgent` cannot be null or undefined.");
         }
@@ -67,7 +67,7 @@ export class VWActorFactory {
         }
     }
 
-    public static createVWUserFromJSONObject(data: object): VWUser {
+    public static createVWUserFromJSONObject(data: VWActorJSON): VWUser {
         if (data === null || data === undefined) {
             throw new Error("The JSON representation of a `VWUser` cannot be null or undefined.");
         }
