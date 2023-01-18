@@ -10,7 +10,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
     }
 
     public sink(perception: P) : void {
-        if (perception == null || perception == undefined) {
+        if (perception === null || perception === undefined) {
             throw new Error("The perception cannot be null or undefined.");
         }
         else {
@@ -19,7 +19,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
     }
 
     public sinkAll(perceptions: P[]) : void {
-        if (perceptions == null || perceptions == undefined) {
+        if (perceptions === null || perceptions === undefined) {
             throw new Error("The perceptions cannot be null or undefined.");
         }
         else {

@@ -13,7 +13,7 @@ export class VWAmbient {
     }
 
     private static validateGrid(grid: Map<VWCoord, VWLocation>): Map<VWCoord, VWLocation> {
-        if (grid == null || grid == undefined) {
+        if (grid === null || grid === undefined) {
             throw new Error("The grid cannot be null or undefined.");
         }
         else {
@@ -100,10 +100,10 @@ export class VWAmbient {
     }
 
     public addActorToLocation(coord: VWCoord, actor: VWActor): void {
-        if (coord == null || coord == undefined) {
+        if (coord === null || coord === undefined) {
             throw new Error("The coordinates of the location cannot be null or undefined.");
         }
-        else if (actor == null || actor == undefined) {
+        else if (actor === null || actor === undefined) {
             throw new Error("The actor cannot be null or undefined.");
         }
         else if (this.getActorByCoord(coord).isPresent()) {
@@ -119,10 +119,10 @@ export class VWAmbient {
     }
 
     public moveActor(from: VWCoord, to: VWCoord): void {
-        if (from == null || from == undefined) {
+        if (from === null || from === undefined) {
             throw new Error("The coordinates of the origin location cannot be null or undefined.");
         }
-        else if (to == null || to == undefined) {
+        else if (to === null || to === undefined) {
             throw new Error("The coordinates of the destination location cannot be null or undefined.");
         }
         else if (from.equals(to)) {
@@ -143,7 +143,7 @@ export class VWAmbient {
     }
 
     public turnActor(coord: VWCoord, direction: VWDirection): void {
-        if (coord == null || coord == undefined) {
+        if (coord === null || coord === undefined) {
             throw new Error("The coordinates of the actor location cannot be null or undefined.");
         }
         else if (!this.getActorByCoord(coord).isPresent()) {
@@ -199,7 +199,7 @@ export class VWAmbient {
     }
 
     public cleanDirtByCoord(coord: VWCoord): void {
-        if (coord == null || coord == undefined) {
+        if (coord === null || coord === undefined) {
             throw new Error("The coordinates of the dirt location cannot be null or undefined.");
         }
         else if (!this.getDirtByCoord(coord).isPresent()) {
@@ -213,10 +213,10 @@ export class VWAmbient {
     }
 
     public addDirtToLocation(coord: VWCoord, dirt: VWDirt): void {
-        if (coord == null || coord == undefined) {
+        if (coord === null || coord === undefined) {
             throw new Error("The coordinates of the location cannot be null or undefined.");
         }
-        else if (dirt == null || dirt == undefined) {
+        else if (dirt === null || dirt === undefined) {
             throw new Error("The dirt cannot be null or undefined.");
         }
         else if (this.getDirtByCoord(coord).isPresent()) {

@@ -10,7 +10,7 @@ export abstract class VWAbstractActuator<A extends VWAction> implements VWActuat
     }
 
     public sink(action: A) : void {
-        if (action == null || action == undefined) {
+        if (action === null || action === undefined) {
             throw new Error("The action cannot be null or undefined.");
         }
         else {
@@ -19,7 +19,7 @@ export abstract class VWAbstractActuator<A extends VWAction> implements VWActuat
     }
 
     public sinkAll(actions: A[]) : void {
-        if (actions == null || actions == undefined) {
+        if (actions === null || actions === undefined) {
             throw new Error("The actions cannot be null or undefined.");
         }
         else {

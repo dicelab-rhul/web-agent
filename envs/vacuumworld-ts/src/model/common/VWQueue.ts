@@ -6,7 +6,7 @@ export class VWQueue<T> {
     }
 
     public enqueue(elm: T) : void {
-        if (elm == null || elm == undefined) {
+        if (elm === null || elm === undefined) {
             throw new Error("The perception cannot be null or undefined.");
         }
         else {
@@ -17,7 +17,7 @@ export class VWQueue<T> {
     public dequeue() : T {
         const candidate: T | undefined = this.queue.shift();
 
-        if (candidate == null || candidate == undefined) {
+        if (candidate === null || candidate === undefined) {
             throw new Error("No perceptions to dequeue.");
         }
         else {
@@ -28,7 +28,7 @@ export class VWQueue<T> {
     public peek() : T {
         const candidate: T | undefined = this.queue[0];
 
-        if (candidate == null || candidate == undefined) {
+        if (candidate === null || candidate === undefined) {
             throw new Error("No perceptions to peek.");
         }
         else {
@@ -37,6 +37,6 @@ export class VWQueue<T> {
     }
 
     public isEmpty() : boolean {
-        return this.queue.length == 0;
+        return this.queue.length === 0;
     }
 }

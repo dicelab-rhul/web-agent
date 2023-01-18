@@ -79,7 +79,7 @@ symbols_: {"error":2,"expressions":3,"program":4,"EOF":5,"block":6,";":7,"hstate
 terminals_: {2:"error",5:"EOF",7:";",9:":",11:"ARROW",12:"ATOM",13:"(",14:")",16:",",17:"VARIABLE",20:"LT",21:"GT",22:"GTE",23:"LTE",24:"EQ",25:"NEQ",26:"+",27:"-",28:"*",29:"/",30:"^",31:"NUMBER"},
 productions_: [0,[3,2],[4,3],[4,2],[6,5],[6,3],[6,3],[6,1],[6,1],[8,4],[8,3],[10,3],[10,1],[15,4],[15,4],[15,3],[15,3],[15,1],[15,1],[15,1],[18,3],[18,3],[18,3],[18,3],[18,3],[18,3],[19,3],[19,3],[19,3],[19,3],[19,3],[19,2],[19,3],[19,1],[19,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
-/* this == yyval */
+/* this === yyval */
 
 var $0 = $$.length - 1;
 switch (yystate) {
@@ -154,7 +154,7 @@ parse: function parse(input) {
     lexer.setInput(input, sharedState.yy);
     sharedState.yy.lexer = lexer;
     sharedState.yy.parser = this;
-    if (typeof lexer.yylloc == 'undefined') {
+    if (lexer.yylloc === undefined) {
         lexer.yylloc = {};
     }
     var yyloc = lexer.yylloc;
@@ -185,12 +185,12 @@ parse: function parse(input) {
         if (this.defaultActions[state]) {
             action = this.defaultActions[state];
         } else {
-            if (symbol === null || typeof symbol == 'undefined') {
+            if (symbol === null || symbol === undefined) {
                 symbol = lex();
             }
             action = table[state] && table[state][symbol];
         }
-                    if (typeof action === 'undefined' || !action.length || !action[0]) {
+                    if (action === undefined || !action.length || !action[0]) {
                 var errStr = '';
                 expected = [];
                 for (p in table[state]) {
@@ -201,7 +201,7 @@ parse: function parse(input) {
                 if (lexer.showPosition) {
                     errStr = 'Parse error on line ' + (yylineno + 1) + ':\n' + lexer.showPosition() + '\nExpecting ' + expected.join(', ') + ', got \'' + (this.terminals_[symbol] || symbol) + '\'';
                 } else {
-                    errStr = 'Parse error on line ' + (yylineno + 1) + ': Unexpected ' + (symbol == EOF ? 'end of input' : '\'' + (this.terminals_[symbol] || symbol) + '\'');
+                    errStr = 'Parse error on line ' + (yylineno + 1) + ': Unexpected ' + (symbol === EOF ? 'end of input' : '\'' + (this.terminals_[symbol] || symbol) + '\'');
                 }
                 this.parseError(errStr, {
                     text: lexer.match,
@@ -258,7 +258,7 @@ parse: function parse(input) {
                 vstack,
                 lstack
             ].concat(args));
-            if (typeof r !== 'undefined') {
+            if (r !== undefined) {
                 return r;
             }
             if (len) {
@@ -289,7 +289,7 @@ parse: function parse(input) {
         constructor(terms) {
             this.terms = terms;
         }
-        variables() { return this.terms.filter(item => typeof item === Variable); }
+        variables() { return this.terms.filter(item => item instanceof Variable); }
     }
 
     class Statement { // a statement is of the form "statement(term1, term2, ..., termn)
@@ -739,7 +739,7 @@ return new Parser;
 })();
 
 
-if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
+if (require !== undefined && exports !== undefined) {
 exports.parser = teleora;
 exports.Parser = teleora.Parser;
 exports.parse = function () { return teleora.parse.apply(teleora, arguments); };
@@ -751,7 +751,7 @@ exports.main = function commonjsMain (args) {
     var source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
     return exports.parser.parse(source);
 };
-if (typeof module !== 'undefined' && require.main === module) {
+if (module !== undefined && require.main === module) {
   exports.main(process.argv.slice(1));
 }
 }

@@ -42,10 +42,10 @@ export class VWLocation {
     }
 
     private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
-        if (wall == null || wall == undefined) {
+        if (wall === null || wall === undefined) {
             throw new Error("The wall cannot be null or undefined.");
         }
-        else if (wall.size != 4) {
+        else if (wall.size !== 4) {
             throw new Error("The wall must have 4 sides.");
         }
         else if (!wall.has(VWOrientation.NORTH) || !wall.has(VWOrientation.EAST) || !wall.has(VWOrientation.SOUTH) || !wall.has(VWOrientation.WEST)) {
@@ -76,7 +76,7 @@ export class VWLocation {
         if (this.hasActor()) {
             throw new Error("There is already an actor in this location.");
         }
-        else if (actor == null || actor == undefined) {
+        else if (actor === null || actor === undefined) {
             throw new Error("The actor cannot be null or undefined.");
         }
         else {
@@ -115,7 +115,7 @@ export class VWLocation {
         if (this.hasDirt()) {
             throw new Error("There is already a dirt in this location.");
         }
-        else if (dirt == null || dirt == undefined) {
+        else if (dirt === null || dirt === undefined) {
             throw new Error("The dirt cannot be null or undefined.");
         }
         else {

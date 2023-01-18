@@ -63,7 +63,7 @@ export class Editor {
     }
     
     updateLocalStorage(tab_id : string | null) {
-        if (tab_id != null && tab_id != this.new_tab_id) {
+        if (tab_id !== null && tab_id !== this.new_tab_id) {
             var value : string = JSON.stringify(this.tabs.get(tab_id));
             localStorage.setItem(LOCAL_STORAGE_PREFIX + tab_id, value); 
             console.log("LOCAL STORAGE UPDATE", localStorage.getItem(LOCAL_STORAGE_PREFIX + tab_id));
@@ -71,18 +71,18 @@ export class Editor {
     }
 
     updateFileContent(tab_id : string | null) { 
-        if (tab_id != null) {
+        if (tab_id !== null) {
             var content : string = this.editor_view.state.doc.toString();
             this.tabs.get(tab_id)!.content = content;
         }
     }
    
     activateTab(tab_id : string) {
-        if (tab_id == this.new_tab_id) {
+        if (tab_id === this.new_tab_id) {
             this.newFileModal.show()
-        } else if (tab_id != this.active_tab_id) {
+        } else if (tab_id !== this.active_tab_id) {
             // update old active tab
-            if (this.active_tab_id != null) {
+            if (this.active_tab_id !== null) {
                 $("#" + this.active_tab_id).children("a").removeClass("active");
                 this.updateFileContent(this.active_tab_id);
             }
@@ -155,7 +155,7 @@ class EditorFile {
 
     load() { 
         var string_data = localStorage.getItem(LOCAL_STORAGE_PREFIX + this.tab_id);
-        if (string_data != null) {
+        if (string_data !== null) {
             var data = JSON.parse(string_data);
             // TODO: do smoething with this data.
         }
@@ -193,7 +193,7 @@ class NewFileModal extends Modal {
             var upload_file_name = form_control?.get(1)?.value;
             var upload_file = form_control.get(1)?.files[0]!;
 
-            if (new_file_name.length == 0) { // set the file name to the upload file if none was given
+            if (new_file_name.length === 0) { // set the file name to the upload file if none was given
                 var path : Array<string> = upload_file_name.split("\\");
                 new_file_name = path[path.length - 1].split(".")[0];
             }
