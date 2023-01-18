@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 '''
-Please run this file as ./todo_generator.py from within its parent directory.
+Please run this file as ./loose_equality_checks_searcher.py from within its parent directory.
 Otherwise, the paths will not be generated/printed correctly.
 '''
 
@@ -13,9 +13,9 @@ import os
 INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js"]
 FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__)]
 DIR_EXCLUSION_LIST: List[str] = ["node_modules"]
-TODO_FILE: str = "TODO.md"
-TODO_PATTERN: str = "TODO"
-TODO_HEADER: str = "# List of TODOs"
+OUTPUT_FILE: str = "LOOSE_EQUALITY_CHECKS.md"
+PATTERNS: List[str] = [" == ", " != "]
+HEADER: str = "# List of loose equality checks"
 
 
 def main() -> None:
@@ -27,10 +27,10 @@ def main() -> None:
 
         for f in filter(lambda candidate: any(filter(lambda ext: isinstance(ext, str) and candidate.endswith(ext), INTERESTING_FILES_EXTENSIONS)), files):
             if f not in FILES_EXCLUSION_LIST:
-                lines += __look_for_todos(os.path.join(dir, f))
+                lines += __look_for_loose_equality_checks(os.path.join(dir, f))
 
-    with open(TODO_FILE, "w") as f:
-        f.write(TODO_HEADER + "\n\n")
+    with open(OUTPUT_FILE, "w") as f:
+        f.write(HEADER + "\n\n")
 
         for line in lines:
             f.write(line + "\n\n")
@@ -39,7 +39,7 @@ def main() -> None:
         f.flush()
 
 
-def __look_for_todos(path: str) -> List[str]:
+def __look_for_loose_equality_checks(path: str) -> List[str]:
     to_add: List[str] = []
     path_to_print: str = __get_relative_path(absolute_path=path)
     prefix: str = "* File [{}]({}) - line ".format(path_to_print, path_to_print)
@@ -51,7 +51,7 @@ def __look_for_todos(path: str) -> List[str]:
     for i in range(len(lines)):
         line_number = i + 1
 
-        if TODO_PATTERN in lines[i]:
+        if any(pattern in lines[i] for pattern in PATTERNS):
             to_add.append(prefix + "{}: `{}`".format(line_number, lines[i].strip().replace("`", "'")))
 
     return to_add

@@ -28,10 +28,10 @@ export class VWLocationAppearance implements VWAppearance {
     }
 
     private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
-        if (wall == null || wall == undefined) {
+        if (wall === null || wall === undefined) {
             throw new Error("The wall cannot be null or undefined.");
         }
-        else if (wall.size != 4) {
+        else if (wall.size !== 4) {
             throw new Error("The wall must have 4 sides.");
         }
         else if (!wall.has(VWOrientation.NORTH) || !wall.has(VWOrientation.EAST) || !wall.has(VWOrientation.SOUTH) || !wall.has(VWOrientation.WEST)) {

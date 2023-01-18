@@ -47,7 +47,7 @@ export class VWEnvironment {
     }
 
     private static validateAmbient(ambient: VWAmbient): VWAmbient {
-        if (ambient == null || ambient == undefined) {
+        if (ambient === null || ambient === undefined) {
             throw new Error("The ambient cannot be null or undefined.");
         }
         else {
@@ -128,7 +128,7 @@ export class VWEnvironment {
     }
 
     public cycle(): void {
-        if (this.cycleNumber == 0) {
+        if (this.cycleNumber === 0) {
             this.forceInitialPerceptionToActors();
         }
 
@@ -304,7 +304,7 @@ export class VWEnvironment {
     }
 
     private serialiseLocation(location: VWLocation): VWLocationJSON {
-        if (location == null || location == undefined) {
+        if (location === null || location === undefined) {
             throw new Error("The location cannot be null or undefined.");
         }
         else if (!location.hasActor()) {
@@ -322,19 +322,19 @@ export class VWEnvironment {
     }
 
     public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {
-        if (data == null || data == undefined) {
+        if (data === null || data === undefined) {
             throw new Error("The data cannot be null or undefined.");
         }
-        else if (data["locations"] == null || data["locations"] == undefined) {
+        else if (data["locations"] === null || data["locations"] === undefined) {
             throw new Error("The data must contain a 'locations' property.");
         }
         else if (!Array.isArray(data["locations"])) {
             throw new Error("The 'locations' property must be an array.");
         }
-        else if (data["locations"].some((location: object) => location == null || location == undefined)) {
+        else if (data["locations"].some((location: object) => location === null || location === undefined)) {
             throw new Error("The 'locations' array cannot contain null or undefined values.");
         }
-        else if (config == null || config == undefined) {
+        else if (config === null || config === undefined) {
             throw new Error("The config cannot be null or undefined.");
         }
         else {
@@ -354,7 +354,7 @@ export class VWEnvironment {
         const grid: Map<VWCoord, VWLocation> = new Map<VWCoord, VWLocation>();
 
         for (const location of locations) {
-            if (location["coord"] == null || location["coord"] == undefined) {
+            if (location["coord"] === null || location["coord"] === undefined) {
                 throw new Error("The location coordinates cannot be null or undefined.");
             }
             else {
@@ -366,16 +366,16 @@ export class VWEnvironment {
     }
 
     private static validateGrid(grid: Map<VWCoord, VWLocation>, config: any): void {
-        if (grid == null || grid == undefined) {
+        if (grid === null || grid === undefined) {
             throw new Error("The grid cannot be null or undefined.");
         }
-        else if (config == null || config == undefined) {
+        else if (config === null || config === undefined) {
             throw new Error("The config cannot be null or undefined.");
         }
-        else if (config["min_environment_dim"] == null || config["min_environment_dim"] == undefined) {
+        else if (config["min_environment_dim"] === null || config["min_environment_dim"] === undefined) {
             throw new Error("The config must contain a 'min_environment_dim' property.");
         }
-        else if (config["max_environment_dim"] == null || config["max_environment_dim"] == undefined) {
+        else if (config["max_environment_dim"] === null || config["max_environment_dim"] === undefined) {
             throw new Error("The config must contain a 'max_environment_dim' property.");
         }
         else {
@@ -392,7 +392,7 @@ export class VWEnvironment {
     private static validateGridSize(gridSize: number, config: any): void {
         const gridSizeInt: number = Math.floor(gridSize);
 
-        if (gridSize != gridSizeInt) {
+        if (gridSize !== gridSizeInt) {
             throw new Error("The grid must be a square.");
         }
         else if (gridSize < config["min_environment_dim"]) {
@@ -404,7 +404,7 @@ export class VWEnvironment {
     }
 
     public static newEmptyVWEnvironment(config: any, gridSize?: bigint): VWEnvironment {
-        if (config == null || config == undefined) {
+        if (config === null || config === undefined) {
             throw new Error("The config cannot be null or undefined.");
         }
         else {
@@ -413,7 +413,7 @@ export class VWEnvironment {
     }
 
     private static newEmptyVWEnvironmentHelper(config: any, gridSize?: bigint): VWEnvironment {
-        const realGridSize: bigint = gridSize == null || gridSize == undefined ? BigInt(config["initial_environment_dim"]) : gridSize;
+        const realGridSize: bigint = gridSize === null || gridSize === undefined ? BigInt(config["initial_environment_dim"]) : gridSize;
 
         VWEnvironment.validateGridSize(Number(realGridSize), config);
 

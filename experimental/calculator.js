@@ -80,7 +80,7 @@ let calculator = (function () {
         terminals_: { 2: "error", 5: "EOF", 6: "+", 7: "-", 8: "*", 9: "/", 10: "^", 11: "(", 12: ")", 13: "NUMBER", 14: "E", 15: "PI" },
         productions_: [0, [3, 2], [4, 3], [4, 3], [4, 3], [4, 3], [4, 3], [4, 2], [4, 3], [4, 1], [4, 1], [4, 1]],
         performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
-            /* this == yyval */
+            /* this === yyval */
 
             let $0 = $$.length - 1;
             switch (yystate) {
@@ -143,7 +143,7 @@ let calculator = (function () {
             lexer.setInput(input, sharedState.yy);
             sharedState.yy.lexer = lexer;
             sharedState.yy.parser = this;
-            if (typeof lexer.yylloc == 'undefined') {
+            if (lexer.yylloc === undefined) {
                 lexer.yylloc = {};
             }
             let yyloc = lexer.yylloc;
@@ -174,12 +174,12 @@ let calculator = (function () {
                 if (this.defaultActions[state]) {
                     action = this.defaultActions[state];
                 } else {
-                    if (symbol === null || typeof symbol == 'undefined') {
+                    if (symbol === null || symbol === undefined) {
                         symbol = lex();
                     }
                     action = table[state] && table[state][symbol];
                 }
-                if (typeof action === 'undefined' || !action.length || !action[0]) {
+                if (action === undefined || !action.length || !action[0]) {
                     let errStr = '';
                     expected = [];
                     for (p in table[state]) {
@@ -190,7 +190,7 @@ let calculator = (function () {
                     if (lexer.showPosition) {
                         errStr = 'Parse error on line ' + (yylineno + 1) + ':\n' + lexer.showPosition() + '\nExpecting ' + expected.join(', ') + ', got \'' + (this.terminals_[symbol] || symbol) + '\'';
                     } else {
-                        errStr = 'Parse error on line ' + (yylineno + 1) + ': Unexpected ' + (symbol == EOF ? 'end of input' : '\'' + (this.terminals_[symbol] || symbol) + '\'');
+                        errStr = 'Parse error on line ' + (yylineno + 1) + ': Unexpected ' + (symbol === EOF ? 'end of input' : '\'' + (this.terminals_[symbol] || symbol) + '\'');
                     }
                     this.parseError(errStr, {
                         text: lexer.match,
@@ -247,7 +247,7 @@ let calculator = (function () {
                             vstack,
                             lstack
                         ].concat(args));
-                        if (typeof r !== 'undefined') {
+                        if (r !== undefined) {
                             return r;
                         }
                         if (len) {
@@ -635,7 +635,7 @@ let calculator = (function () {
 })();
 
 
-if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
+if (require !== undefined && exports !== undefined) {
     exports.parser = calculator;
     exports.Parser = calculator.Parser;
     exports.parse = function () { return calculator.parse.apply(calculator, arguments); };
@@ -647,7 +647,7 @@ if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
         let source = require('fs').readFileSync(require('path').normalize(args[1]), "utf8");
         return exports.parser.parse(source);
     };
-    if (typeof module !== 'undefined' && require.main === module) {
+    if (module !== undefined && require.main === module) {
         exports.main(process.argv.slice(1));
     }
 }
