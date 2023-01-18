@@ -15,7 +15,7 @@ FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__)]
 DIR_EXCLUSION_LIST: List[str] = ["node_modules"]
 OUTPUT_FILE: str = "LOOSE_EQUALITY_CHECKS.md"
 PATTERNS: List[str] = [" == ", " != "]
-HEADER: str = "# List of loose equality checks\n"
+HEADER: str = "# List of loose equality checks"
 
 
 def main() -> None:
@@ -30,10 +30,7 @@ def main() -> None:
                 lines += __look_for_loose_equality_checks(os.path.join(dir, f))
 
     with open(OUTPUT_FILE, "w") as f:
-        f.write(HEADER + "\n")
-
-        if len(lines) > 0:
-            f.write("\n")
+        f.write(HEADER + "\n\n")
 
         for line in lines:
             f.write(line + "\n\n")
