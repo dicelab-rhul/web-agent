@@ -1,6 +1,6 @@
 # List of TODOs
 
-* File [static/js/index.js](static/js/index.js) - line 1: `// TODO: This file should check which Environment has been selected and load the appropriate script.`
+* File [static/js/index.js](static/js/index.js) - line 17: `// TODO: This function needs to check which environment has been selected and return the appropriate paths.`
 
 * File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 1: `const fs = require("fs"); // TODO: Convert to import.`
 
