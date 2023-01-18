@@ -27,7 +27,7 @@ export class Editor {
     recoverModal : RecoverModal;
 
     constructor() {
-        //localStorage.clear() // TODO REMOVE THIS IN PRODUCTION
+        //localStorage.clear() // TODO: REMOVE THIS IN PRODUCTION
         this.tabs = new Map<string, EditorFile>();
         var new_file = new EditorFile("+", "");
         this.newEditorTab(new_file, false);
@@ -54,7 +54,7 @@ export class Editor {
 
     updateEditorContent(tab_id : string) {
         var content : string = this.tabs.get(tab_id)!.content;
-        // TODO apparently there are various ways of doing this...? not sure what has the best performance...
+        // TODO: apparently there are various ways of doing this...? not sure what has the best performance...
         this.editor_view.dispatch({changes: {
             from: 0,
             to: this.editor_view.state.doc.length,
@@ -139,7 +139,7 @@ class EditorFile {
         this.tab_id = "";           // unique ID (file id in localStorage)
         this.file_name = file_name; // this is used if the file is download to disk!
         this.content = content;     // file content
-        this.file_extension = "";   // TODO set this properly!
+        this.file_extension = "";   // TODO: set this properly!
     }
 
     rename(file_name : string) { 
@@ -157,7 +157,7 @@ class EditorFile {
         var string_data = localStorage.getItem(LOCAL_STORAGE_PREFIX + this.tab_id);
         if (string_data != null) {
             var data = JSON.parse(string_data);
-            //TODO
+            // TODO: do smoething with this data.
         }
         // error? 
     }
@@ -182,13 +182,13 @@ class NewFileModal extends Modal {
                 <button id="${BUTTON_CREATE_ID}", type="button" class="btn btn-success w3-bar-item p-10">Create</button>
             </div>`
         createNewModal(MODAL_NEW_FILE_ID, MODAL_BODY)
-        // TODO refactor this majorly!
+        // TODO: refactor this majorly!
         $(`#${BUTTON_CREATE_ID}`).on("click", function() {
             // get modal data
             var modal = $(`#${MODAL_NEW_FILE_ID}`);
             var form_control = modal.find(".form-control");
             console.log(form_control);
-            // TODO cast below to correct types?
+            // TODO: cast below to correct types?
             var new_file_name : string = form_control?.get(0)?.value;
             var upload_file_name = form_control?.get(1)?.value;
             var upload_file = form_control.get(1)?.files[0]!;
