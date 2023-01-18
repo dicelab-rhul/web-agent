@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path-browserify");
+const fs = require("fs"); // TODO: Convert to import.
+const path = require("path-browserify"); // TODO: Convert to import.
 
 export class VWSaveStateManager {
     private constructor() {}
@@ -10,7 +10,7 @@ export class VWSaveStateManager {
                 throw new Error("Invalid name");
             }
             else if (!name.endsWith(".json")) {
-                name += ".json";
+                throw new Error("The name does not end with .json");
             }
 
             const savesStatesDir = path.join(path.resolve(".."), "saved_states");

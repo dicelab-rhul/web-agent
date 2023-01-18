@@ -57,7 +57,7 @@ export class VWActorFactory {
         else {
             const colour: VWColour = VWColour[data["colour"]];
             const orientation: VWOrientation = VWOrientation[data["orientation"]];
-            const mind: VWCleaningAgentMind = VWCleaningAgentMind.loadFromFile(data["mind"]);
+            const mind: VWCleaningAgentMind = new VWCleaningAgentMind(data["mind"]);
             const observationSensor: VWObservationSensor = new VWObservationSensor();
             const listeningSensor: VWListeningSensor = new VWListeningSensor();
             const physicalActuator: VWCleaningAgentPhysicalActuator = new VWCleaningAgentPhysicalActuator();
@@ -83,12 +83,9 @@ export class VWActorFactory {
         else if (!Object.values(VWOrientation).includes(data["orientation"])) {
             throw new Error(`The orientation of a \`VWUser\` cannot be "${data["orientation"]}".`);
         }
-        else if (data["mind"] === null || data["mind"] === undefined) {
-            throw new Error("The path of the mind of a `VWUser` cannot be null or undefined.");
-        }
         else {
             const orientation: VWOrientation = VWOrientation[data["orientation"]];
-            const mind: VWUserMind = VWUserMind.loadFromFile(data["mind"]);
+            const mind: VWUserMind = new VWUserMind();
             const observationSensor: VWObservationSensor = new VWObservationSensor();
             const physicalActuator: VWUserPhysicalActuator = new VWUserPhysicalActuator();
 

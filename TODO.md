@@ -2,21 +2,23 @@
 
 * File [static/js/index.js](static/js/index.js) - line 1: `// TODO: This file should check which Environment has been selected and load the appropriate script.`
 
+* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 1: `const fs = require("fs"); // TODO: Convert to import.`
+
+* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 2: `const path = require("path-browserify"); // TODO: Convert to import.`
+
 * File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 150: `console.log("Start simulation."); // TODO: Implement this.`
 
 * File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 154: `window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.`
 
-* File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this class be moved to a separate package?`
+* File [envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts](envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts) - line 3: `const uuid = require("uuid"); // TODO: Replace with import.`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/VWUserMind.ts](envs/vacuumworld-ts/src/model/actor/mind/VWUserMind.ts) - line 5: `throw new Error("Not yet implemented."); // TODO: implement.`
+* File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/VWCleaningAgentMind.ts](envs/vacuumworld-ts/src/model/actor/mind/VWCleaningAgentMind.ts) - line 5: `throw new Error("Not yet implemented."); // TODO: implement.`
+* File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](envs/vacuumworld-ts/src/model/common/VWQueue.ts) - line 2: `// TODO: should this class be moved to a separate npm module?`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 59: `public abstract revise(): void; // TODO: integrate Teleora.`
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 98: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 61: `public abstract decide(): VWAction[]; // TODO: integrate Teleora.`
-
-* File [envs/vacuumworld-ts/src/model/environment/VWEnvironment.ts](envs/vacuumworld-ts/src/model/environment/VWEnvironment.ts) - line 321: `throw new Error("Method not yet implemented."); // TODO: Implement this.`
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 101: `// TODO: call this method from 'loadFromFile()', and validate the arguments.`
 
 * File [experimental/src/editor.ts](experimental/src/editor.ts) - line 30: `//localStorage.clear() // TODO: REMOVE THIS IN PRODUCTION`
 

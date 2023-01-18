@@ -2,7 +2,7 @@ import { VWTurnAction } from "../../actions/VWTurnAction";
 import { VWActionOutcome } from "../../common/VWActionOutcome";
 import { VWActionResult } from "../../common/VWActionResult";
 import { VWDirection } from "../../common/VWDirection";
-import { VWOrientation } from "../../common/VWOrientation";
+import { VWOrientationUtils } from "../../utils/VWOrientationUtils";
 import { VWEnvironment } from "../VWEnvironment";
 import { VWAbstractExecutor } from "./VWAbstractExecutor";
 
@@ -44,46 +44,10 @@ export class VWTurnExecutor extends VWAbstractExecutor {
         const newOrientation = env.getActorByID(action.getActorID()).orElseThrow().getOrientation();
 
         if (action.getTurningDirection() === VWDirection.LEFT) {
-            return this.checkOrientationAfterLeftTurn(newOrientation);
+            return newOrientation === VWOrientationUtils.getLeft(this.getActorOrientationBeforeAction());
         }
         else if (action.getTurningDirection() === VWDirection.RIGHT) {
-            return this.checkOrientationAfterRightTurn(newOrientation);
-        }
-        else {
-            return false;
-        }
-    }
-
-    private checkOrientationAfterLeftTurn(newOrientation: VWOrientation): boolean {
-        if (this.getActorOrientationBeforeAction() === VWOrientation.NORTH) {
-            return newOrientation === VWOrientation.WEST;
-        }
-        else if (this.getActorOrientationBeforeAction() === VWOrientation.EAST) {
-            return newOrientation === VWOrientation.NORTH;
-        }
-        else if (this.getActorOrientationBeforeAction() === VWOrientation.SOUTH) {
-            return newOrientation === VWOrientation.EAST;
-        }
-        else if (this.getActorOrientationBeforeAction() === VWOrientation.WEST) {
-            return newOrientation === VWOrientation.SOUTH;
-        }
-        else {
-            return false;
-        }
-    }
-
-    private checkOrientationAfterRightTurn(newOrientation: VWOrientation): boolean {
-        if (this.getActorOrientationBeforeAction() === VWOrientation.NORTH) {
-            return newOrientation === VWOrientation.EAST;
-        }
-        else if (this.getActorOrientationBeforeAction() === VWOrientation.EAST) {
-            return newOrientation === VWOrientation.SOUTH;
-        }
-        else if (this.getActorOrientationBeforeAction() === VWOrientation.SOUTH) {
-            return newOrientation === VWOrientation.WEST;
-        }
-        else if (this.getActorOrientationBeforeAction() === VWOrientation.WEST) {
-            return newOrientation === VWOrientation.NORTH;
+            return newOrientation === VWOrientationUtils.getRight(this.getActorOrientationBeforeAction());
         }
         else {
             return false;

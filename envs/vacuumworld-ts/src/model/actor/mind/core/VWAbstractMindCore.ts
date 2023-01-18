@@ -10,6 +10,9 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     private observation: VWObservation;
     private messages: VWMessage[];
     private cumulativeEffort: bigint = 0n;
+    private mindCoreFilePath: string;
+    private reviseMethod: () => void;
+    private decideMethod: () => VWAction[];
 
     public getLatestObservation(): VWObservation {
         return this.observation;
@@ -17,6 +20,10 @@ export abstract class VWAbstractMindCore implements VWMindCore {
 
     public getLatestMessages(): VWMessage[] {
         return this.messages;
+    }
+
+    public getMindCoreFilePath(): string {
+        return this.mindCoreFilePath;
     }
 
     public getOwnID(): string {
@@ -56,9 +63,23 @@ export abstract class VWAbstractMindCore implements VWMindCore {
         return messages;
     }
 
-    public abstract revise(): void; // TODO: integrate Teleora.
+    public revise(): void {
+        if (this.reviseMethod === null || this.reviseMethod === undefined) {
+            throw new Error("The revise method cannot be null or undefined.");
+        }
+        else {
+            this.reviseMethod();
+        }
+    }
 
-    public abstract decide(): VWAction[]; // TODO: integrate Teleora.
+    public decide(): VWAction[] {
+        if (this.decideMethod === null || this.decideMethod === undefined) {
+            throw new Error("The decide method cannot be null or undefined.");
+        }
+        else {
+            return this.decideMethod();
+        }
+    }
 
     public getCumulativeEffort(): bigint {
         return this.cumulativeEffort;
@@ -71,5 +92,16 @@ export abstract class VWAbstractMindCore implements VWMindCore {
         else {
             this.cumulativeEffort += effort;
         }
+    }
+
+    public static loadFromFile(mindCoreFilePath: string): VWMindCore {
+        throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.
+    }
+
+    // TODO: call this method from `loadFromFile()`, and validate the arguments.
+    protected construct(mindCoreFilePath: string, reviseMethod: () => void, decideMethod: () => VWAction[]) {
+        this.mindCoreFilePath = mindCoreFilePath;
+        this.reviseMethod = reviseMethod;
+        this.decideMethod = decideMethod;
     }
 }

@@ -1,7 +1,8 @@
 import { VWAbstractMind } from "./VWAbstractMind";
+import { VWUserMindCore } from "./core/VWUserMindCore";
 
 export class VWUserMind extends VWAbstractMind {
-    public static loadFromFile(path: string): VWUserMind {
-        throw new Error("Not yet implemented."); // TODO: implement.
+    public constructor() {
+        super(new VWUserMindCore());
     }
 }

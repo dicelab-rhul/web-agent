@@ -3,6 +3,12 @@ import { VWIdleAction } from "../../../actions/VWIdleAction";
 import { VWAbstractMindCore } from "./VWAbstractMindCore";
 
 export class VWHystereticMindCore extends VWAbstractMindCore {
+    public constructor() {
+        super();
+
+        this.construct(__filename, this.revise, this.decide);
+    }
+
     public revise(): void {
         // Do nothing.
     }

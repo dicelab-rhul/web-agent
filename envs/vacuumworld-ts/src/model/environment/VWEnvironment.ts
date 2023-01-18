@@ -318,7 +318,7 @@ export class VWEnvironment {
     }
 
     private getActorMindCorePath(mindCore: VWMindCore): string {
-        throw new Error("Method not yet implemented."); // TODO: Implement this.
+        return mindCore.getMindCoreFilePath();
     }
 
     public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {

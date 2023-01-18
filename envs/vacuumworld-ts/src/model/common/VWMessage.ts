@@ -1,11 +1,13 @@
 import { VWPerception } from "./VWPerception";
 
+export type VWMessageContent = number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>;
+
 export class VWMessage extends VWPerception {
-    private content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>;
+    private content: VWMessageContent;
     private senderID: string;
     private recipientID: string;
 
-    public constructor(content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>, senderID: string, recipientID: string) {
+    public constructor(content: VWMessageContent, senderID: string, recipientID: string) {
         super();
 
         this.content = VWMessage.validateContent(content);
@@ -13,7 +15,7 @@ export class VWMessage extends VWPerception {
         this.recipientID = VWMessage.validateRecipientID(recipientID);
     }
 
-    private static validateContent(content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>): number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string> {
+    private static validateContent(content: VWMessageContent): VWMessageContent {
         if (content === null || content === undefined) {
             throw new Error("The content cannot be null or undefined.");
         }
@@ -37,7 +39,7 @@ export class VWMessage extends VWPerception {
         return recipientID;
     }
 
-    public getContent(): number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string> {
+    public getContent(): VWMessageContent {
         return this.content;
     }
 
