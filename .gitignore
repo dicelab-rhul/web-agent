@@ -49,6 +49,9 @@ dist/
 # Scripts to interact with git
 pull.sh
 
+# Deployment scripts
+deploy.sh
+
 # Parcel stuff
 .parcel-cache
 

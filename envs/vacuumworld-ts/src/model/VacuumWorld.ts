@@ -128,7 +128,7 @@ export class VacuumWorld {
     private loadStartMenu(): HTMLDivElement {
         let img: HTMLImageElement = document.createElement("img");
 
-        img.src = "images/start_menu.png";
+        img.src = "envs/vacuumworld-ts/res/images/start_menu.png";
         img.alt = "Start menu";
 
         return img;
