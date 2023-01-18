@@ -15,7 +15,7 @@ user@machine:~$ npm install -D live-server webpack webpack-cli typescript ts-loa
 ### Build the system
 
 ```console
-user@machine:~$ cd vacuumworld-ts && npm run build
+user@machine:~$ cd envs/vacuumworld-ts && npm run build
 ```
 
 ### Run the system
