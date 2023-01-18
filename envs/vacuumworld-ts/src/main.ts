@@ -5,8 +5,6 @@ import { VacuumWorld } from "./model/VacuumWorld"
  * It is responsible for displaying the initial view and calling the `Vacuumworld` script.
  * 
  */
-document.addEventListener("DOMContentLoaded", function() {
-    const vacuumworld: VacuumWorld = new VacuumWorld();
+const vacuumworld: VacuumWorld = new VacuumWorld();
 
-    vacuumworld.run();
-});
+vacuumworld.run();

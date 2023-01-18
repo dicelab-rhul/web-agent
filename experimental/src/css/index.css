@@ -12,13 +12,14 @@
     height: 28px;
     min-width: 0px;
 }
+
 .close_button:hover {
     background-color: rgb(199, 199, 199);
 }
 
 
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     color: black;
 }
 
