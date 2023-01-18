@@ -10,6 +10,7 @@ import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWOrientation } from "../common/VWOrientation";
 import { VWEnvironment } from "../environment/VWEnvironment";
+import { VWOrientationUtils } from "../utils/VWOrientationUtils";
 import { VWActorAppearance } from "./appearance/VWActorAppearance";
 import { VWCommunicativeActuator } from "./appendices/VWCommunicativeActuator";
 import { VWListeningSensor } from "./appendices/VWListeningSensor";
@@ -106,49 +107,13 @@ export abstract class VWActor extends VWAbstractIdentifiable {
             throw new Error("The turning direction cannot be null or undefined.");
         }
         else if (direction === VWDirection.LEFT) {
-            return this.turnLeft();
+            this.orientation = VWOrientationUtils.getLeft(this.orientation);
         }
         else if (direction === VWDirection.RIGHT) {
-            return this.turnRight();
+            this.orientation = VWOrientationUtils.getRight(this.orientation);
         }
         else {
             throw new Error("The turning direction is invalid.");
-        }
-    }
-
-    public turnLeft(): void {
-        if (this.orientation === VWOrientation.NORTH) {
-            this.orientation = VWOrientation.WEST;
-        }
-        else if (this.orientation === VWOrientation.WEST) {
-            this.orientation = VWOrientation.SOUTH;
-        }
-        else if (this.orientation === VWOrientation.SOUTH) {
-            this.orientation = VWOrientation.EAST;
-        }
-        else if (this.orientation === VWOrientation.EAST) {
-            this.orientation = VWOrientation.NORTH;
-        }
-        else {
-            throw new Error("The orientation is invalid.");
-        }
-    }
-
-    public turnRight(): void {
-        if (this.orientation === VWOrientation.NORTH) {
-            this.orientation = VWOrientation.EAST;
-        }
-        else if (this.orientation === VWOrientation.EAST) {
-            this.orientation = VWOrientation.SOUTH;
-        }
-        else if (this.orientation === VWOrientation.SOUTH) {
-            this.orientation = VWOrientation.WEST;
-        }
-        else if (this.orientation === VWOrientation.WEST) {
-            this.orientation = VWOrientation.NORTH;
-        }
-        else {
-            throw new Error("The orientation is invalid.");
         }
     }
 

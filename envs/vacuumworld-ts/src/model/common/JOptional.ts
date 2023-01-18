@@ -1,9 +1,11 @@
-// TODO: should this class be moved to a separate package?
+// TODO: should this classes be moved to a separate npm module?
+
+type TMaybe<T> = T | null | undefined;
 
 export class JOptional<T> {
-    private value: T | null | undefined;
+    private value: TMaybe<T>;
 
-    private constructor(value: T | null | undefined) {
+    private constructor(value: TMaybe<T>) {
         this.value = value;
     }
 

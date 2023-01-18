@@ -14,7 +14,7 @@ export class VWOrientationUtils {
             case VWOrientation.WEST:
                 return VWOrientation.SOUTH;
             default:
-                throw new Error("Unknown orientation.");
+                throw new Error("Invalid orientation.");
         }
     }
 
@@ -29,7 +29,7 @@ export class VWOrientationUtils {
             case VWOrientation.WEST:
                 return VWOrientation.NORTH;
             default:
-                throw new Error("Unknown orientation.");
+                throw new Error("Invalid orientation.");
         }
     }
 
@@ -44,7 +44,7 @@ export class VWOrientationUtils {
             case VWOrientation.WEST:
                 return VWOrientation.EAST;
             default:
-                throw new Error("Unknown orientation.");
+                throw new Error("Invalid orientation.");
         }
     }
 }

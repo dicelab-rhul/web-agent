@@ -12,4 +12,6 @@ export interface VWMindCore {
     getCumulativeEffort(): bigint;
 
     incrementEffort(effort: bigint): void;
+
+    getMindCoreFilePath(): string;
 }

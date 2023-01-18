@@ -1,6 +1,6 @@
 import { VWIdentifiable } from './VWIdentifiable';
 
-const uuid = require("uuid");
+const uuid = require("uuid"); // TODO: Replace with import.
 
 export class VWAbstractIdentifiable implements VWIdentifiable {
     private id: string;
