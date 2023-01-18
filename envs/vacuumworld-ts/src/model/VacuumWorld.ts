@@ -24,12 +24,105 @@ export class VacuumWorld {
     }
 
     public run(): void {
+        this.createSkeletonView();
         document.getElementById("initial_view_div").appendChild(this.loadStartMenu())
         document.getElementById("initial_view_div").removeAttribute("hidden");
         document.getElementById("initial_view_buttons_div").appendChild(this.createButton("Start", "start_button", ["initial_buttons"], this.startSimulation.bind(this)));
         document.getElementById("initial_view_buttons_div").appendChild(this.createButton("Options", "options_button", ["initial_buttons"], this.setOptions.bind(this)));
         document.getElementById("initial_view_buttons_div").appendChild(this.createButton("Guide", "guide_button", ["initial_buttons"], this.openWiki.bind(this)));
         document.getElementById("initial_view_buttons_div").removeAttribute("hidden");
+    }
+
+    private createSkeletonView(): void {
+        this.setTitle("VacuumWorld");
+        this.createPlatformDiv();
+    }
+
+    private setTitle(title: string): void {
+        if (title !== null && title !== undefined && title !== "") {
+            document.title = title;
+        }
+    }
+
+    private createPlatformDiv(): void {
+        let platformDiv: HTMLDivElement = document.createElement("div");
+
+        platformDiv.id = "platform_div";
+        platformDiv.classList.add("center-aligned");
+
+        document.getElementById("container_div").appendChild(platformDiv);
+
+        this.createHiddenCenterAlignedDiv("platform_div", "initial_view_div");
+        this.createHiddenCenterAlignedDiv("platform_div", "initial_view_buttons_div");
+        this.createHiddenCenterAlignedDiv("platform_div", "options_dialog_div");
+        this.createHiddenCenterAlignedDiv("platform_div", "grid_div");
+        this.createHiddenCenterAlignedDiv("platform_div", "draggable_bodies_div");
+        this.createHiddenCenterAlignedDiv("platform_div", "simulation_controls_div");
+    }
+
+    private createHiddenCenterAlignedDiv(parentID: string, divID: string): void {
+        let div: HTMLDivElement = document.createElement("div");
+
+        div.id = divID;
+        div.classList.add("center-aligned");
+        div.hidden = true;
+
+        document.getElementById(parentID).appendChild(div);
+    }
+
+    private createOptionsDialog(): void {
+        let optionsDialog: HTMLDialogElement = document.createElement("dialog");
+
+        optionsDialog.id = "options_dialog";
+
+        document.getElementById("options_dialog_div").appendChild(optionsDialog);
+
+        this.createDivWithLabel("options_dialog", "speed_selector_div", "speed_selector", "Speed");
+        this.createDivWithLabel("options_dialog", "autoplay_selector_div", "autoplay_selector", "Autoplay");
+        this.createDivWithLabel("options_dialog", "state_to_load_selector_div", "state_to_load_selector", "State");
+        this.createDivWithLabel("options_dialog", "tooltips_selector_div", "tooltips_selector", "Tooltips");
+        this.createDivWithLabel("options_dialog", "max_number_of_cycles_selector_div", "max_number_of_cycles_selector", "Cycles");
+        this.createDivWithLabel("options_dialog", "efforts_selector_div", "efforts_selector", "Efforts");
+        this.createDivWithLabel("options_dialog", "teleora_selector_div", "teleora_selector", "Teleora mind core");
+        this.createSpeedSelectorSelectElement();
+        this.createButtonWithoutCallback("options_dialog", "options_dialog_ok_button", "OK");
+        this.createButtonWithoutCallback("options_dialog", "options_dialog_cancel_button", "Cancel");
+    }
+
+    private createDivWithLabel(parentID: string, divID: string, labelForID: string, labelText: string): void {
+        let div: HTMLDivElement = document.createElement("div");
+
+        div.id = divID;
+
+        document.getElementById(parentID).appendChild(div);
+
+        this.createAndAppendLabel(divID, labelForID, labelText);
+    }
+
+    private createAndAppendLabel(parentId: string, for_attribute: string, text: string): void {
+        let label: HTMLLabelElement = document.createElement("label");
+
+        label.htmlFor = for_attribute;
+        label.innerText = text;
+
+        document.getElementById(parentId).appendChild(label);
+    }
+
+    private createSpeedSelectorSelectElement(): void {
+        let speedValues: HTMLSelectElement = document.createElement("select");
+
+        speedValues.id = "speed_values";
+
+        document.getElementById("speed_selector_div").appendChild(speedValues);
+    }
+
+    private createButtonWithoutCallback(parentID: string, buttonID: string, buttonText: string): void {
+        let button: HTMLButtonElement = document.createElement("button");
+
+        button.id = buttonID;
+        button.textContent = buttonText;
+
+        document.getElementById(parentID).appendChild(button);
     }
 
     private loadStartMenu(): HTMLDivElement {
@@ -61,17 +154,8 @@ export class VacuumWorld {
         window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.
     }
 
-    private generateSpeedValues(): number[] {
-        let values: number[] = [];
-
-        for (let i = 0; i < 1000; i++) {
-            values.push(i / 1000);
-        }
-
-        return values;
-    }
-
     private setOptions(): void {
+        this.createOptionsDialog();
         this.createSpeedSelector();
         this.createAutoplayCheckbox();
         this.createStateToLoadUploadInput();
@@ -100,6 +184,16 @@ export class VacuumWorld {
 
             document.getElementById("speed_values").appendChild(option);
         });
+    }
+
+    private generateSpeedValues(): number[] {
+        let values: number[] = [];
+
+        for (let i = 0; i < 1000; i++) {
+            values.push(i / 1000);
+        }
+
+        return values;
     }
 
     private createAutoplayCheckbox(): void {
@@ -142,7 +236,11 @@ export class VacuumWorld {
     }
 
     private createEffortsSelector(): void {
-        const actions: string[] = [
+        this.getActionNames().forEach((action: string) => this.createEffortSelector(action));
+    }
+
+    private getActionNames(): string[] {
+        return [
             "VWIdleAction",
             "VWMoveAction",
             "VWTurnAction",
@@ -151,8 +249,6 @@ export class VacuumWorld {
             "VWSpeakAction",
             "VWBroadcastAction"
         ];
-
-        actions.forEach((action: string) => this.createEffortSelector(action));
     }
 
     private createEffortSelector(action: string): void {
@@ -187,9 +283,10 @@ export class VacuumWorld {
 
     private saveOptionsAndCloseDialog(optionsDialog: HTMLDialogElement): void {
         this.saveOptions();
-        this.resetOptionsDialog();
 
         optionsDialog.close();
+
+        this.resetOptionsDialog();
 
         console.log("Options saved:");
         console.log("Speed: " + this.speed);
@@ -209,19 +306,13 @@ export class VacuumWorld {
     }
 
     private discardOptionsAndCloseDialog(optionsDialog: HTMLDialogElement): void {
-        this.resetOptionsDialog();
-
         optionsDialog.close();
+
+        this.resetOptionsDialog();
     }
 
     private resetOptionsDialog(): void {
-        document.getElementById("speed_values").innerHTML = ""; // TODO: this parser-generated DOM modification should be avoided.
-        document.getElementById("autoplay_selector_div").removeChild(document.getElementById("autoplay_checkbox"));
-        document.getElementById("state_to_load_selector_div").removeChild(document.getElementById("state_to_load_upload_input"));
-        document.getElementById("tooltips_selector_div").removeChild(document.getElementById("tooltips_checkbox"));
-        document.getElementById("max_number_of_cycles_selector_div").removeChild(document.getElementById("max_number_of_cycles_input"));
-        document.getElementById("efforts_selector_div").innerHTML = ""; // TODO: this parser-generated DOM modification should be avoided.
-        document.getElementById("teleora_selector_div").removeChild(document.getElementById("teleora_upload_input"));
+        document.getElementById("options_dialog_div").removeChild(document.getElementById("options_dialog"));
     }
 
     private saveOptions(): void {
@@ -229,25 +320,26 @@ export class VacuumWorld {
         this.autoplay = (<HTMLInputElement>document.getElementById("autoplay_checkbox")).checked;
         this.stateToLoad = (<HTMLInputElement>document.getElementById("state_to_load_upload_input")).files[0];
         this.tooltipsActive = (<HTMLInputElement>document.getElementById("tooltips_checkbox")).checked;
-        this.maxNumberOfCycles = parseInt((<HTMLInputElement>document.getElementById("max_number_of_cycles_input")).value); // TODO: check if this is a number.
+        this.maxNumberOfCycles = this.parseMaxNumberOfCycles();
         this.efforts = this.loadEfforts();
         this.teleora = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0];
     }
 
-    private loadEfforts(): Map<string, bigint> {
-        const actions: string[] = [
-            "VWIdleAction",
-            "VWMoveAction",
-            "VWTurnAction",
-            "VWCleanAction",
-            "VWDropDirtAction",
-            "VWSpeakAction",
-            "VWBroadcastAction"
-        ];
+    private parseMaxNumberOfCycles(): number {
+        const value = (<HTMLInputElement>document.getElementById("max_number_of_cycles_input")).value;
 
+        if (value === "" || value === null || value === undefined) {
+            return undefined; // no limit
+        }
+        else {
+            return parseInt(value);
+        }
+    }
+
+    private loadEfforts(): Map<string, bigint> {
         let efforts: Map<string, bigint> = new Map();
 
-        for (const action of actions) {
+        for (const action of this.getActionNames()) {
             const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + "_effort_input")).value;
 
             if (value === "" || value === null || value === undefined) {

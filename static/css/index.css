@@ -1,0 +1,44 @@
+.center-aligned {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
+#platform_div {
+    width: 30%;
+    border: 3px solid black;
+    padding: 10px;
+}
+
+.initial_buttons {
+    width: 20%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 5pt;
+}
+
+#options_dialog_ok_button {
+    margin: 5pt;
+}
+
+#options_dialog_cancel_button {
+    margin: 5pt;
+}
+
+.close_button {
+    display: inline-block;
+    cursor: pointer;
+    border: 0px solid #fff;
+    font-weight: 700;
+    background: inherit;
+    padding: 0 0 0 0px;
+    font-size: 13px;
+    border-radius: 4px;
+    color: rgb(29, 28, 29);
+    height: 28px;
+    min-width: 0px;
+}
+
+.close_button:hover {
+    background-color: rgb(199, 199, 199);
+}
