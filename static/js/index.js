@@ -1,10 +1,21 @@
 // TODO: This file should check which Environment has been selected and load the appropriate script.
 // At the moment, it just loads the main script from vacuumworld-ts.
 document.addEventListener("DOMContentLoaded", function() {
+    loadFavicon();
     createContainerDiv();
     loadMainStyle();
     loadMainScript();
 });
+
+function loadFavicon() {
+    let favicon = document.createElement("link");
+
+    favicon.href = "/envs/vacuumworld-ts/res/images/favicon.ico";
+    favicon.rel = "icon";
+    favicon.type = "image/x-icon";
+
+    document.head.appendChild(favicon);
+}
 
 function createContainerDiv() {
     let containerDiv = document.createElement("div");
