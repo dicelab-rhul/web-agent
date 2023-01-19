@@ -1,14 +1,9 @@
-document.addEventListener("loadstart", function() {
-    const resourcesPaths = getResourcesPaths();
-
-    loadFavicon(resourcesPaths.favicon);
-});
-
 document.addEventListener("DOMContentLoaded", function() {
     const resourcesPaths = getResourcesPaths();
 
     createContainerDiv();
 
+    loadFavicon(resourcesPaths.favicon);
     loadStyle(resourcesPaths.mainStyle); // This is the main style of the page.
     loadStyle(resourcesPaths.envStyle); // This is the main style of the environment.
     loadScript(resourcesPaths.envScript); // This is the main script of the environment.

@@ -1,12 +1,13 @@
+import { VWMessageContent } from "../common/VWMessage";
+import { VWActionName } from "../common/VWActionName";
 import { VWAction } from "./VWAction";
 import { VWActionEffort } from "./VWActionEffort";
-import { VWBroadcastAction } from "./VWBroadcastAction";
 
 export abstract class VWCommunicativeAction extends VWAction {
-    private content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>;
+    private content: VWMessageContent;
     private recipientsIDs: Array<string>;
 
-    public constructor(actorID: string, content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>, recipientsIDs?: Array<string>) {
+    public constructor(actorID: string, content: VWMessageContent, recipientsIDs?: Array<string>) {
         super(actorID);
 
         this.content = VWCommunicativeAction.validateContent(content);
@@ -14,7 +15,7 @@ export abstract class VWCommunicativeAction extends VWAction {
     }
 
 
-    private static validateContent(content: number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>): number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string> {
+    private static validateContent(content: VWMessageContent): VWMessageContent {
         if (content === null || content === undefined) {
             throw new Error("The content cannot be null or undefined.");
         }
@@ -22,7 +23,7 @@ export abstract class VWCommunicativeAction extends VWAction {
         return content;
     }
 
-    public getContent(): number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string> {
+    public getContent(): VWMessageContent {
         return this.content;
     }
 
@@ -32,7 +33,7 @@ export abstract class VWCommunicativeAction extends VWAction {
 
     public getEffort(): bigint {
         if (this.recipientsIDs.length === 0) {
-            return VWActionEffort.getEffort(typeof VWBroadcastAction)
+            return VWActionEffort.getEffort(VWActionName.VWBroadcastAction);
         }
         else {
             return super.getEffort();

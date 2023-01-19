@@ -1,18 +1,19 @@
 import { VWActor } from "../actor/VWActor";
 import { JOptional } from "../common/JOptional";
-import { VWCoord } from "../common/VWCoord";
+import { VWCoord} from "../common/VWCoord";
 import { VWDirection } from "../common/VWDirection";
+import { VWMap } from "../common/VWMap";
 import { VWDirt } from "../dirt/VWDirt";
 import { VWLocation } from "./VWLocation";
 
 export class VWAmbient {
-    private grid: Map<VWCoord, VWLocation>;
+    private grid: VWMap<VWCoord, VWLocation>;
 
-    public constructor(grid: Map<VWCoord, VWLocation>) {
+    public constructor(grid: VWMap<VWCoord, VWLocation>) {
         this.grid = VWAmbient.validateGrid(grid);
     }
 
-    private static validateGrid(grid: Map<VWCoord, VWLocation>): Map<VWCoord, VWLocation> {
+    private static validateGrid(grid: VWMap<VWCoord, VWLocation>): VWMap<VWCoord, VWLocation> {
         if (grid === null || grid === undefined) {
             throw new Error("The grid cannot be null or undefined.");
         }
@@ -21,7 +22,11 @@ export class VWAmbient {
         }
     }
 
-    public getGrid(): Map<VWCoord, VWLocation> {
+    public getGridSize(): number {
+        return Math.sqrt(this.grid.size());
+    }
+
+    public getGrid(): VWMap<VWCoord, VWLocation> {
         return this.grid;
     }
 

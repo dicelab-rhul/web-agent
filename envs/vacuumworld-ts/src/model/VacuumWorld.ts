@@ -1,4 +1,6 @@
 import { VWActionEffort } from "./actions/VWActionEffort";
+import { VWEnvironment } from "./environment/VWEnvironment";
+import { VWSimulationGUI } from "./gui/VWSimulationGUI";
 
 export class VacuumWorld {
     private speed: number;
@@ -146,8 +148,15 @@ export class VacuumWorld {
         return button;
     }
 
+    // TODO: Implement this method properly.
     private startSimulation(): void {
-        console.log("Start simulation."); // TODO: Implement this.
+        console.log("Start simulation.");
+
+        let gui: VWSimulationGUI = new VWSimulationGUI(VWEnvironment.newEmptyVWEnvironment({"initial_environment_dim": 8}, 8n), null);
+
+        gui.pack();
+        gui.show();
+        gui.cycleSimulation();
     }
 
     private openWiki(): void {
@@ -295,13 +304,9 @@ export class VacuumWorld {
         console.log("Tooltips active: " + this.tooltipsActive);
         console.log("Max number of cycles: " + this.maxNumberOfCycles);
         console.log("Efforts:");
-        console.log("- VWIdleAction: " + this.efforts.get("VWIdleAction"));
-        console.log("- VWMoveAction: " + this.efforts.get("VWMoveAction"));
-        console.log("- VWTurnAction: " + this.efforts.get("VWTurnAction"));
-        console.log("- VWCleanAction: " + this.efforts.get("VWCleanAction"));
-        console.log("- VWDropDirtAction: " + this.efforts.get("VWDropDirtAction"));
-        console.log("- VWSpeakAction: " + this.efforts.get("VWSpeakAction"));
-        console.log("- VWBroadcastAction: " + this.efforts.get("VWBroadcastAction"));
+
+        this.getActionNames().forEach((action: string) => console.log("- " + action + ": " + this.efforts.get(action)));
+
         console.log("Teleora file to load: " + this.teleora);
     }
 
