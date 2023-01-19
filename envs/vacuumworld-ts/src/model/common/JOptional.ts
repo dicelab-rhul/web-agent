@@ -83,6 +83,15 @@ export class JOptional<T> {
         }
     }
 
+    public ifPresentOrElse(consumer: (value: T) => void, alternative: () => void): void {
+        if (this.value !== null && this.value !== undefined) {
+            consumer(this.value);
+        }
+        else {
+            alternative();
+        }
+    }
+
     public filter(predicate: (value: T) => boolean): JOptional<T> {
         if (this.value === null || this.value === undefined) {
             return JOptional.empty<T>();

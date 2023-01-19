@@ -9,14 +9,13 @@ import { VWDirection } from "../common/VWDirection";
 import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWOrientation } from "../common/VWOrientation";
-import { VWEnvironment } from "../environment/VWEnvironment";
+import { VWActionUtils } from "../utils/VWActionUtils";
 import { VWOrientationUtils } from "../utils/VWOrientationUtils";
 import { VWActorAppearance } from "./appearance/VWActorAppearance";
 import { VWCommunicativeActuator } from "./appendices/VWCommunicativeActuator";
 import { VWListeningSensor } from "./appendices/VWListeningSensor";
 import { VWObservationSensor } from "./appendices/VWObservationSensor";
 import { VWPhysicalActuator } from "./appendices/VWPhysicalActuator";
-import { VWActorFactory } from "./factories/VWActorFactory";
 import { VWMind } from "./mind/VWMind";
 
 export type VWActorJSON = {
@@ -128,7 +127,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
 
         const nextActions: VWAction[] = this.getMind().execute();
 
-        VWEnvironment.validateActions(nextActions);
+        VWActionUtils.validateActions(nextActions);
 
         this.executeActions(nextActions);
     }
@@ -180,9 +179,5 @@ export abstract class VWActor extends VWAbstractIdentifiable {
             "orientation": this.getOrientation(),
             "mind": actorMindCorePath
         };
-    }
-
-    public static fromJsonObject(jsonObject: VWActorJSON): VWActor {
-        return VWActorFactory.createVWActorFromJSONObject(jsonObject);
     }
 }

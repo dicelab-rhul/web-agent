@@ -57,3 +57,4 @@ typings/
 lib/*.js
 test/*.js
 *.map
+*.bak

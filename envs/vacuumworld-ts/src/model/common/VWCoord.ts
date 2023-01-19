@@ -1,6 +1,12 @@
+import { Equalisable } from "./Equalisable";
 import { VWOrientation } from "./VWOrientation";
 
-export class VWCoord {
+export type VWCoordJSON = {
+    x: string;
+    y: string;
+};
+
+export class VWCoord implements Equalisable {
     private x: bigint;
     private y: bigint;
 
@@ -158,11 +164,33 @@ export class VWCoord {
         return new VWCoord(this.x - decrement, this.y - decrement);
     }
 
+    public toJsonObject(): VWCoordJSON {
+        return {
+            x: this.x.toString(),
+            y: this.y.toString()
+        };
+    }
+
+    public static fromJsonObject(data: VWCoordJSON): VWCoord {
+        if (data === null || data === undefined) {
+            throw new Error("The JSON representation cannot be null or undefined.");
+        }
+        else if (data.x === null || data.x === undefined) {
+            throw new Error("The x coordinate cannot be null or undefined.");
+        }
+        else if (data.y === null || data.y === undefined) {
+            throw new Error("The y coordinate cannot be null or undefined.");
+        }
+        else {
+            return new VWCoord(BigInt(data.x), BigInt(data.y));
+        }
+    }
+
     public toString(): string {
         return `(${this.x}, ${this.y})`;
     }
 
-    public equals(other: object): boolean {
+    public equals(other: any): boolean {
         if (other === null || other === undefined) {
             return false;
         }

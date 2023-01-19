@@ -17,10 +17,12 @@ import { VWActionOutcome } from "../common/VWActionOutcome";
 import { VWActionResult } from "../common/VWActionResult";
 import { VWCoord } from "../common/VWCoord";
 import { VWDirection } from "../common/VWDirection";
+import { VWMap } from "../common/VWMap";
 import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWPosition } from "../common/VWPosition";
 import { VWDirt } from "../dirt/VWDirt";
+import { VWActionUtils } from "../utils/VWActionUtils";
 import { VWAmbient } from "./VWAmbient";
 import { VWLocation, VWLocationJSON } from "./VWLocation";
 import { VWLocationAppearance } from "./VWLocationAppearance";
@@ -65,6 +67,10 @@ export class VWEnvironment {
 
     public resetCycleNumber(): void {
         this.cycleNumber = 0;
+    }
+
+    public getGridSize(): number {
+        return this.ambient.getGridSize();
     }
 
     public getLocation(coord: VWCoord): JOptional<VWLocation> {
@@ -164,43 +170,20 @@ export class VWEnvironment {
             actor.getCommunicativeActuator().orElseThrow().sourceAll().forEach((action: VWCommunicativeAction) => actions.push(action));
         }
     
-        VWEnvironment.validateActions(actions);
+        VWActionUtils.validateActions(actions);
 
         actions.forEach((action: VWAction) => this.executeAction(action));
     }
 
-    public static validateActions(actions: VWAction[]): void {
-        if (actions === null || actions === undefined) {
-            throw new Error("The actions array cannot be null or undefined.");
-        }
-        else if (actions.some((action: VWAction) => action === null || action === undefined)) {
-            throw new Error("The actions array cannot contain null or undefined actions.");
-        }
-        else if (actions.length === 0) {
-            throw new Error("At least one action per cycle must by attempted by each actor.");
-        }
-        else if (actions.length > 2) {
-            throw new Error("At most two actions per cycle can be attempted by each actor.");
-        }
-        else if (actions.length === 2 && actions[0] instanceof VWPhysicalAction && actions[1] instanceof VWPhysicalAction) {
-            throw new Error("At most one physical action per cycle can be attempted by each actor.");
-        }
-        else if (actions.length === 2 && actions[0] instanceof VWCommunicativeAction && actions[1] instanceof VWCommunicativeAction) {
-            throw new Error("At most one communicative action per cycle can be attempted by each actor.");
-        }
-    }
-
     private executeAction(action: VWAction): void {
-        const executor: JOptional<VWAbstractExecutor> = VWEnvironment.getExecutorFor(action);
-
-        if (executor.isPresent()) {
-            const result: VWActionResult = executor.orElseThrow().attempt(action, this);
+        VWEnvironment.getExecutorFor(action).ifPresentOrElse((executor: VWAbstractExecutor) => {
+            const result: VWActionResult = executor.attempt(action, this);
 
             this.sendResultToActor(result, true);
-        }
-        else {
+        },
+        () => {
             throw new Error("No executor found for the action " + action + ".");
-        }
+        });
     }
 
     public static getExecutorFor(action: VWAction): JOptional<VWAbstractExecutor> {
@@ -240,27 +223,27 @@ export class VWEnvironment {
         const forwardleftCoord: VWCoord = this.getActorCoordByID(result.getAction().getActorID()).orElseThrow().getForwardLeftCoord(actorOrientation);
         const forwardrightCoord: VWCoord = this.getActorCoordByID(result.getAction().getActorID()).orElseThrow().getForwardRightCoord(actorOrientation);
 
-        if (this.ambient.getGrid().has(actorCoord)) {
+        if (this.ambient.getGrid().containsKey(actorCoord)) {
             locations.set(VWPosition.CENTER, this.ambient.getGrid().get(actorCoord)!.getAppearance());
         }
         
-        if (this.ambient.getGrid().has(forwardCoord)) {
+        if (this.ambient.getGrid().containsKey(forwardCoord)) {
             locations.set(VWPosition.FORWARD, this.ambient.getGrid().get(forwardCoord)!.getAppearance());
         }
 
-        if (this.ambient.getGrid().has(leftCoord)) {
+        if (this.ambient.getGrid().containsKey(leftCoord)) {
             locations.set(VWPosition.LEFT, this.ambient.getGrid().get(leftCoord)!.getAppearance());
         }
 
-        if (this.ambient.getGrid().has(rightCoord)) {
+        if (this.ambient.getGrid().containsKey(rightCoord)) {
             locations.set(VWPosition.RIGHT, this.ambient.getGrid().get(rightCoord)!.getAppearance());
         }
 
-        if (this.ambient.getGrid().has(forwardleftCoord)) {
+        if (this.ambient.getGrid().containsKey(forwardleftCoord)) {
             locations.set(VWPosition.FORWARDLEFT, this.ambient.getGrid().get(forwardleftCoord)!.getAppearance());
         }
 
-        if (this.ambient.getGrid().has(forwardrightCoord)) {
+        if (this.ambient.getGrid().containsKey(forwardrightCoord)) {
             locations.set(VWPosition.FORWARDRIGHT, this.ambient.getGrid().get(forwardrightCoord)!.getAppearance());
         }
 
@@ -296,7 +279,7 @@ export class VWEnvironment {
     private serialiseLocations(): VWLocationJSON[] {
         let locations: VWLocationJSON[] = [];
 
-        for (let location of this.ambient.getGrid().values()) {
+        for (let location of this.ambient.getGrid().getValues()) {
             locations.push(this.serialiseLocation(location));
         }
 
@@ -343,29 +326,29 @@ export class VWEnvironment {
     }
 
     private static fromJsonObjectHelper(data: VWEnvironmentJSON, config: any): VWEnvironment {
-        const grid: Map<VWCoord, VWLocation> = VWEnvironment.loadLocations(data["locations"]);
+        const grid: VWMap<VWCoord, VWLocation> = VWEnvironment.loadLocations(data["locations"]);
 
         VWEnvironment.validateGrid(grid, config);
 
         return new VWEnvironment(new VWAmbient(grid));
     }
 
-    private static loadLocations(locations: VWLocationJSON[]): Map<VWCoord, VWLocation> {
-        const grid: Map<VWCoord, VWLocation> = new Map<VWCoord, VWLocation>();
+    private static loadLocations(locations: VWLocationJSON[]): VWMap<VWCoord, VWLocation> {
+        const grid: VWMap<VWCoord, VWLocation> = new VWMap<VWCoord, VWLocation>();
 
         for (const location of locations) {
             if (location["coord"] === null || location["coord"] === undefined) {
                 throw new Error("The location coordinates cannot be null or undefined.");
             }
             else {
-                grid.set(location["coord"], VWLocation.fromJsonObject(location));
+                grid.put(VWCoord.fromJsonObject(location["coord"]), VWLocation.fromJsonObject(location));
             }
         }
 
         return grid;
     }
 
-    private static validateGrid(grid: Map<VWCoord, VWLocation>, config: any): void {
+    private static validateGrid(grid: VWMap<VWCoord, VWLocation>, config: any): void {
         if (grid === null || grid === undefined) {
             throw new Error("The grid cannot be null or undefined.");
         }
@@ -383,8 +366,8 @@ export class VWEnvironment {
         }
     }
 
-    private static validateGridHelper(grid: Map<VWCoord, VWLocation>, config: any): void {
-        const gridSize: number = Math.sqrt(grid.size);
+    private static validateGridHelper(grid: VWMap<VWCoord, VWLocation>, config: any): void {
+        const gridSize: number = Math.sqrt(grid.size());
 
         VWEnvironment.validateGridSize(gridSize, config);
     }
@@ -417,13 +400,13 @@ export class VWEnvironment {
 
         VWEnvironment.validateGridSize(Number(realGridSize), config);
 
-        const grid: Map<VWCoord, VWLocation> = new Map<VWCoord, VWLocation>();
+        const grid: VWMap<VWCoord, VWLocation> = new VWMap<VWCoord, VWLocation>();
 
         for (let x = 0n; x < realGridSize; x++) {
             for (let y = 0n; y < realGridSize; y++) {
                 const coord: VWCoord = new VWCoord(x, y);
 
-                grid.set(coord, new VWLocation(coord, VWLocation.generateWallFromCoordAndGridSize(coord, realGridSize)));
+                grid.put(coord, new VWLocation(coord, VWLocation.generateWallFromCoordAndGridSize(coord, realGridSize)));
             }
         }
 

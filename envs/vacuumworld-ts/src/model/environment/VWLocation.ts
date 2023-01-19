@@ -1,9 +1,10 @@
 import { VWActor, VWActorJSON } from "../actor/VWActor";
 import { JOptional } from "../common/JOptional";
 import { VWColour } from "../common/VWColour";
-import { VWCoord } from "../common/VWCoord";
+import { VWCoord, VWCoordJSON } from "../common/VWCoord";
 import { VWOrientation } from "../common/VWOrientation";
 import { VWDirt, VWDirtJSON } from "../dirt/VWDirt";
+import { VWActorFactory } from "../actor/factories/VWActorFactory";
 import { VWLocationAppearance } from "./VWLocationAppearance";
 
 export type VWWallJSON = {
@@ -14,7 +15,7 @@ export type VWWallJSON = {
 }
 
 export type VWLocationJSON = {
-    coord: VWCoord;
+    coord: VWCoordJSON;
     wall: VWWallJSON;
     actor?: VWActorJSON;
     dirt?: VWDirtJSON;
@@ -177,7 +178,7 @@ export class VWLocation {
 
     public toJsonObject(actorMindCorePath?: string): VWLocationJSON {
         const data: VWLocationJSON = {
-            "coord": this.coord,
+            "coord": this.coord.toJsonObject(),
             "wall": {
                 "north": this.hasWallOnNorth(),
                 "east": this.hasWallOnEast(),
@@ -208,13 +209,13 @@ export class VWLocation {
             throw new Error("The JSON representation of a `VWLocation` must have a `coord` property.");
         }
         else {
-            return VWLocation.fromJsonObjectHelper(data["coord"], data["wall"], data["actor"], data["dirt"]);
+            return VWLocation.fromJsonObjectHelper(VWCoord.fromJsonObject(data["coord"]), data["wall"], data["actor"], data["dirt"]);
         }
     }
 
     private static fromJsonObjectHelper(coord: VWCoord, wallData: VWWallJSON, actorData: VWActorJSON, dirtData: VWDirtJSON): VWLocation {
         const wall: Map<VWOrientation, boolean> = VWLocation.constructWallFromData(wallData);
-        const actor: JOptional<VWActor> = actorData === null || actorData === undefined ? JOptional.empty() : JOptional.of(VWActor.fromJsonObject(actorData));
+        const actor: JOptional<VWActor> = actorData === null || actorData === undefined ? JOptional.empty() : JOptional.of(VWActorFactory.createVWActorFromJSONObject(actorData));
         const dirt: JOptional<VWDirt> = dirtData === null || dirtData === undefined ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
 
         if (actor.isPresent() && dirt.isPresent()) {
