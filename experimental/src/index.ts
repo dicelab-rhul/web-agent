@@ -1,6 +1,6 @@
 
 
-import '/src/utils.js'
+import './utils.js'
 import {Editor} from './editor'
 import {parser} from "./grammar/teleora"
 

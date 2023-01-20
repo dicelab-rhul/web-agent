@@ -75,7 +75,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
             throw new Error("The environment cannot be null or undefined.");
         }
         else if (!this.isPossible(action, env)) {
-            return new VWActionResult(VWActionOutcome.FAILURE, action);
+            return new VWActionResult(VWActionOutcome.IMPOSSIBLE, action);
         }
         else {
             this.setActorColourBeforeAction(env.getActorByID(action.getActorID()).orElseThrow().getColour());

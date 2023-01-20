@@ -51,6 +51,7 @@ deploy.sh
 
 # Parcel stuff
 .parcel-cache
+experimental/dist/
 
 # Other stuff
 typings/
