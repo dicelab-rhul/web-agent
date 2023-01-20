@@ -1,3 +1,4 @@
+import { JOptional } from "../../common/JOptional";
 import { VWPerception } from "../../common/VWPerception";
 import { VWQueue } from "../../common/VWQueue";
 import { VWSensor } from "./VWSensor";
@@ -27,18 +28,18 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
         }
     }
 
-    public source() : P {
+    public source() : JOptional<P> {
         if (this.perceptions.isEmpty()) {
-            throw new Error("No perceptions to source.");
+            return JOptional.empty();
         }
         else {
-            return this.perceptions.dequeue();
+            return JOptional.of(this.perceptions.dequeue());
         }
     }
 
-    public sourceAll() : P[] {
+    public sourceAll() : JOptional<P[]> {
         if (this.perceptions.isEmpty()) {
-            throw new Error("No perceptions to source.");
+            return JOptional.empty();
         }
         else {
             let perceptions: P[] = [];
@@ -47,7 +48,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
                 perceptions.push(this.perceptions.dequeue());
             }
 
-            return perceptions;
+            return JOptional.of(perceptions);
         }
     }
 }

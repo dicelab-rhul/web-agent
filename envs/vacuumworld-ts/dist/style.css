@@ -18,8 +18,17 @@ table {
     display: grid;
 }
 
+#error_div {
+    border: 3px solid black;
+    padding: 10px;
+    color: #ff0000;
+    font-weight: bold;
+    margin: 10px;
+    width: auto;
+}
+
 #platform_div {
-    width: 30%;
+    width: auto;
     border: 3px solid black;
     padding: 10px;
     display: inline-table;
@@ -27,4 +36,8 @@ table {
 
 #initial_view_buttons_div {
     align-items: center;
+}
+
+.cell {
+    padding: 0;
 }

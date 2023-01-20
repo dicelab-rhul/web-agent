@@ -1,8 +1,8 @@
 import { VWAbstractMind } from "./VWAbstractMind";
-import { VWAbstractMindCore } from "./core/VWAbstractMindCore";
+import { VWMindCore } from "./core/VWMindCore";
 
 export class VWCleaningAgentMind extends VWAbstractMind {
-    public constructor(mindCoreFilePath:string) {
-        super(VWAbstractMindCore.loadFromFile(mindCoreFilePath));
+    public constructor(mindCore: VWMindCore) {
+        super(mindCore);
     }
 }

@@ -117,9 +117,9 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public cycle(): void {
-        const observations: VWObservation[] = this.getObservationSensor().orElseThrow().sourceAll();
+        const observations: VWObservation[] = this.getObservationSensor().orElseThrow().sourceAll().orElseThrow();
         const observation: VWObservation = VWActor.mergeObservations(observations);
-        const messages: VWMessage[] = this.getListeningSensor().orElseThrow().sourceAll();
+        const messages: VWMessage[] = this.sourceMessages();
 
         this.getMind().perceive(observation, messages);
         this.getMind().revise();
@@ -130,6 +130,14 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         VWActionUtils.validateActions(nextActions);
 
         this.executeActions(nextActions);
+    }
+
+    private sourceMessages(): VWMessage[] {
+        const messages: VWMessage[] = [];
+
+        this.getListeningSensor().ifPresent((listeningSensor: VWListeningSensor) => listeningSensor.sourceAll().ifPresent((sourced: VWMessage[]) => messages.push(...sourced)));
+    
+        return messages;
     }
 
     private static mergeObservations(observations: VWObservation[]): VWObservation {

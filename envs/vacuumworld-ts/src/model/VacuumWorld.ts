@@ -1,15 +1,22 @@
-import { VWActionEffort } from "./actions/VWActionEffort";
-import { VWEnvironment } from "./environment/VWEnvironment";
+import { VWBroadcastAction } from "./actions/VWBroadcastAction";
+import { VWCleanAction } from "./actions/VWCleanAction";
+import { VWDropDirtAction } from "./actions/VWDropDirtAction";
+import { VWIdleAction } from "./actions/VWIdleAction";
+import { VWMoveAction } from "./actions/VWMoveAction";
+import { VWSpeakAction } from "./actions/VWSpeakAction";
+import { VWTurnAction } from "./actions/VWTurnAction";
+import { VWEnvironment, VWEnvironmentJSON } from "./environment/VWEnvironment";
+import { VWErrorDiv } from "./gui/VWErrorDiv";
 import { VWSimulationGUI } from "./gui/VWSimulationGUI";
 
 export class VacuumWorld {
     private speed: number;
     private autoplay: boolean;
-    private stateToLoad: File;
+    private stateToLoad: VWEnvironmentJSON;
     private tooltipsActive: boolean;
     private maxNumberOfCycles: number;
     private efforts: Map<string, bigint>;
-    private teleora: File;
+    private teleora: any; // TODO: Add Teleora type.
 
     public constructor() {
         this.setDefaultOptions();
@@ -150,13 +157,27 @@ export class VacuumWorld {
 
     // TODO: Implement this method properly.
     private startSimulation(): void {
-        console.log("Start simulation.");
+        try {
+            console.log("Start simulation.");
 
-        let gui: VWSimulationGUI = new VWSimulationGUI(VWEnvironment.newEmptyVWEnvironment({"initial_environment_dim": 8}, 8n), null);
+            this.setActionEfforts();
 
-        gui.pack();
-        gui.show();
-        gui.cycleSimulation();
+            const config: object = {
+                "initial_environment_dim": 3,
+                "min_environment_dim": 3,
+                "max_environment_dim": 13
+            };
+
+            let environment: VWEnvironment = VWEnvironment.fromJsonObject(this.stateToLoad, config);
+            let gui: VWSimulationGUI = new VWSimulationGUI(environment, config);
+
+            gui.pack();
+            gui.show();
+            gui.cycleSimulation();
+        }
+        catch (e) {
+            VWErrorDiv.displayError(e);
+        }
     }
 
     private openWiki(): void {
@@ -223,6 +244,17 @@ export class VacuumWorld {
         stateToLoadUploadInput.id = "state_to_load_upload_input";
 
         document.getElementById("state_to_load_selector_div").appendChild(stateToLoadUploadInput);
+
+        stateToLoadUploadInput.addEventListener("change", () => {
+            const file = stateToLoadUploadInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                this.stateToLoad = JSON.parse(<string>e.target.result);
+            }
+
+            reader.readAsText(file);
+        });
     }
 
     private createTooltipsCheckbox(): void {
@@ -288,6 +320,17 @@ export class VacuumWorld {
         teleoraUploadInput.id = "teleora_upload_input";
 
         document.getElementById("teleora_selector_div").appendChild(teleoraUploadInput);
+
+        teleoraUploadInput.addEventListener("change", () => {
+            const file = teleoraUploadInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                this.teleora = <string>e.target.result; // TODO: parse teleora file.
+            }
+
+            reader.readAsText(file);
+        });
     }
 
     private saveOptionsAndCloseDialog(optionsDialog: HTMLDialogElement): void {
@@ -318,16 +361,16 @@ export class VacuumWorld {
 
     private resetOptionsDialog(): void {
         document.getElementById("options_dialog_div").removeChild(document.getElementById("options_dialog"));
+        document.getElementById("options_dialog_div").hidden = true;
     }
 
     private saveOptions(): void {
         this.speed = parseFloat((<HTMLInputElement>document.getElementById("speed_values")).value);
         this.autoplay = (<HTMLInputElement>document.getElementById("autoplay_checkbox")).checked;
-        this.stateToLoad = (<HTMLInputElement>document.getElementById("state_to_load_upload_input")).files[0];
         this.tooltipsActive = (<HTMLInputElement>document.getElementById("tooltips_checkbox")).checked;
         this.maxNumberOfCycles = this.parseMaxNumberOfCycles();
         this.efforts = this.loadEfforts();
-        this.teleora = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0];
+        this.teleora = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0]; // TODO: change this.
     }
 
     private parseMaxNumberOfCycles(): number {
@@ -348,7 +391,7 @@ export class VacuumWorld {
             const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + "_effort_input")).value;
 
             if (value === "" || value === null || value === undefined) {
-                efforts.set(action, VWActionEffort.getEffort(action));
+                efforts.set(action, undefined);
             }
             else {
                 efforts.set(action, BigInt(parseInt(value)));
@@ -356,5 +399,15 @@ export class VacuumWorld {
         }
 
         return efforts;
+    }
+
+    private setActionEfforts(): void {
+        VWIdleAction.overrideDefaultEffort(this.efforts.get("VWIdleAction"));
+        VWMoveAction.overrideDefaultEffort(this.efforts.get("VWMoveAction"));
+        VWTurnAction.overrideDefaultEffort(this.efforts.get("VWTurnAction"));
+        VWCleanAction.overrideDefaultEffort(this.efforts.get("VWCleanAction"));
+        VWDropDirtAction.overrideDefaultEffort(this.efforts.get("VWDropDirtAction"));
+        VWSpeakAction.overrideDefaultEffort(this.efforts.get("VWSpeakAction"));
+        VWBroadcastAction.overrideDefaultEffort(this.efforts.get("VWBroadcastAction"));
     }
 }

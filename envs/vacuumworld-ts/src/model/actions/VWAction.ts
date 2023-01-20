@@ -1,5 +1,3 @@
-import { VWActionEffort } from "./VWActionEffort";
-
 export abstract class VWAction {
     private actorID: string;
 
@@ -19,7 +17,5 @@ export abstract class VWAction {
         return this.actorID;
     }
 
-    public getEffort(): bigint {
-        return VWActionEffort.getEffort(typeof this);
-    }
+    public abstract getEffort(): bigint;
 }

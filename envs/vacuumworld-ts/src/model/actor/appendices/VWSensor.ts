@@ -1,3 +1,4 @@
+import { JOptional } from "../../common/JOptional";
 import { VWPerception } from "../../common/VWPerception";
 
 export interface VWSensor<P extends VWPerception> {
@@ -5,7 +6,7 @@ export interface VWSensor<P extends VWPerception> {
 
     sinkAll(perceptions: P[]) : void;
 
-    source() : P;
+    source() : JOptional<P>;
 
-    sourceAll() : P[];
+    sourceAll() : JOptional<P[]>;
 }

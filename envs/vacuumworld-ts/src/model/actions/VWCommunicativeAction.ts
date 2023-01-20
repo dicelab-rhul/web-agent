@@ -1,7 +1,5 @@
 import { VWMessageContent } from "../common/VWMessage";
-import { VWActionName } from "../common/VWActionName";
 import { VWAction } from "./VWAction";
-import { VWActionEffort } from "./VWActionEffort";
 
 export abstract class VWCommunicativeAction extends VWAction {
     private content: VWMessageContent;
@@ -29,14 +27,5 @@ export abstract class VWCommunicativeAction extends VWAction {
 
     public getRecipientsIDs(): Array<string> {
         return this.recipientsIDs;
-    }
-
-    public getEffort(): bigint {
-        if (this.recipientsIDs.length === 0) {
-            return VWActionEffort.getEffort(VWActionName.VWBroadcastAction);
-        }
-        else {
-            return super.getEffort();
-        }
     }
 }

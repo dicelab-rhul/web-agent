@@ -1,10 +1,42 @@
-const fs = require("fs"); // TODO: Convert to import.
-const path = require("path-browserify"); // TODO: Convert to import.
+import { VWEnvironmentJSON } from "./environment/VWEnvironment";
+
+//const fs = require("fs"); // TODO: Convert to import.
+//const path = require("path-browserify"); // TODO: Convert to import.
+
+import * as fs from "fs";
+import * as path from "path";
+//import path from "path-browserify";
 
 export class VWSaveStateManager {
     private constructor() {}
 
-    public static loadState(name: string): object {
+    public static loadStateFromFile(f: File): VWEnvironmentJSON {
+        console.log(f)
+        try {
+            if (f === undefined || f === null) {
+                throw new Error("Invalid file");
+            }
+
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                console.log(e.target.result) // this shows bfile
+            }
+            reader.readAsText(f);
+
+            return JSON.parse(reader.result as string);
+        }
+        catch (e) {
+            console.log("Could not load the state because of:");
+            console.log(e);
+
+            return {
+                "locations": []
+            };
+        }
+    }
+
+    public static loadState(name: string): VWEnvironmentJSON {
         try {
             if (name === undefined || name === null || name === "") {
                 throw new Error("Invalid name");
@@ -28,11 +60,13 @@ export class VWSaveStateManager {
             console.log("Could not load the state because of:");
             console.log(e);
 
-            return {};
+            return {
+                "locations": []
+            };
         }
     }
 
-    public static saveState(name: string, state: object): void {
+    public static saveState(name: string, state: VWEnvironmentJSON): void {
         try {
             if (name === undefined || name === null || name === "") {
                 throw new Error("Invalid name");
