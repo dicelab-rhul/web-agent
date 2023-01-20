@@ -1,32 +1,15 @@
-/*
- * This file:
- * - Creates the elements of the page that are common to all environments:
- *  - The container div.
- *  - The error div.
- * - Loads the favicon.
- * - Loads the main style of the page.
- * - Loads the main style of the environment.
- * - Loads the main script of the environment.
- */
 document.addEventListener("DOMContentLoaded", function() {
-    const resourcesPaths = getResourcesPaths();
-
     createContainerDiv();
     createErrorDiv();
-
-    loadFavicon(resourcesPaths.favicon);
-    loadStyle(resourcesPaths.mainStyle); // This is the main style of the page.
-    loadStyle(resourcesPaths.envStyle); // This is the main style of the environment.
-    loadScript(resourcesPaths.envScript); // This is the main script of the environment.
+    loadStyle("/static/css/index.css"); // This is the main style of the page.
+    loadChoiceDiv();
 });
 
-// TODO: This function needs to check which environment has been selected and return the appropriate paths.
-function getResourcesPaths() {
+function getResourcesPaths(envPath) {
     return {
-        favicon: "/envs/vacuumworld-ts/res/images/favicon.ico",
-        mainStyle: "/envs/vacuumworld-ts/dist/style.css",
-        envStyle: "/static/css/index.css",
-        envScript: "/envs/vacuumworld-ts/dist/main.js"
+        favicon: `${envPath}/res/images/favicon.ico`,
+        envStyle: `${envPath}/dist/style.css`,
+        envScript: `${envPath}/dist/main.js`
     };
 }
 
@@ -128,4 +111,67 @@ function loadScript(scriptPath) {
 
         document.body.appendChild(script);
     }
+}
+
+function loadChoiceDiv() {
+    let choiceDiv = document.createElement("div");
+
+    choiceDiv.id = "choice_div";
+    choiceDiv.classList.add("center-aligned");
+
+    document.body.appendChild(choiceDiv);
+
+    loadChoices();
+}
+
+function loadChoices() {
+    const paths = getChoicesPaths();
+
+    paths.forEach((path) => addEntryToChoiceDiv(path));
+}
+
+// TODO: This function should be replaced by a function that gets the choices paths from the fs. (How?)
+function getChoicesPaths() {
+    return [
+        "/envs/vacuumworld-ts",
+        "/envs/example-env-ts"
+    ];
+}
+
+function addEntryToChoiceDiv(choicePath) {
+    if (choicePath === null || choicePath === undefined) {
+        throw new Error("The choice path is null or undefined.");
+    }
+    else if (typeof choicePath !== "string") {
+        throw new Error("The choice path is not a string.");
+    }
+    else if (choicePath.length === 0) {
+        throw new Error("The choice path is empty.");
+    }
+
+    const imgPath = choicePath + "/res/images/choice.png";
+
+    let choiceDiv = document.getElementById("choice_div");
+    let choice = document.createElement("img");
+
+    choice.src = imgPath;
+    choice.classList.add("choice");
+
+    choiceDiv.appendChild(choice);
+
+    choice.addEventListener("click", () => {
+        document.querySelectorAll(".choice").forEach((choice) => choiceDiv.removeChild(choice));
+
+        choiceDiv.hidden = true;
+
+        loadEnvironmentDiv(choicePath);
+    });
+}
+
+function loadEnvironmentDiv(choicePath) {
+    const resourcesPaths = getResourcesPaths(choicePath);
+
+    loadFavicon(resourcesPaths.favicon);
+    loadStyle(resourcesPaths.envStyle); // This is the main style of the environment.
+    loadScript(resourcesPaths.envScript); // This is the main script of the environment
 }

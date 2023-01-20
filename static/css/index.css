@@ -19,6 +19,16 @@
     margin: 5pt;
 }
 
+.choice {
+    margin: 5pt;
+    width: 10%;
+    border: 5px solid black;
+}
+
+.choice:hover {
+    opacity: 0.5;
+}
+
 .close_button {
     display: inline-block;
     cursor: pointer;

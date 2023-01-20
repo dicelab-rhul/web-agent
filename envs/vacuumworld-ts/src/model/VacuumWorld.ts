@@ -35,11 +35,12 @@ export class VacuumWorld {
     public run(): void {
         this.createSkeletonView();
         document.getElementById("initial_view_div").appendChild(this.loadStartMenu())
-        document.getElementById("initial_view_div").removeAttribute("hidden");
         document.getElementById("initial_view_buttons_div").appendChild(this.createButton("Start", "start_button", ["initial_buttons"], this.startSimulation.bind(this)));
         document.getElementById("initial_view_buttons_div").appendChild(this.createButton("Options", "options_button", ["initial_buttons"], this.setOptions.bind(this)));
         document.getElementById("initial_view_buttons_div").appendChild(this.createButton("Guide", "guide_button", ["initial_buttons"], this.openWiki.bind(this)));
+        document.getElementById("initial_view_div").removeAttribute("hidden");
         document.getElementById("initial_view_buttons_div").removeAttribute("hidden");
+        document.getElementById("platform_div").removeAttribute("hidden");
     }
 
     private createSkeletonView(): void {
@@ -56,6 +57,7 @@ export class VacuumWorld {
     private createPlatformDiv(): void {
         let platformDiv: HTMLDivElement = document.createElement("div");
 
+        platformDiv.hidden = true;
         platformDiv.id = "platform_div";
         platformDiv.classList.add("center-aligned");
 
