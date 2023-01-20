@@ -156,6 +156,8 @@ export class VacuumWorld {
     }
 
     // TODO: Implement this method properly.
+    // Pass the options to the simulation.
+    // Pass the appropiate config to the simulation.
     private startSimulation(): void {
         try {
             console.log("Start simulation.");
@@ -169,7 +171,7 @@ export class VacuumWorld {
             };
 
             let environment: VWEnvironment = VWEnvironment.fromJsonObject(this.stateToLoad, config);
-            let gui: VWSimulationGUI = new VWSimulationGUI(environment, config);
+            let gui: VWSimulationGUI = new VWSimulationGUI(environment, this.maxNumberOfCycles, config);
 
             gui.pack();
             gui.show();
@@ -377,7 +379,7 @@ export class VacuumWorld {
         const value = (<HTMLInputElement>document.getElementById("max_number_of_cycles_input")).value;
 
         if (value === "" || value === null || value === undefined) {
-            return undefined; // no limit
+            return undefined; // No limit.
         }
         else {
             return parseInt(value);

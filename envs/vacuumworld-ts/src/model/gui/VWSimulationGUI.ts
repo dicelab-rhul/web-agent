@@ -2,23 +2,23 @@ import { VWCoord } from "../common/VWCoord";
 import { VWMap } from "../common/VWMap";
 import { VWEnvironment } from "../environment/VWEnvironment";
 import { VWLocation } from "../environment/VWLocation";
-import { VWLocationAppearance } from "../environment/VWLocationAppearance";
 import { VWCell } from "./VWCell";
 import { VWGrid } from "./VWGrid";
 
 // TODO: check if the simulation is [started, stopped, paused], and display the appropriate elements.
-
 export class VWSimulationGUI {
     private gridSize: number;
     private config: any;
     private grid: VWGrid;
     private environment: VWEnvironment;
+    private numberOfCycles: number;
 
-    public constructor(environment: VWEnvironment, config: any) {
+    public constructor(environment: VWEnvironment, numberOfCycles: number, config: any) {
         this.config = VWSimulationGUI.validateConfig(config);
         this.gridSize = VWSimulationGUI.validateGridSize(environment, config);
         this.environment = VWSimulationGUI.validateEnvironment(environment);
         this.grid = this.createGrid();
+        this.numberOfCycles = VWSimulationGUI.validateNumberOfCycles(numberOfCycles);
     }
 
     public pack(): void {
@@ -94,20 +94,13 @@ export class VWSimulationGUI {
         }
     }
 
-    // TODO: this is just a test method.
-    private createEmptyGrid(gridSize: number) {
-        let gridMap: VWMap<VWCoord, VWCell> = new VWMap<VWCoord, VWCell>();
-
-        for (let i = 0; i < gridSize; i++) {
-            for (let j = 0; j < gridSize; j++) {
-                const coord: VWCoord = new VWCoord(BigInt(i), BigInt(j));
-                const locApp: VWLocationAppearance = new VWLocationAppearance(coord, VWLocation.generateWallFromCoordAndGridSize(coord, BigInt(gridSize)));
-
-                gridMap.put(coord, new VWCell(locApp));
-            }
+    private static validateNumberOfCycles(numberOfCycles: number): number {
+        if (numberOfCycles === null || numberOfCycles === undefined || numberOfCycles <= 0) {
+            return undefined; // No limit.
         }
-
-        return new VWGrid(gridSize, gridMap);
+        else {
+            return numberOfCycles;
+        }
     }
 
     private createGrid(): VWGrid {
@@ -122,31 +115,51 @@ export class VWSimulationGUI {
 
     public reset(newEnvironment: VWEnvironment, newConfig: any): void {
         // TODO: implement this method.
+        throw new Error("Not yet implemented.");
     }
 
     public cycleSimulation(): void {
         console.log("Initial environment: ")
         console.log(this.environment.getAmbient().getGrid());
 
-        let i = 10;
-        while (i > 0) { // TODO: add a real condition to stop the simulation.
-            this.environment.cycle();
+        this.mainLoop();
+    }
 
-            this.unpack(); // Delete the old grid.
-
-            this.grid = this.createGrid(); // Create the new grid.
-
-            this.pack(); // Create the new grid.
-            this.show(); // Show the new grid.
-
-            i--;
-
-            (async () => await this.delay(1000))(); // TODO: use the `speed` option to set the delay.
+    private async mainLoop(): Promise<void> {
+        if (this.numberOfCycles === undefined) {
+            await this.loopForever();
+        }
+        else {
+            await this.loopNumberOfTimes();
         }
     }
 
-    private delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
+    private async loopForever(): Promise<void> {
+        while (true) {
+            await this.doOneCycle();
+        }
     }
 
+    private async loopNumberOfTimes(): Promise<void> {
+        for(let i = 0; i < this.numberOfCycles; i++) {
+            await this.doOneCycle();
+        }
+    }
+
+    private async doOneCycle(): Promise<void> {
+        this.environment.cycle();
+
+        this.unpack(); // Delete the old grid.
+
+        this.grid = this.createGrid(); // Create the new grid.
+
+        this.pack(); // Create the new grid.
+        this.show(); // Show the new grid.
+
+        await this.delay(1000);
+    }
+
+    private delay(ms: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
