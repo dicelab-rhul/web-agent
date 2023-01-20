@@ -86,8 +86,8 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     }
 
     public incrementEffort(effort: bigint): void {
-        if (this.cumulativeEffort === null || this.cumulativeEffort === undefined) {
-            throw new Error("The cumulative effort cannot be null or undefined.");
+        if (effort === null || effort === undefined) {
+            throw new Error("The effort cannot be null or undefined.");
         }
         else {
             this.cumulativeEffort += effort;

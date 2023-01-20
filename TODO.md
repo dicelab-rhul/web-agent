@@ -1,14 +1,18 @@
 # List of TODOs
 
-* File [static/js/index.js](static/js/index.js) - line 17: `// TODO: This function needs to check which environment has been selected and return the appropriate paths.`
+* File [static/js/index.js](static/js/index.js) - line 12: `// TODO: This function needs to check which environment has been selected and return the appropriate paths.`
 
-* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 1: `const fs = require("fs"); // TODO: Convert to import.`
+* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 3: `//const fs = require("fs"); // TODO: Convert to import.`
 
-* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 2: `const path = require("path-browserify"); // TODO: Convert to import.`
+* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 4: `//const path = require("path-browserify"); // TODO: Convert to import.`
 
-* File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 150: `console.log("Start simulation."); // TODO: Implement this.`
+* File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 150: `// TODO: Implement this method properly.`
 
-* File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 154: `window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.`
+* File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 169: `window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.`
+
+* File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 346: `this.teleora = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0]; // TODO: change this.`
+
+* File [envs/vacuumworld-ts/src/model/VacuumWorld.ts](envs/vacuumworld-ts/src/model/VacuumWorld.ts) - line 367: `continue; // TODO: implement this.`
 
 * File [envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts](envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts) - line 3: `const uuid = require("uuid"); // TODO: Replace with import.`
 
@@ -19,6 +23,24 @@
 * File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 98: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
 
 * File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 101: `// TODO: call this method from 'loadFromFile()', and validate the arguments.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts](envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts) - line 16: `// TODO: uncomment this when the config file is ready.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts](envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts) - line 20: `this.grid = this.createEmptyGrid(8); // TODO: change this to this.createGrid()`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts](envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts) - line 95: `// TODO: this is just a test method.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts](envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts) - line 122: `// TODO: implement this method.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts](envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts) - line 130: `while (i > 0) { // TODO: add a real condition to stop the simulation.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts](envs/vacuumworld-ts/src/model/gui/VWSimulationGUI.ts) - line 135: `this.grid = this.createEmptyGrid(8); // TODO: change this to this.createGrid()`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWGrid.ts](envs/vacuumworld-ts/src/model/gui/VWGrid.ts) - line 19: `private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWGrid.ts](envs/vacuumworld-ts/src/model/gui/VWGrid.ts) - line 44: `if (this.gridSize === null || this.gridSize === undefined || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.`
+
+* File [envs/vacuumworld-ts/src/model/gui/VWCell.ts](envs/vacuumworld-ts/src/model/gui/VWCell.ts) - line 34: `// TODO: get the image src from the location appearance.`
 
 * File [experimental/src/editor.ts](experimental/src/editor.ts) - line 30: `//localStorage.clear() // TODO: REMOVE THIS IN PRODUCTION`
 

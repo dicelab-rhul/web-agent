@@ -1,6 +1,12 @@
 const path = require( 'path' );
+const webpack = require('webpack');
 
 module.exports = {
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.platform": JSON.stringify(process.platform)
+        }),
+    ],
 
     // bundling mode
     mode: 'production',
@@ -17,6 +23,9 @@ module.exports = {
     // file resolutions
     resolve: {
         extensions: [ '.ts', '.js' ],
+        fallback: {
+            "fs": false
+        }
     },
 
     // loaders

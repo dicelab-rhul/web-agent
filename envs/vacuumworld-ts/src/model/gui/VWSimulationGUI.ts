@@ -123,6 +123,9 @@ export class VWSimulationGUI {
     }
 
     public cycleSimulation(): void {
+        console.log("Initial environment: ")
+        console.log(this.environment.getAmbient().getGrid());
+
         let i = 10;
         while (i > 0) { // TODO: add a real condition to stop the simulation.
             this.environment.cycle();
@@ -135,6 +138,8 @@ export class VWSimulationGUI {
             this.show(); // Show the new grid.
 
             console.log("Cycle: " + this.environment.getCycleNumber() + ".")
+            console.log("Environment: ")
+            console.log(this.environment.getAmbient().getGrid());
             i--;
         }
     }

@@ -1,11 +1,10 @@
-import { VWActionEffort } from "./actions/VWActionEffort";
-import { VWEnvironment } from "./environment/VWEnvironment";
+import { VWEnvironment, VWEnvironmentJSON } from "./environment/VWEnvironment";
 import { VWSimulationGUI } from "./gui/VWSimulationGUI";
 
 export class VacuumWorld {
     private speed: number;
     private autoplay: boolean;
-    private stateToLoad: File;
+    private stateToLoad: VWEnvironmentJSON;
     private tooltipsActive: boolean;
     private maxNumberOfCycles: number;
     private efforts: Map<string, bigint>;
@@ -152,7 +151,14 @@ export class VacuumWorld {
     private startSimulation(): void {
         console.log("Start simulation.");
 
-        let gui: VWSimulationGUI = new VWSimulationGUI(VWEnvironment.newEmptyVWEnvironment({"initial_environment_dim": 8}, 8n), null);
+        const config: object = {
+            "initial_environment_dim": 3,
+            "min_environment_dim": 3,
+            "max_environment_dim": 13
+        };
+
+        let environment: VWEnvironment = VWEnvironment.fromJsonObject(this.stateToLoad, config);
+        let gui: VWSimulationGUI = new VWSimulationGUI(environment, config);
 
         gui.pack();
         gui.show();
@@ -223,6 +229,17 @@ export class VacuumWorld {
         stateToLoadUploadInput.id = "state_to_load_upload_input";
 
         document.getElementById("state_to_load_selector_div").appendChild(stateToLoadUploadInput);
+
+        stateToLoadUploadInput.addEventListener("change", () => {
+            const file = stateToLoadUploadInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                this.stateToLoad = JSON.parse(<string>e.target.result);
+            }
+
+            reader.readAsText(file);
+        });
     }
 
     private createTooltipsCheckbox(): void {
@@ -323,11 +340,10 @@ export class VacuumWorld {
     private saveOptions(): void {
         this.speed = parseFloat((<HTMLInputElement>document.getElementById("speed_values")).value);
         this.autoplay = (<HTMLInputElement>document.getElementById("autoplay_checkbox")).checked;
-        this.stateToLoad = (<HTMLInputElement>document.getElementById("state_to_load_upload_input")).files[0];
         this.tooltipsActive = (<HTMLInputElement>document.getElementById("tooltips_checkbox")).checked;
         this.maxNumberOfCycles = this.parseMaxNumberOfCycles();
         this.efforts = this.loadEfforts();
-        this.teleora = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0];
+        this.teleora = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0]; // TODO: change this.
     }
 
     private parseMaxNumberOfCycles(): number {
@@ -348,7 +364,7 @@ export class VacuumWorld {
             const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + "_effort_input")).value;
 
             if (value === "" || value === null || value === undefined) {
-                efforts.set(action, VWActionEffort.getEffort(action));
+                continue; // TODO: implement this.
             }
             else {
                 efforts.set(action, BigInt(parseInt(value)));

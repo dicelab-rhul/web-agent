@@ -10,6 +10,9 @@ import { VWObservationSensor } from "../appendices/VWObservationSensor";
 import { VWUserPhysicalActuator } from "../appendices/VWUserPhysicalActuator";
 import { VWCleaningAgentMind } from "../mind/VWCleaningAgentMind";
 import { VWUserMind } from "../mind/VWUserMind";
+import { VWAbstractMindCore } from "../mind/core/VWAbstractMindCore";
+import { VWHystereticMindCore } from "../mind/core/VWHystereticMindCore";
+import { VWMindCore } from "../mind/core/VWMindCore";
 
 export class VWActorFactory {
     private constructor() {}
@@ -57,7 +60,8 @@ export class VWActorFactory {
         else {
             const colour: VWColour = VWColour[data["colour"]];
             const orientation: VWOrientation = VWOrientation[data["orientation"]];
-            const mind: VWCleaningAgentMind = new VWCleaningAgentMind(data["mind"]);
+            const mindCore: VWMindCore = data["mind"] == "hysteretic" ? new VWHystereticMindCore() : VWAbstractMindCore.loadFromFile(data["mind"]);
+            const mind: VWCleaningAgentMind = new VWCleaningAgentMind(mindCore);
             const observationSensor: VWObservationSensor = new VWObservationSensor();
             const listeningSensor: VWListeningSensor = new VWListeningSensor();
             const physicalActuator: VWCleaningAgentPhysicalActuator = new VWCleaningAgentPhysicalActuator();
