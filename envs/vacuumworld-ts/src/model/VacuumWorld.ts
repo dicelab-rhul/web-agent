@@ -6,6 +6,7 @@ import { VWMoveAction } from "./actions/VWMoveAction";
 import { VWSpeakAction } from "./actions/VWSpeakAction";
 import { VWTurnAction } from "./actions/VWTurnAction";
 import { VWEnvironment, VWEnvironmentJSON } from "./environment/VWEnvironment";
+import { VWErrorDiv } from "./gui/VWErrorDiv";
 import { VWSimulationGUI } from "./gui/VWSimulationGUI";
 
 export class VacuumWorld {
@@ -156,22 +157,27 @@ export class VacuumWorld {
 
     // TODO: Implement this method properly.
     private startSimulation(): void {
-        console.log("Start simulation.");
+        try {
+            console.log("Start simulation.");
 
-        this.setActionEfforts();
+            this.setActionEfforts();
 
-        const config: object = {
-            "initial_environment_dim": 3,
-            "min_environment_dim": 3,
-            "max_environment_dim": 13
-        };
+            const config: object = {
+                "initial_environment_dim": 3,
+                "min_environment_dim": 3,
+                "max_environment_dim": 13
+            };
 
-        let environment: VWEnvironment = VWEnvironment.fromJsonObject(this.stateToLoad, config);
-        let gui: VWSimulationGUI = new VWSimulationGUI(environment, config);
+            let environment: VWEnvironment = VWEnvironment.fromJsonObject(this.stateToLoad, config);
+            let gui: VWSimulationGUI = new VWSimulationGUI(environment, config);
 
-        gui.pack();
-        gui.show();
-        gui.cycleSimulation();
+            gui.pack();
+            gui.show();
+            gui.cycleSimulation();
+        }
+        catch (e) {
+            VWErrorDiv.displayError(e);
+        }
     }
 
     private openWiki(): void {

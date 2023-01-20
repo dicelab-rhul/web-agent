@@ -6,6 +6,8 @@ import { VWLocationAppearance } from "../environment/VWLocationAppearance";
 import { VWCell } from "./VWCell";
 import { VWGrid } from "./VWGrid";
 
+// TODO: check if the simulation is [started, stopped, paused], and display the appropriate elements.
+
 export class VWSimulationGUI {
     private gridSize: number;
     private config: any;

@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const resourcesPaths = getResourcesPaths();
 
     createContainerDiv();
+    createErrorDiv();
 
     loadFavicon(resourcesPaths.favicon);
     loadStyle(resourcesPaths.mainStyle); // This is the main style of the page.
@@ -48,11 +49,26 @@ function createContainerDiv() {
         let containerDiv = document.createElement("div");
 
         containerDiv.id = "container_div";
-    
+
         document.body.appendChild(containerDiv);
     }
     else {
         throw new Error("The container div already exists.");
+    }
+}
+
+function createErrorDiv() {
+    if (document.getElementById("error_div") === null) {
+        let errorDiv = document.createElement("div");
+
+        errorDiv.id = "error_div";
+        errorDiv.classList.add("center-aligned");
+        errorDiv.hidden = true;
+
+        document.body.appendChild(errorDiv);
+    }
+    else {
+        throw new Error("The error div already exists.");
     }
 }
 
@@ -75,7 +91,7 @@ function loadStyle(stylePath) {
         mainStyle.href = stylePath;
         mainStyle.rel = "stylesheet";
         mainStyle.type = "text/css";
-    
+
         document.head.appendChild(mainStyle);
     }
 }
@@ -99,7 +115,7 @@ function loadScript(scriptPath) {
         script.src = scriptPath;
         script.type = "text/javascript";
         script.async = false;
-    
+
         document.body.appendChild(script);
     }
 }
