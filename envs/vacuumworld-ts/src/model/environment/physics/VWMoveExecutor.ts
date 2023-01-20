@@ -26,9 +26,17 @@ export class VWMoveExecutor extends VWAbstractExecutor {
 
     private static targetHasNoActor(action: VWMoveAction, env: VWEnvironment): boolean {
         try {
-            const actorCoord: JOptional<VWCoord> = env.getActorCoordByID(action.getActorID());
+            const actorCoord: VWCoord = env.getActorCoordByID(action.getActorID()).orElseThrow();
+            const actorOrientation: VWOrientation = env.getActorByID(action.getActorID()).orElseThrow().getOrientation();
 
-            return actorCoord.isPresent() && !env.getLocation(actorCoord.orElseThrow()).orElseThrow().hasActor();
+            if (env.getLocation(actorCoord).orElseThrow().hasWallOn(actorOrientation)) {
+                return false;
+            }
+            else {
+                const forwardCoord: VWCoord = actorCoord.getForwardCoord(actorOrientation);
+
+                return env.getLocation(forwardCoord).isPresent() && !env.getLocation(forwardCoord).orElseThrow().hasActor();
+            }
         }
         catch (e) {
             return false;
