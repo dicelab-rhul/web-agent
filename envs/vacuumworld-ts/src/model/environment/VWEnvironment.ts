@@ -143,7 +143,7 @@ export class VWEnvironment {
         this.ambient.getActors().forEach((actor: VWActor) => this.cycleActor(actor));
 
         console.log("Environment after the actions: ")
-        console.log(this.toJsonObject()); // TODO: pretty format.
+        console.log(JSON.stringify(this.toJsonObject(), null, 4));
         console.log("End of cycle #" + this.cycleNumber + "...");
 
         this.cycleNumber++;
