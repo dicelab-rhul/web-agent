@@ -1,4 +1,12 @@
 
+/*
+const basicSetup = require("codemirror").basicSetup;
+const EditorState = require("@codemirror/state").EditorState;
+const Compartment = require("@codemirror/state").Compartment;
+const EditorView = require("@codemirror/view").EditorView;
+const keymap = require("@codemirror/view").keymap;
+const indentWithTab = require("@codemirror/commands").indentWithTab;
+*/
 
 import {basicSetup} from "codemirror"
 import {EditorState, Compartment} from "@codemirror/state"
