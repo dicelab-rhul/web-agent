@@ -134,11 +134,17 @@ export class VWEnvironment {
     }
 
     public cycle(): void {
+        console.log("Start of cycle #" + this.cycleNumber + "...");
+
         if (this.cycleNumber === 0) {
             this.forceInitialPerceptionToActors();
         }
 
         this.ambient.getActors().forEach((actor: VWActor) => this.cycleActor(actor));
+
+        console.log("Environment after the actions: ")
+        console.log(this.toJsonObject()); // TODO: pretty format.
+        console.log("End of cycle #" + this.cycleNumber + "...");
 
         this.cycleNumber++;
     }
@@ -306,10 +312,10 @@ export class VWEnvironment {
 
     public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {
         if (data === null || data === undefined) {
-            throw new Error("The data cannot be null or undefined.");
+            throw new Error("The state to load cannot be null or undefined.");
         }
         else if (data["locations"] === null || data["locations"] === undefined) {
-            throw new Error("The data must contain a 'locations' property.");
+            throw new Error("The state to load must contain a 'locations' property.");
         }
         else if (!Array.isArray(data["locations"])) {
             throw new Error("The 'locations' property must be an array.");

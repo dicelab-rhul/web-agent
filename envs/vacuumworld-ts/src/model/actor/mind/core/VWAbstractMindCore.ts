@@ -26,6 +26,10 @@ export abstract class VWAbstractMindCore implements VWMindCore {
         return this.mindCoreFilePath;
     }
 
+    public setMindCoreFilePath(mindCoreFilePath: string): void {
+        this.mindCoreFilePath = mindCoreFilePath;
+    }
+
     public getOwnID(): string {
         return this.observation.getOwnID();
     }
