@@ -1,3 +1,13 @@
+// TODO: there is a lot to do here:
+// - Fix the errors (e.g., non-existent properties).
+// - Refactor the code, so that the JQuery dependency is removed.
+// - Replace `var` with `const` and `let` whenever possible, and remove global variables.
+// - Add visibility modifiers to all class members.
+// - 1 class per file.
+// - Refactor the methods that are too long.
+// - Fix the types.
+// - Remove all instances of parser-generated code, and replace them with proper nodes.
+
 const MODAL_HTML : string = `
 <div class="modal fade" id="{}" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

@@ -1,29 +1,23 @@
-
-/*
-const basicSetup = require("codemirror").basicSetup;
-const EditorState = require("@codemirror/state").EditorState;
-const Compartment = require("@codemirror/state").Compartment;
-const EditorView = require("@codemirror/view").EditorView;
-const keymap = require("@codemirror/view").keymap;
-const indentWithTab = require("@codemirror/commands").indentWithTab;
-*/
-
 import {basicSetup} from "codemirror"
-import {EditorState, Compartment} from "@codemirror/state"
 import {EditorView, keymap} from "@codemirror/view"
-import {indentWithTab} from "@codemirror/commands"
-
 import {createNewModal, Modal} from './modal'; 
 
 const UNTITLED_NAME : string = "Untitled";
 const LOCAL_STORAGE_PREFIX : string = "00001_webagent_"
 const EDITOR_TABS_ELEMENT_ID : string = "#editor-tabs";
-
 const SOURCE_FILE_EXTENSION : string = ".tel";
-
 const MODAL_NEW_FILE_ID : string = "modal_new_file";
 const MODAL_RECOVER_ID : string = "modal_recover";
 
+// TODO: there is a lot to do here:
+// - Fix the errors (e.g., non-existent properties).
+// - Refactor the code, so that the JQuery dependency is removed.
+// - Replace `var` with `const` and `let` whenever possible, and remove global variables.
+// - Add visibility modifiers to all class members.
+// - 1 class per file.
+// - Refactor the methods that are too long.
+// - Fix the types.
+// - Remove all instances of parser-generated code, and replace them with proper nodes.
 export class Editor {
 
     tabs : Map<string, EditorFile>;
@@ -113,7 +107,8 @@ export class Editor {
             <a class="nav-link" href="#">${file_name}</a>
         </li>`)
 
-        // this is horrific :) sue me.
+        // this is horrific :) sue me. - BW
+        // I am going to :), but I'll first refactor the code so that JQuery can be defenestrated. - EU
         var editor = this;
         $("#" + tab_id).on("click", function(){
             editor.activateTab(tab_id);
@@ -275,4 +270,3 @@ class RecoverModal extends Modal {
     }
     clear_data() {}
 }
-
