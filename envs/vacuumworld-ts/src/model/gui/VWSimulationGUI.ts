@@ -13,11 +13,10 @@ export class VWSimulationGUI {
     private environment: VWEnvironment;
 
     public constructor(environment: VWEnvironment, config: any) {
-        // TODO: uncomment this when the config file is ready.
-        //this.config = VWSimulationGUI.validateConfig(config);
-        //this.gridSize = VWSimulationGUI.validateGridSize(environment, config);
+        this.config = VWSimulationGUI.validateConfig(config);
+        this.gridSize = VWSimulationGUI.validateGridSize(environment, config);
         this.environment = VWSimulationGUI.validateEnvironment(environment);
-        this.grid = this.createEmptyGrid(8); // TODO: change this to this.createGrid()
+        this.grid = this.createGrid();
     }
 
     public pack(): void {
@@ -66,16 +65,17 @@ export class VWSimulationGUI {
         VWSimulationGUI.validateEnvironment(environment);
         VWSimulationGUI.validateConfig(config);
 
-        if (config["min_grid_size"] === null || config["min_grid_size"] === undefined || config["min_grid_size"] <= 0) {
+        // TODO: throw errors with more meaningful messages.
+        if (config["min_environment_dim"] === null || config["min_environment_dim"] === undefined || config["min_environment_dim"] <= 0) {
             throw new Error("Invalid config.");
         }
-        else if (config["max_grid_size"] === null || config["max_grid_size"] === undefined || config["max_grid_size"] <= 0) {
+        else if (config["max_environment_dim"] === null || config["max_environment_dim"] === undefined || config["max_environment_dim"] <= 0) {
             throw new Error("Invalid config.");
         }
-        else if (config["min_grid_size"] > config["max_grid_size"]) {
+        else if (config["min_environment_dim"] > config["max_environment_dim"]) {
             throw new Error("Invalid config.");
         }
-        else if (environment.getGridSize() < config["min_grid_size"] || environment.getGridSize() > config["max_grid_size"]) {
+        else if (environment.getGridSize() < config["min_environment_dim"] || environment.getGridSize() > config["max_environment_dim"]) {
             throw new Error("Invalid environment.");
         }
         else {
@@ -132,7 +132,7 @@ export class VWSimulationGUI {
 
             this.unpack(); // Delete the old grid.
 
-            this.grid = this.createEmptyGrid(8); // TODO: change this to this.createGrid()
+            this.grid = this.createGrid(); // Create the new grid.
 
             this.pack(); // Create the new grid.
             this.show(); // Show the new grid.
@@ -141,6 +141,13 @@ export class VWSimulationGUI {
             console.log("Environment: ")
             console.log(this.environment.getAmbient().getGrid());
             i--;
+
+            (async () => await this.delay(1000))(); // TODO: use the `speed` option to set the delay.
         }
     }
+
+    private delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+    
 }

@@ -11,12 +11,14 @@ export class VWCleanAction extends VWPhysicalAction {
         return VWCleanAction.effort;
     }
 
-    public static overrideDefaultEffort(effort: bigint): void {
-        if (effort === null || effort === undefined) {
-            throw new Error("The effort cannot be null or undefined.");
+    public static overrideDefaultEffort(newEffort: bigint): void {
+        if (newEffort === null || newEffort === undefined) {
+            console.log("The new effort for VWCleanAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {
-            VWCleanAction.effort = effort;
+            VWCleanAction.effort = newEffort;
+
+            console.log("The effort of VWCleanAction has been changed to " + newEffort + ".");
         }
     }
 }

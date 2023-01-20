@@ -1,3 +1,10 @@
+import { VWBroadcastAction } from "./actions/VWBroadcastAction";
+import { VWCleanAction } from "./actions/VWCleanAction";
+import { VWDropDirtAction } from "./actions/VWDropDirtAction";
+import { VWIdleAction } from "./actions/VWIdleAction";
+import { VWMoveAction } from "./actions/VWMoveAction";
+import { VWSpeakAction } from "./actions/VWSpeakAction";
+import { VWTurnAction } from "./actions/VWTurnAction";
 import { VWEnvironment, VWEnvironmentJSON } from "./environment/VWEnvironment";
 import { VWSimulationGUI } from "./gui/VWSimulationGUI";
 
@@ -8,7 +15,7 @@ export class VacuumWorld {
     private tooltipsActive: boolean;
     private maxNumberOfCycles: number;
     private efforts: Map<string, bigint>;
-    private teleora: File;
+    private teleora: any; // TODO: Add Teleora type.
 
     public constructor() {
         this.setDefaultOptions();
@@ -150,6 +157,8 @@ export class VacuumWorld {
     // TODO: Implement this method properly.
     private startSimulation(): void {
         console.log("Start simulation.");
+
+        this.setActionEfforts();
 
         const config: object = {
             "initial_environment_dim": 3,
@@ -305,6 +314,17 @@ export class VacuumWorld {
         teleoraUploadInput.id = "teleora_upload_input";
 
         document.getElementById("teleora_selector_div").appendChild(teleoraUploadInput);
+
+        teleoraUploadInput.addEventListener("change", () => {
+            const file = teleoraUploadInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                this.teleora = <string>e.target.result; // TODO: parse teleora file.
+            }
+
+            reader.readAsText(file);
+        });
     }
 
     private saveOptionsAndCloseDialog(optionsDialog: HTMLDialogElement): void {
@@ -335,6 +355,7 @@ export class VacuumWorld {
 
     private resetOptionsDialog(): void {
         document.getElementById("options_dialog_div").removeChild(document.getElementById("options_dialog"));
+        document.getElementById("options_dialog_div").hidden = true;
     }
 
     private saveOptions(): void {
@@ -364,7 +385,7 @@ export class VacuumWorld {
             const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + "_effort_input")).value;
 
             if (value === "" || value === null || value === undefined) {
-                continue; // TODO: implement this.
+                efforts.set(action, undefined);
             }
             else {
                 efforts.set(action, BigInt(parseInt(value)));
@@ -372,5 +393,15 @@ export class VacuumWorld {
         }
 
         return efforts;
+    }
+
+    private setActionEfforts(): void {
+        VWIdleAction.overrideDefaultEffort(this.efforts.get("VWIdleAction"));
+        VWMoveAction.overrideDefaultEffort(this.efforts.get("VWMoveAction"));
+        VWTurnAction.overrideDefaultEffort(this.efforts.get("VWTurnAction"));
+        VWCleanAction.overrideDefaultEffort(this.efforts.get("VWCleanAction"));
+        VWDropDirtAction.overrideDefaultEffort(this.efforts.get("VWDropDirtAction"));
+        VWSpeakAction.overrideDefaultEffort(this.efforts.get("VWSpeakAction"));
+        VWBroadcastAction.overrideDefaultEffort(this.efforts.get("VWBroadcastAction"));
     }
 }

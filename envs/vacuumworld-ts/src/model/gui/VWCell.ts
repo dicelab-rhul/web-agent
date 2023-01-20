@@ -1,3 +1,5 @@
+import { VWColour } from "../common/VWColour";
+import { VWOrientation } from "../common/VWOrientation";
 import { VWLocationAppearance } from "../environment/VWLocationAppearance";
 
 export class VWCell {
@@ -31,9 +33,34 @@ export class VWCell {
     }
 
     private getCellImageSrc(): string {
-        // TODO: get the image src from the location appearance.
-    
-        return "envs/vacuumworld-ts/res/images/locations/empty.png";
+        if (this.locationAppearance === null || this.locationAppearance === undefined) {
+            throw new Error("Cannot get the image src for a cell for which no location appearance is available.");
+        }
+        else if (this.locationAppearance.hasActor()) {
+            return this.getCellImageSrcIfActorIsPresent();
+        }
+        else if (this.locationAppearance.hasDirt()) {
+            return this.getCellImageSrcIfDirtIsPresent();
+        }
+        else {
+            return "envs/vacuumworld-ts/res/images/locations/empty.png";
+        }        
+    }
+
+    private getCellImageSrcIfActorIsPresent(): string {
+        const actorOrientation: VWOrientation = this.locationAppearance.getActorAppearance().orElseThrow().getOrientation();
+        const actorColour: VWColour = this.locationAppearance.getActorAppearance().orElseThrow().getColour();
+        const orientation: string = actorOrientation.toString().toLowerCase();
+        const colour: string = actorColour.toString().toLowerCase();
+
+        return `envs/vacuumworld-ts/res/images/locations/actor/${colour}_${orientation}.png`;
+    }
+
+    private getCellImageSrcIfDirtIsPresent(): string {
+        const dirtColour: VWColour = this.locationAppearance.getDirtAppearance().orElseThrow().getColour();
+        const colour: string = dirtColour.toString().toLowerCase();
+
+        return `envs/vacuumworld-ts/res/images/locations/dirt/${colour}_dirt.png`;
     }
 
     public pack(): void {

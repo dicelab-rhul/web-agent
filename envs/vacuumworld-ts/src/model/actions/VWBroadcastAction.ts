@@ -17,12 +17,14 @@ export class VWBroadcastAction extends VWCommunicativeAction {
         return VWBroadcastAction.effort;
     }
 
-    public static overrideDefaultEffort(effort: bigint): void {
-        if (effort === null || effort === undefined) {
-            throw new Error("The effort cannot be null or undefined.");
+    public static overrideDefaultEffort(newEffort: bigint): void {
+        if (newEffort === null || newEffort === undefined) {
+            console.log("The new effort for VWBroadcastAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {
-            VWBroadcastAction.effort = effort;
+            VWBroadcastAction.effort = newEffort;
+
+            console.log("The effort of VWBroadcastAction has been changed to " + newEffort + ".");
         }
     }
 }

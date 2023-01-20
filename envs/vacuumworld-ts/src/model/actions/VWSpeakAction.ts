@@ -18,12 +18,14 @@ export class VWSpeakAction extends VWCommunicativeAction {
         }
     }
 
-    public static overrideDefaultEffort(effort: bigint): void {
-        if (effort === null || effort === undefined) {
-            throw new Error("The effort cannot be null or undefined.");
+    public static overrideDefaultEffort(newEffort: bigint): void {
+        if (newEffort === null || newEffort === undefined) {
+            console.log("The new effort for VWSpeakAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {
-            VWSpeakAction.effort = effort;
+            VWSpeakAction.effort = newEffort;
+
+            console.log("The effort of VWSpeakAction has been changed to " + newEffort + ".");
         }
     }
 }
