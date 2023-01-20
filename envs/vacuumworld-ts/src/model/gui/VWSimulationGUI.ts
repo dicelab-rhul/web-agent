@@ -139,9 +139,6 @@ export class VWSimulationGUI {
             this.pack(); // Create the new grid.
             this.show(); // Show the new grid.
 
-            console.log("Cycle: " + this.environment.getCycleNumber() + ".")
-            console.log("Environment: ")
-            console.log(this.environment.getAmbient().getGrid());
             i--;
 
             (async () => await this.delay(1000))(); // TODO: use the `speed` option to set the delay.
@@ -151,5 +148,5 @@ export class VWSimulationGUI {
     private delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
-    
+
 }

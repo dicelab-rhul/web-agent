@@ -1,3 +1,13 @@
+/*
+ * This file:
+ * - Creates the elements of the page that are common to all environments:
+ *  - The container div.
+ *  - The error div.
+ * - Loads the favicon.
+ * - Loads the main style of the page.
+ * - Loads the main style of the environment.
+ * - Loads the main script of the environment.
+ */
 document.addEventListener("DOMContentLoaded", function() {
     const resourcesPaths = getResourcesPaths();
 

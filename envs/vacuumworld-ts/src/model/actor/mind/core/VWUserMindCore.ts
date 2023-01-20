@@ -19,6 +19,8 @@ export class VWUserMindCore extends VWAbstractMindCore {
         else {
             this.difficultyLevel = difficultyLevel;
         }
+
+        this.setMindCoreFilePath(__filename);
     }
 
     public getDifficultyLevel(): VWUserDifficulty {

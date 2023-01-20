@@ -1,39 +1,36 @@
-const path = require( 'path' );
-const webpack = require('webpack');
+// These cannot be converted to ES modules because they are used by webpack.
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
+    // Plugins
     plugins: [
         new webpack.DefinePlugin({
             "process.platform": JSON.stringify(process.platform)
         }),
     ],
-
-    // bundling mode
-    mode: 'production',
-
-    // entry files
-    entry: './src/main.ts',
-
-    // output bundles (location)
+    // Bundling mode
+    mode: "production",
+    // Entry files
+    entry: "./src/main.ts",
+    // Output bundles (location)
     output: {
-        path: path.resolve( __dirname, 'dist' ),
-        filename: 'main.js',
+        path: path.resolve(__dirname, "dist"),
+        filename: "main.js",
     },
-
-    // file resolutions
+    // File resolutions
     resolve: {
-        extensions: [ '.ts', '.js' ],
+        extensions: [".ts", ".js"],
         fallback: {
             "fs": false
         }
     },
-
-    // loaders
+    // Loaders
     module: {
         rules: [
             {
                 test: /\.tsx?/,
-                use: 'ts-loader',
+                use: "ts-loader",
                 exclude: /node_modules/,
             }
         ]
