@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", function() {
     createContainerDiv();
     createErrorDiv();
     loadStyle("/static/css/index.css"); // This is the main style of the page.
@@ -89,7 +89,7 @@ function loadStyle(stylePath) {
     }
 }
 
-function loadScript(scriptPath) {
+function loadScript(scriptPath, defer) {
     if (scriptPath === null || scriptPath === undefined) {
         throw new Error("The script path is null or undefined.");
     }
@@ -108,6 +108,7 @@ function loadScript(scriptPath) {
         script.src = scriptPath;
         script.type = "text/javascript";
         script.async = false;
+        script.defer = defer === undefined || defer == null ? false : defer;
 
         document.body.appendChild(script);
     }
