@@ -1,4 +1,4 @@
-import { VWDraggable } from "./VWDraggable";
+import { VWDraggable } from "./simulation/div/VWDraggable";
 
 export class VWDraggables {
     private draggablesDiv: HTMLDivElement;

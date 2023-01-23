@@ -1,6 +1,6 @@
-import { VWColour } from "../common/VWColour";
-import { VWOrientation } from "../common/VWOrientation";
-import { VWLocationAppearance } from "../environment/VWLocationAppearance";
+import { VWColour } from "../../../common/VWColour";
+import { VWOrientation } from "../../../common/VWOrientation";
+import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
 
 export class VWCell {
     private cell: HTMLDivElement;
