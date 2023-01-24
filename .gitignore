@@ -53,6 +53,9 @@ deploy.sh
 .parcel-cache
 experimental/dist/
 
+# IDE files
+.vscode/
+
 # Other stuff
 typings/
 lib/*.js
