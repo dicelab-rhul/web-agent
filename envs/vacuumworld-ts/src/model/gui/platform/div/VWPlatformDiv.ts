@@ -24,7 +24,6 @@ export class VWPlatformDiv implements VWDiv {
     private initialViewButtonsDiv: VWInitialViewButtonsDiv; // Shown by default;
     private optionsDialogDiv: VWOptionsDialogDiv; // Hidden by default;
     private gridDiv: VWGridDiv; // Hidden by default;
-    private draggableBodiesDiv: VWDraggableBodiesDiv; // Hidden by default;
     private simulationControlsDiv: VWSimulationControlsDiv; // Hidden by default;
     private options: VWOptions;
     private packed: boolean;
@@ -42,7 +41,6 @@ export class VWPlatformDiv implements VWDiv {
             this.initialViewButtonsDiv = new VWInitialViewButtonsDiv(this.start.bind(this), this.showOptionsDialog.bind(this), this.guide);
             this.optionsDialogDiv = new VWOptionsDialogDiv(this.saveNewOptions.bind(this), this.discardNewOptions.bind(this), this.loadState.bind(this), this.loadTeleora.bind(this));
             this.gridDiv = new VWGridDiv();
-            this.draggableBodiesDiv = new VWDraggableBodiesDiv();
             this.simulationControlsDiv = new VWSimulationControlsDiv();
             this.options = new VWOptions();
             this.packed = false;
@@ -81,38 +79,90 @@ export class VWPlatformDiv implements VWDiv {
         reader.readAsText(file);
     }
 
-    // TODO: Implement this method properly.
-    // Pass the options to the simulation.
-    // Pass the appropiate config to the simulation.
     private start(): void {
         try {
-            console.log("Start simulation.");
-
             this.setActionEfforts();
 
+            // TODO: load the appropriate config.
             const config: object = {
-                "initial_environment_dim": 3,
+                "initial_environment_dim": 8,
                 "min_environment_dim": 3,
                 "max_environment_dim": 13
             };
 
-            let environment: VWEnvironment = VWEnvironment.fromJsonObject(this.options.getStateToLoad(), config);
+            let environment: VWEnvironment = VWEnvironment.newEnvironment(this.options, config, this.options.getStateToLoad());
+            let simulation: VWSimulation = new VWSimulation(environment, this.options, config);
 
-            // TODO: change this.
-            let simulation: VWSimulation = new VWSimulation(environment, this.options, config, () => {
-                this.div.replaceChild(simulation.getGridDiv().getDiv(), this.gridDiv.getDiv());
-                this.gridDiv = simulation.getGridDiv();
-            });
+            simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
 
             this.initialViewDiv.hide();
             this.initialViewButtonsDiv.hide();
             this.initialViewDiv.unpack();
             this.initialViewButtonsDiv.unpack();
 
-            simulation.cycleSimulation();
+            if (this.options.isAutoplayActive()) {
+                simulation.cycleSimulation();
+            }
+            else {
+                simulation.showSimulation();
+            }
         }
         catch (e) {
             VWErrorDiv.displayError(e);
+
+            console.error(e);
+        }
+    }
+
+    private replaceGridDiv(newGridDiv: VWGridDiv): void {
+        if (newGridDiv === null || newGridDiv === undefined) {
+            throw new Error("Cannot replace the grid div: the new grid div is null or undefined.");
+        }
+        else {
+            this.div.replaceChild(newGridDiv.getDiv(), this.gridDiv.getDiv());
+            this.gridDiv = newGridDiv;
+        }
+    }
+
+    private hideDraggableBodiesDiv(): void {
+        VWExistenceChecker.validateExistence(this.gridDiv, "The grid div cannot be null or undefined.");
+        VWExistenceChecker.validateExistence(this.gridDiv.getDraggableBodiesDiv(), "The draggable bodies div cannot be null or undefined.");
+
+        this.gridDiv.getDraggableBodiesDiv().hide();
+    }
+
+    private replaceDraggableBodiesDiv(gridSize: number): void {
+        VWExistenceChecker.validateExistence(gridSize, "The grid size cannot be null or undefined.");
+        VWExistenceChecker.validateExistence(this.gridDiv, "The grid div cannot be null or undefined.");
+        VWExistenceChecker.validateExistence(this.gridDiv.getDraggableBodiesDiv(), "The draggable bodies div cannot be null or undefined.");
+
+        let newDraggableBodiesDiv: VWDraggableBodiesDiv = new VWDraggableBodiesDiv(gridSize);
+        // TODO: resize the draggable bodies div
+
+        newDraggableBodiesDiv.pack();
+
+        this.gridDiv.getDiv().replaceChild(newDraggableBodiesDiv.getDiv(), this.gridDiv.getDraggableBodiesDiv().getDiv());
+        this.gridDiv.setDraggableBodiesDiv(newDraggableBodiesDiv);
+
+        this.gridDiv.getDraggableBodiesDiv().show();
+    }
+
+    private hideSimulationControlsDiv(): void {
+        if (this.simulationControlsDiv === null || this.simulationControlsDiv === undefined) {
+            throw new Error("Cannot hide the simulation controls div: it is null or undefined.");
+        }
+        else {
+            this.simulationControlsDiv.hide();
+        }
+    }
+
+    private replaceSimulationControlsDiv(newSimulationControlsDiv: VWSimulationControlsDiv): void {
+        if (newSimulationControlsDiv === null || newSimulationControlsDiv === undefined) {
+            throw new Error("Cannot replace the simulation controls div: the new simulation controls div is null or undefined.");
+        }
+        else {
+            this.div.replaceChild(newSimulationControlsDiv.getDiv(), this.simulationControlsDiv.getDiv());
+            this.simulationControlsDiv = newSimulationControlsDiv;
         }
     }
 
@@ -273,9 +323,6 @@ export class VWPlatformDiv implements VWDiv {
         else if (!VWExistenceChecker.exists(this.gridDiv)) {
             throw new Error("Cannot pack: the grid div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.draggableBodiesDiv)) {
-            throw new Error("Cannot pack: the draggable bodies div is null or undefined.");
-        }
         else if (!VWExistenceChecker.exists(this.simulationControlsDiv)) {
             throw new Error("Cannot pack: the simulation controls div is null or undefined.");
         }
@@ -290,7 +337,6 @@ export class VWPlatformDiv implements VWDiv {
             this.div.appendChild(this.initialViewButtonsDiv.getDiv());
             this.div.appendChild(this.optionsDialogDiv.getDiv());
             this.div.appendChild(this.gridDiv.getDiv());
-            this.div.appendChild(this.draggableBodiesDiv.getDiv());
             this.div.appendChild(this.simulationControlsDiv.getDiv());
 
             this.packed = true;
@@ -302,35 +348,31 @@ export class VWPlatformDiv implements VWDiv {
             console.log("The initial view div is already unpacked.");
         }
         else if (!VWExistenceChecker.exists(this.div)) {
-            throw new Error("Cannot pack: the platform div is null or undefined.");
+            throw new Error("Cannot unpack: the platform div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the initial view div is not hidden (it must be before unpacking it).");
         }
         else if (!VWExistenceChecker.exists(this.initialViewDiv)) {
-            throw new Error("Cannot pack: the initial view div is null or undefined.");
+            throw new Error("Cannot unpack: the initial view div is null or undefined.");
         }
         else if (!VWExistenceChecker.exists(this.initialViewButtonsDiv)) {
-            throw new Error("Cannot pack: the initial view buttons div is null or undefined.");
+            throw new Error("Cannot unpack: the initial view buttons div is null or undefined.");
         }
         else if (!VWExistenceChecker.exists(this.optionsDialogDiv)) {
-            throw new Error("Cannot pack: the options dialog div is null or undefined.");
+            throw new Error("Cannot unpack: the options dialog div is null or undefined.");
         }
         else if (!VWExistenceChecker.exists(this.gridDiv)) {
-            throw new Error("Cannot pack: the grid div is null or undefined.");
-        }
-        else if (!VWExistenceChecker.exists(this.draggableBodiesDiv)) {
-            throw new Error("Cannot pack: the draggable bodies div is null or undefined.");
+            throw new Error("Cannot unpack: the grid div is null or undefined.");
         }
         else if (!VWExistenceChecker.exists(this.simulationControlsDiv)) {
-            throw new Error("Cannot pack: the simulation controls div is null or undefined.");
+            throw new Error("Cannot unpack: the simulation controls div is null or undefined.");
         }
         else {
             this.div.removeChild(this.initialViewDiv.getDiv());
             this.div.removeChild(this.initialViewButtonsDiv.getDiv());
             this.div.removeChild(this.optionsDialogDiv.getDiv());
             this.div.removeChild(this.gridDiv.getDiv());
-            this.div.removeChild(this.draggableBodiesDiv.getDiv());
             this.div.removeChild(this.simulationControlsDiv.getDiv());
 
             this.packed = false;
@@ -369,7 +411,6 @@ export class VWPlatformDiv implements VWDiv {
             this.initialViewButtonsDiv.hide();
             this.optionsDialogDiv.hide();
             this.gridDiv.hide();
-            this.draggableBodiesDiv.hide();
             this.simulationControlsDiv.hide();
 
             this.div.hidden = true;

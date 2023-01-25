@@ -3,11 +3,13 @@ import { VWMap } from "../../../common/VWMap";
 import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWCell } from "./VWCell";
+import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
 
 export class VWGridDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "grid_div";
     private gridSize: number; // The length of the grid's side.
     private gridMap: VWMap<VWCoord, VWCell>;
+    private draggableBodiesDiv: VWDraggableBodiesDiv;
     private packed: boolean;
 
     public constructor() {
@@ -15,6 +17,7 @@ export class VWGridDiv implements VWDiv {
         this.div.id = "grid_div";
         this.div.classList.add("grid", "center-aligned");
         this.div.hidden = true;
+        this.draggableBodiesDiv = new VWDraggableBodiesDiv();
         this.packed = false;
     }
 
@@ -79,11 +82,15 @@ export class VWGridDiv implements VWDiv {
         else if (this.gridMap === null || this.gridMap === undefined) {
             throw new Error("Cannot pack a grid that has no cells.");
         }
+        else if (this.draggableBodiesDiv === null || this.draggableBodiesDiv === undefined) {
+            throw new Error("Cannot pack a grid that has no draggable bodies div.");
+        }
         else if (!this.packed) {
             this.gridMap.forEach((cell: VWCell) => cell.pack());
 
             let table: HTMLTableElement = this.createTableForGrid();
             this.div.appendChild(table);
+            this.div.appendChild(this.draggableBodiesDiv.getDiv());
             this.packed = true;
         }
     }
@@ -101,9 +108,13 @@ export class VWGridDiv implements VWDiv {
         else if (this.div.childElementCount === 0) {
             throw new Error("Cannot unpack: the grid div has no children.");
         }
+        else if (!VWExistenceChecker.exists(this.draggableBodiesDiv)) {
+            throw new Error("Cannot pack a grid that has no draggable bodies div.");
+        }
         else {
             this.div.removeChild(this.div.firstChild);
             this.gridMap.forEach((cell: VWCell) => cell.unpack());
+            this.div.removeChild(this.draggableBodiesDiv.getDiv());
             this.gridMap = null;
             this.packed = false;
         }
@@ -145,6 +156,24 @@ export class VWGridDiv implements VWDiv {
         }
         else {
             return this.div;
+        }
+    }
+
+    public getDraggableBodiesDiv(): VWDraggableBodiesDiv {
+        if (this.draggableBodiesDiv === null || this.draggableBodiesDiv === undefined) {
+            throw new Error("Cannot get the draggable bodies div: it is null or undefined.");
+        }
+        else {
+            return this.draggableBodiesDiv;
+        }
+    }
+
+    public setDraggableBodiesDiv(draggableBodiesDiv: VWDraggableBodiesDiv): void {
+        if (draggableBodiesDiv === null || draggableBodiesDiv === undefined) {
+            throw new Error("Cannot set the draggable bodies div: it is null or undefined.");
+        }
+        else {
+            this.draggableBodiesDiv = draggableBodiesDiv;
         }
     }
 }

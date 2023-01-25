@@ -4,7 +4,9 @@ import { VWEnvironment } from "../../../environment/VWEnvironment";
 import { VWLocation } from "../../../environment/VWLocation";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
+import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
 import { VWGridDiv } from "./VWGridDiv";
+import { VWSimulationControlsDiv } from "./VWSimulationControlsDiv";
 
 export class VWSimulation {
     private gridSize: number;
@@ -12,15 +14,26 @@ export class VWSimulation {
     private gridDiv: VWGridDiv;
     private environment: VWEnvironment;
     private options: VWOptions
-    private gridDivReplacementCallback: () => void;
+    private replaceGridDivCallback: (newGridDiv: VWGridDiv) => void;
+    private hideDraggableBodiesDivCallback: () => void;
+    private replaceDraggableBodiesDivCallback: (newDraggableBodiesDiv: VWDraggableBodiesDiv) => void;
+    private hideSimulationControlsDivCallback: () => void;
+    private replaceSimulationControlsDivCallback: (newSimulationControlsDiv: VWSimulationControlsDiv) => void;
 
-    public constructor(environment: VWEnvironment, options: VWOptions, config: any, gridDivReplacementCallback: () => void) {
+    public constructor(environment: VWEnvironment, options: VWOptions, config: any) {
         this.config = VWSimulation.validateConfig(config);
         this.gridSize = VWSimulation.validateGridSize(environment, config);
         this.environment = VWSimulation.validateEnvironment(environment);
         this.gridDiv = this.createGrid();
         this.options = VWSimulation.validateOptions(options);
-        this.gridDivReplacementCallback = gridDivReplacementCallback;
+    }
+
+    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (d: VWDraggableBodiesDiv) => void, simCtrlHide: () => void, simCtrlReplace: (s: VWSimulationControlsDiv) => void): void {
+        this.replaceGridDivCallback = gridRepl;
+        this.replaceDraggableBodiesDivCallback = dragReplace;
+        this.hideDraggableBodiesDivCallback = dragHide;
+        this.hideSimulationControlsDivCallback = simCtrlHide;
+        this.replaceSimulationControlsDivCallback = simCtrlReplace;
     }
 
     public getGridDiv(): VWGridDiv {
@@ -90,11 +103,41 @@ export class VWSimulation {
         return gridDiv;
     }
 
+    public showSimulation(): void {
+        this.gridDiv = this.createGrid(); // Create the new grid.
+
+        this.replaceGridDivCallback(this.gridDiv); // Replace the old grid div with the new grid.
+
+        this.gridDiv.pack(); // Pack the new grid.
+
+        this.replaceDraggableBodiesDivCallback(new VWDraggableBodiesDiv(this.gridSize));
+
+        this.gridDiv.show(); // Show the new grid.
+    }
+
     public cycleSimulation(): void {
-        console.log("Initial environment: ")
+        this.validateCallbacks();
+
+        console.log("Simulation starting...");
+        console.log("Initial environment: ");
         console.log(console.log(JSON.stringify(this.environment.toJsonObject(), null, 4)));
 
         this.mainLoop();
+    }
+
+    private validateCallbacks(): void {
+        if (this.replaceGridDivCallback === null || this.replaceGridDivCallback === undefined) {
+            throw new Error("Cannot cycle the simulation without a callback to replace the grid div.");
+        }
+        else if (this.hideDraggableBodiesDivCallback === null || this.hideDraggableBodiesDivCallback === undefined) {
+            throw new Error("Cannot cycle the simulation without a callback to hide the draggable bodies div.");
+        }
+        else if (this.hideSimulationControlsDivCallback === null || this.hideSimulationControlsDivCallback === undefined) {
+            throw new Error("Cannot cycle the simulation without a callback to hide the simulation controls div.");
+        }
+        else if (this.replaceSimulationControlsDivCallback === null || this.replaceSimulationControlsDivCallback === undefined) {
+            throw new Error("Cannot cycle the simulation without a callback to replace the simulation controls div.");
+        }
     }
 
     private async mainLoop(): Promise<void> {
@@ -126,7 +169,7 @@ export class VWSimulation {
 
         this.gridDiv = this.createGrid(); // Create the new grid.
 
-        this.gridDivReplacementCallback(); // Replace the old grid div with the new grid.
+        this.replaceGridDivCallback(this.gridDiv); // Replace the old grid div with the new grid.
 
         this.gridDiv.pack(); // Pack the new grid.
         this.gridDiv.show(); // Show the new grid.
