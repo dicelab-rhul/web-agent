@@ -22,7 +22,9 @@ import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWPosition } from "../common/VWPosition";
 import { VWDirt } from "../dirt/VWDirt";
+import { VWOptions } from "../gui/common/VWOptions";
 import { VWActionUtils } from "../utils/VWActionUtils";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWAmbient } from "./VWAmbient";
 import { VWLocation, VWLocationJSON } from "./VWLocation";
 import { VWLocationAppearance } from "./VWLocationAppearance";
@@ -308,6 +310,17 @@ export class VWEnvironment {
 
     private getActorMindCorePath(mindCore: VWMindCore): string {
         return mindCore.getMindCoreFilePath();
+    }
+
+    public static newEnvironment(options: VWOptions, config: any, data?: VWEnvironmentJSON): VWEnvironment {
+        VWExistenceChecker.validateExistence(options, "The options cannot be null or undefined.");
+
+        if (options.getStateToLoad() === null || options.getStateToLoad() === undefined) {
+            return VWEnvironment.newEmptyVWEnvironment(config);
+        }
+        else {
+            return VWEnvironment.fromJsonObject(data, config);
+        }
     }
 
     public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {
