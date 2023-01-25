@@ -10,10 +10,25 @@ export class VWDraggableDiv implements VWDiv {
         this.div = document.createElement("div");
         this.div.classList.add("draggable-body-div");
         this.div.hidden = true;
+
+        this.addDragEventsListeners();
+
         this.displayedImage = document.createElement("img");
         this.displayedImage.src = imageSrc;
         this.displayedImage.classList.add("draggable-image");
         this.packed = false;
+    }
+
+    private addDragEventsListeners(): void {
+        this.div.addEventListener("dragstart", (event: DragEvent) => {
+            (<HTMLElement>event.target).classList.add("dragging");
+
+            event.dataTransfer.setData("source", "draggable-image");
+        });
+
+        this.div.addEventListener("dragend", (event: DragEvent) => {
+            (<HTMLElement>event.target).classList.remove("dragging");
+        });
     }
 
     public pack(): void {

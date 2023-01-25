@@ -1,7 +1,12 @@
+import { VWActorFactory } from "../../../actor/factories/VWActorFactory";
+import { VWColour } from "../../../common/VWColour";
 import { VWCoord } from "../../../common/VWCoord";
+import { VWDirection } from "../../../common/VWDirection";
 import { VWMap } from "../../../common/VWMap";
+import { VWDirt } from "../../../dirt/VWDirt";
 import { VWEnvironment } from "../../../environment/VWEnvironment";
 import { VWLocation } from "../../../environment/VWLocation";
+import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
 import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
@@ -93,7 +98,7 @@ export class VWSimulation {
         let gridMap: VWMap<VWCoord, VWCell> = new VWMap<VWCoord, VWCell>();
 
         this.environment.getAmbient().getGrid().forEach((loc: VWLocation, coord: VWCoord) => {
-            gridMap.put(coord, new VWCell(loc.getAppearance()));
+            gridMap.put(coord, new VWCell(loc.getAppearance(), this.dropCallback.bind(this), this.rotateCallback.bind(this), this.doubleClickCallback.bind(this)));
         });
     
         let gridDiv: VWGridDiv = new VWGridDiv();
@@ -101,6 +106,68 @@ export class VWSimulation {
         gridDiv.updateGrid(this.gridSize, gridMap);
 
         return gridDiv;
+    }
+
+    private dropCallback(imageSrc: string, locationAppearance: VWLocationAppearance): VWLocationAppearance {
+        const coord: VWCoord = locationAppearance.getCoord();
+
+        if (imageSrc.endsWith("green_north.png")) {
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.removeActorIfPresent());
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.addActor(VWActorFactory.createVWActorFacingNorth(VWColour.GREEN, this.options)));
+        }
+        else if (imageSrc.endsWith("orange_north.png")) {
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.removeActorIfPresent());
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.addActor(VWActorFactory.createVWActorFacingNorth(VWColour.ORANGE, this.options)));
+        }
+        else if (imageSrc.endsWith("white_north.png")) {
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.removeActorIfPresent());
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.addActor(VWActorFactory.createVWActorFacingNorth(VWColour.WHITE, this.options)));
+        }
+        else if (imageSrc.endsWith("user_north.png")) {
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.removeActorIfPresent());
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.addActor(VWActorFactory.createVWActorFacingNorth(VWColour.USER, this.options)));
+        }
+        else if (imageSrc.endsWith("green_dirt.png")) {
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.removeDirtIfPresent());
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.addDirt(new VWDirt(VWColour.GREEN)));
+        }
+        else if (imageSrc.endsWith("orange_dirt.png")) {
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.removeDirtIfPresent());
+            this.environment.getLocation(coord).ifPresent((loc: VWLocation) => loc.addDirt(new VWDirt(VWColour.ORANGE)));
+        }
+        else {
+            throw new Error("Invalid image src.");
+        }
+
+        return this.environment.getLocation(coord).orElseThrow().getAppearance();
+    }
+
+    private doubleClickCallback(locationAppearance: VWLocationAppearance): VWLocationAppearance {
+        const coord: VWCoord = locationAppearance.getCoord();
+
+        // We only remove the "top" item, so if there is an actor, remove it, otherwise remove the dirt (if present).
+        this.environment.getLocation(coord).ifPresent((loc: VWLocation) => {
+            if (loc.hasActor()) {
+                loc.removeActor();
+            }
+            else if (loc.hasDirt()) {
+                loc.removeDirt();
+            }
+        });
+
+        return this.environment.getLocation(coord).orElseThrow().getAppearance();
+    }
+
+    private rotateCallback(direction: VWDirection, locationAppearance: VWLocationAppearance): VWLocationAppearance {
+        const coord: VWCoord = locationAppearance.getCoord();
+
+        this.environment.getLocation(coord).ifPresent((loc: VWLocation) => {
+            if (loc.hasActor()) {
+                this.environment.turnActor(coord, direction);
+            }
+        });
+
+        return this.environment.getLocation(coord).orElseThrow().getAppearance();
     }
 
     public showSimulation(): void {

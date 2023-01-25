@@ -14,7 +14,9 @@
 
 * File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 102: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 105: `// TODO: call this method from 'loadFromFile()', and validate the arguments.`
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 106: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
+
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 109: `// TODO: call this method from 'loadFromFile()', and validate the arguments.`
 
 * File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 10: `private teleora: any; // TODO: Add Teleora type.`
 
@@ -26,7 +28,7 @@
 
 * File [envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts](envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts) - line 180: `// TODO: implement this method.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts) - line 56: `// TODO: throw errors with more meaningful messages.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts) - line 61: `// TODO: throw errors with more meaningful messages.`
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 24: `private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.`
 

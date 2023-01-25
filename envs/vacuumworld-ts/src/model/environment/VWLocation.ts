@@ -94,6 +94,12 @@ export class VWLocation {
         }
     }
 
+    public removeActorIfPresent(): void {
+        if (this.hasActor()) {
+            this.removeActor();
+        }
+    }
+
     public popActor(): JOptional<VWActor> {
         const actor: JOptional<VWActor> = this.getActor();
 
@@ -130,6 +136,12 @@ export class VWLocation {
         }
         else {
             this.dirt = JOptional.empty();
+        }
+    }
+
+    public removeDirtIfPresent(): void {
+        if (this.hasDirt()) {
+            this.removeDirt();
         }
     }
 

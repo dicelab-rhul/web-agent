@@ -1,8 +1,34 @@
+body {
+    user-select: none;
+}
+
+.dropzone.dragover {
+    filter: brightness(90%);
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.selected {
+    filter: brightness(90%);
+}
+
+tr {
+    padding: 0%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+
 td {
     border: 1px black solid;
     padding: 0; 
     margin: 0;
     border-collapse: collapse;
+    width: auto;
+    height: auto;
+    overflow: hidden;
 }
 
 table {
@@ -11,8 +37,6 @@ table {
     margin: 0;
     border-collapse: collapse;
     border-spacing: 0;
-    width: 100%;
-    height: 100%;
 }
 
 #container_div {
@@ -50,5 +74,6 @@ table {
 }
 
 .cell {
-    padding: 0;
+    padding-bottom: 0%;
+    display: flex;
 }
