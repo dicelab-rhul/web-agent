@@ -1,5 +1,7 @@
 import { VWColour } from "../../common/VWColour";
 import { VWOrientation } from "../../common/VWOrientation";
+import { VWOptions } from "../../gui/common/VWOptions";
+import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 import { VWActor, VWActorJSON } from "../VWActor";
 import { VWCleaningAgent } from "../VWCleaningAgent";
 import { VWUser } from "../VWUser";
@@ -60,7 +62,7 @@ export class VWActorFactory {
         else {
             const colour: VWColour = VWColour[data["colour"]];
             const orientation: VWOrientation = VWOrientation[data["orientation"]];
-            const mindCore: VWMindCore = data["mind"] == "hysteretic" ? new VWHystereticMindCore() : VWAbstractMindCore.loadFromFile(data["mind"]);
+            const mindCore: VWMindCore = data["mind"] === "hysteretic" ? new VWHystereticMindCore() : VWAbstractMindCore.loadFromFile(data["mind"]);
             const mind: VWCleaningAgentMind = new VWCleaningAgentMind(mindCore);
             const observationSensor: VWObservationSensor = new VWObservationSensor();
             const listeningSensor: VWListeningSensor = new VWListeningSensor();
@@ -95,5 +97,55 @@ export class VWActorFactory {
 
             return new VWUser(orientation, mind, observationSensor, physicalActuator);
         }
+    }
+
+    public static createVWActorFacingNorth(colour: VWColour, options: VWOptions): VWActor {
+        if (colour === null || colour === undefined) {
+            throw new Error("The colour of a `VWActor` cannot be null or undefined.");
+        }
+        else if (colour === VWColour.USER) {
+            return this.createVWUserFacingNorth();
+        }
+        else if (Object.values(VWColour).includes(colour)) {
+            return this.createVWCleaningAgentFacingNorth(colour, options);
+        }
+        else {
+            throw new Error(`The colour of a \`VWActor\` cannot be "${colour}".`);
+        }
+    }
+
+    public static createVWCleaningAgentFacingNorth(colour: VWColour, options: VWOptions): VWCleaningAgent {
+        if (colour === null || colour === undefined) {
+            throw new Error("The colour of a `VWCleaningAgent` cannot be null or undefined.");
+        }
+        else if (colour === VWColour.USER) {
+            throw new Error(`The colour of a \`VWCleaningAgent\` cannot be "${VWColour.USER}".`);
+        }
+        else if (!Object.values(VWColour).includes(colour)) {
+            throw new Error(`The colour of a \`VWCleaningAgent\` cannot be "${colour}".`);
+        }
+        else if (options === null || options === undefined) {
+            throw new Error("The simulation options cannot be null or undefined.");
+        }
+        else {
+            const orientation: VWOrientation = VWOrientation.NORTH;
+            const mindCore: VWMindCore = VWExistenceChecker.exists(options.getTeleora()) ? VWAbstractMindCore.import(options.getTeleora()) : new VWHystereticMindCore();
+            const mind: VWCleaningAgentMind = new VWCleaningAgentMind(mindCore);
+            const observationSensor: VWObservationSensor = new VWObservationSensor();
+            const listeningSensor: VWListeningSensor = new VWListeningSensor();
+            const physicalActuator: VWCleaningAgentPhysicalActuator = new VWCleaningAgentPhysicalActuator();
+            const communicativeActuator: VWCommunicativeActuator = new VWCommunicativeActuator();
+
+            return new VWCleaningAgent(colour, orientation, mind, observationSensor, listeningSensor, physicalActuator, communicativeActuator);
+        }
+    }
+
+    public static createVWUserFacingNorth(): VWUser {
+        const orientation: VWOrientation = VWOrientation.NORTH;
+        const mind: VWUserMind = new VWUserMind();
+        const observationSensor: VWObservationSensor = new VWObservationSensor();
+        const physicalActuator: VWUserPhysicalActuator = new VWUserPhysicalActuator();
+
+        return new VWUser(orientation, mind, observationSensor, physicalActuator);
     }
 }

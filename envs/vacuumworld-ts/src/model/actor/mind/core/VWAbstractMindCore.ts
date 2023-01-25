@@ -102,6 +102,10 @@ export abstract class VWAbstractMindCore implements VWMindCore {
         throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.
     }
 
+    public static import(teleora: any): VWMindCore {
+        throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.
+    }
+
     // TODO: call this method from `loadFromFile()`, and validate the arguments.
     protected construct(mindCoreFilePath: string, reviseMethod: () => void, decideMethod: () => VWAction[]) {
         this.mindCoreFilePath = mindCoreFilePath;

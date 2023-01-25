@@ -1,20 +1,32 @@
 import { VWColour } from "../../../common/VWColour";
+import { VWDirection } from "../../../common/VWDirection";
 import { VWOrientation } from "../../../common/VWOrientation";
 import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 
 export class VWCell {
     private cell: HTMLDivElement;
     private locationAppearance: VWLocationAppearance;
     private displayedImage: HTMLImageElement;
+    private dropCallback: (imageSrc: string, locationAppearance: VWLocationAppearance) => VWLocationAppearance;
+    private rotateCallback: (direction: VWDirection, locationAppearance: VWLocationAppearance) => VWLocationAppearance;
+    private doubleClickCallback: (locationAppearance: VWLocationAppearance) => VWLocationAppearance;
     private packed: boolean;
 
-    public constructor(locationAppearance: VWLocationAppearance) {
-        this.locationAppearance = VWCell.validateLocationAppearance(locationAppearance);
+    public constructor(locApp: VWLocationAppearance, drop: (imgSrc: string, locApp: VWLocationAppearance) => VWLocationAppearance, rotate: (dir: VWDirection, locApp: VWLocationAppearance) => VWLocationAppearance, dClick: (locApp: VWLocationAppearance) => VWLocationAppearance) {
+        this.locationAppearance = VWCell.validateLocationAppearance(locApp);
+
         this.createLocationImage();
-        this.packed = false;
+
+        this.dropCallback = drop;
+        this.rotateCallback = rotate;
+        this.doubleClickCallback = dClick;
+
         this.cell = document.createElement("div");
         this.cell.classList.add("cell");
-        this.cell.id = `cell-${locationAppearance.getCoord().getX()}-${locationAppearance.getCoord().getY()}`;
+        this.cell.id = `cell-${locApp.getCoord().getX()}-${locApp.getCoord().getY()}`;
+
+        this.packed = false;
     }
 
     private static validateLocationAppearance(locationAppearance: VWLocationAppearance): VWLocationAppearance {
@@ -29,7 +41,101 @@ export class VWCell {
     private createLocationImage(): void {
         this.displayedImage = document.createElement("img");
         this.displayedImage.src = this.getCellImageSrc();
-        this.displayedImage.classList.add("location-image");
+        this.displayedImage.classList.add("location-image", "dropzone");
+
+        this.addDropListeners();
+        this.addClickListener();
+        this.addDoubleClickListener();
+        this.addRotateListener();
+    }
+
+    private addDropListeners(): void {
+        this.displayedImage.addEventListener("dragover", (event: DragEvent) => event.preventDefault());
+
+        this.displayedImage.addEventListener("dragenter", (event: DragEvent) => {
+            if (event.dataTransfer.getData("source") === "draggable-image" && (<HTMLElement>event.target).classList.contains("dropzone")) {
+                (<HTMLElement>event.target).classList.add("dragover");
+
+                for (const element of document.getElementsByClassName("selected")) {
+                    element.classList.remove("selected");
+                }
+            }
+        });
+
+        this.displayedImage.addEventListener("dragleave", (event: DragEvent) => {
+            if ((<HTMLElement>event.target).classList.contains("dropzone")) {
+                (<HTMLElement>event.target).classList.remove("dragover");
+            }
+        });
+
+        this.displayedImage.addEventListener("drop", (event: DragEvent) => {
+            event.preventDefault();
+
+            if ((<HTMLElement>event.target).classList.contains("dropzone")) {
+                (<HTMLElement>event.target).classList.remove("dragover");
+
+                const draggedImg: HTMLImageElement = document.getElementsByClassName("dragging")[0] as HTMLImageElement;
+
+                if (VWExistenceChecker.exists(draggedImg)) {
+                    this.locationAppearance = this.dropCallback(draggedImg.src, this.locationAppearance);
+
+                    (<HTMLImageElement>event.target).src = this.getCellImageSrc();
+
+                    console.log("Dropped.");
+                }
+            }
+        });
+    }
+
+    private addClickListener(): void {
+        this.displayedImage.addEventListener("click", (event: MouseEvent) => {
+            if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
+                const toHighlight: boolean = !this.displayedImage.classList.contains("selected");
+
+                for (const element of document.getElementsByClassName("selected")) {
+                    element.classList.remove("selected");
+                }
+
+                if (toHighlight) {
+                    this.displayedImage.classList.add("selected");
+                }
+            }
+        });
+    }
+
+    private addDoubleClickListener(): void {
+        this.displayedImage.addEventListener("dblclick", (event: MouseEvent) => {
+            if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
+                this.locationAppearance = this.doubleClickCallback(this.locationAppearance);
+
+                (<HTMLImageElement>event.target).src = this.getCellImageSrc();
+
+                console.log("Removed.");
+            }
+        });
+    }
+
+    private addRotateListener(): void {
+        document.addEventListener("keydown", this.rotate.bind(this));
+    }
+
+    private rotate(event: KeyboardEvent): void {
+        if (this.displayedImage.classList.contains("selected") && this.locationAppearance.hasActor()) {
+            if (event.code === "ArrowRight") {
+                this.locationAppearance = this.rotateCallback(VWDirection.RIGHT, this.locationAppearance);
+
+                this.displayedImage.src = this.getCellImageSrc();
+
+                console.log("Rotated the actor clockwise.");
+            }
+            else if (event.code === "ArrowLeft") {
+                this.locationAppearance = this.rotateCallback(VWDirection.LEFT, this.locationAppearance);
+
+                this.displayedImage.src = this.getCellImageSrc();
+
+                console.log("Rotated the actor counter-clockwise.");
+            }
+        }
     }
 
     private getCellImageSrc(): string {
