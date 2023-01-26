@@ -1,6 +1,6 @@
 # List of TODOs
 
-* File [static/js/index.js](static/js/index.js) - line 134: `// TODO: This function should be replaced by a function that gets the choices paths from the fs. (How?)`
+* File [static/js/index.js](static/js/index.js) - line 135: `// TODO: This function should be replaced by a function that gets the choices paths from the fs. (How?)`
 
 * File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 3: `//const fs = require("fs"); // TODO: Convert to import.`
 
@@ -28,7 +28,7 @@
 
 * File [envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts](envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts) - line 180: `// TODO: implement this method.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts) - line 61: `// TODO: throw errors with more meaningful messages.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts) - line 74: `// TODO: throw errors with more meaningful messages.`
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 24: `private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.`
 
@@ -46,13 +46,27 @@
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts) - line 27: `// TODO: implement this method.`
 
-* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 76: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 98: `// TODO: show the coordinates of the selected cell.`
 
-* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 86: `// TODO: load the appropriate config.`
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 77: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 
-* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 140: `// TODO: resize the draggable bodies div`
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 87: `// TODO: load the appropriate config.`
 
-* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 301: `window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.`
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 122: `// TODO: show the internal user difficulty toggle button.`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 123: `// TODO: change the displayed buttons, and add the appropriate listeners.`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 140: `// TODO: hide the internal user difficulty toggle button.`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 147: `// TODO: show slider.`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 148: `// TODO: show the internal user difficulty toggle button.`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 188: `// TODO: add listeners to the save and load buttons.`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 250: `// TODO: resize the draggable bodies div`
+
+* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 411: `window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.`
 
 * File [experimental/src/modal.ts](experimental/src/modal.ts) - line 1: `// TODO: there is a lot to do here:`
 

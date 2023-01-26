@@ -95,6 +95,7 @@ export class VWCell {
     }
 
     private addClickListener(): void {
+        // TODO: show the coordinates of the selected cell.
         this.displayedImage.addEventListener("click", (event: MouseEvent) => {
             if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
                 const toHighlight: boolean = !this.displayedImage.classList.contains("selected");

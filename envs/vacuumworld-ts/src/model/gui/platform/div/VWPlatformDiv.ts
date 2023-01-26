@@ -119,6 +119,7 @@ export class VWPlatformDiv implements VWDiv {
 
         this.showExternalSimulationControls();
 
+        // TODO: show the internal user difficulty toggle button.
         // TODO: change the displayed buttons, and add the appropriate listeners.
 
         if (autoplay) {
@@ -136,12 +137,15 @@ export class VWPlatformDiv implements VWDiv {
 
         document.getElementById("external_run_button").addEventListener("click", () => {
             this.showRunningSimulationControls();
+            // TODO: hide the internal user difficulty toggle button.
 
             this.simulation.cycleSimulation();
         });
 
         document.getElementById("external_stop_button").addEventListener("click", () => {
             this.showStoppedSimulationControls();
+            // TODO: show slider.
+            // TODO: show the internal user difficulty toggle button.
 
             this.simulation.stop();
             this.simulation.getEnvironment().resetAndMaintainElements();
