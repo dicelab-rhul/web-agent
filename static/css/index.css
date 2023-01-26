@@ -4,6 +4,13 @@
     width: 100%;
 }
 
+.external_simulation_control_button {
+    width: 5%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    margin: 5pt;
+}
+
 .initial_buttons {
     width: 20%;
     padding-top: 1%;

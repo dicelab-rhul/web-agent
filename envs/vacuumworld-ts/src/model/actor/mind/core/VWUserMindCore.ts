@@ -262,4 +262,8 @@ export class VWUserMindCore extends VWAbstractMindCore {
     private dropRandomDirt(): VWAction[] {
         return this.actRandomly(0.5, 0.5, 0.0, 0.0, 0.0);
     }
+
+    public newCore(): VWUserMindCore {
+        return new VWUserMindCore(this.difficultyLevel);
+    }
 }
