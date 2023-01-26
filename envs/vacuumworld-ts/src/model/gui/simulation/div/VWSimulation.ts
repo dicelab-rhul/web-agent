@@ -3,6 +3,7 @@ import { VWColour } from "../../../common/VWColour";
 import { VWCoord } from "../../../common/VWCoord";
 import { VWDirection } from "../../../common/VWDirection";
 import { VWMap } from "../../../common/VWMap";
+import { VWActor } from "../../../actor/VWActor";
 import { VWDirt } from "../../../dirt/VWDirt";
 import { VWEnvironment } from "../../../environment/VWEnvironment";
 import { VWLocation } from "../../../environment/VWLocation";
@@ -19,6 +20,8 @@ export class VWSimulation {
     private gridDiv: VWGridDiv;
     private environment: VWEnvironment;
     private options: VWOptions
+    private canRun: boolean;
+    private paused: boolean;
     private replaceGridDivCallback: (newGridDiv: VWGridDiv) => void;
     private hideDraggableBodiesDivCallback: () => void;
     private replaceDraggableBodiesDivCallback: (newDraggableBodiesDiv: VWDraggableBodiesDiv) => void;
@@ -29,8 +32,10 @@ export class VWSimulation {
         this.config = VWSimulation.validateConfig(config);
         this.gridSize = VWSimulation.validateGridSize(environment, config);
         this.environment = VWSimulation.validateEnvironment(environment);
-        this.gridDiv = this.createGrid();
+        this.gridDiv = this.createGrid(true);
         this.options = VWSimulation.validateOptions(options);
+        this.canRun = true;
+        this.paused = false;
     }
 
     public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (d: VWDraggableBodiesDiv) => void, simCtrlHide: () => void, simCtrlReplace: (s: VWSimulationControlsDiv) => void): void {
@@ -43,6 +48,14 @@ export class VWSimulation {
 
     public getGridDiv(): VWGridDiv {
         return this.gridDiv;
+    }
+
+    public getEnvironment(): VWEnvironment {
+        return this.environment;
+    }
+
+    public getConfig(): any {
+        return this.config;
     }
 
     private static validateConfig(config: any): any {
@@ -94,13 +107,19 @@ export class VWSimulation {
         }
     }
 
-    private createGrid(): VWGridDiv {
+    private createGrid(addListeners: boolean): VWGridDiv {
         let gridMap: VWMap<VWCoord, VWCell> = new VWMap<VWCoord, VWCell>();
 
         this.environment.getAmbient().getGrid().forEach((loc: VWLocation, coord: VWCoord) => {
-            gridMap.put(coord, new VWCell(loc.getAppearance(), this.dropCallback.bind(this), this.rotateCallback.bind(this), this.doubleClickCallback.bind(this)));
+            let cell: VWCell = new VWCell(loc.getAppearance());
+
+            if (addListeners) {
+                cell.addCallbacks(this.dropCallback.bind(this), this.rotateCallback.bind(this), this.doubleClickCallback.bind(this));
+            }
+
+            gridMap.put(coord, cell);
         });
-    
+
         let gridDiv: VWGridDiv = new VWGridDiv();
 
         gridDiv.updateGrid(this.gridSize, gridMap);
@@ -171,7 +190,7 @@ export class VWSimulation {
     }
 
     public showSimulation(): void {
-        this.gridDiv = this.createGrid(); // Create the new grid.
+        this.gridDiv = this.createGrid(true); // Create the new grid.
 
         this.replaceGridDivCallback(this.gridDiv); // Replace the old grid div with the new grid.
 
@@ -187,6 +206,7 @@ export class VWSimulation {
 
         console.log("Simulation starting...");
         console.log("Initial environment: ");
+        console.log(this.environment.toJsonObject());
         console.log(console.log(JSON.stringify(this.environment.toJsonObject(), null, 4)));
 
         this.mainLoop();
@@ -217,14 +237,24 @@ export class VWSimulation {
     }
 
     private async loopForever(): Promise<void> {
-        while (true) {
-            await this.doOneCycle();
+        while (this.canRun) {
+            await this.stayPausedIfNeeded(); // Wait for the user to unpause the simulation, if paused.
+
+            if (this.canRun) { // Check if a paused simulation was stopped.
+                await this.doOneCycle();
+            }
         }
     }
 
     private async loopNumberOfTimes(): Promise<void> {
         for(let i = 0; i < this.options.getMaxNumberOfCycles(); i++) {
-            await this.doOneCycle();
+            if (this.canRun) {
+                await this.stayPausedIfNeeded(); // Wait for the user to unpause the simulation, if paused.
+
+                if (this.canRun) { // Check if a paused simulation was stopped.
+                    await this.doOneCycle();
+                }
+            }
         }
     }
 
@@ -234,7 +264,7 @@ export class VWSimulation {
         this.gridDiv.hide(); // Hide the old grid.
         this.gridDiv.unpack(); // Delete the old grid.
 
-        this.gridDiv = this.createGrid(); // Create the new grid.
+        this.gridDiv = this.createGrid(false); // Create the new grid.
 
         this.replaceGridDivCallback(this.gridDiv); // Replace the old grid div with the new grid.
 
@@ -246,5 +276,24 @@ export class VWSimulation {
 
     private delay(ms: number): Promise<void> {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    private async stayPausedIfNeeded(): Promise<void> {
+        while(this.paused) {
+            await this.delay(100);
+        }
+    }
+
+    public stop(): void {
+        this.canRun = false;
+        this.paused = false;
+    }
+
+    public pause(): void {
+        this.paused = true;
+    }
+
+    public resume(): void {
+        this.paused = false;
     }
 }

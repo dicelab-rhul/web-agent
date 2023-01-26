@@ -13,20 +13,24 @@ export class VWCell {
     private doubleClickCallback: (locationAppearance: VWLocationAppearance) => VWLocationAppearance;
     private packed: boolean;
 
-    public constructor(locApp: VWLocationAppearance, drop: (imgSrc: string, locApp: VWLocationAppearance) => VWLocationAppearance, rotate: (dir: VWDirection, locApp: VWLocationAppearance) => VWLocationAppearance, dClick: (locApp: VWLocationAppearance) => VWLocationAppearance) {
+    public constructor(locApp: VWLocationAppearance) {
         this.locationAppearance = VWCell.validateLocationAppearance(locApp);
 
         this.createLocationImage();
-
-        this.dropCallback = drop;
-        this.rotateCallback = rotate;
-        this.doubleClickCallback = dClick;
 
         this.cell = document.createElement("div");
         this.cell.classList.add("cell");
         this.cell.id = `cell-${locApp.getCoord().getX()}-${locApp.getCoord().getY()}`;
 
         this.packed = false;
+    }
+
+    public addCallbacks(drop: (imgSrc: string, locApp: VWLocationAppearance) => VWLocationAppearance, rotate: (dir: VWDirection, locApp: VWLocationAppearance) => VWLocationAppearance, dClick: (locApp: VWLocationAppearance) => VWLocationAppearance) {
+        this.dropCallback = drop;
+        this.rotateCallback = rotate;
+        this.doubleClickCallback = dClick;
+
+        this.addListeners();
     }
 
     private static validateLocationAppearance(locationAppearance: VWLocationAppearance): VWLocationAppearance {
@@ -42,7 +46,10 @@ export class VWCell {
         this.displayedImage = document.createElement("img");
         this.displayedImage.src = this.getCellImageSrc();
         this.displayedImage.classList.add("location-image", "dropzone");
+    }
 
+    // Public because it is called when the simulation is stopped to re-add the listeners.
+    public addListeners(): void {
         this.addDropListeners();
         this.addClickListener();
         this.addDoubleClickListener();
@@ -120,7 +127,7 @@ export class VWCell {
     }
 
     private rotate(event: KeyboardEvent): void {
-        if (this.displayedImage.classList.contains("selected") && this.locationAppearance.hasActor()) {
+        if (VWExistenceChecker.exists(this.displayedImage) && this.displayedImage.classList.contains("selected") && this.locationAppearance.hasActor()) {
             if (event.code === "ArrowRight") {
                 this.locationAppearance = this.rotateCallback(VWDirection.RIGHT, this.locationAppearance);
 

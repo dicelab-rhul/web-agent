@@ -1,8 +1,9 @@
 window.addEventListener("DOMContentLoaded", function() {
     createContainerDiv();
-    createErrorDiv();
     loadStyle("/static/css/index.css"); // This is the main style of the page.
     loadChoiceDiv();
+    createAndHideSimulationControlsDiv();
+    createErrorDiv();
 });
 
 function getResourcesPaths(envPath) {
@@ -175,4 +176,45 @@ function loadEnvironmentDiv(choicePath) {
     loadFavicon(resourcesPaths.favicon);
     loadStyle(resourcesPaths.envStyle); // This is the main style of the environment.
     loadScript(resourcesPaths.envScript); // This is the main script of the environment
+}
+
+function createAndHideSimulationControlsDiv() {
+    let simulationControlsDiv = document.createElement("div");
+
+    simulationControlsDiv.id = "external_simulation_controls_div";
+    simulationControlsDiv.classList.add("center-aligned");
+    simulationControlsDiv.hidden = true;
+
+    createSimulationControls().forEach((control) => simulationControlsDiv.appendChild(control));
+
+    document.body.appendChild(simulationControlsDiv);
+}
+
+function createSimulationControls() {
+    let controls = [];
+
+    controls.push(createSimulationControlButton("external_run_button", "Run", ["external_simulation_control_button"], () => console.log("This will run the simulation.")));
+    controls.push(createSimulationControlButton("external_pause_button", "Pause", ["external_simulation_control_button"], () => console.log("This will pause the simulation.")));
+    controls.push(createSimulationControlButton("external_resume_button", "Resume", ["external_simulation_control_button"], () => console.log("This will resume a paused simulation.")));
+    controls.push(createSimulationControlButton("external_stop_button", "Stop", ["external_simulation_control_button"], () => console.log("This will stop the simulation.")));
+    controls.push(createSimulationControlButton("external_reset_button", "Reset", ["external_simulation_control_button"], () => console.log("This will reset the simulation.")));
+    controls.push(createSimulationControlButton("external_speed_button", "Speed Up", ["external_simulation_control_button"], () => console.log("This will increase the simulation speed.")));
+    controls.push(createSimulationControlButton("external_save_button", "Save", ["external_simulation_control_button"], () => console.log("This will save the simulation state.")));
+    controls.push(createSimulationControlButton("external_load_button", "Load", ["external_simulation_control_button"], () => console.log("This will load a new state for the simulation.")));
+    controls.push(createSimulationControlButton("external_guide_button", "Guide", ["external_simulation_control_button"], () => console.log("This will open the relevant guide.")));
+
+    return controls;
+}
+
+function createSimulationControlButton(buttonID, buttonText, buttonClasses, buttonDefaultClickFunction) {
+    let button = document.createElement("button");
+
+    button.id = buttonID;
+    button.innerText = buttonText;
+    button.classList.add(...buttonClasses);
+    button.hidden = true;
+
+    button.addEventListener("click", buttonDefaultClickFunction);
+
+    return button;
 }

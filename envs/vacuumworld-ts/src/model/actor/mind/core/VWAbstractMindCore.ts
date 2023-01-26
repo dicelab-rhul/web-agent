@@ -112,4 +112,13 @@ export abstract class VWAbstractMindCore implements VWMindCore {
         this.reviseMethod = reviseMethod;
         this.decideMethod = decideMethod;
     }
+
+    // This is called when the simulation is stopped, and the mind core is to be reset.
+    public newCore(): VWMindCore {
+        let newCore: VWAbstractMindCore = new (this.constructor as any)();
+
+        newCore.construct(this.mindCoreFilePath, this.reviseMethod, this.decideMethod);
+
+        return newCore;
+    }
 }

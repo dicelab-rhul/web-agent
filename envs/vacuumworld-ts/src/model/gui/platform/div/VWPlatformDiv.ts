@@ -26,6 +26,7 @@ export class VWPlatformDiv implements VWDiv {
     private gridDiv: VWGridDiv; // Hidden by default;
     private simulationControlsDiv: VWSimulationControlsDiv; // Hidden by default;
     private options: VWOptions;
+    private simulation: VWSimulation;
     private packed: boolean;
 
     public constructor(initialViewImgPath: string) {
@@ -90,21 +91,11 @@ export class VWPlatformDiv implements VWDiv {
                 "max_environment_dim": 13
             };
 
-            let environment: VWEnvironment = VWEnvironment.newEnvironment(this.options, config, this.options.getStateToLoad());
-            let simulation: VWSimulation = new VWSimulation(environment, this.options, config);
-
-            simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
-
-            this.initialViewDiv.hide();
-            this.initialViewButtonsDiv.hide();
-            this.initialViewDiv.unpack();
-            this.initialViewButtonsDiv.unpack();
-
             if (this.options.isAutoplayActive()) {
-                simulation.cycleSimulation();
+                this.run(config, true);
             }
             else {
-                simulation.showSimulation();
+                this.run(config, false);
             }
         }
         catch (e) {
@@ -112,6 +103,121 @@ export class VWPlatformDiv implements VWDiv {
 
             console.error(e);
         }
+    }
+
+    private run(config: object, autoplay: boolean): void {
+        let environment: VWEnvironment = VWEnvironment.newEnvironment(this.options, config, this.options.getStateToLoad());
+
+        this.simulation = new VWSimulation(environment, this.options, config);
+
+        this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
+
+        this.initialViewDiv.hide();
+        this.initialViewButtonsDiv.hide();
+        this.initialViewDiv.unpack();
+        this.initialViewButtonsDiv.unpack();
+
+        this.showExternalSimulationControls();
+
+        // TODO: change the displayed buttons, and add the appropriate listeners.
+
+        if (autoplay) {
+            this.simulation.cycleSimulation();
+        }
+        else {
+            this.simulation.showSimulation();
+        }
+    }
+
+    private showExternalSimulationControls(): void {
+        document.getElementById("external_simulation_controls_div").hidden = false;
+
+        this.showStoppedSimulationControls();
+
+        document.getElementById("external_run_button").addEventListener("click", () => {
+            this.showRunningSimulationControls();
+
+            this.simulation.cycleSimulation();
+        });
+
+        document.getElementById("external_stop_button").addEventListener("click", () => {
+            this.showStoppedSimulationControls();
+
+            this.simulation.stop();
+            this.simulation.getEnvironment().resetAndMaintainElements();
+
+            this.simulation = new VWSimulation(this.simulation.getEnvironment(), this.options, this.simulation.getConfig());
+
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
+            this.simulation.showSimulation();
+        });
+
+        document.getElementById("external_pause_button").addEventListener("click", () => {
+            this.showPausedSimulationControls();
+
+            this.simulation.pause();
+        });
+
+        document.getElementById("external_resume_button").addEventListener("click", () => {
+            this.showRunningSimulationControls();
+
+            this.simulation.resume();
+        });
+
+        document.getElementById("external_speed_button").addEventListener("click", () => {
+            this.options.setSpeed(Math.max(0.999, this.options.getSpeed() + 0.1));
+        });
+
+        document.getElementById("external_reset_button").addEventListener("click", () => {
+            this.showStoppedSimulationControls();
+
+            this.simulation.stop();
+
+            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig()), this.options, this.simulation.getConfig());
+
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
+            this.simulation.showSimulation();
+        });
+
+        document.getElementById("external_guide_button").addEventListener("click", this.guide);
+
+        // TODO: add listeners to the save and load buttons.
+    }
+
+    private showRunningSimulationControls(): void {
+        document.getElementById("external_run_button").hidden = true;
+        document.getElementById("external_pause_button").hidden = false;
+        document.getElementById("external_resume_button").hidden = true;
+        document.getElementById("external_stop_button").hidden = false;
+        document.getElementById("external_reset_button").hidden = true;
+        document.getElementById("external_speed_button").hidden = false;
+        document.getElementById("external_save_button").hidden = true;
+        document.getElementById("external_load_button").hidden = true;
+        document.getElementById("external_guide_button").hidden = true;
+    }
+
+    private showStoppedSimulationControls(): void {
+        document.getElementById("external_run_button").hidden = false;
+        document.getElementById("external_pause_button").hidden = true;
+        document.getElementById("external_resume_button").hidden = true;
+        document.getElementById("external_stop_button").hidden = true;
+        document.getElementById("external_reset_button").hidden = false;
+        document.getElementById("external_speed_button").hidden = true;
+        document.getElementById("external_save_button").hidden = false;
+        document.getElementById("external_load_button").hidden = false;
+        document.getElementById("external_guide_button").hidden = false;
+    }
+
+    private showPausedSimulationControls(): void {
+        document.getElementById("external_run_button").hidden = true;
+        document.getElementById("external_pause_button").hidden = true;
+        document.getElementById("external_resume_button").hidden = false;
+        document.getElementById("external_stop_button").hidden = false;
+        document.getElementById("external_reset_button").hidden = true;
+        document.getElementById("external_speed_button").hidden = true;
+        document.getElementById("external_save_button").hidden = true;
+        document.getElementById("external_load_button").hidden = true;
+        document.getElementById("external_guide_button").hidden = true;
     }
 
     private replaceGridDiv(newGridDiv: VWGridDiv): void {

@@ -16,6 +16,7 @@ import { VWCommunicativeActuator } from "./appendices/VWCommunicativeActuator";
 import { VWListeningSensor } from "./appendices/VWListeningSensor";
 import { VWObservationSensor } from "./appendices/VWObservationSensor";
 import { VWPhysicalActuator } from "./appendices/VWPhysicalActuator";
+import { VWCleaningAgentMind } from "./mind/VWCleaningAgentMind";
 import { VWMind } from "./mind/VWMind";
 
 export type VWActorJSON = {
@@ -187,5 +188,9 @@ export abstract class VWActor extends VWAbstractIdentifiable {
             "orientation": this.getOrientation(),
             "mind": actorMindCorePath
         };
+    }
+
+    public reset(): void {
+        this.mind = new VWCleaningAgentMind(this.mind.getMindCore().newCore());
     }
 }

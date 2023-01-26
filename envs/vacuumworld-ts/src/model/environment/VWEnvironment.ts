@@ -144,7 +144,8 @@ export class VWEnvironment {
 
         this.ambient.getActors().forEach((actor: VWActor) => this.cycleActor(actor));
 
-        console.log("Environment after the actions: ")
+        console.log("Environment after the actions: ");
+        console.log(this.toJsonObject());
         console.log(JSON.stringify(this.toJsonObject(), null, 4));
         console.log("End of cycle #" + this.cycleNumber + "...");
 
@@ -430,5 +431,10 @@ export class VWEnvironment {
         }
 
         return new VWEnvironment(new VWAmbient(grid));
+    }
+
+    public resetAndMaintainElements(): void {
+        this.ambient.getActors().forEach((actor: VWActor) => actor.reset());
+        this.cycleNumber = 0;
     }
 }

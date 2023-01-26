@@ -14,4 +14,6 @@ export interface VWMindCore {
     incrementEffort(effort: bigint): void;
 
     getMindCoreFilePath(): string;
+
+    newCore(): VWMindCore;
 }
