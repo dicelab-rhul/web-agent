@@ -118,7 +118,7 @@ export class Main {
             script.src = scriptPath;
             script.type = "text/javascript";
             script.async = false;
-            script.defer = defer === undefined || defer == null ? false : defer;
+            script.defer = defer === undefined || defer === null ? false : defer;
     
             document.body.appendChild(script);
         }

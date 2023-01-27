@@ -1,52 +1,52 @@
 # List of TODOs
 
-* File [static/js/index.js](static/js/index.js) - line 135: `// TODO: This function should be replaced by a function that gets the choices paths from the fs. (How?)`
+* File [src/Main.ts](src/Main.ts) - line 144: `// TODO: This method should be replaced by a function that gets the choices paths from the fs. (How?)`
 
 * File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 3: `//const fs = require("fs"); // TODO: Convert to import.`
 
 * File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 4: `//const path = require("path-browserify"); // TODO: Convert to import.`
 
-* File [envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts](envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts) - line 3: `const uuid = require("uuid"); // TODO: Replace with import.`
+* File [envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts](envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts) - line 4: `const uuid = require("uuid"); // TODO: Replace with import.`
 
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
-* File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](envs/vacuumworld-ts/src/model/common/VWQueue.ts) - line 2: `// TODO: should this class be moved to a separate npm module?`
+* File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](envs/vacuumworld-ts/src/model/common/VWQueue.ts) - line 3: `// TODO: should this class be moved to a separate npm module?`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 102: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 77: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 106: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 81: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
 
-* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 109: `// TODO: call this method from 'loadFromFile()', and validate the arguments.`
+* File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts) - line 84: `// TODO: call this method from 'loadFromFile()', and validate the arguments.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 10: `private teleora: any; // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 11: `private teleora: any; // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 86: `public getTeleora(): any { // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 87: `public getTeleora(): any { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 90: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 91: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
 * File [envs/vacuumworld-ts/src/model/gui/common/VWPackable.ts](envs/vacuumworld-ts/src/model/gui/common/VWPackable.ts) - line 6: `// TODO: add a packed(): boolean method.`
 
 * File [envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts](envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts) - line 180: `// TODO: implement this method.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulation.ts) - line 74: `// TODO: throw errors with more meaningful messages.`
-
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 24: `private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 76: `if (this.gridSize === null || this.gridSize === undefined || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 76: `if (!VWExistenceChecker.exists(this.gridSize) || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.`
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts) - line 74: `// TODO: use the grid size to determine how to append the draggable bodies to the div.`
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts) - line 100: `// TODO: use the grid size to determine how to remove the draggable bodies from the div.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts) - line 15: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 89: `// TODO: show the coordinates of the selected cell.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts) - line 19: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 188: `// TODO: add checks.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts) - line 23: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 15: `// TODO: implement this method.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWSimulationControlsDiv.ts) - line 27: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 19: `// TODO: implement this method.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 98: `// TODO: show the coordinates of the selected cell.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 23: `// TODO: implement this method.`
+
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 27: `// TODO: implement this method.`
 
 * File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 77: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 
