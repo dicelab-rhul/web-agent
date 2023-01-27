@@ -1,14 +1,12 @@
 import { VWAction } from "../actions/VWAction";
 import { VWPhysicalAction } from "../actions/VWPhysicalAction";
 import { VWCommunicativeAction } from "../actions/VWCommunicativeAction";
+import { VWExistenceChecker } from "./VWExistenceChecker";
 
 export class VWActionUtils {
     public static validateActions(actions: VWAction[]): void {
-        if (actions === null || actions === undefined) {
-            throw new Error("The actions array cannot be null or undefined.");
-        }
-        else if (actions.some((action: VWAction) => action === null || action === undefined)) {
-            throw new Error("The actions array cannot contain null or undefined actions.");
+        if (!VWExistenceChecker.allExist(actions)) {
+            throw new Error("The actions array cannot be null or undefined, or contain null or undefined elements.");
         }
         else if (actions.length === 0) {
             throw new Error("At least one action per cycle must by attempted by each actor.");

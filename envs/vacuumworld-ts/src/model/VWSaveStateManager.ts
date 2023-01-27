@@ -5,6 +5,7 @@ import { VWEnvironmentJSON } from "./environment/VWEnvironment";
 
 import * as fs from "fs";
 import * as path from "path";
+import { VWExistenceChecker } from "./utils/VWExistenceChecker";
 //import path from "path-browserify";
 
 export class VWSaveStateManager {
@@ -13,7 +14,7 @@ export class VWSaveStateManager {
     public static loadStateFromFile(f: File): VWEnvironmentJSON {
         console.log(f)
         try {
-            if (f === undefined || f === null) {
+            if (!VWExistenceChecker.exists(f)) {
                 throw new Error("Invalid file");
             }
 
@@ -38,7 +39,7 @@ export class VWSaveStateManager {
 
     public static loadState(name: string): VWEnvironmentJSON {
         try {
-            if (name === undefined || name === null || name === "") {
+            if (!VWExistenceChecker.exists(name) || name === "") {
                 throw new Error("Invalid name");
             }
             else if (!name.endsWith(".json")) {
@@ -68,13 +69,13 @@ export class VWSaveStateManager {
 
     public static saveState(name: string, state: VWEnvironmentJSON): void {
         try {
-            if (name === undefined || name === null || name === "") {
+            if (!VWExistenceChecker.exists(name) || name === "") {
                 throw new Error("Invalid name");
             }
             else if (!name.endsWith(".json")) {
                 name += ".json";
             }
-            else if (state === undefined || state === null) {
+            else if (!VWExistenceChecker.exists(state)) {
                 throw new Error("Invalid state");
             }
 

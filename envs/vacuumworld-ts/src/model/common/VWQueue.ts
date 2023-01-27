@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 
 // TODO: should this class be moved to a separate npm module?
 export class VWQueue<T> {
@@ -8,7 +9,7 @@ export class VWQueue<T> {
     }
 
     public enqueue(elm: T) : void {
-        if (elm === null || elm === undefined) {
+        if (!VWExistenceChecker.exists(elm)) {
             throw new Error("The perception cannot be null or undefined.");
         }
         else {
@@ -19,7 +20,7 @@ export class VWQueue<T> {
     public dequeue() : T {
         const candidate: T | undefined = this.queue.shift();
 
-        if (candidate === null || candidate === undefined) {
+        if (!VWExistenceChecker.exists(candidate)) {
             throw new Error("No perceptions to dequeue.");
         }
         else {
@@ -30,7 +31,7 @@ export class VWQueue<T> {
     public peek() : T {
         const candidate: T | undefined = this.queue[0];
 
-        if (candidate === null || candidate === undefined) {
+        if (!VWExistenceChecker.exists(candidate)) {
             throw new Error("No perceptions to peek.");
         }
         else {

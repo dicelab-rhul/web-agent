@@ -4,6 +4,7 @@ import { VWCoord } from "../../../common/VWCoord";
 import { VWMessage } from "../../../common/VWMessage";
 import { VWObservation } from "../../../common/VWObservation";
 import { VWOrientation } from "../../../common/VWOrientation";
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWMindCore } from "./VWMindCore";
 
 export abstract class VWAbstractMindCore implements VWMindCore {
@@ -47,42 +48,16 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     }
 
     public perceive(observation: VWObservation, messages: VWMessage[]): void {
-        this.observation = VWAbstractMindCore.validateObservation(observation);
-        this.messages = VWAbstractMindCore.validateMessages(messages);
-    }
-
-    private static validateObservation(observation: VWObservation): VWObservation {
-        if (observation === null || observation === undefined) {
-            throw new Error("The observation cannot be null or undefined.");
-        }
-
-        return observation;
-    }
-
-    private static validateMessages(messages: VWMessage[]): VWMessage[] {
-        if (messages === null || messages === undefined) {
-            throw new Error("The messages cannot be null or undefined.");
-        }
-
-        return messages;
+        this.observation = VWExistenceChecker.validateExistence(observation, "The observation cannot be null or undefined.");
+        this.messages = VWExistenceChecker.validateAllExistence(messages, "The messages cannot be null or undefined.");
     }
 
     public revise(): void {
-        if (this.reviseMethod === null || this.reviseMethod === undefined) {
-            throw new Error("The revise method cannot be null or undefined.");
-        }
-        else {
-            this.reviseMethod();
-        }
+        VWExistenceChecker.validateExistence(this.reviseMethod, "The revise method cannot be null or undefined.")();
     }
 
     public decide(): VWAction[] {
-        if (this.decideMethod === null || this.decideMethod === undefined) {
-            throw new Error("The decide method cannot be null or undefined.");
-        }
-        else {
-            return this.decideMethod();
-        }
+        return VWExistenceChecker.validateExistence(this.decideMethod, "The decide method cannot be null or undefined.")();
     }
 
     public getCumulativeEffort(): bigint {
@@ -90,7 +65,7 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     }
 
     public incrementEffort(effort: bigint): void {
-        if (effort === null || effort === undefined) {
+        if (!VWExistenceChecker.exists(effort)) {
             throw new Error("The effort cannot be null or undefined.");
         }
         else {
@@ -108,9 +83,9 @@ export abstract class VWAbstractMindCore implements VWMindCore {
 
     // TODO: call this method from `loadFromFile()`, and validate the arguments.
     protected construct(mindCoreFilePath: string, reviseMethod: () => void, decideMethod: () => VWAction[]) {
-        this.mindCoreFilePath = mindCoreFilePath;
-        this.reviseMethod = reviseMethod;
-        this.decideMethod = decideMethod;
+        this.mindCoreFilePath = VWExistenceChecker.validateExistence(mindCoreFilePath, "The mind core file path cannot be null or undefined.");
+        this.reviseMethod = VWExistenceChecker.validateExistence(reviseMethod, "The revise method cannot be null or undefined.");
+        this.decideMethod = VWExistenceChecker.validateExistence(decideMethod, "The decide method cannot be null or undefined.");
     }
 
     // This is called when the simulation is stopped, and the mind core is to be reset.

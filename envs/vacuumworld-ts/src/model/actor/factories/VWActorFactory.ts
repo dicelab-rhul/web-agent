@@ -20,10 +20,10 @@ export class VWActorFactory {
     private constructor() {}
 
     public static createVWActorFromJSONObject(data: VWActorJSON): VWActor {
-        if (data === null || data === undefined) {
+        if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWActor` cannot be null or undefined.");
         }
-        else if (data["colour"] === null || data["colour"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["colour"])) {
             throw new Error("The colour of a `VWActor` cannot be null or undefined.");
         }
         else if (data["colour"] === VWColour.USER) {
@@ -38,10 +38,10 @@ export class VWActorFactory {
     }
 
     public static createVWCleaningAgentFromJSONObject(data: VWActorJSON): VWCleaningAgent {
-        if (data === null || data === undefined) {
+        if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWCleaningAgent` cannot be null or undefined.");
         }
-        else if (data["colour"] === null || data["colour"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["colour"])) {
             throw new Error("The colour of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else if (data["colour"] === VWColour.USER) {
@@ -50,13 +50,13 @@ export class VWActorFactory {
         else if (!Object.values(VWColour).includes(data["colour"])) {
             throw new Error(`The colour of a \`VWCleaningAgent\` cannot be "${data["colour"]}".`);
         }
-        else if (data["orientation"] === null || data["orientation"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["orientation"])) {
             throw new Error("The orientation of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else if (!Object.values(VWOrientation).includes(data["orientation"])) {
             throw new Error(`The orientation of a \`VWCleaningAgent\` cannot be "${data["orientation"]}".`);
         }
-        else if (data["mind"] === null || data["mind"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["mind"])) {
             throw new Error("The path of the mind of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else {
@@ -74,16 +74,16 @@ export class VWActorFactory {
     }
 
     public static createVWUserFromJSONObject(data: VWActorJSON): VWUser {
-        if (data === null || data === undefined) {
+        if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWUser` cannot be null or undefined.");
         }
-        else if (data["colour"] === null || data["colour"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["colour"])) {
             throw new Error("The colour of a `VWUser` cannot be null or undefined.");
         }
         else if (data["colour"] !== VWColour.USER) {
             throw new Error(`The colour of a \`VWUser\` must be "${VWColour.USER}".`);
         }
-        else if (data["orientation"] === null || data["orientation"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["orientation"])) {
             throw new Error("The orientation of a `VWUser` cannot be null or undefined.");
         }
         else if (!Object.values(VWOrientation).includes(data["orientation"])) {
@@ -100,7 +100,7 @@ export class VWActorFactory {
     }
 
     public static createVWActorFacingNorth(colour: VWColour, options: VWOptions): VWActor {
-        if (colour === null || colour === undefined) {
+        if (!VWExistenceChecker.exists(colour)) {
             throw new Error("The colour of a `VWActor` cannot be null or undefined.");
         }
         else if (colour === VWColour.USER) {
@@ -115,7 +115,7 @@ export class VWActorFactory {
     }
 
     public static createVWCleaningAgentFacingNorth(colour: VWColour, options: VWOptions): VWCleaningAgent {
-        if (colour === null || colour === undefined) {
+        if (!VWExistenceChecker.exists(colour)) {
             throw new Error("The colour of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else if (colour === VWColour.USER) {

@@ -1,4 +1,5 @@
 import { VWLocationAppearance } from "../environment/VWLocationAppearance";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWOrientationUtils } from "../utils/VWOrientationUtils";
 import { JOptional } from "./JOptional";
 import { VWActionResult } from "./VWActionResult";
@@ -19,10 +20,10 @@ export class VWObservation extends VWPerception {
         this.actionResults = VWObservation.validateActionResults(actionResults);
 
         for (const position of locations.keys()) {
-            if (position === null || position === undefined) {
+            if (!VWExistenceChecker.exists(position)) {
                 throw new Error("The position cannot be null or undefined.");
             }
-            else if (locations.get(position) === null || locations.get(position) === undefined) {
+            else if (!VWExistenceChecker.exists(locations.get(position))) {
                 throw new Error("The location appearance cannot be null or undefined.");
             }
             else {
@@ -32,11 +33,8 @@ export class VWObservation extends VWPerception {
     }
 
     private static validateActionResults(actionResults: VWActionResult[]): VWActionResult[] {
-        if (actionResults === null || actionResults === undefined) {
-            throw new Error("The action results cannot be null or undefined.");
-        }
-        else if (actionResults.some((actionResult: VWActionResult) => actionResult === null || actionResult === undefined)) {
-            throw new Error("The action results array cannot contain null or undefined elements.");
+        if (!VWExistenceChecker.allExist(actionResults)) {
+            throw new Error("The action results cannot be null or undefined, or contain null or undefined elements.");
         }
         else if (actionResults.length === 0) {
             throw new Error("The action results array cannot be empty.");
@@ -51,7 +49,7 @@ export class VWObservation extends VWPerception {
     }
 
     public getLocationAt(position: VWPosition): JOptional<VWLocationAppearance> {
-        if (this.locations.has(position) && this.locations.get(position) !== null && this.locations.get(position) !== undefined) {
+        if (this.locations.has(position) && VWExistenceChecker.exists(this.locations.get(position))) {
             return JOptional.of(this.locations.get(position)!);
         }
         else {

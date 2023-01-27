@@ -10,6 +10,7 @@ import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWOrientation } from "../common/VWOrientation";
 import { VWActionUtils } from "../utils/VWActionUtils";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWOrientationUtils } from "../utils/VWOrientationUtils";
 import { VWActorAppearance } from "./appearance/VWActorAppearance";
 import { VWCommunicativeActuator } from "./appendices/VWCommunicativeActuator";
@@ -37,37 +38,13 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     public constructor(colour: VWColour, orientation: VWOrientation, mind: VWMind, observationSensor?: VWObservationSensor, listeningSensor?: VWListeningSensor, physicalActuator?: VWPhysicalActuator, communicativeActuator?: VWCommunicativeActuator) {
         super();
 
-        this.colour = VWActor.validateColour(colour);
-        this.orientation = VWActor.validateOrientation(orientation);
-        this.mind = VWActor.validateMind(mind);
+        this.colour = VWExistenceChecker.validateExistence(colour, "The colour cannot be null or undefined.");
+        this.orientation = VWExistenceChecker.validateExistence(orientation, "The orientation cannot be null or undefined.");
+        this.mind = VWExistenceChecker.validateExistence(mind, "The mind cannot be null or undefined.");
         this.observationSensor = observationSensor === null || observationSensor === undefined ? JOptional.empty() : JOptional.of(observationSensor);
         this.listeningSensor = listeningSensor === null || listeningSensor === undefined ? JOptional.empty() : JOptional.of(listeningSensor);
         this.physicalActuator = physicalActuator === null || physicalActuator === undefined ? JOptional.empty() : JOptional.of(physicalActuator);
         this.CommunicativeActuator = communicativeActuator === null || communicativeActuator === undefined ? JOptional.empty() : JOptional.of(communicativeActuator);
-    }
-
-    private static validateColour(colour: VWColour): VWColour {
-        if (colour === null || colour === undefined) {
-            throw new Error("The colour cannot be null or undefined.");
-        }
-
-        return colour;
-    }
-
-    private static validateOrientation(orientation: VWOrientation): VWOrientation {
-        if (orientation === null || orientation === undefined) {
-            throw new Error("The orientation cannot be null or undefined.");
-        }
-
-        return orientation;
-    }
-
-    private static validateMind(mind: VWMind): VWMind {
-        if (mind === null || mind === undefined) {
-            throw new Error("The mind cannot be null or undefined.");
-        }
-
-        return mind;
     }
 
     public getColour(): VWColour {
@@ -103,7 +80,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public turn(direction: VWDirection) {
-        if (direction === null || direction === undefined) {
+        if (!VWExistenceChecker.exists(direction)) {
             throw new Error("The turning direction cannot be null or undefined.");
         }
         else if (direction === VWDirection.LEFT) {
@@ -142,11 +119,8 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     private static mergeObservations(observations: VWObservation[]): VWObservation {
-        if (observations === null || observations === undefined) {
-            throw new Error("The observations array cannot be null or undefined.");
-        }
-        else if (observations.some((observation: VWObservation) => observation === null || observation === undefined)) {
-            throw new Error("The observations array cannot contain null or undefined observations.");
+        if (!VWExistenceChecker.allExist(observations)) {
+            throw new Error("The observations array cannot be null or undefined, or contain null or undefined observations.");
         }
         else if (observations.length === 0) {
             throw new Error("At least one observation must be present.");
@@ -179,7 +153,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public toJsonObject(actorMindCorePath?: string): VWActorJSON {
-        if (actorMindCorePath === null || actorMindCorePath === undefined) {
+        if (!VWExistenceChecker.exists(actorMindCorePath)) {
             throw new Error("The actor mind core path cannot be null or undefined.");
         }
 

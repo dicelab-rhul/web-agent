@@ -1,5 +1,6 @@
 import { VWAbstractIdentifiable } from "../common/VWAbstractIdentifiable";
 import { VWColour } from "../common/VWColour";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWDirtAppearance } from "./VWDirtAppearance";
 
 export type VWDirtJSON = {
@@ -12,15 +13,7 @@ export class VWDirt extends VWAbstractIdentifiable {
     public constructor(colour: VWColour) {
         super();
 
-        this.colour = VWDirt.validateColour(colour);
-    }
-
-    private static validateColour(colour: VWColour): VWColour {
-        if (colour === null || colour === undefined) {
-            throw new Error("The dirt colour cannot be null or undefined.");
-        }
-
-        return colour;
+        this.colour = VWExistenceChecker.validateExistence(colour, "The dirt colour cannot be null or undefined.");
     }
 
     public getColour(): VWColour {
@@ -28,7 +21,7 @@ export class VWDirt extends VWAbstractIdentifiable {
     }
 
     public equals(other: object): boolean {
-        if (other === null || other === undefined) {
+        if (!VWExistenceChecker.exists(other)) {
             return false;
         }
         else if (this === other) {
@@ -55,10 +48,10 @@ export class VWDirt extends VWAbstractIdentifiable {
     }
 
     public static fromJsonObject(data: VWDirtJSON): VWDirt {
-        if (data === null || data === undefined) {
+        if (!VWExistenceChecker.exists(data)) {
             throw new Error("The dirt JSON object cannot be null or undefined.");
         }
-        else if (data["colour"] === null || data["colour"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["colour"])) {
             throw new Error("The colour of a `VWDirt` cannot be null or undefined.");
         }
 

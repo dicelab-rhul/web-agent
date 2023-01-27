@@ -5,6 +5,7 @@ import { VWTurnAction } from "../../../actions/VWTurnAction";
 import { VWColour } from "../../../common/VWColour";
 import { VWDirection } from "../../../common/VWDirection";
 import { VWUserDifficulty } from "../../../common/VWUserDifficulty";
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWAbstractMindCore } from "./VWAbstractMindCore";
 
 export class VWUserMindCore extends VWAbstractMindCore {
@@ -13,12 +14,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     public constructor(difficultyLevel?: VWUserDifficulty) {
         super();
 
-        if (difficultyLevel === null || difficultyLevel === undefined) {
-            this.difficultyLevel = VWUserDifficulty.BASIC;
-        }
-        else {
-            this.difficultyLevel = difficultyLevel;
-        }
+        this.difficultyLevel = VWExistenceChecker.exists(difficultyLevel) ? difficultyLevel : VWUserDifficulty.BASIC;
 
         this.setMindCoreFilePath(__filename);
     }
@@ -221,17 +217,14 @@ export class VWUserMindCore extends VWAbstractMindCore {
     }
 
     private static validateWeights(weights: number[]): void {
-        if (weights === null || weights === undefined) {
-            throw new Error("Weights cannot be null or undefined.");
-        }
-        else if (weights.some(weight => weight === null || weight === undefined)) {
-            throw new Error("Weights cannot contain null or undefined values.");
+        if (!VWExistenceChecker.allExist(weights)) {
+            throw new Error("The weights array cannot be null or undefined, or contain null or undefined values.");
         }
         else if (weights.some(weight => weight < 0.0)) {
-            throw new Error("Weights cannot be negative.");
+            throw new Error("The weights cannot be negative.");
         }
         else if (weights.some(weight => weight > 1.0)) {
-            throw new Error("Weights cannot be greater than 1.0.");
+            throw new Error("The weights cannot be greater than 1.0.");
         }
         else {
             VWUserMindCore.validateWeightsSum(weights.reduce((partialSum, elm) => partialSum + elm, 0));
@@ -240,10 +233,10 @@ export class VWUserMindCore extends VWAbstractMindCore {
 
     private static validateWeightsSum(weightsSum: number): void {
         if (weightsSum < 1.0) {
-            throw new Error("Weights cannot sum to less than 1.0.");
+            throw new Error("The weights cannot sum to less than 1.0.");
         }
         else if (weightsSum > 1.0) {
-            throw new Error("Weights cannot sum to more than 1.0.");
+            throw new Error("The weights cannot sum to more than 1.0.");
         }
     }
 

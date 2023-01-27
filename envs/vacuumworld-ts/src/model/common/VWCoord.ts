@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { Equalisable } from "./Equalisable";
 import { VWOrientation } from "./VWOrientation";
 
@@ -11,24 +12,8 @@ export class VWCoord implements Equalisable {
     private y: bigint;
 
     public constructor(x: bigint, y: bigint) {
-        this.x = VWCoord.validateX(x);
-        this.y = VWCoord.validateY(y);
-    }
-
-    private static validateX(x: bigint): bigint {
-        if (x === null || x === undefined) {
-            throw new Error("The x coordinate cannot be null or undefined.");
-        }
-
-        return x;
-    }
-
-    private static validateY(y: bigint): bigint {
-        if (y === null || y === undefined) {
-            throw new Error("The y coordinate cannot be null or undefined.");
-        }
-
-        return y;
+        this.x = VWExistenceChecker.validateExistence(x, "The x coordinate cannot be null or undefined.");
+        this.y = VWExistenceChecker.validateExistence(y, "The y coordinate cannot be null or undefined.");
     }
 
     public getX(): bigint {
@@ -44,7 +29,7 @@ export class VWCoord implements Equalisable {
     }
 
     public getForwardCoord(orientation: VWOrientation): VWCoord {
-        if (orientation === null || orientation === undefined) {
+        if (!VWExistenceChecker.exists(orientation)) {
             throw new Error("The orientation cannot be null or undefined.");
         }
         else if (orientation === VWOrientation.NORTH) {
@@ -65,7 +50,7 @@ export class VWCoord implements Equalisable {
     }
 
     public getLeftCoord(orientation: VWOrientation): VWCoord {
-        if (orientation === null || orientation === undefined) {
+        if (!VWExistenceChecker.exists(orientation)) {
             throw new Error("The orientation cannot be null or undefined.");
         }
         else if (orientation === VWOrientation.NORTH) {
@@ -86,7 +71,7 @@ export class VWCoord implements Equalisable {
     }
 
     public getRightCoord(orientation: VWOrientation): VWCoord {
-        if (orientation === null || orientation === undefined) {
+        if (!VWExistenceChecker.exists(orientation)) {
             throw new Error("The orientation cannot be null or undefined.");
         }
         else if (orientation === VWOrientation.NORTH) {
@@ -107,7 +92,7 @@ export class VWCoord implements Equalisable {
     }
 
     public getForwardLeftCoord(orientation: VWOrientation): VWCoord {
-        if (orientation === null || orientation === undefined) {
+        if (!VWExistenceChecker.exists(orientation)) {
             throw new Error("The orientation cannot be null or undefined.");
         }
         else if (orientation === VWOrientation.NORTH) {
@@ -128,7 +113,7 @@ export class VWCoord implements Equalisable {
     }
 
     public getForwardRightCoord(orientation: VWOrientation): VWCoord {
-        if (orientation === null || orientation === undefined) {
+        if (!VWExistenceChecker.exists(orientation)) {
             throw new Error("The orientation cannot be null or undefined.");
         }
         else if (orientation === VWOrientation.NORTH) {
@@ -172,13 +157,13 @@ export class VWCoord implements Equalisable {
     }
 
     public static fromJsonObject(data: VWCoordJSON): VWCoord {
-        if (data === null || data === undefined) {
+        if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation cannot be null or undefined.");
         }
-        else if (data.x === null || data.x === undefined) {
+        else if (!VWExistenceChecker.exists(data.x)) {
             throw new Error("The x coordinate cannot be null or undefined.");
         }
-        else if (data.y === null || data.y === undefined) {
+        else if (!VWExistenceChecker.exists(data.y)) {
             throw new Error("The y coordinate cannot be null or undefined.");
         }
         else {
@@ -191,7 +176,7 @@ export class VWCoord implements Equalisable {
     }
 
     public equals(other: any): boolean {
-        if (other === null || other === undefined) {
+        if (!VWExistenceChecker.exists(other)) {
             return false;
         }
         else if (this === other) {
@@ -206,7 +191,7 @@ export class VWCoord implements Equalisable {
     }
 
     public static fromString(coordString: string): VWCoord {
-        if (coordString === null || coordString === undefined) {
+        if (!VWExistenceChecker.exists(coordString)) {
             throw new Error("The coordinate string cannot be null or undefined.");
         }
         else if (coordString.length < 5) {

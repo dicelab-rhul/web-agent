@@ -1,6 +1,6 @@
 import { VWDiv } from "../../common/VWDiv";
 
-export class VWSimulationControlsDiv implements VWDiv {
+export class VWInternalSimulationControlsDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "simulation_controls_div";
     private packed: boolean;
 

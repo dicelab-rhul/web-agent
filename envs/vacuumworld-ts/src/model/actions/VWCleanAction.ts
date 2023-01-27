@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWPhysicalAction } from "./VWPhysicalAction";
 
 export class VWCleanAction extends VWPhysicalAction {
@@ -12,7 +13,7 @@ export class VWCleanAction extends VWPhysicalAction {
     }
 
     public static overrideDefaultEffort(newEffort: bigint): void {
-        if (newEffort === null || newEffort === undefined) {
+        if (!VWExistenceChecker.exists(newEffort)) {
             console.log("The new effort for VWCleanAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {

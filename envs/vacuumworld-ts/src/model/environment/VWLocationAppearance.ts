@@ -5,6 +5,7 @@ import { VWColour } from "../common/VWColour";
 import { VWCoord } from "../common/VWCoord";
 import { VWOrientation } from "../common/VWOrientation";
 import { VWDirtAppearance } from "../dirt/VWDirtAppearance";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 
 export class VWLocationAppearance implements VWAppearance {
     private coord: VWCoord;
@@ -13,22 +14,14 @@ export class VWLocationAppearance implements VWAppearance {
     private wall: Map<VWOrientation, boolean>;
 
     public constructor(coord: VWCoord, wall: Map<VWOrientation, boolean>, actorAppearance?: VWActorAppearance, dirtAppearance?: VWDirtAppearance) {
-        this.coord = VWLocationAppearance.validateCoord(coord);
+        this.coord = VWExistenceChecker.validateExistence(coord, "The coordinates cannot be null or undefined.");
         this.wall = VWLocationAppearance.validateWall(wall);
         this.actorAppearance = JOptional.ofNullable(actorAppearance);
         this.dirtAppearance = JOptional.ofNullable(dirtAppearance);
     }
 
-    private static validateCoord(coord: VWCoord): VWCoord {
-        if (coord === null || coord === undefined) {
-            throw new Error("The coordinates cannot be null or undefined.");
-        }
-
-        return coord;
-    }
-
     private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
-        if (wall === null || wall === undefined) {
+        if (!VWExistenceChecker.exists(wall)) {
             throw new Error("The wall cannot be null or undefined.");
         }
         else if (wall.size !== 4) {

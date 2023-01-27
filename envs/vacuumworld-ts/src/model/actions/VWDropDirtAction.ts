@@ -1,4 +1,5 @@
 import { VWColour } from "../common/VWColour";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWPhysicalAction } from "./VWPhysicalAction";
 
 export class VWDropDirtAction extends VWPhysicalAction {
@@ -8,19 +9,11 @@ export class VWDropDirtAction extends VWPhysicalAction {
     public constructor(actorID: string, colour: VWColour) {
         super(actorID);
 
-        this.colour = VWDropDirtAction.validateColour(colour);
+        this.colour = VWExistenceChecker.validateExistence(colour, "The dirt colour cannot be null or undefined.");
     }
 
     public getColour(): VWColour {
         return this.colour;
-    }
-
-    private static validateColour(colour: VWColour): VWColour {
-        if (colour === null || colour === undefined) {
-            throw new Error("The dirt colour cannot be null or undefined.");
-        }
-
-        return colour;
     }
 
     public getEffort(): bigint {
@@ -28,7 +21,7 @@ export class VWDropDirtAction extends VWPhysicalAction {
     }
 
     public static overrideDefaultEffort(newEffort: bigint): void {
-        if (newEffort === null || newEffort === undefined) {
+        if (!VWExistenceChecker.exists(newEffort)) {
             console.log("The new effort for VWDropDirtAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {

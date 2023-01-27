@@ -22,7 +22,7 @@ export class VWGridDiv implements VWDiv {
     }
 
     private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.
-        if (gridSize === null || gridSize === undefined || gridSize <= 0) {
+        if (!VWExistenceChecker.exists(gridSize) || gridSize <= 0) {
             throw new Error("Cannot create a grid with no size.");
         }
         else {
@@ -31,7 +31,7 @@ export class VWGridDiv implements VWDiv {
     }
 
     private static validateGrid(grid: VWMap<VWCoord, VWCell>): VWMap<VWCoord, VWCell> {
-        if (grid === null || grid === undefined) {
+        if (!VWExistenceChecker.exists(grid)) {
             throw new Error("Cannot create a grid without cells.");
         }
         else if ([...grid.getKeys()].some((coord: VWCoord) => coord === null || coord === undefined)) {
@@ -73,17 +73,17 @@ export class VWGridDiv implements VWDiv {
     }
 
     public pack(): void {
-        if (this.gridSize === null || this.gridSize === undefined || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.
+        if (!VWExistenceChecker.exists(this.gridSize) || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.
             throw new Error("Cannot pack a grid that has no size.");
         }
-        else if (this.div === null || this.div === undefined) {
+        else if (!VWExistenceChecker.exists(this.div)) {
             throw new Error("Cannot pack a grid that has no div.");
         }
-        else if (this.gridMap === null || this.gridMap === undefined) {
+        else if (!VWExistenceChecker.exists(this.gridMap)) {
             throw new Error("Cannot pack a grid that has no cells.");
         }
-        else if (this.draggableBodiesDiv === null || this.draggableBodiesDiv === undefined) {
-            throw new Error("Cannot pack a grid that has no draggable bodies div.");
+        else if (!VWExistenceChecker.exists(this.draggableBodiesDiv)) {
+            throw new Error("Cannot pack a grid that has not got a draggable bodies div.");
         }
         else if (!this.packed) {
             this.gridMap.forEach((cell: VWCell) => cell.pack());
@@ -109,7 +109,7 @@ export class VWGridDiv implements VWDiv {
             throw new Error("Cannot unpack: the grid div has no children.");
         }
         else if (!VWExistenceChecker.exists(this.draggableBodiesDiv)) {
-            throw new Error("Cannot pack a grid that has no draggable bodies div.");
+            throw new Error("Cannot pack a grid that has not got a draggable bodies div.");
         }
         else {
             this.div.removeChild(this.div.firstChild);
@@ -121,7 +121,7 @@ export class VWGridDiv implements VWDiv {
     }
 
     public show(): void {
-        if (this.div === null || this.div === undefined) {
+        if (!VWExistenceChecker.exists(this.div)) {
             throw new Error("Cannot show a grid that has no div.");
         }
         else if (!this.div.hidden) {
@@ -136,7 +136,7 @@ export class VWGridDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (this.div === null || this.div === undefined) {
+        if (!VWExistenceChecker.exists(this.div)) {
             throw new Error("Cannot hide: the grid div is null or undefined.");
         }
         else if (this.div.hidden) {
@@ -151,25 +151,15 @@ export class VWGridDiv implements VWDiv {
     }
 
     public getDiv(): HTMLDivElement {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot get the grid div: it is null or undefined.");
-        }
-        else {
-            return this.div;
-        }
+        return VWExistenceChecker.validateExistence(this.div, "Cannot get the grid div: the div is null or undefined.");
     }
 
     public getDraggableBodiesDiv(): VWDraggableBodiesDiv {
-        if (this.draggableBodiesDiv === null || this.draggableBodiesDiv === undefined) {
-            throw new Error("Cannot get the draggable bodies div: it is null or undefined.");
-        }
-        else {
-            return this.draggableBodiesDiv;
-        }
+        return VWExistenceChecker.validateExistence(this.draggableBodiesDiv, "Cannot get the draggable bodies div: the div is null or undefined.");
     }
 
     public setDraggableBodiesDiv(draggableBodiesDiv: VWDraggableBodiesDiv): void {
-        if (draggableBodiesDiv === null || draggableBodiesDiv === undefined) {
+        if (!VWExistenceChecker.exists(draggableBodiesDiv)) {
             throw new Error("Cannot set the draggable bodies div: it is null or undefined.");
         }
         else {

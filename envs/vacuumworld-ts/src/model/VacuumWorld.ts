@@ -1,4 +1,5 @@
 import { VWPlatformDiv } from "./gui/platform/div/VWPlatformDiv";
+import { VWExistenceChecker } from "./utils/VWExistenceChecker";
 
 export class VacuumWorld {
     public run(): void {
@@ -14,7 +15,7 @@ export class VacuumWorld {
     }
 
     private setTitle(title: string): void {
-        if (title !== null && title !== undefined && title !== "") {
+        if (VWExistenceChecker.exists(title) && title !== "") {
             document.title = title;
         }
     }

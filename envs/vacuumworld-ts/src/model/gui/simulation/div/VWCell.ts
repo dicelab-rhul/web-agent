@@ -14,7 +14,7 @@ export class VWCell {
     private packed: boolean;
 
     public constructor(locApp: VWLocationAppearance) {
-        this.locationAppearance = VWCell.validateLocationAppearance(locApp);
+        this.locationAppearance = VWExistenceChecker.validateExistence(locApp, "Cannot create a cell without a location appearance.");
 
         this.createLocationImage();
 
@@ -31,15 +31,6 @@ export class VWCell {
         this.doubleClickCallback = dClick;
 
         this.addListeners();
-    }
-
-    private static validateLocationAppearance(locationAppearance: VWLocationAppearance): VWLocationAppearance {
-        if (locationAppearance === null || locationAppearance === undefined) {
-            throw new Error("Cannot create a cell without a location appearance.");
-        }
-        else {
-            return locationAppearance;
-        }
     }
 
     private createLocationImage(): void {
@@ -147,7 +138,7 @@ export class VWCell {
     }
 
     private getCellImageSrc(): string {
-        if (this.locationAppearance === null || this.locationAppearance === undefined) {
+        if (!VWExistenceChecker.exists(this.locationAppearance)) {
             throw new Error("Cannot get the image src for a cell for which no location appearance is available.");
         }
         else if (this.locationAppearance.hasActor()) {
@@ -178,13 +169,13 @@ export class VWCell {
     }
 
     public pack(): void {
-        if (this.displayedImage === null || this.displayedImage === undefined) {
-            throw new Error("Cannot pack a cell that has no image");
+        if (!VWExistenceChecker.exists(this.displayedImage)) {
+            throw new Error("Cannot pack a cell that has no image.");
         }
-        else if (this.locationAppearance === null || this.locationAppearance === undefined) {
+        else if (!VWExistenceChecker.exists(this.locationAppearance)) {
             throw new Error("Cannot pack a cell for which no location appearance is available.");
         }
-        else if (this.cell === null || this.cell === undefined) {
+        else if (!VWExistenceChecker.exists(this.cell)) {
             throw new Error("Cannot pack a non-existent cell.");
         }
         else if (!this.packed) {
@@ -194,6 +185,7 @@ export class VWCell {
     }
 
     public unpack(): void {
+        // TODO: add checks.
         if (this.packed) {
             this.cell.removeChild(this.displayedImage);
             this.locationAppearance = null;
@@ -207,6 +199,6 @@ export class VWCell {
     }
 
     public getCell(): HTMLDivElement {
-        return this.cell;
+        return VWExistenceChecker.validateExistence(this.cell, "Cannot get the cell: the cell is null or undefined.");
     }
 }

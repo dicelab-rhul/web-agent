@@ -6,6 +6,7 @@ import { VWColour } from "../../common/VWColour";
 import { VWCoord } from "../../common/VWCoord";
 import { VWOrientation } from "../../common/VWOrientation";
 import { VWDirt } from "../../dirt/VWDirt";
+import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 import { VWEnvironment } from "../VWEnvironment";
 import { VWActionExecutor } from "./VWActionExecutor";
 
@@ -20,7 +21,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setActorColourBeforeAction(colour: VWColour): void {
-        if (colour === null || colour === undefined) {
+        if (!VWExistenceChecker.exists(colour)) {
             throw new Error("The actor colour cannot be null or undefined.");
         }
         else {
@@ -33,7 +34,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setActorOrientationBeforeAction(orientation: VWOrientation): void {
-        if (orientation === null || orientation === undefined) {
+        if (!VWExistenceChecker.exists(orientation)) {
             throw new Error("The actor orientation cannot be null or undefined.");
         }
         else {
@@ -46,7 +47,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setActorCoordBeforeAction(coord: VWCoord): void {
-        if (coord === null || coord === undefined) {
+        if (!VWExistenceChecker.exists(coord)) {
             throw new Error("The actor coord cannot be null or undefined.");
         }
         else {
@@ -59,7 +60,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setDirtBeforeAction(dirt: JOptional<VWDirt>): void {
-        if (dirt === null || dirt === undefined) {
+        if (!VWExistenceChecker.exists(dirt)) {
             throw new Error("The dirt cannot be null or undefined.");
         }
         else {
@@ -68,10 +69,10 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     public attempt(action: VWAction, env: VWEnvironment): VWActionResult {
-        if (action === null || action === undefined) {
+        if (!VWExistenceChecker.exists(action)) {
             throw new Error("The action cannot be null or undefined.");
         }
-        else if (env === null || env === undefined) {
+        else if (!VWExistenceChecker.exists(env)) {
             throw new Error("The environment cannot be null or undefined.");
         }
         else if (!this.isPossible(action, env)) {

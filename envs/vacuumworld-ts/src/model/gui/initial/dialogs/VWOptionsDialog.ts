@@ -131,7 +131,7 @@ export class VWOptionsDialog implements VWPackable {
         if (this.packed) {
             console.log("The options dialog is already packed.");
         }
-        else if (this.dialog === null || this.dialog === undefined) {
+        else if (!VWExistenceChecker.exists(this.dialog)) {
             throw new Error("Cannot pack the options dialog: the dialog is null or undefined.");
         }
         else if (!VWExistenceChecker.exists(this.speedSelectorDiv)) {
@@ -194,11 +194,6 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     public getDialog(): HTMLDialogElement {
-        if (this.dialog === null || this.dialog === undefined) {
-            throw new Error("Cannot get the options dialog: the dialog is null or undefined.");
-        }
-        else {
-            return this.dialog;
-        }
+        return VWExistenceChecker.validateExistence(this.dialog, "Cannot get the options dialog: the dialog is null or undefined.");
     }
 }

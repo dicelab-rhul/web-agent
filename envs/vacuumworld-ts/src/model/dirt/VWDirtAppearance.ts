@@ -1,29 +1,14 @@
 import { VWAppearance } from "../common/VWAppearance";
 import { VWColour } from "../common/VWColour";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 
 export class VWDirtAppearance implements VWAppearance {
     private dirtID: string;
     private colour: VWColour;
 
     public constructor(dirtID: string, colour: VWColour) {
-        this.dirtID = VWDirtAppearance.validateDirtID(dirtID);
-        this.colour = VWDirtAppearance.validateColour(colour);
-    }
-
-    private static validateDirtID(dirtID: string): string {
-        if (dirtID === null || dirtID === undefined) {
-            throw new Error("The dirt ID cannot be null or undefined.");
-        }
-
-        return dirtID;
-    }
-
-    private static validateColour(colour: VWColour): VWColour {
-        if (colour === null || colour === undefined) {
-            throw new Error("The dirt colour cannot be null or undefined.");
-        }
-
-        return colour;
+        this.dirtID = VWExistenceChecker.validateExistence(dirtID, "The dirt ID cannot be null or undefined.");
+        this.colour = VWExistenceChecker.validateExistence(colour, "The dirt colour cannot be null or undefined.");
     }
 
     public getID(): string {
@@ -35,7 +20,7 @@ export class VWDirtAppearance implements VWAppearance {
     }
 
     public equals(other: object): boolean {
-        if (other === null || other === undefined) {
+        if (!VWExistenceChecker.exists(other)) {
             return false;
         }
         else if (this === other) {

@@ -1,4 +1,5 @@
 import { VWMessageContent } from "../common/VWMessage";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWCommunicativeAction } from "./VWCommunicativeAction";
 
 export class VWBroadcastAction extends VWCommunicativeAction {
@@ -18,7 +19,7 @@ export class VWBroadcastAction extends VWCommunicativeAction {
     }
 
     public static overrideDefaultEffort(newEffort: bigint): void {
-        if (newEffort === null || newEffort === undefined) {
+        if (!VWExistenceChecker.exists(newEffort)) {
             console.log("The new effort for VWBroadcastAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {
