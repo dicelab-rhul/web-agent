@@ -530,4 +530,12 @@ export class VWPlatformDiv implements VWDiv {
     public getDiv(): HTMLDivElement {
         return VWExistenceChecker.validateExistence(this.div, "Cannot get the platform div: the div is null or undefined.");
     }
+
+    public isPacked(): boolean {
+        return this.packed;
+    }
+
+    public isHidden(): boolean {
+        return this.getDiv().hidden;
+    }
 }

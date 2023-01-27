@@ -18,8 +18,6 @@
 
 * File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 91: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWPackable.ts](envs/vacuumworld-ts/src/model/gui/common/VWPackable.ts) - line 6: `// TODO: add a packed(): boolean method.`
-
 * File [envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts](envs/vacuumworld-ts/src/model/gui/initial/dialogs/VWOptionsDialog.ts) - line 180: `// TODO: implement this method.`
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 24: `private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.`
@@ -30,17 +28,23 @@
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts) - line 100: `// TODO: use the grid size to determine how to remove the draggable bodies from the div.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 89: `// TODO: show the coordinates of the selected cell.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 90: `// TODO: show the coordinates of the selected cell.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 188: `// TODO: add checks.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 189: `// TODO: add checks.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 15: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 199: `// TODO: implement this.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 19: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 203: `// TODO: implement this.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 23: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 10: `this.div.id = "simulation_controls_div"; // TODO: change this ID to "internal_simulation_controls_div", and propagate.;`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 27: `// TODO: implement this method.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 16: `// TODO: implement this method.`
+
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 20: `// TODO: implement this method.`
+
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 24: `// TODO: implement this method.`
+
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWInternalSimulationControlsDiv.ts) - line 28: `// TODO: implement this method.`
 
 * File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 77: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 

@@ -102,4 +102,12 @@ export class VWDraggableDiv implements VWDiv {
     public getDiv(): HTMLDivElement {
         return VWExistenceChecker.validateExistence(this.div, "Cannot get the draggable body's div: it is null or undefined.");
     }
+
+    public isPacked(): boolean {
+        return this.packed;
+    }
+
+    public isHidden(): boolean {
+        return this.getDiv().hidden;
+    }
 }

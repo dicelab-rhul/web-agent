@@ -145,4 +145,12 @@ export class VWDraggableBodiesDiv implements VWDiv {
         // It does not matter if it is packed or not.
         return this.div;
     }
+
+    public isPacked(): boolean {
+        return this.packed;
+    }
+
+    public isHidden(): boolean {
+        return VWExistenceChecker.exists(this.div) && this.div.hidden; // this.div can be null or undefined, unlike other class-wrapped divs.
+    }
 }

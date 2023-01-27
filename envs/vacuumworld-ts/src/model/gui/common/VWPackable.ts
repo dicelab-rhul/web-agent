@@ -3,5 +3,5 @@ export interface VWPackable {
 
     unpack(): void;
 
-    // TODO: add a packed(): boolean method.
+    isPacked(): boolean;
 }

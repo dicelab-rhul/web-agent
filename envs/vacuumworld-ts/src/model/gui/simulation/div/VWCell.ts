@@ -3,8 +3,9 @@ import { VWDirection } from "../../../common/VWDirection";
 import { VWOrientation } from "../../../common/VWOrientation";
 import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
 import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWDiv } from "../../common/VWDiv";
 
-export class VWCell {
+export class VWCell implements VWDiv {
     private cell: HTMLDivElement;
     private locationAppearance: VWLocationAppearance;
     private displayedImage: HTMLImageElement;
@@ -194,11 +195,23 @@ export class VWCell {
         }
     }
 
+    public show(): void {
+        // TODO: implement this.
+    }
+
+    public hide(): void {
+        // TODO: implement this.
+    }
+
+    public getDiv(): HTMLDivElement {
+        return VWExistenceChecker.validateExistence(this.cell, "Cannot get the cell: the cell is null or undefined.");
+    }
+
     public isPacked(): boolean {
         return this.packed;
     }
 
-    public getCell(): HTMLDivElement {
-        return VWExistenceChecker.validateExistence(this.cell, "Cannot get the cell: the cell is null or undefined.");
+    public isHidden(): boolean {
+        return this.getDiv().hidden;
     }
 }
