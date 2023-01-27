@@ -1,13 +1,12 @@
 import { VWExistenceChecker } from '../utils/VWExistenceChecker';
 import { VWIdentifiable } from './VWIdentifiable';
-
-const uuid = require("uuid"); // TODO: Replace with import.
+import { v4 as uuidv4 } from "uuid";
 
 export class VWAbstractIdentifiable implements VWIdentifiable {
     private id: string;
 
     public constructor() {
-        this.id = uuid.v4();
+        this.id = uuidv4();
     }
 
     public getID(): string {

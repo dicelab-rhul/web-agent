@@ -2,12 +2,6 @@
 
 * File [src/Main.ts](src/Main.ts) - line 144: `// TODO: This method should be replaced by a function that gets the choices paths from the fs. (How?)`
 
-* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 3: `//const fs = require("fs"); // TODO: Convert to import.`
-
-* File [envs/vacuumworld-ts/src/model/VWSaveStateManager.ts](envs/vacuumworld-ts/src/model/VWSaveStateManager.ts) - line 4: `//const path = require("path-browserify"); // TODO: Convert to import.`
-
-* File [envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts](envs/vacuumworld-ts/src/model/common/VWAbstractIdentifiable.ts) - line 4: `const uuid = require("uuid"); // TODO: Replace with import.`
-
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
 * File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](envs/vacuumworld-ts/src/model/common/VWQueue.ts) - line 3: `// TODO: should this class be moved to a separate npm module?`

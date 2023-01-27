@@ -6,6 +6,10 @@ for dir in envs/*/; do
     cd ../..
 done
 
+cd experimental
+./deploy.sh
+cd ..
+
 echo "Deploying the main page..."
 npm install
 npm run build

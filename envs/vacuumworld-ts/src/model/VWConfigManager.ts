@@ -1,6 +1,3 @@
-//const fs = require("fs");
-//const path = require("path-browserify");
-
 import * as fs from "fs";
 import * as path from "path";
 

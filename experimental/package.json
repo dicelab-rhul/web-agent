@@ -1,6 +1,7 @@
 {
   "name": "web-agent",
   "version": "1.0.0",
+  "type": "module",
   "description": "Browser-based agent development for educational purposes.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
