@@ -1,12 +1,7 @@
-import { VWEnvironmentJSON } from "./environment/VWEnvironment";
-
-//const fs = require("fs"); // TODO: Convert to import.
-//const path = require("path-browserify"); // TODO: Convert to import.
-
 import * as fs from "fs";
 import * as path from "path";
+import { VWEnvironmentJSON } from "./environment/VWEnvironment";
 import { VWExistenceChecker } from "./utils/VWExistenceChecker";
-//import path from "path-browserify";
 
 export class VWSaveStateManager {
     private constructor() {}

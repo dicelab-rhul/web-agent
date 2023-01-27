@@ -196,4 +196,12 @@ export class VWOptionsDialog implements VWPackable {
     public getDialog(): HTMLDialogElement {
         return VWExistenceChecker.validateExistence(this.dialog, "Cannot get the options dialog: the dialog is null or undefined.");
     }
+
+    public isPacked(): boolean {
+        return this.packed;
+    }
+
+    public isHidden(): boolean {
+        return this.getDialog().hidden;
+    }
 }

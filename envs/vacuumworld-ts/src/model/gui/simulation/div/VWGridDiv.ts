@@ -57,7 +57,7 @@ export class VWGridDiv implements VWDiv {
                 let tableCell: HTMLTableCellElement = document.createElement("td");
                 tableCell.classList.add("grid-cell");
                 const coord: VWCoord = new VWCoord(BigInt(col), BigInt(row));
-                tableCell.appendChild(this.gridMap.get(coord).getCell());
+                tableCell.appendChild(this.gridMap.get(coord).getDiv());
                 tableRow.appendChild(tableCell);
             }
 
@@ -165,5 +165,13 @@ export class VWGridDiv implements VWDiv {
         else {
             this.draggableBodiesDiv = draggableBodiesDiv;
         }
+    }
+
+    public isPacked(): boolean {
+        return this.packed;
+    }
+
+    public isHidden(): boolean {
+        return this.getDiv().hidden;
     }
 }

@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 
 export class VWInternalSimulationControlsDiv implements VWDiv {
@@ -6,7 +7,7 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
 
     public constructor() {
         this.div = document.createElement("div");
-        this.div.id = "simulation_controls_div";
+        this.div.id = "simulation_controls_div"; // TODO: change this ID to "internal_simulation_controls_div", and propagate.;
         this.div.hidden = true;
         this.packed = false;
     }
@@ -28,11 +29,14 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
     }
 
     public getDiv(): HTMLDivElement {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot get the simulation controls div: it is null or undefined.");
-        }
-        else {
-            return this.div;
-        }
+        return VWExistenceChecker.validateExistence(this.div, "Cannot get the internal simulation controls div: the div is null or undefined.");
+    }
+
+    public isPacked(): boolean {
+        return this.packed;
+    }
+
+    public isHidden(): boolean {
+        return this.getDiv().hidden;
     }
 }

@@ -1,9 +1,17 @@
 {
     "name": "vacuumworld-ts",
     "version": "1.0.0",
-    "description": "",
+    "type": "module",
+    "description": "An agent platform with cleaning robots, pieces of dirt, and human users engaging in the practice of fly tipping.",
     "main": "dist/main.js",
     "dependencies": {
+        "ts-loader": "^9.4.2",
+        "typescript": "^4.9.4",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
+    },
+    "devDependencies": {
+        "@types/uuid": "^9.0.0",
         "fs": "0.0.1-security",
         "path": "^0.12.7",
         "path-browserify": "^1.0.1",
@@ -11,19 +19,7 @@
         "queue-typescript": "^1.0.1",
         "uuid": "^9.0.0"
     },
-    "devDependencies": {
-        "fs": "0.0.1-security",
-        "path-browserify": "^1.0.1",
-        "queue-typescript": "^1.0.1",
-        "ts-loader": "^9.4.2",
-        "typescript": "^4.9.4",
-        "uuid": "^9.0.0",
-        "webpack": "^5.75.0",
-        "webpack-cli": "^5.0.1"
-    },
     "scripts": {
-        "build": "webpack",
-        "start": "live-server ../..",
-        "run": "webpack && live-server ../.."
+        "build": "webpack"
     }
 }
