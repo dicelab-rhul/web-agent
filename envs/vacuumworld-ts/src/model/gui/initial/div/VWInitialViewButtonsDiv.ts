@@ -1,5 +1,6 @@
 import { VWInitialViewButton } from "../buttons/VWInitialViewButton";
 import { VWDiv } from "../../common/VWDiv";
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 
 export class VWInitialViewButtonsDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "initial_view_buttons_div";
@@ -9,13 +10,13 @@ export class VWInitialViewButtonsDiv implements VWDiv {
     private packed: boolean;
 
     public constructor(startCallback: () => void, optionsCallback: () => void, guideCallback: () => void) {
-        if (startCallback === null || startCallback === undefined) {
+        if (!VWExistenceChecker.exists(startCallback)) {
             throw new Error("The start callback cannot be null or undefined.");
         }
-        else if (optionsCallback === null || optionsCallback === undefined) {
+        else if (!VWExistenceChecker.exists(optionsCallback)) {
             throw new Error("The options callback cannot be null or undefined.");
         }
-        else if (guideCallback === null || guideCallback === undefined) {
+        else if (!VWExistenceChecker.exists(guideCallback)) {
             throw new Error("The guide callback cannot be null or undefined.");
         }
         else {
@@ -35,25 +36,26 @@ export class VWInitialViewButtonsDiv implements VWDiv {
         if (this.packed) {
             console.log("The initial view buttons div is already packed.");
         }
-        else if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot pack: the div is null or undefined.");
+        else if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot pack: the initial view buttons div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the initial view buttons div is not hidden (it must be before packing it).");
         }
-        else if (this.startButton === null || this.startButton === undefined) {
+        else if (!VWExistenceChecker.exists(this.startButton)) {
             throw new Error("Cannot pack: the start button is null or undefined.");
         }
-        else if (this.guideButton === null || this.guideButton === undefined) {
+        else if (!VWExistenceChecker.exists(this.guideButton)) {
             throw new Error("Cannot pack: the guide button is null or undefined.");
         }
-        else if (this.optionsButton === null || this.optionsButton === undefined) {
+        else if (!VWExistenceChecker.exists(this.optionsButton)) {
             throw new Error("Cannot pack: the options button is null or undefined.");
         }
         else {
             this.div.appendChild(this.startButton.getButton());
             this.div.appendChild(this.optionsButton.getButton());
             this.div.appendChild(this.guideButton.getButton());
+
             this.packed = true;
         }
     }
@@ -62,32 +64,33 @@ export class VWInitialViewButtonsDiv implements VWDiv {
         if (!this.packed) {
             console.log("The initial view buttons div is already unpacked.");
         }
-        else if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot unpack: the div is null or undefined.");
+        else if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot unpack: the initial view buttons div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the initial view buttons div is not hidden (it must be before unpacking it).");
         }
-        else if (this.startButton === null || this.startButton === undefined) {
+        else if (!VWExistenceChecker.exists(this.startButton)) {
             throw new Error("Cannot unpack: the start button is null or undefined.");
         }
-        else if (this.guideButton === null || this.guideButton === undefined) {
+        else if (!VWExistenceChecker.exists(this.guideButton)) {
             throw new Error("Cannot unpack: the guide button is null or undefined.");
         }
-        else if (this.optionsButton === null || this.optionsButton === undefined) {
+        else if (!VWExistenceChecker.exists(this.optionsButton)) {
             throw new Error("Cannot unpack: the options button is null or undefined.");
         }
         else {
             this.div.removeChild(this.startButton.getButton());
             this.div.removeChild(this.guideButton.getButton());
             this.div.removeChild(this.optionsButton.getButton());
+
             this.packed = false;
         }
     }
 
     public show(): void {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot show: the div is null or undefined.");
+        if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot show: the initial view buttons div is null or undefined.");
         }
         else if (!this.div.hidden) {
             console.log("The initial view buttons div is already shown.");
@@ -101,8 +104,8 @@ export class VWInitialViewButtonsDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot hide: the div is null or undefined.");
+        if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot hide: the initial view buttons div is null or undefined.");
         }
         else if (this.div.hidden) {
             console.log("The initial view buttons div is already hidden.");
@@ -116,11 +119,6 @@ export class VWInitialViewButtonsDiv implements VWDiv {
     }
 
     public getDiv(): HTMLDivElement {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot get the div: the div is null or undefined.");
-        }
-        else {
-            return this.div;
-        }
+        return VWExistenceChecker.validateExistence(this.div, "Cannot get the initial view buttons div: the div is null or undefined.");
     }
 }

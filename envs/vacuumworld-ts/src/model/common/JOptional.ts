@@ -1,5 +1,7 @@
 // TODO: should this classes be moved to a separate npm module?
 
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
+
 type TMaybe<T> = T | null | undefined;
 
 export class JOptional<T> {
@@ -10,7 +12,7 @@ export class JOptional<T> {
     }
 
     public static of<T>(value: T | null | undefined): JOptional<T> {
-        if (value === null || value === undefined) {
+        if (!VWExistenceChecker.exists(value)) {
             throw new Error("The value cannot be null or undefined.");
         }
         else {
@@ -19,7 +21,7 @@ export class JOptional<T> {
     }
 
     public static ofNullable<T>(value: T | null | undefined): JOptional<T> {
-        if (value === null || value === undefined) {
+        if (!VWExistenceChecker.exists(value)) {
             return JOptional.empty();
         }
         else {
@@ -40,37 +42,20 @@ export class JOptional<T> {
     }
 
     public get(): T {
-        if (this.value === null || this.value === undefined) {
-            throw new Error("The value is null.");
-        }
-        else {
-            return this.value;
-        }
+        return VWExistenceChecker.validateExistence(this.value, "The value is null or undefined.");
     }
 
     public orElse(other: T): T {
-        if (this.value === null || this.value === undefined) {
-            return other;
-        }
-        else {
-            return this.value;
-        }
+        return VWExistenceChecker.exists(this.value) ? this.value : other;
     }
 
     public orElseGet(other: () => T): T {
-        if (this.value === null || this.value === undefined) {
-            return other();
-        }
-        else {
-            return this.value;
-        }
+        return VWExistenceChecker.exists(this.value) ? this.value : other();
     }
 
     public orElseThrow(error?: Error): T {
-        const errorToThrow: Error = error === null || error === undefined ? new Error("The value is null or undefined.") : error;
-
-        if (this.value === null || this.value === undefined) {
-            throw errorToThrow;
+        if (!VWExistenceChecker.exists(this.value)) {
+            throw error || new Error("The value is null or undefined.");
         }
         else {
             return this.value;
@@ -78,13 +63,13 @@ export class JOptional<T> {
     }
 
     public ifPresent(consumer: (value: T) => void): void {
-        if (this.value !== null && this.value !== undefined) {
+        if (VWExistenceChecker.exists(this.value)) {
             consumer(this.value);
         }
     }
 
     public ifPresentOrElse(consumer: (value: T) => void, alternative: () => void): void {
-        if (this.value !== null && this.value !== undefined) {
+        if (VWExistenceChecker.exists(this.value)) {
             consumer(this.value);
         }
         else {
@@ -93,7 +78,7 @@ export class JOptional<T> {
     }
 
     public filter(predicate: (value: T) => boolean): JOptional<T> {
-        if (this.value === null || this.value === undefined) {
+        if (!VWExistenceChecker.exists(this.value)) {
             return JOptional.empty<T>();
         }
         else if (predicate(this.value)) {
@@ -105,7 +90,7 @@ export class JOptional<T> {
     }
 
     public map<U>(mapper: (value: T) => U): JOptional<U> {
-        if (this.value === null || this.value === undefined) {
+        if (!VWExistenceChecker.exists(this.value)) {
             return JOptional.empty<U>();
         }
         else {
@@ -114,7 +99,7 @@ export class JOptional<T> {
     }
 
     public flatMap<U>(mapper: (value: T) => JOptional<U>): JOptional<U> {
-        if (this.value === null || this.value === undefined) {
+        if (!VWExistenceChecker.exists(this.value)) {
             return JOptional.empty<U>();
         }
         else {
@@ -123,7 +108,7 @@ export class JOptional<T> {
     }
 
     public equals(other: object): boolean {
-        if (other === null || other === undefined) {
+        if (!VWExistenceChecker.exists(other)) {
             return false;
         }
         else if (this === other) {

@@ -15,11 +15,20 @@ export class VWExistenceChecker {
     }
 
     public static validateExistence<T>(obj: T, errorMessage?: string): T {
-        if (obj === null || obj === undefined) {
-            throw new Error(errorMessage || "The object is null or undefined.");
+        if (VWExistenceChecker.exists(obj)) {
+            return obj;
         }
         else {
+            throw new Error(errorMessage || "The object is null or undefined.");
+        }
+    }
+
+    public static validateAllExistence<T>(obj: T[], errorMessage?: string): T[] {
+        if (VWExistenceChecker.allExist(obj)) {
             return obj;
+        }
+        else {
+            throw new Error(errorMessage || "The object is null or undefined.");
         }
     }
 }

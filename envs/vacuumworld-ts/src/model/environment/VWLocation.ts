@@ -6,6 +6,7 @@ import { VWOrientation } from "../common/VWOrientation";
 import { VWDirt, VWDirtJSON } from "../dirt/VWDirt";
 import { VWActorFactory } from "../actor/factories/VWActorFactory";
 import { VWLocationAppearance } from "./VWLocationAppearance";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 
 export type VWWallJSON = {
     north: boolean;
@@ -28,22 +29,14 @@ export class VWLocation {
     private wall: Map<VWOrientation, boolean>;
 
     public constructor(coord: VWCoord, wall: Map<VWOrientation, boolean>, actor?: VWActor, dirt?: VWDirt) {
-        this.coord = VWLocation.validateCoord(coord);
+        this.coord = VWExistenceChecker.validateExistence(coord, "The coordinates cannot be null or undefined.");
         this.wall = VWLocation.validateWall(wall);
         this.actor = JOptional.ofNullable(actor);
         this.dirt = JOptional.ofNullable(dirt);
     }
 
-    private static validateCoord(coord: VWCoord): VWCoord {
-        if (coord === null || coord === undefined) {
-            throw new Error("The coordinates cannot be null or undefined.");
-        }
-
-        return coord;
-    }
-
     private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
-        if (wall === null || wall === undefined) {
+        if (!VWExistenceChecker.exists(wall)) {
             throw new Error("The wall cannot be null or undefined.");
         }
         else if (wall.size !== 4) {
@@ -77,7 +70,7 @@ export class VWLocation {
         if (this.hasActor()) {
             throw new Error("There is already an actor in this location.");
         }
-        else if (actor === null || actor === undefined) {
+        else if (!VWExistenceChecker.exists(actor)) {
             throw new Error("The actor cannot be null or undefined.");
         }
         else {
@@ -122,7 +115,7 @@ export class VWLocation {
         if (this.hasDirt()) {
             throw new Error("There is already a dirt in this location.");
         }
-        else if (dirt === null || dirt === undefined) {
+        else if (!VWExistenceChecker.exists(dirt)) {
             throw new Error("The dirt cannot be null or undefined.");
         }
         else {
@@ -211,13 +204,13 @@ export class VWLocation {
     }
 
     public static fromJsonObject(data: VWLocationJSON): VWLocation {
-        if (data === null || data === undefined) {
+        if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWLocation` cannot be null or undefined.");
         }
-        else if (data["wall"] === null || data["wall"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["wall"])) {
             throw new Error("The JSON representation of a `VWLocation` must have a `wall` property.");
         }
-        else if (data["coord"] === null || data["coord"] === undefined) {
+        else if (!VWExistenceChecker.exists(data["coord"])) {
             throw new Error("The JSON representation of a `VWLocation` must have a `coord` property.");
         }
         else {
@@ -227,8 +220,8 @@ export class VWLocation {
 
     private static fromJsonObjectHelper(coord: VWCoord, wallData: VWWallJSON, actorData: VWActorJSON, dirtData: VWDirtJSON): VWLocation {
         const wall: Map<VWOrientation, boolean> = VWLocation.constructWallFromData(wallData);
-        const actor: JOptional<VWActor> = actorData === null || actorData === undefined ? JOptional.empty() : JOptional.of(VWActorFactory.createVWActorFromJSONObject(actorData));
-        const dirt: JOptional<VWDirt> = dirtData === null || dirtData === undefined ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
+        const actor: JOptional<VWActor> = !VWExistenceChecker.exists(actorData) ? JOptional.empty() : JOptional.of(VWActorFactory.createVWActorFromJSONObject(actorData));
+        const dirt: JOptional<VWDirt> = !VWExistenceChecker.exists(dirtData) ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
 
         if (actor.isPresent() && dirt.isPresent()) {
             return new VWLocation(coord, wall, actor.orElseThrow(), dirt.orElseThrow());
@@ -247,19 +240,19 @@ export class VWLocation {
     private static constructWallFromData(wallData: VWWallJSON): Map<VWOrientation, boolean> {
         const wall: Map<VWOrientation, boolean> = new Map<VWOrientation, boolean>();
 
-        if (wallData === null || wallData === undefined) {
+        if (!VWExistenceChecker.exists(wallData)) {
             throw new Error("The wall cannot be null or undefined.");
         }
-        else if (wallData["north"] === null || wallData["north"] === undefined) {
+        else if (!VWExistenceChecker.exists(wallData["north"])) {
             throw new Error("The wall must have a `north` property.");
         }
-        else if (wallData["east"] === null || wallData["east"] === undefined) {
+        else if (!VWExistenceChecker.exists(wallData["east"])) {
             throw new Error("The wall must have an `east` property.");
         }
-        else if (wallData["south"] === null || wallData["south"] === undefined) {
+        else if (!VWExistenceChecker.exists(wallData["south"])) {
             throw new Error("The wall must have a `south` property.");
         }
-        else if (wallData["west"] === null || wallData["west"] === undefined) {
+        else if (!VWExistenceChecker.exists(wallData["west"])) {
             throw new Error("The wall must have a `west` property.");
         }
         else {

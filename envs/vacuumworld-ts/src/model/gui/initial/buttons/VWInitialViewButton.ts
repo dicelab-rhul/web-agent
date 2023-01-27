@@ -1,15 +1,17 @@
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+
 export class VWInitialViewButton {
     private callback: () => void;
     private button: HTMLButtonElement;
 
     public constructor(text: string, id: string, callback: () => void, classes?: string[]) {
-        if (text === null || text === undefined) {
+        if (!VWExistenceChecker.exists(text)) {
             throw new Error("The text of the button cannot be null or undefined.");
         }
-        else if (id === null || id === undefined) {
+        else if (!VWExistenceChecker.exists(id)) {
             throw new Error("The id of the button cannot be null or undefined.");
         }
-        else if (callback === null || callback === undefined) {
+        else if (!VWExistenceChecker.exists(callback)) {
             throw new Error("The callback of the button cannot be null or undefined.");
         }
         else {
@@ -24,7 +26,7 @@ export class VWInitialViewButton {
     }
 
     private addClasses(classes: string[]): void {
-        if (classes !== null && classes !== undefined) {
+        if (VWExistenceChecker.allExist(classes)) {
             classes.forEach(c => this.button.classList.add(c));
         }
     }

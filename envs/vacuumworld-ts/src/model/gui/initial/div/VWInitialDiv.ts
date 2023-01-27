@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 
 export class VWInitialViewDiv implements VWDiv {
@@ -6,7 +7,7 @@ export class VWInitialViewDiv implements VWDiv {
     private packed: boolean;
 
     public constructor(initialViewImgPath: string) {
-        if (initialViewImgPath === null || initialViewImgPath === undefined) {
+        if (!VWExistenceChecker.exists(initialViewImgPath)) {
             throw new Error("The path of the initial view image cannot be null or undefined.");
         }
         else {
@@ -24,13 +25,13 @@ export class VWInitialViewDiv implements VWDiv {
         if (this.packed) {
             console.log("The initial view div is already packed.");
         }
-        else if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot pack: the div is null or undefined.");
+        else if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot pack: the initial view div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the initial view div is not hidden (it must be before packing it).");
         }
-        else if (this.img === null || this.img === undefined) {
+        else if (!VWExistenceChecker.exists(this.img)) {
             throw new Error("Cannot pack: the image is null or undefined.");
         }
         else {
@@ -43,13 +44,13 @@ export class VWInitialViewDiv implements VWDiv {
         if (!this.packed) {
             console.log("The initial view div is already unpacked.");
         }
-        else if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot unpack: the div is null or undefined.");
+        else if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot unpack: the initial view div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the initial view div is not hidden (it must be before unpacking it).");
         }
-        else if (this.img === null || this.img === undefined) {
+        else if (!VWExistenceChecker.exists(this.img)) {
             throw new Error("Cannot unpack: the image is null or undefined.");
         }
         else {
@@ -59,8 +60,8 @@ export class VWInitialViewDiv implements VWDiv {
     }
 
     public show(): void {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot show: the div is null or undefined.");
+        if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot show: the initial view div is null or undefined.");
         }
         else if (!this.div.hidden) {
             console.log("The initial view div is already shown.");
@@ -74,8 +75,8 @@ export class VWInitialViewDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot hide: the div is null or undefined.");
+        if (!VWExistenceChecker.exists(this.div)) {
+            throw new Error("Cannot hide: the initial view div is null or undefined.");
         }
         else if (this.div.hidden) {
             console.log("The initial view div is already hidden.");
@@ -89,11 +90,6 @@ export class VWInitialViewDiv implements VWDiv {
     }
 
     public getDiv(): HTMLDivElement {
-        if (this.div === null || this.div === undefined) {
-            throw new Error("Cannot get the initial view div: the div is null or undefined.");
-        }
-        else {
-            return this.div;
-        }
+        return VWExistenceChecker.validateExistence(this.div, "Cannot get the initial view div: the div is null or undefined.");
     }
 }

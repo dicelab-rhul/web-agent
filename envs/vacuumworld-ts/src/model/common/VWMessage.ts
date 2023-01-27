@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWPerception } from "./VWPerception";
 
 export type VWMessageContent = number | bigint | string | Array<number | bigint | string> | Map<string, number | bigint | string>;
@@ -10,33 +11,9 @@ export class VWMessage extends VWPerception {
     public constructor(content: VWMessageContent, senderID: string, recipientID: string) {
         super();
 
-        this.content = VWMessage.validateContent(content);
-        this.senderID = VWMessage.validateSenderID(senderID);
-        this.recipientID = VWMessage.validateRecipientID(recipientID);
-    }
-
-    private static validateContent(content: VWMessageContent): VWMessageContent {
-        if (content === null || content === undefined) {
-            throw new Error("The content cannot be null or undefined.");
-        }
-
-        return content;
-    }
-
-    private static validateSenderID(senderID: string): string {
-        if (senderID === null || senderID === undefined) {
-            throw new Error("The sender ID cannot be null or undefined.");
-        }
-
-        return senderID;
-    }
-
-    private static validateRecipientID(recipientID: string): string {
-        if (recipientID === null || recipientID === undefined) {
-            throw new Error("The recipient ID cannot be null or undefined.");
-        }
-
-        return recipientID;
+        this.content = VWExistenceChecker.validateExistence(content, "The content cannot be null or undefined.");
+        this.senderID = VWExistenceChecker.validateExistence(senderID, "The sender ID cannot be null or undefined.");
+        this.recipientID = VWExistenceChecker.validateExistence(recipientID, "The recipient ID cannot be null or undefined.");
     }
 
     public getContent(): VWMessageContent {

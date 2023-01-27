@@ -1,4 +1,5 @@
 import { VWAction } from "../actions/VWAction";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWActionOutcome } from "./VWActionOutcome";
 
 export class VWActionResult {
@@ -6,24 +7,8 @@ export class VWActionResult {
     private action: VWAction;
 
     public constructor(actionOutcome: VWActionOutcome, action: VWAction) {
-        this.actionOutcome = VWActionResult.validateActionOutcome(actionOutcome);
-        this.action = VWActionResult.validateAction(action);
-    }
-
-    private static validateActionOutcome(actionOutcome: VWActionOutcome): VWActionOutcome {
-        if (actionOutcome === null || actionOutcome === undefined) {
-            throw new Error("The action outcome cannot be null or undefined.");
-        }
-
-        return actionOutcome;
-    }
-
-    private static validateAction(action: VWAction): VWAction {
-        if (action === null || action === undefined) {
-            throw new Error("The action cannot be null or undefined.");
-        }
-
-        return action;
+        this.actionOutcome = VWExistenceChecker.validateExistence(actionOutcome, "The action outcome cannot be null or undefined.");
+        this.action = VWExistenceChecker.validateExistence(action, "The action cannot be null or undefined.");
     }
 
     public getActionOutcome(): VWActionOutcome {

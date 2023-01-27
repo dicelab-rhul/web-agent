@@ -1,6 +1,7 @@
 import { JOptional } from "../../common/JOptional";
 import { VWPerception } from "../../common/VWPerception";
 import { VWQueue } from "../../common/VWQueue";
+import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 import { VWSensor } from "./VWSensor";
 
 export abstract class VWAbstractSensor<P extends VWPerception> implements VWSensor<P> {
@@ -11,7 +12,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
     }
 
     public sink(perception: P) : void {
-        if (perception === null || perception === undefined) {
+        if (!VWExistenceChecker.exists(perception)) {
             throw new Error("The perception cannot be null or undefined.");
         }
         else {
@@ -20,7 +21,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
     }
 
     public sinkAll(perceptions: P[]) : void {
-        if (perceptions === null || perceptions === undefined) {
+        if (!VWExistenceChecker.allExist(perceptions)) {
             throw new Error("The perceptions cannot be null or undefined.");
         }
         else {

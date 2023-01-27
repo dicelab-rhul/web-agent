@@ -3,16 +3,16 @@ import { VWColour } from "../../../common/VWColour";
 import { VWCoord } from "../../../common/VWCoord";
 import { VWDirection } from "../../../common/VWDirection";
 import { VWMap } from "../../../common/VWMap";
-import { VWActor } from "../../../actor/VWActor";
 import { VWDirt } from "../../../dirt/VWDirt";
 import { VWEnvironment } from "../../../environment/VWEnvironment";
 import { VWLocation } from "../../../environment/VWLocation";
 import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
+import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
 import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
 import { VWGridDiv } from "./VWGridDiv";
-import { VWSimulationControlsDiv } from "./VWSimulationControlsDiv";
+import { VWInternalSimulationControlsDiv } from "./VWInternalSimulationControlsDiv";
 
 export class VWSimulation {
     private gridSize: number;
@@ -26,19 +26,19 @@ export class VWSimulation {
     private hideDraggableBodiesDivCallback: () => void;
     private replaceDraggableBodiesDivCallback: (newDraggableBodiesDiv: VWDraggableBodiesDiv) => void;
     private hideSimulationControlsDivCallback: () => void;
-    private replaceSimulationControlsDivCallback: (newSimulationControlsDiv: VWSimulationControlsDiv) => void;
+    private replaceSimulationControlsDivCallback: (newSimulationControlsDiv: VWInternalSimulationControlsDiv) => void;
 
     public constructor(environment: VWEnvironment, options: VWOptions, config: any) {
-        this.config = VWSimulation.validateConfig(config);
+        this.config = VWExistenceChecker.validateExistence(config, "Cannot create a simulation without a config.");
         this.gridSize = VWSimulation.validateGridSize(environment, config);
-        this.environment = VWSimulation.validateEnvironment(environment);
+        this.environment = VWExistenceChecker.validateExistence(environment, "Cannot create a simulation without an environment.");
         this.gridDiv = this.createGrid(true);
-        this.options = VWSimulation.validateOptions(options);
+        this.options = VWExistenceChecker.validateExistence(options, "Cannot create a simulation without options.");
         this.canRun = true;
         this.paused = false;
     }
 
-    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (d: VWDraggableBodiesDiv) => void, simCtrlHide: () => void, simCtrlReplace: (s: VWSimulationControlsDiv) => void): void {
+    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (d: VWDraggableBodiesDiv) => void, simCtrlHide: () => void, simCtrlReplace: (s: VWInternalSimulationControlsDiv) => void): void {
         this.replaceGridDivCallback = gridRepl;
         this.replaceDraggableBodiesDivCallback = dragReplace;
         this.hideDraggableBodiesDivCallback = dragHide;
@@ -58,52 +58,24 @@ export class VWSimulation {
         return this.config;
     }
 
-    private static validateConfig(config: any): any {
-        if (config === null || config === undefined) {
-            throw new Error("Cannot create a simulation without a config.");
-        }
-        else {
-            return config;
-        }
-    }
-
     private static validateGridSize(environment: VWEnvironment, config: any): number {
-        VWSimulation.validateEnvironment(environment);
-        VWSimulation.validateConfig(config);
+        VWExistenceChecker.validateExistence(environment, "Cannot create a simulation without an environment.");
+        VWExistenceChecker.validateExistence(config, "Cannot create a simulation without a config.");
 
-        // TODO: throw errors with more meaningful messages.
-        if (config["min_environment_dim"] === null || config["min_environment_dim"] === undefined || config["min_environment_dim"] <= 0) {
-            throw new Error("Invalid config.");
+        if (!VWExistenceChecker.exists(config["min_environment_dim"]) || config["min_environment_dim"] <= 0) {
+            throw new Error("The config must have a `min_environment_dim` key.");
         }
-        else if (config["max_environment_dim"] === null || config["max_environment_dim"] === undefined || config["max_environment_dim"] <= 0) {
-            throw new Error("Invalid config.");
+        else if (!VWExistenceChecker.exists(config["max_environment_dim"]) || config["max_environment_dim"] <= 0) {
+            throw new Error("The config must have a `max_environment_dim` key.");
         }
         else if (config["min_environment_dim"] > config["max_environment_dim"]) {
-            throw new Error("Invalid config.");
+            throw new Error("Invalid config: the value of `max_environment_dim` must be greater or equal to the value of `min_environment_dim`.");
         }
         else if (environment.getGridSize() < config["min_environment_dim"] || environment.getGridSize() > config["max_environment_dim"]) {
-            throw new Error("Invalid environment.");
+            throw new Error(`The grid size must be between ${config["min_environment_dim"]} and ${config["max_environment_dim"]} (inclusive).`);
         }
         else {
             return environment.getGridSize();
-        }
-    }
-
-    private static validateEnvironment(environment: VWEnvironment): VWEnvironment {
-        if (environment === null || environment === undefined) {
-            throw new Error("Cannot create a simulation without an environment.");
-        }
-        else {
-            return environment;
-        }
-    }
-
-    private static validateOptions(options: VWOptions): VWOptions {
-        if (options === null || options === undefined) {
-            throw new Error("Cannot create a simulation without options.");
-        }
-        else {
-            return options;
         }
     }
 
@@ -204,6 +176,9 @@ export class VWSimulation {
     public cycleSimulation(): void {
         this.validateCallbacks();
 
+        this.paused = false;
+        this.canRun = true;
+
         console.log("Simulation starting...");
         console.log("Initial environment: ");
         console.log(this.environment.toJsonObject());
@@ -213,16 +188,19 @@ export class VWSimulation {
     }
 
     private validateCallbacks(): void {
-        if (this.replaceGridDivCallback === null || this.replaceGridDivCallback === undefined) {
+        if (!VWExistenceChecker.exists(this.replaceGridDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to replace the grid div.");
         }
-        else if (this.hideDraggableBodiesDivCallback === null || this.hideDraggableBodiesDivCallback === undefined) {
+        else if (!VWExistenceChecker.exists(this.hideDraggableBodiesDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to hide the draggable bodies div.");
         }
-        else if (this.hideSimulationControlsDivCallback === null || this.hideSimulationControlsDivCallback === undefined) {
+        else if (!VWExistenceChecker.exists(this.replaceDraggableBodiesDivCallback)) {
+            throw new Error("Cannot cycle the simulation without a callback to replace the draggable bodies div.");
+        }
+        else if (!VWExistenceChecker.exists(this.hideSimulationControlsDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to hide the simulation controls div.");
         }
-        else if (this.replaceSimulationControlsDivCallback === null || this.replaceSimulationControlsDivCallback === undefined) {
+        else if (!VWExistenceChecker.exists(this.replaceSimulationControlsDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to replace the simulation controls div.");
         }
     }
@@ -234,6 +212,28 @@ export class VWSimulation {
         else {
             await this.loopNumberOfTimes();
         }
+
+        // In case the ends beacues the max number of cycles has been reached.
+        this.paused = false;
+        this.canRun = false;
+
+        this.showStoppedSimulationControls();
+
+        this.environment.resetAndMaintainElements();
+
+        this.showSimulation();
+    }
+
+    private showStoppedSimulationControls(): void {
+        document.getElementById("external_run_button").hidden = false;
+        document.getElementById("external_pause_button").hidden = true;
+        document.getElementById("external_resume_button").hidden = true;
+        document.getElementById("external_stop_button").hidden = true;
+        document.getElementById("external_reset_button").hidden = false;
+        document.getElementById("external_speed_button").hidden = true;
+        document.getElementById("external_save_button").hidden = false;
+        document.getElementById("external_load_button").hidden = false;
+        document.getElementById("external_guide_button").hidden = false;
     }
 
     private async loopForever(): Promise<void> {

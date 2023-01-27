@@ -1,4 +1,5 @@
 import { VWMessageContent } from "../common/VWMessage";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWAction } from "./VWAction";
 
 export abstract class VWCommunicativeAction extends VWAction {
@@ -8,17 +9,8 @@ export abstract class VWCommunicativeAction extends VWAction {
     public constructor(actorID: string, content: VWMessageContent, recipientsIDs?: Array<string>) {
         super(actorID);
 
-        this.content = VWCommunicativeAction.validateContent(content);
+        this.content = VWExistenceChecker.validateExistence(content, "The content cannot be null or undefined.");
         this.recipientsIDs = recipientsIDs === null || recipientsIDs === undefined ? [] : recipientsIDs;
-    }
-
-
-    private static validateContent(content: VWMessageContent): VWMessageContent {
-        if (content === null || content === undefined) {
-            throw new Error("The content cannot be null or undefined.");
-        }
-
-        return content;
     }
 
     public getContent(): VWMessageContent {

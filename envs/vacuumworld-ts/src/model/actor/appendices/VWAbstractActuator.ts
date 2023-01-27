@@ -1,5 +1,6 @@
 import { VWAction } from "../../actions/VWAction";
 import { VWQueue } from "../../common/VWQueue";
+import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 import { VWActuator } from "./VWActuator";
 
 export abstract class VWAbstractActuator<A extends VWAction> implements VWActuator<A> {
@@ -10,7 +11,7 @@ export abstract class VWAbstractActuator<A extends VWAction> implements VWActuat
     }
 
     public sink(action: A) : void {
-        if (action === null || action === undefined) {
+        if (!VWExistenceChecker.exists(action)) {
             throw new Error("The action cannot be null or undefined.");
         }
         else {
@@ -19,7 +20,7 @@ export abstract class VWAbstractActuator<A extends VWAction> implements VWActuat
     }
 
     public sinkAll(actions: A[]) : void {
-        if (actions === null || actions === undefined) {
+        if (!VWExistenceChecker.allExist(actions)) {
             throw new Error("The actions cannot be null or undefined.");
         }
         else {

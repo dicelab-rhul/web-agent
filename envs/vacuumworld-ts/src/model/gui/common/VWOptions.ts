@@ -1,4 +1,5 @@
 import { VWEnvironmentJSON } from "../../environment/VWEnvironment";
+import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 
 export class VWOptions {
     private speed: number;
@@ -68,7 +69,7 @@ export class VWOptions {
     }
 
     public setMaxNumberOfCycles(maxNumberOfCycles: number): void {
-        this.maxNumberOfCycles = maxNumberOfCycles;
+        this.maxNumberOfCycles = maxNumberOfCycles; // Can be undefined.
     }
 
     public getEfforts(): Map<string, bigint> {
@@ -76,7 +77,7 @@ export class VWOptions {
     }
 
     public setEfforts(efforts: Map<string, bigint>): void {
-        this.efforts = efforts;
+        this.efforts = VWExistenceChecker.validateExistence(efforts); // Individual efforts can be undefined.
     }
 
     public setEffort(actionName: string, effort: bigint): void {

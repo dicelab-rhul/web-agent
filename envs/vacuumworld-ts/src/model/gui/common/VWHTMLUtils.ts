@@ -1,3 +1,5 @@
+import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
+
 export class VWHTMLUtils {
     private constructor() {}
 
@@ -27,7 +29,7 @@ export class VWHTMLUtils {
 
         checkbox.type = "checkbox";
         checkbox.id = checkboxID;
-        checkbox.checked = checked !== null && checked !== undefined ? checked : false;
+        checkbox.checked = VWExistenceChecker.exists(checked) ? checked : false;
 
         return checkbox;
     }
@@ -37,7 +39,7 @@ export class VWHTMLUtils {
 
         fileInput.type = "file";
         fileInput.id = fileInputID;
-        fileInput.accept = accept !== null && accept !== undefined ? accept : "";
+        fileInput.accept = VWExistenceChecker.exists(accept) ? accept : "";
 
         return fileInput;
     }
@@ -64,10 +66,10 @@ export class VWHTMLUtils {
 
         numberInput.type = "number";
         numberInput.id = numberInputID;
-        numberInput.min = min !== null && min !== undefined ? min.toString() : "";
-        numberInput.max = max !== null && max !== undefined ? max.toString() : "";
-        numberInput.step = step !== null && step !== undefined ? step.toString() : "";
-        numberInput.value = value !== null && value !== undefined ? value.toString() : "";
+        numberInput.min = VWExistenceChecker.exists(min) ? min.toString() : "";
+        numberInput.max = VWExistenceChecker.exists(max) ? max.toString() : "";
+        numberInput.step = VWExistenceChecker.exists(step) ? step.toString() : "";
+        numberInput.value = VWExistenceChecker.exists(value) ? value.toString() : "";
 
         return numberInput;
     }
@@ -88,7 +90,7 @@ export class VWHTMLUtils {
         select.id = selectID;
 
         optionsValues.forEach((optionValue: string) => {
-            const optionID: string = option_id_prefix !== null && option_id_prefix !== undefined ? option_id_prefix + optionValue : optionValue;
+            const optionID: string = VWExistenceChecker.exists(option_id_prefix) ? option_id_prefix + optionValue : optionValue;
 
             let option: HTMLOptionElement = VWHTMLUtils.createOptionElement(optionID, optionValue, optionValue);
 

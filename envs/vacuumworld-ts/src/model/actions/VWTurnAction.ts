@@ -1,4 +1,5 @@
 import { VWDirection } from "../common/VWDirection";
+import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWPhysicalAction } from "./VWPhysicalAction";
 
 export class VWTurnAction extends VWPhysicalAction {
@@ -8,15 +9,7 @@ export class VWTurnAction extends VWPhysicalAction {
     public constructor(actorID: string, turningDirection: VWDirection) {
         super(actorID);
 
-        this.turningDirection = VWTurnAction.validateTurningDirection(turningDirection);
-    }
-
-    private static validateTurningDirection(direction: VWDirection): VWDirection {
-        if (direction === null || direction === undefined) {
-            throw new Error("The turning direction cannot be null or undefined.");
-        }
-
-        return direction;
+        this.turningDirection = VWExistenceChecker.validateExistence(turningDirection, "The turning direction cannot be null or undefined.");
     }
 
     public getTurningDirection(): VWDirection {
@@ -28,7 +21,7 @@ export class VWTurnAction extends VWPhysicalAction {
     }
 
     public static overrideDefaultEffort(newEffort: bigint): void {
-        if (newEffort === null || newEffort === undefined) {
+        if (!VWExistenceChecker.exists(newEffort)) {
             console.log("The new effort for VWTurnAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {

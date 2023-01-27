@@ -77,3 +77,7 @@ table {
     padding-bottom: 0%;
     display: flex;
 }
+
+.grid-table {
+    display: block;
+}

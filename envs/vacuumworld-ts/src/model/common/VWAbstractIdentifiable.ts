@@ -1,3 +1,4 @@
+import { VWExistenceChecker } from '../utils/VWExistenceChecker';
 import { VWIdentifiable } from './VWIdentifiable';
 
 const uuid = require("uuid"); // TODO: Replace with import.
@@ -14,7 +15,7 @@ export class VWAbstractIdentifiable implements VWIdentifiable {
     }
 
     public equals(other: object): boolean {
-        if (other === null || other === undefined) {
+        if (!VWExistenceChecker.exists(other)) {
             return false;
         }
         else if (this === other) {
