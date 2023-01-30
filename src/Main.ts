@@ -4,6 +4,11 @@ type ResourcePaths = {
     envScript: string;
 }
 
+type TeleoraResourcePaths = {
+    teleoraScript: string;
+    teleoraStyle: string;
+}
+
 export class Main {
     private constructor() {}
 
@@ -176,6 +181,7 @@ export class Main {
             choiceDiv.hidden = true;
     
             Main.loadEnvironmentDiv(choicePath);
+            Main.loadTeleoraDiv();
         });
     }
     
@@ -184,7 +190,7 @@ export class Main {
     
         Main.loadFavicon(resourcesPaths.favicon);
         Main.loadStyle(resourcesPaths.envStyle); // This is the main style of the environment.
-        Main.loadScript(resourcesPaths.envScript); // This is the main script of the environment
+        Main.loadScript(resourcesPaths.envScript); // This is the main script of the environment.
     }
     
     private static createAndHideSimulationControlsDiv(): void {
@@ -226,5 +232,19 @@ export class Main {
         button.addEventListener("click", buttonDefaultClickFunction);
     
         return button;
+    }
+
+    private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
+        return {
+            teleoraScript: "/teleora_editor/dist/main.js",
+            teleoraStyle: "/teleora_editor/dist/style.css"
+        }
+    }
+
+    private static loadTeleoraDiv(): void {
+        const resourcesPaths: TeleoraResourcePaths = Main.getTeleoraResourcesPaths();
+
+        Main.loadStyle(resourcesPaths.teleoraStyle); // This is the main Teleora style.
+        Main.loadScript(resourcesPaths.teleoraScript); // This is the main Teleora script.
     }
 }
