@@ -85,3 +85,32 @@ table {
 #draggable_bodies_div {
     display: flex;
 }
+
+.option_div {
+    display: grid;
+    padding: 5px;
+    border: 2px solid #000000;
+    border-collapse: collapse;
+    margin: 2pt;
+}
+
+.effort_option_div {
+    display: grid;
+    padding: 2px;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin: 1pt;
+}
+
+.option_div_label {
+    padding: 1px;
+}
+
+.option_subdiv {
+    padding: 1px;
+    margin: auto;
+}
+
+#teleora_upload_input, #state_to_load_upload_input {
+    border: 1pt solid #000000;
+}

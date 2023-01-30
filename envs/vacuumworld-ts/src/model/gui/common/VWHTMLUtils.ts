@@ -3,55 +3,71 @@ import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 export class VWHTMLUtils {
     private constructor() {}
 
-    public static createDivWithLabel(divID: string, labelFor: string, labelText: string): HTMLDivElement {
+    public static createDivWithLabel(divID: string, labelFor: string, labelText: string, classes?: string[], classesForLabel?: string[]): HTMLDivElement {
         let div: HTMLDivElement = document.createElement("div");
 
         div.id = divID;
 
-        let label: HTMLLabelElement = VWHTMLUtils.createLabel(labelFor, labelText);
+        if (VWExistenceChecker.allExist(classes)) {
+            div.classList.add(...classes);
+        }
+
+        let label: HTMLLabelElement = VWHTMLUtils.createLabel(labelFor, labelText, classesForLabel);
 
         div.appendChild(label);
 
         return div;
     }
 
-    public static createLabel(labelFor: string, labelText: string): HTMLLabelElement {
+    public static createLabel(labelFor: string, labelText: string, classes?: string[]): HTMLLabelElement {
         let label: HTMLLabelElement = document.createElement("label");
 
         label.htmlFor = labelFor;
         label.innerText = labelText;
 
+        if (VWExistenceChecker.allExist(classes)) {
+            label.classList.add(...classes);
+        }
+
         return label;
     }
 
-    public static createCheckbox(checkboxID: string, checked?: boolean): HTMLInputElement {
+    public static createCheckbox(checkboxID: string, checked?: boolean, classes?: string[]): HTMLInputElement {
         let checkbox: HTMLInputElement = document.createElement("input");
 
         checkbox.type = "checkbox";
         checkbox.id = checkboxID;
         checkbox.checked = VWExistenceChecker.exists(checked) ? checked : false;
 
+        if (VWExistenceChecker.allExist(classes)) {
+            checkbox.classList.add(...classes);
+        }
+
         return checkbox;
     }
 
-    public static createFileInput(fileInputID: string, accept?: string): HTMLInputElement {
+    public static createFileInput(fileInputID: string, accept?: string, classes?: string[]): HTMLInputElement {
         let fileInput: HTMLInputElement = document.createElement("input");
 
         fileInput.type = "file";
         fileInput.id = fileInputID;
         fileInput.accept = VWExistenceChecker.exists(accept) ? accept : "";
 
+        if (VWExistenceChecker.allExist(classes)) {
+            fileInput.classList.add(...classes);
+        }
+
         return fileInput;
     }
 
-    public static createNumberInputsDivs(numberInputsTexts: string[], numberInputsIDsDivSuffix: string, numberInputsIDsSuffix: string): HTMLDivElement[] {
+    public static createNumberInputsDivs(numberInputsTexts: string[], numberInputsIDsDivSuffix: string, numberInputsIDsSuffix: string, classesForAllDivs?: string[], classesForAllLabels?: string[]): HTMLDivElement[] {
         let numberInputsDivs: HTMLDivElement[] = [];
 
         numberInputsTexts.forEach((numberInputText: string) => {
             const numberInputIDString: string = numberInputText.toLowerCase() + numberInputsIDsSuffix;
             const numberInputDivIDString: string = numberInputText.toLowerCase() + numberInputsIDsDivSuffix;
             let numberInput: HTMLInputElement = VWHTMLUtils.createNumberInput(numberInputIDString);
-            let numberInputDiv: HTMLDivElement = VWHTMLUtils.createDivWithLabel(numberInputDivIDString, numberInputIDString, numberInputText);
+            let numberInputDiv: HTMLDivElement = VWHTMLUtils.createDivWithLabel(numberInputDivIDString, numberInputIDString, numberInputText, classesForAllDivs, classesForAllLabels);
 
             numberInputDiv.appendChild(numberInput);
 
@@ -61,7 +77,7 @@ export class VWHTMLUtils {
         return numberInputsDivs;
     }
 
-    public static createNumberInput(numberInputID: string, min?: number, max?: number, step?: number, value?: number): HTMLInputElement {
+    public static createNumberInput(numberInputID: string, classes?: string[], min?: number, max?: number, step?: number, value?: number): HTMLInputElement {
         let numberInput: HTMLInputElement = document.createElement("input");
 
         numberInput.type = "number";
@@ -71,23 +87,35 @@ export class VWHTMLUtils {
         numberInput.step = VWExistenceChecker.exists(step) ? step.toString() : "";
         numberInput.value = VWExistenceChecker.exists(value) ? value.toString() : "";
 
+        if (VWExistenceChecker.allExist(classes)) {
+            numberInput.classList.add(...classes);
+        }
+
         return numberInput;
     }
 
-    public static createOptionElement(optionID: string, optionValue: string, optionText: string): HTMLOptionElement {
+    public static createOptionElement(optionID: string, optionValue: string, optionText: string, classes?: string[]): HTMLOptionElement {
         let option: HTMLOptionElement = document.createElement("option");
 
         option.id = optionID;
         option.value = optionValue;
         option.textContent = optionText;
 
+        if (VWExistenceChecker.allExist(classes)) {
+            option.classList.add(...classes);
+        }
+
         return option;
     }
 
-    public static createSelectElement(selectID: string, optionsValues: string[], option_id_prefix?: string): HTMLSelectElement {
+    public static createSelectElement(selectID: string, optionsValues: string[], option_id_prefix?: string, classes?: string[]): HTMLSelectElement {
         let select: HTMLSelectElement = document.createElement("select");
 
         select.id = selectID;
+
+        if (VWExistenceChecker.allExist(classes)) {
+            select.classList.add(...classes);
+        }
 
         optionsValues.forEach((optionValue: string) => {
             const optionID: string = VWExistenceChecker.exists(option_id_prefix) ? option_id_prefix + optionValue : optionValue;

@@ -85,7 +85,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
     }
 
     private packDependingOnGridSize(): void {
-        if (this.gridSize < 6) {
+        if (this.gridSize < this.draggableBodies.length) {
             this.packTwoColumns();
         }
         else {
@@ -148,7 +148,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
     }
 
     private unpackDependingOnGridSize(): void {
-        if (this.gridSize < 6) {
+        if (this.gridSize < this.draggableBodies.length) {
             this.unpackTwoColumns();
         }
         else {
