@@ -198,6 +198,8 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById("external_save_button").hidden = true;
         document.getElementById("external_load_button").hidden = true;
         document.getElementById("external_guide_button").hidden = true;
+
+        this.showTooltips();
     }
 
     private showStoppedSimulationControls(): void {
@@ -210,6 +212,8 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById("external_save_button").hidden = false;
         document.getElementById("external_load_button").hidden = false;
         document.getElementById("external_guide_button").hidden = false;
+
+        this.showTooltips();
     }
 
     private showPausedSimulationControls(): void {
@@ -222,6 +226,22 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById("external_save_button").hidden = true;
         document.getElementById("external_load_button").hidden = true;
         document.getElementById("external_guide_button").hidden = true;
+
+        this.showTooltips();
+    }
+
+    private showTooltips(): void {
+        if (this.options.areTooltipsActive()) {
+            document.getElementById("external_run_button").title = "Run the simulation.";
+            document.getElementById("external_pause_button").title = "Pause the simulation.";
+            document.getElementById("external_resume_button").title = "Resume the simulation.";
+            document.getElementById("external_stop_button").title = "Stop the simulation.";
+            document.getElementById("external_reset_button").title = "Reset the simulation.";
+            document.getElementById("external_speed_button").title = "Increase the simulation speed.";
+            document.getElementById("external_save_button").title = "Save the environment to a JSON file.";
+            document.getElementById("external_load_button").title = "Load the environment from a JSON file.";
+            document.getElementById("external_guide_button").title = "Show the guide in the browser.";
+        }
     }
 
     private replaceGridDiv(newGridDiv: VWGridDiv): void {
@@ -332,9 +352,13 @@ export class VWPlatformDiv implements VWDiv {
 
         if (tooltips) {
             this.options.activateTooltips();
+            this.initialViewButtonsDiv.showTooltips();
+            this.optionsDialogDiv.showTooltips();
         }
         else {
             this.options.deactivateTooltips();
+            this.initialViewButtonsDiv.hideTooltips();
+            this.optionsDialogDiv.hideTooltips();
         }
     }
 
