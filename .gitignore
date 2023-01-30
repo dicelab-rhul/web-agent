@@ -51,7 +51,8 @@ pull.sh
 experimental/dist
 
 # JS dist files
-dist/js/
+envs/*/dist/js
+teleora_editor/dist/js
 static/js/
 
 # IDE files
