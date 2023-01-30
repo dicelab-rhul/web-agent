@@ -23,8 +23,8 @@ export class Main {
     private static getResourcesPaths(envPath: string): ResourcePaths {
         return {
             favicon: `${envPath}/res/images/favicon.ico`,
-            envStyle: `${envPath}/dist/style.css`,
-            envScript: `${envPath}/dist/main.js`
+            envStyle: `${envPath}/dist/css/style.css`,
+            envScript: `${envPath}/dist/js/main.js`
         };
     }
     
@@ -236,8 +236,8 @@ export class Main {
 
     private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
         return {
-            teleoraScript: "/teleora_editor/dist/main.js",
-            teleoraStyle: "/teleora_editor/dist/style.css"
+            teleoraScript: "/teleora_editor/dist/js/main.js",
+            teleoraStyle: "/teleora_editor/dist/css/style.css"
         }
     }
 

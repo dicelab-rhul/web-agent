@@ -15,7 +15,7 @@ module.exports = {
     entry: "./src/main.ts",
     // Output bundles (location)
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "dist", "js"),
         filename: "main.js",
     },
     // File resolutions

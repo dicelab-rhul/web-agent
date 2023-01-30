@@ -48,7 +48,12 @@ pull.sh
 
 # Parcel stuff
 .parcel-cache
-experimental/dist/
+experimental/dist
+
+# JS dist files
+envs/*/dist/js
+teleora_editor/dist/js
+static/js/
 
 # IDE files
 .vscode/
