@@ -34,9 +34,9 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     private constructSpeedSelectorDiv(): void {
-        this.speedSelectorDiv = VWHTMLUtils.createDivWithLabel("speed_selector_div", "speed_selector", "Speed:");
+        this.speedSelectorDiv = VWHTMLUtils.createDivWithLabel("speed_selector_div", "speed_selector", "Speed", ["option_div"], ["option_div_label"]);
 
-        let speedSelector: HTMLSelectElement = VWHTMLUtils.createSelectElement("speed_values", this.generateSpeedValues(), "speed_value_");
+        let speedSelector: HTMLSelectElement = VWHTMLUtils.createSelectElement("speed_values", this.generateSpeedValues(), "speed_value_", ["option_subdiv"]);
 
         this.speedSelectorDiv.appendChild(speedSelector);
     }
@@ -54,17 +54,17 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     private constructAutoplayCheckboxDiv(): void {
-        this.autoplaySelectorDiv = VWHTMLUtils.createDivWithLabel("autoplay_checkbox_div", "autoplay_checkbox", "Autoplay:");
+        this.autoplaySelectorDiv = VWHTMLUtils.createDivWithLabel("autoplay_checkbox_div", "autoplay_checkbox", "Autoplay", ["option_div"], ["option_div_label"]);
 
-        let autoplayCheckbox: HTMLInputElement = VWHTMLUtils.createCheckbox("autoplay_checkbox");
+        let autoplayCheckbox: HTMLInputElement = VWHTMLUtils.createCheckbox("autoplay_checkbox", false, ["option_subdiv"]);
 
         this.autoplaySelectorDiv.appendChild(autoplayCheckbox);
     }
 
     private constructStateToLoadSelectorDiv(): void {
-        this.stateToLoadSelectorDiv = VWHTMLUtils.createDivWithLabel("state_to_load_input_div", "state_to_load_upload_input", "State:");
+        this.stateToLoadSelectorDiv = VWHTMLUtils.createDivWithLabel("state_to_load_input_div", "state_to_load_upload_input", "State to load", ["option_div"], ["option_div_label"]);
 
-        let stateToLoadUploadInput: HTMLInputElement = VWHTMLUtils.createFileInput("state_to_load_upload_input", ".json");
+        let stateToLoadUploadInput: HTMLInputElement = VWHTMLUtils.createFileInput("state_to_load_upload_input", ".json", ["option_subdiv"]);
 
         stateToLoadUploadInput.addEventListener("change", this.stateToLoadInputCallback);
 
@@ -72,27 +72,27 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     private constructTooltipsCheckboxDiv(): void {
-        this.tooltipsSelectorDiv = VWHTMLUtils.createDivWithLabel("tooltips_checkbox_div", "tooltips_checkbox", "Tooltips:");
+        this.tooltipsSelectorDiv = VWHTMLUtils.createDivWithLabel("tooltips_checkbox_div", "tooltips_checkbox", "Tooltips", ["option_div"], ["option_div_label"]);
 
-        let tooltipsCheckbox: HTMLInputElement = VWHTMLUtils.createCheckbox("tooltips_checkbox");
+        let tooltipsCheckbox: HTMLInputElement = VWHTMLUtils.createCheckbox("tooltips_checkbox", false, ["option_subdiv"]);
 
         this.tooltipsSelectorDiv.appendChild(tooltipsCheckbox);
     }
 
     private constructMaxNumberOfCyclesSelectorDiv(): void {
-        this.maxNumberOfCyclesSelectorDiv = VWHTMLUtils.createDivWithLabel("max_number_of_cycles_input_div", "max_number_of_cycles_input", "Cycles:");
+        this.maxNumberOfCyclesSelectorDiv = VWHTMLUtils.createDivWithLabel("max_number_of_cycles_input_div", "max_number_of_cycles_input", "Max number of cycles", ["option_div"], ["option_div_label"]);
 
-        let maxNumberOfCyclesSelector: HTMLInputElement = VWHTMLUtils.createNumberInput("max_number_of_cycles_input");
+        let maxNumberOfCyclesSelector: HTMLInputElement = VWHTMLUtils.createNumberInput("max_number_of_cycles_input", ["option_subdiv"]);
 
         this.maxNumberOfCyclesSelectorDiv.appendChild(maxNumberOfCyclesSelector);
     }
 
     private constructEffortsSelectorDiv(): void {
-        this.effortsSelectorDiv = VWHTMLUtils.createDivWithLabel("efforts_inputs_div", "efforts_selector", "Efforts:");
+        this.effortsSelectorDiv = VWHTMLUtils.createDivWithLabel("efforts_inputs_div", "efforts_selector", "Effort values", ["option_div"], ["option_div_label"]);
 
         const numberInputsIDsDivSuffix: string = "_effort_div";
         const numberInputsIDsSuffix: string = "_effort_input";
-        let numberInputsIDsDivs: HTMLDivElement[] = VWHTMLUtils.createNumberInputsDivs(VWOptionsDialog.getActionNames(), numberInputsIDsDivSuffix, numberInputsIDsSuffix);
+        let numberInputsIDsDivs: HTMLDivElement[] = VWHTMLUtils.createNumberInputsDivs(VWOptionsDialog.getActionNames(), numberInputsIDsDivSuffix, numberInputsIDsSuffix, ["effort_option_div"], ["option_div_label"]);
 
         numberInputsIDsDivs.forEach((numberInputsIDsDiv: HTMLDivElement) => this.effortsSelectorDiv.appendChild(numberInputsIDsDiv));
     }
@@ -110,9 +110,9 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     private constructTeleoraSelectorDiv(): void {
-        this.teleoraSelectorDiv = VWHTMLUtils.createDivWithLabel("teleora_input_div", "teleora_selector", "Teleora mind core:");
+        this.teleoraSelectorDiv = VWHTMLUtils.createDivWithLabel("teleora_input_div", "teleora_selector", "Teleora mind cores to load", ["option_div"], ["option_div_label"]);
 
-        let teleoraSelector: HTMLInputElement = VWHTMLUtils.createFileInput("teleora_upload_input", ".tel");
+        let teleoraSelector: HTMLInputElement = VWHTMLUtils.createFileInput("teleora_upload_input", ".tel", ["option_subdiv"]);
 
         teleoraSelector.addEventListener("change", this.teleoraInputCallback);
 

@@ -1,6 +1,6 @@
 # List of TODOs
 
-* File [src/Main.ts](src/Main.ts) - line 144: `// TODO: This method should be replaced by a function that gets the choices paths from the fs. (How?)`
+* File [src/Main.ts](src/Main.ts) - line 149: `// TODO: This method should be replaced by a function that gets the choices paths from the fs. (How?)`
 
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
@@ -22,11 +22,7 @@
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 24: `private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 76: `if (!VWExistenceChecker.exists(this.gridSize) || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.`
-
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts) - line 74: `// TODO: use the grid size to determine how to append the draggable bodies to the div.`
-
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWDraggableBodiesDiv.ts) - line 100: `// TODO: use the grid size to determine how to remove the draggable bodies from the div.`
+* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWGridDiv.ts) - line 78: `if (!VWExistenceChecker.exists(this.gridSize) || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.`
 
 * File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 90: `// TODO: show the coordinates of the selected cell.`
 
