@@ -1,4 +1,4 @@
-// These cannot be converted to ES modules because they are used by webpack.
+// These assignments cannot be converted to imports because they are used by webpack.
 const path = require("path");
 const webpack = require("webpack");
 
