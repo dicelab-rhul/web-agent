@@ -64,3 +64,4 @@ lib/*.js
 test/*.js
 *.map
 *.bak
+vw.sh
