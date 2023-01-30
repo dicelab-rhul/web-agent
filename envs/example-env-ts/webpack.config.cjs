@@ -1,3 +1,4 @@
+// This assignment cannot be converted to an import because it is used by webpack.
 const path = require("path");
 
 module.exports = {
