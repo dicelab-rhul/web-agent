@@ -120,11 +120,11 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     private constructOkButton(): void {
-        this.okButton = new VWInitialViewButton("OK", "options_dialog_ok_button", this.okButtonCallback.bind(this));
+        this.okButton = new VWInitialViewButton("OK", "options_dialog_ok_button", "Close and save the options", this.okButtonCallback.bind(this));
     }
 
     private constructCancelButton(): void {
-        this.cancelButton = new VWInitialViewButton("Cancel", "options_dialog_cancel_button", this.cancelButtonCallback.bind(this));
+        this.cancelButton = new VWInitialViewButton("Cancel", "options_dialog_cancel_button", "Close without saving the options", this.cancelButtonCallback.bind(this));
     }
 
     public pack(): void {
@@ -203,5 +203,19 @@ export class VWOptionsDialog implements VWPackable {
 
     public isHidden(): boolean {
         return this.getDialog().hidden;
+    }
+
+    public showTooltips(): void {
+        if (this.packed) {
+            this.okButton.showTooltip();
+            this.cancelButton.showTooltip();
+        }
+    }
+
+    public hideTooltips(): void {
+        if (this.packed) {
+            this.okButton.hideTooltip();
+            this.cancelButton.hideTooltip();
+        }
     }
 }

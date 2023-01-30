@@ -110,4 +110,16 @@ export class VWOptionsDialogDiv implements VWDiv {
     public isHidden(): boolean {
         return this.getDiv().hidden;
     }
+
+    public showTooltips(): void {
+        if (this.packed) {
+            this.optionsDialog.showTooltips();
+        }
+    }
+
+    public hideTooltips(): void {
+        if (this.packed) {
+            this.optionsDialog.hideTooltips();
+        }
+    }
 }

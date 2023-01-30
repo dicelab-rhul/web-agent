@@ -24,9 +24,9 @@ export class VWInitialViewButtonsDiv implements VWDiv {
             this.div.id = "initial_view_buttons_div";
             this.div.hidden = true;
 
-            this.startButton = new VWInitialViewButton("Start", "start_button", startCallback.bind(this), ["initial_buttons"]);
-            this.optionsButton = new VWInitialViewButton("Options", "options_button", optionsCallback.bind(this), ["initial_buttons"]);
-            this.guideButton = new VWInitialViewButton("Guide", "guide_button", guideCallback.bind(this), ["initial_buttons"]);
+            this.startButton = new VWInitialViewButton("Start", "start_button", "Open the simulation view", startCallback.bind(this), ["initial_buttons"]);
+            this.optionsButton = new VWInitialViewButton("Options", "options_button", "Set the simulation options", optionsCallback.bind(this), ["initial_buttons"]);
+            this.guideButton = new VWInitialViewButton("Guide", "guide_button", "Open the guide in the browser", guideCallback.bind(this), ["initial_buttons"]);
 
             this.packed = false;
         }
@@ -128,5 +128,17 @@ export class VWInitialViewButtonsDiv implements VWDiv {
 
     public isHidden(): boolean {
         return this.getDiv().hidden;
+    }
+
+    public showTooltips(): void {
+        this.startButton.showTooltip();
+        this.optionsButton.showTooltip();
+        this.guideButton.showTooltip();
+    }
+
+    public hideTooltips(): void {
+        this.startButton.hideTooltip();
+        this.optionsButton.hideTooltip();
+        this.guideButton.hideTooltip();
     }
 }
