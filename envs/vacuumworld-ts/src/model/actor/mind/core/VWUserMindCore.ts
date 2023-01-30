@@ -23,13 +23,17 @@ export class VWUserMindCore extends VWAbstractMindCore {
         return this.difficultyLevel;
     }
 
-    public switchDifficultyLevel(): void {
+    public toggleDifficultyLevel(): void {
         if (this.difficultyLevel === VWUserDifficulty.BASIC) {
             this.difficultyLevel = VWUserDifficulty.ADVANCED;
         }
         else {
             this.difficultyLevel = VWUserDifficulty.BASIC;
         }
+    }
+
+    public overrideDifficultyLevel(difficultyLevel: VWUserDifficulty): void {
+        this.difficultyLevel = VWExistenceChecker.validateExistence(difficultyLevel, "The user difficulty level cannot be null or undefined.");
     }
 
     public revise(): void {

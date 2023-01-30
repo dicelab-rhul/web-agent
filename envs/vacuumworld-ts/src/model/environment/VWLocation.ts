@@ -7,6 +7,7 @@ import { VWDirt, VWDirtJSON } from "../dirt/VWDirt";
 import { VWActorFactory } from "../actor/factories/VWActorFactory";
 import { VWLocationAppearance } from "./VWLocationAppearance";
 import { VWExistenceChecker } from "../utils/VWExistenceChecker";
+import { VWUserDifficulty } from "../common/VWUserDifficulty";
 
 export type VWWallJSON = {
     north: boolean;
@@ -203,7 +204,7 @@ export class VWLocation {
         return data;
     }
 
-    public static fromJsonObject(data: VWLocationJSON): VWLocation {
+    public static fromJsonObject(data: VWLocationJSON, userDifficulty: VWUserDifficulty): VWLocation {
         if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWLocation` cannot be null or undefined.");
         }
@@ -214,13 +215,13 @@ export class VWLocation {
             throw new Error("The JSON representation of a `VWLocation` must have a `coord` property.");
         }
         else {
-            return VWLocation.fromJsonObjectHelper(VWCoord.fromJsonObject(data["coord"]), data["wall"], data["actor"], data["dirt"]);
+            return VWLocation.fromJsonObjectHelper(VWCoord.fromJsonObject(data["coord"]), data["wall"], data["actor"], data["dirt"], userDifficulty);
         }
     }
 
-    private static fromJsonObjectHelper(coord: VWCoord, wallData: VWWallJSON, actorData: VWActorJSON, dirtData: VWDirtJSON): VWLocation {
+    private static fromJsonObjectHelper(coord: VWCoord, wallData: VWWallJSON, actorData: VWActorJSON, dirtData: VWDirtJSON, userDifficulty: VWUserDifficulty): VWLocation {
         const wall: Map<VWOrientation, boolean> = VWLocation.constructWallFromData(wallData);
-        const actor: JOptional<VWActor> = !VWExistenceChecker.exists(actorData) ? JOptional.empty() : JOptional.of(VWActorFactory.createVWActorFromJSONObject(actorData));
+        const actor: JOptional<VWActor> = !VWExistenceChecker.exists(actorData) ? JOptional.empty() : JOptional.of(VWActorFactory.createVWActorFromJSONObject(actorData, userDifficulty));
         const dirt: JOptional<VWDirt> = !VWExistenceChecker.exists(dirtData) ? JOptional.empty() : JOptional.of(VWDirt.fromJsonObject(dirtData));
 
         if (actor.isPresent() && dirt.isPresent()) {

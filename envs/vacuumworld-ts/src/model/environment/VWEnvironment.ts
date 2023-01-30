@@ -9,6 +9,7 @@ import { VWPhysicalAction } from "../actions/VWPhysicalAction";
 import { VWSpeakAction } from "../actions/VWSpeakAction";
 import { VWTurnAction } from "../actions/VWTurnAction";
 import { VWActor } from "../actor/VWActor";
+import { VWUser } from "../actor/VWUser";
 import { VWListeningSensor } from "../actor/appendices/VWListeningSensor";
 import { VWObservationSensor } from "../actor/appendices/VWObservationSensor";
 import { VWMindCore } from "../actor/mind/core/VWMindCore";
@@ -21,6 +22,7 @@ import { VWMap } from "../common/VWMap";
 import { VWMessage } from "../common/VWMessage";
 import { VWObservation } from "../common/VWObservation";
 import { VWPosition } from "../common/VWPosition";
+import { VWUserDifficulty } from "../common/VWUserDifficulty";
 import { VWDirt } from "../dirt/VWDirt";
 import { VWOptions } from "../gui/common/VWOptions";
 import { VWActionUtils } from "../utils/VWActionUtils";
@@ -44,10 +46,12 @@ export type VWEnvironmentJSON = {
 export class VWEnvironment {
     private ambient: VWAmbient;
     private cycleNumber: number;
+    private userDifficulty: VWUserDifficulty;
 
     public constructor(ambient: VWAmbient) {
         this.ambient = VWExistenceChecker.validateExistence(ambient, "The ambient cannot be null or undefined.");
         this.cycleNumber = 0;
+        this.userDifficulty = VWUserDifficulty.BASIC;
     }
 
     public getAmbient(): VWAmbient {
@@ -60,6 +64,12 @@ export class VWEnvironment {
 
     public resetCycleNumber(): void {
         this.cycleNumber = 0;
+    }
+
+    public toggleUserDifficulty(): void {
+        this.userDifficulty = this.userDifficulty === VWUserDifficulty.BASIC ? VWUserDifficulty.ADVANCED : VWUserDifficulty.BASIC;
+
+        console.log("New user difficulty: " + this.userDifficulty + ".");
     }
 
     public getGridSize(): number {
@@ -133,6 +143,7 @@ export class VWEnvironment {
             this.forceInitialPerceptionToActors();
         }
 
+        this.ambient.getUsers().forEach((user: VWUser) => user.getMind().getMindCore().overrideDifficultyLevel(this.userDifficulty));
         this.ambient.getActors().forEach((actor: VWActor) => this.cycleActor(actor));
 
         console.log("Environment after the actions: ");
@@ -352,7 +363,7 @@ export class VWEnvironment {
                 throw new Error("The location coordinates cannot be null or undefined.");
             }
             else {
-                grid.put(VWCoord.fromJsonObject(location["coord"]), VWLocation.fromJsonObject(location));
+                grid.put(VWCoord.fromJsonObject(location["coord"]), VWLocation.fromJsonObject(location, undefined));
             }
         }
 

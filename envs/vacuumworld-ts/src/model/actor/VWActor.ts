@@ -13,12 +13,15 @@ import { VWActionUtils } from "../utils/VWActionUtils";
 import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWOrientationUtils } from "../utils/VWOrientationUtils";
 import { VWActorAppearance } from "./appearance/VWActorAppearance";
+import { VWCleaningAgentPhysicalActuator } from "./appendices/VWCleaningAgentPhysicalActuator";
 import { VWCommunicativeActuator } from "./appendices/VWCommunicativeActuator";
 import { VWListeningSensor } from "./appendices/VWListeningSensor";
 import { VWObservationSensor } from "./appendices/VWObservationSensor";
 import { VWPhysicalActuator } from "./appendices/VWPhysicalActuator";
+import { VWUserPhysicalActuator } from "./appendices/VWUserPhysicalActuator";
 import { VWCleaningAgentMind } from "./mind/VWCleaningAgentMind";
 import { VWMind } from "./mind/VWMind";
+import { VWUserMind } from "./mind/VWUserMind";
 
 export type VWActorJSON = {
     colour: VWColour;
@@ -33,7 +36,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     private observationSensor: JOptional<VWObservationSensor>;
     private listeningSensor: JOptional<VWListeningSensor>;
     private physicalActuator: JOptional<VWPhysicalActuator>;
-    private CommunicativeActuator: JOptional<VWCommunicativeActuator>;
+    private communicativeActuator: JOptional<VWCommunicativeActuator>;
 
     public constructor(colour: VWColour, orientation: VWOrientation, mind: VWMind, observationSensor?: VWObservationSensor, listeningSensor?: VWListeningSensor, physicalActuator?: VWPhysicalActuator, communicativeActuator?: VWCommunicativeActuator) {
         super();
@@ -44,11 +47,19 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         this.observationSensor = observationSensor === null || observationSensor === undefined ? JOptional.empty() : JOptional.of(observationSensor);
         this.listeningSensor = listeningSensor === null || listeningSensor === undefined ? JOptional.empty() : JOptional.of(listeningSensor);
         this.physicalActuator = physicalActuator === null || physicalActuator === undefined ? JOptional.empty() : JOptional.of(physicalActuator);
-        this.CommunicativeActuator = communicativeActuator === null || communicativeActuator === undefined ? JOptional.empty() : JOptional.of(communicativeActuator);
+        this.communicativeActuator = communicativeActuator === null || communicativeActuator === undefined ? JOptional.empty() : JOptional.of(communicativeActuator);
     }
 
     public getColour(): VWColour {
         return this.colour;
+    }
+
+    public isCleaningAgent(): boolean {
+        return this.colour !== VWColour.USER && this.mind instanceof VWCleaningAgentMind && this.listeningSensor.isPresent() && this.communicativeActuator.isPresent() && this.physicalActuator.orElseThrow() instanceof VWCleaningAgentPhysicalActuator;
+    }
+
+    public isUser(): boolean {
+        return this.colour === VWColour.USER && this.mind instanceof VWUserMind && !this.listeningSensor.isPresent() && !this.communicativeActuator.isPresent() && this.physicalActuator.orElseThrow() instanceof VWUserPhysicalActuator;
     }
 
     public getOrientation(): VWOrientation {
@@ -72,7 +83,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public getCommunicativeActuator(): JOptional<VWCommunicativeActuator> {
-        return this.CommunicativeActuator;
+        return this.communicativeActuator;
     }
 
     public getAppearance(): VWActorAppearance {
@@ -165,6 +176,8 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public reset(): void {
-        this.mind = new VWCleaningAgentMind(this.mind.getMindCore().newCore());
+        this.mind = this.resetMind();
     }
+
+    protected abstract resetMind(): VWMind;
 }
