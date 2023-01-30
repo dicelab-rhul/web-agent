@@ -1,3 +1,7 @@
+body {
+    display: block;
+}
+
 .center-aligned {
     margin: auto;
     text-align: center;

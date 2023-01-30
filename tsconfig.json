@@ -6,6 +6,7 @@
     },
     "exclude": [
         "./envs/",
-        "./experimental/"
+        "./experimental/",
+        "./teleora_editor/"
     ]
 }

@@ -81,3 +81,7 @@ table {
 .grid-table {
     display: block;
 }
+
+#draggable_bodies_div {
+    display: flex;
+}
