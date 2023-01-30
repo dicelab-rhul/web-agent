@@ -70,6 +70,8 @@ export class VWGridDiv implements VWDiv {
     public updateGrid(gridSize: number, grid: VWMap<VWCoord, VWCell>): void {
         this.gridSize = VWGridDiv.validateGridSize(gridSize);
         this.gridMap = VWGridDiv.validateGrid(grid);
+
+        this.draggableBodiesDiv.updateGridSize(this.gridSize);
     }
 
     public pack(): void {

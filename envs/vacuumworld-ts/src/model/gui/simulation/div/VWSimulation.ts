@@ -10,7 +10,6 @@ import { VWLocationAppearance } from "../../../environment/VWLocationAppearance"
 import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
-import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
 import { VWGridDiv } from "./VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "./VWInternalSimulationControlsDiv";
 
@@ -24,7 +23,7 @@ export class VWSimulation {
     private paused: boolean;
     private replaceGridDivCallback: (newGridDiv: VWGridDiv) => void;
     private hideDraggableBodiesDivCallback: () => void;
-    private replaceDraggableBodiesDivCallback: (newDraggableBodiesDiv: VWDraggableBodiesDiv) => void;
+    private replaceDraggableBodiesDivCallback: (gridSize: number) => void;
     private hideSimulationControlsDivCallback: () => void;
     private replaceSimulationControlsDivCallback: (newSimulationControlsDiv: VWInternalSimulationControlsDiv) => void;
 
@@ -38,7 +37,7 @@ export class VWSimulation {
         this.paused = false;
     }
 
-    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (d: VWDraggableBodiesDiv) => void, simCtrlHide: () => void, simCtrlReplace: (s: VWInternalSimulationControlsDiv) => void): void {
+    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (s: number) => void, simCtrlHide: () => void, simCtrlReplace: (s: VWInternalSimulationControlsDiv) => void): void {
         this.replaceGridDivCallback = gridRepl;
         this.replaceDraggableBodiesDivCallback = dragReplace;
         this.hideDraggableBodiesDivCallback = dragHide;
@@ -168,7 +167,7 @@ export class VWSimulation {
 
         this.gridDiv.pack(); // Pack the new grid.
 
-        this.replaceDraggableBodiesDivCallback(new VWDraggableBodiesDiv(this.gridSize));
+        this.replaceDraggableBodiesDivCallback(this.gridSize);
 
         this.gridDiv.show(); // Show the new grid.
     }
