@@ -4,6 +4,8 @@ import { VWDraggableDiv } from "./VWDraggableDiv";
 
 export class VWDraggableBodiesDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "draggable_bodies_div";
+    private leftDiv: HTMLDivElement; // Will have ID "draggable_bodies_left_div";
+    private rightDiv: HTMLDivElement; // Will have ID "draggable_bodies_right_div";
     private draggableBodies: VWDraggableDiv[]; // GreenA, orangeA, whiteA, user, greenD, orangeD.
     private packed: boolean;
     private gridSize: number; // So that the draggable bodies div can be displayed without overflowing.
@@ -11,6 +13,14 @@ export class VWDraggableBodiesDiv implements VWDiv {
     public constructor(gridSize?: number) {
         this.div = document.createElement("div");
         this.div.id = "draggable_bodies_div";
+        this.div.hidden = true;
+
+        this.leftDiv = document.createElement("div");
+        this.leftDiv.id = "draggable_bodies_left_div";
+        this.div.hidden = true;
+
+        this.rightDiv = document.createElement("div");
+        this.rightDiv.id = "draggable_bodies_right_div";
         this.div.hidden = true;
 
         this.createDraggableBodies();
@@ -68,15 +78,50 @@ export class VWDraggableBodiesDiv implements VWDiv {
             throw new Error("Cannot pack the draggable bodies div: the draggable bodies array is null or undefined, or contains null or undefined elements.");
         }
         else {
-            this.draggableBodies.forEach((draggableBody: VWDraggableDiv) => {
-                draggableBody.pack();
-
-                // TODO: use the grid size to determine how to append the draggable bodies to the div.
-                this.div.appendChild(draggableBody.getDiv());
-            });
+            this.packDependingOnGridSize();
 
             this.packed = true;
         }
+    }
+
+    private packDependingOnGridSize(): void {
+        if (this.gridSize < 6) {
+            this.packTwoColumns();
+        }
+        else {
+            this.packOneColumn();
+        }
+    }
+
+    private packTwoColumns(): void {
+        const draggableBodiesLength: number = this.draggableBodies.length;
+        const draggableBodiesHalfLength: number = Math.floor(draggableBodiesLength / 2);
+
+        for (let i: number = 0; i < draggableBodiesHalfLength; i++) {
+            this.draggableBodies[i].pack();
+
+            this.leftDiv.appendChild(this.draggableBodies[i].getDiv());
+        }
+
+        for (let i: number = draggableBodiesHalfLength; i < draggableBodiesLength; i++) {
+            this.draggableBodies[i].pack();
+
+            this.rightDiv.appendChild(this.draggableBodies[i].getDiv());
+        }
+
+        this.div.appendChild(this.leftDiv);
+        this.div.appendChild(this.rightDiv);
+    }
+
+    private packOneColumn(): void {
+        this.draggableBodies.forEach((draggableBody: VWDraggableDiv) => {
+            draggableBody.pack();
+
+            this.leftDiv.appendChild(draggableBody.getDiv());
+
+            this.div.appendChild(this.leftDiv);
+            // We ignore the right div.
+        });
     }
 
     public unpack(): void {
@@ -96,16 +141,50 @@ export class VWDraggableBodiesDiv implements VWDiv {
             throw new Error("Cannot unpack the draggable bodies div: the draggable bodies array is null or undefined, or contains null or undefined elements.");
         }
         else {
-            this.draggableBodies.forEach((draggableBody: VWDraggableDiv) => {
-                // TODO: use the grid size to determine how to remove the draggable bodies from the div.
-                this.div.removeChild(draggableBody.getDiv());
-
-                draggableBody.unpack();
-            });
+            this.unpackDependingOnGridSize();
 
             this.packed = true;
         }
     }
+
+    private unpackDependingOnGridSize(): void {
+        if (this.gridSize < 6) {
+            this.unpackTwoColumns();
+        }
+        else {
+            this.unpackOneColumn();
+        }
+    }
+
+    private unpackTwoColumns(): void {
+        const draggableBodiesLength: number = this.draggableBodies.length;
+        const draggableBodiesHalfLength: number = Math.floor(draggableBodiesLength / 2);
+
+        for (let i: number = 0; i < draggableBodiesHalfLength; i++) {
+            this.leftDiv.removeChild(this.draggableBodies[i].getDiv());
+
+            this.draggableBodies[i].unpack();
+        }
+
+        for (let i: number = draggableBodiesHalfLength; i < draggableBodiesLength; i++) {
+            this.leftDiv.removeChild(this.draggableBodies[i].getDiv());
+
+            this.draggableBodies[i].unpack();
+        }
+
+        this.div.removeChild(this.leftDiv);
+        this.div.removeChild(this.rightDiv);
+    }
+
+    private unpackOneColumn(): void {
+        this.draggableBodies.forEach((draggableBody: VWDraggableDiv) => {
+            this.leftDiv.removeChild(draggableBody.getDiv());
+
+            draggableBody.unpack();
+        });
+
+        this.div.removeChild(this.leftDiv);
+    }   
 
     public show(): void {
         if (!VWExistenceChecker.exists(this.div)) {
@@ -120,6 +199,8 @@ export class VWDraggableBodiesDiv implements VWDiv {
         else {
             this.draggableBodies.forEach((draggableBody: VWDraggableDiv) => draggableBody.show());
 
+            this.leftDiv.hidden = false;
+            this.rightDiv.hidden = false;
             this.div.hidden = false;
         }
     }
@@ -137,7 +218,9 @@ export class VWDraggableBodiesDiv implements VWDiv {
         else {
             this.draggableBodies.forEach((draggableBody: VWDraggableDiv) => draggableBody.hide());
 
-            this.div.hidden = false;
+            this.div.hidden = true;
+            this.leftDiv.hidden = true;
+            this.rightDiv.hidden = true;
         }
     }
 
