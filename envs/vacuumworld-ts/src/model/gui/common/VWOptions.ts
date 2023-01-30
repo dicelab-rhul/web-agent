@@ -1,3 +1,4 @@
+import { VWUserDifficulty } from "../../common/VWUserDifficulty";
 import { VWEnvironmentJSON } from "../../environment/VWEnvironment";
 import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 
@@ -9,6 +10,7 @@ export class VWOptions {
     private maxNumberOfCycles: number;
     private efforts: Map<string, bigint>;
     private teleora: any; // TODO: Add Teleora type.
+    private userDiffiiculty: VWUserDifficulty;
 
     public constructor() {
         this.setDefaultOptions();
@@ -22,6 +24,7 @@ export class VWOptions {
         this.maxNumberOfCycles = undefined; // No limit.
         this.efforts = new Map<string, bigint>(); // Will be filled with the default efforts.
         this.teleora = undefined; // No Teleora file.
+        this.userDiffiiculty = VWUserDifficulty.BASIC;
     }
 
     public getSpeed(): number {
@@ -90,5 +93,17 @@ export class VWOptions {
 
     public setTeleora(teleora: any): void { // TODO: Add Teleora type.
         this.teleora = teleora;
+    }
+
+    public getUserDifficulty(): VWUserDifficulty {
+        return this.userDiffiiculty;
+    }
+
+    public setUserDifficulty(userDifficulty: VWUserDifficulty): void {
+        this.userDiffiiculty = userDifficulty;
+    }
+
+    public toggleUserDifficulty(): void {
+        this.userDiffiiculty = this.userDiffiiculty === VWUserDifficulty.BASIC ? VWUserDifficulty.ADVANCED : VWUserDifficulty.BASIC;
     }
 }

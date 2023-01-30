@@ -114,3 +114,18 @@ table {
 #teleora_upload_input, #state_to_load_upload_input {
     border: 1pt solid #000000;
 }
+
+#user_difficulty_toggle_button {
+    padding: 5px;
+    margin: 5pt;
+}
+
+.basic {
+    border: 5px solid cyan;
+    border-radius: 5px;
+}
+
+.advanced {
+    border: 5px solid #ff0000;
+    border-radius: 5px;
+}

@@ -17,6 +17,7 @@ import { VWDraggableBodiesDiv } from "../../simulation/div/VWDraggableBodiesDiv"
 import { VWGridDiv } from "../../simulation/div/VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternalSimulationControlsDiv";
 import { VWSimulation } from "../../simulation/div/VWSimulation";
+import { VWUserDifficulty } from "../../../common/VWUserDifficulty";
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -24,7 +25,7 @@ export class VWPlatformDiv implements VWDiv {
     private initialViewButtonsDiv: VWInitialViewButtonsDiv; // Shown by default;
     private optionsDialogDiv: VWOptionsDialogDiv; // Hidden by default;
     private gridDiv: VWGridDiv; // Hidden by default;
-    private simulationControlsDiv: VWInternalSimulationControlsDiv; // Hidden by default;
+    private internalSimulationControlsDiv: VWInternalSimulationControlsDiv; // Hidden by default;
     private options: VWOptions;
     private simulation: VWSimulation;
     private packed: boolean;
@@ -42,10 +43,16 @@ export class VWPlatformDiv implements VWDiv {
             this.initialViewButtonsDiv = new VWInitialViewButtonsDiv(this.start.bind(this), this.showOptionsDialog.bind(this), this.guide);
             this.optionsDialogDiv = new VWOptionsDialogDiv(this.saveNewOptions.bind(this), this.discardNewOptions.bind(this), this.loadState.bind(this), this.loadTeleora.bind(this));
             this.gridDiv = new VWGridDiv();
-            this.simulationControlsDiv = new VWInternalSimulationControlsDiv();
             this.options = new VWOptions();
+            this.internalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this));
             this.packed = false;
         }
+    }
+
+    private toggleUserDifficulty(): void {
+        this.options.toggleUserDifficulty();
+
+        this.simulation.getEnvironment().toggleUserDifficulty();
     }
 
     private showOptionsDialog(): void {
@@ -110,7 +117,7 @@ export class VWPlatformDiv implements VWDiv {
 
         this.simulation = new VWSimulation(environment, this.options, config);
 
-        this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
+        this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
 
         this.initialViewDiv.hide();
         this.initialViewButtonsDiv.hide();
@@ -118,6 +125,7 @@ export class VWPlatformDiv implements VWDiv {
         this.initialViewButtonsDiv.unpack();
 
         this.showExternalSimulationControls();
+        this.showInternalSimulationControls();
 
         // TODO: show the internal user difficulty toggle button.
         // TODO: change the displayed buttons, and add the appropriate listeners.
@@ -152,7 +160,7 @@ export class VWPlatformDiv implements VWDiv {
 
             this.simulation = new VWSimulation(this.simulation.getEnvironment(), this.options, this.simulation.getConfig());
 
-            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
             this.simulation.showSimulation();
         });
 
@@ -176,16 +184,27 @@ export class VWPlatformDiv implements VWDiv {
             this.showStoppedSimulationControls();
 
             this.simulation.stop();
+            this.options.setUserDifficulty(VWUserDifficulty.BASIC);
 
             this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig()), this.options, this.simulation.getConfig());
 
-            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceSimulationControlsDiv.bind(this));
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
             this.simulation.showSimulation();
         });
 
         document.getElementById("external_guide_button").addEventListener("click", this.guide);
 
         // TODO: add listeners to the save and load buttons.
+    }
+
+    private showInternalSimulationControls(): void {
+        this.internalSimulationControlsDiv.setGridSize(this.simulation.getEnvironment().getGridSize());
+        this.internalSimulationControlsDiv.pack();
+        this.internalSimulationControlsDiv.show();
+    }
+
+    private hideInternalSimulationControls(): void {
+        this.internalSimulationControlsDiv.hide();
     }
 
     private showRunningSimulationControls(): void {
@@ -198,6 +217,8 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById("external_save_button").hidden = true;
         document.getElementById("external_load_button").hidden = true;
         document.getElementById("external_guide_button").hidden = true;
+
+        this.hideInternalSimulationControls();
 
         this.showTooltips();
     }
@@ -213,6 +234,8 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById("external_load_button").hidden = false;
         document.getElementById("external_guide_button").hidden = false;
 
+        this.showInternalSimulationControls();
+
         this.showTooltips();
     }
 
@@ -226,6 +249,8 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById("external_save_button").hidden = true;
         document.getElementById("external_load_button").hidden = true;
         document.getElementById("external_guide_button").hidden = true;
+
+        this.hideInternalSimulationControls();
 
         this.showTooltips();
     }
@@ -278,21 +303,29 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private hideSimulationControlsDiv(): void {
-        if (!VWExistenceChecker.exists(this.simulationControlsDiv)) {
+        if (!VWExistenceChecker.exists(this.internalSimulationControlsDiv)) {
             throw new Error("Cannot hide the simulation controls div: it is null or undefined.");
         }
         else {
-            this.simulationControlsDiv.hide();
+            this.internalSimulationControlsDiv.hide();
         }
     }
 
-    private replaceSimulationControlsDiv(newSimulationControlsDiv: VWInternalSimulationControlsDiv): void {
-        if (!VWExistenceChecker.exists(newSimulationControlsDiv)) {
-            throw new Error("Cannot replace the simulation controls div: the new simulation controls div is null or undefined.");
+    private replaceInternalSimulationControlsDiv(gridSize: number): void {
+        if (!VWExistenceChecker.exists(gridSize)) {
+            throw new Error("The grid size cannot be null or undefined.");
         }
         else {
-            this.div.replaceChild(newSimulationControlsDiv.getDiv(), this.simulationControlsDiv.getDiv());
-            this.simulationControlsDiv = newSimulationControlsDiv;
+            let newInternalSimulationControlsDiv: VWInternalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this));
+
+            newInternalSimulationControlsDiv.setGridSize(gridSize);
+            newInternalSimulationControlsDiv.pack();
+
+            this.div.replaceChild(newInternalSimulationControlsDiv.getDiv(), this.internalSimulationControlsDiv.getDiv());
+
+            this.internalSimulationControlsDiv = newInternalSimulationControlsDiv;
+
+            this.internalSimulationControlsDiv.show();
         }
     }
 
@@ -457,7 +490,7 @@ export class VWPlatformDiv implements VWDiv {
         else if (!VWExistenceChecker.exists(this.gridDiv)) {
             throw new Error("Cannot pack: the grid div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.simulationControlsDiv)) {
+        else if (!VWExistenceChecker.exists(this.internalSimulationControlsDiv)) {
             throw new Error("Cannot pack: the simulation controls div is null or undefined.");
         }
         else {
@@ -471,7 +504,7 @@ export class VWPlatformDiv implements VWDiv {
             this.div.appendChild(this.initialViewButtonsDiv.getDiv());
             this.div.appendChild(this.optionsDialogDiv.getDiv());
             this.div.appendChild(this.gridDiv.getDiv());
-            this.div.appendChild(this.simulationControlsDiv.getDiv());
+            this.div.appendChild(this.internalSimulationControlsDiv.getDiv());
 
             this.packed = true;
         }
@@ -499,7 +532,7 @@ export class VWPlatformDiv implements VWDiv {
         else if (!VWExistenceChecker.exists(this.gridDiv)) {
             throw new Error("Cannot unpack: the grid div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.simulationControlsDiv)) {
+        else if (!VWExistenceChecker.exists(this.internalSimulationControlsDiv)) {
             throw new Error("Cannot unpack: the simulation controls div is null or undefined.");
         }
         else {
@@ -507,7 +540,7 @@ export class VWPlatformDiv implements VWDiv {
             this.div.removeChild(this.initialViewButtonsDiv.getDiv());
             this.div.removeChild(this.optionsDialogDiv.getDiv());
             this.div.removeChild(this.gridDiv.getDiv());
-            this.div.removeChild(this.simulationControlsDiv.getDiv());
+            this.div.removeChild(this.internalSimulationControlsDiv.getDiv());
 
             this.packed = false;
         }
@@ -545,7 +578,7 @@ export class VWPlatformDiv implements VWDiv {
             this.initialViewButtonsDiv.hide();
             this.optionsDialogDiv.hide();
             this.gridDiv.hide();
-            this.simulationControlsDiv.hide();
+            this.internalSimulationControlsDiv.hide();
 
             this.div.hidden = true;
         }

@@ -24,4 +24,12 @@ export class VWCleaningAgent extends VWActor {
             return colour;
         }
     }
+
+    public getMind(): VWCleaningAgentMind {
+        return super.getMind() as VWCleaningAgentMind;
+    }
+
+    public resetMind(): VWCleaningAgentMind {
+        return new VWCleaningAgentMind(this.getMind().getMindCore().newCore());
+    }
 }

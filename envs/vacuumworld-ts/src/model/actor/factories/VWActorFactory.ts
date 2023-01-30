@@ -1,5 +1,6 @@
 import { VWColour } from "../../common/VWColour";
 import { VWOrientation } from "../../common/VWOrientation";
+import { VWUserDifficulty } from "../../common/VWUserDifficulty";
 import { VWOptions } from "../../gui/common/VWOptions";
 import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 import { VWActor, VWActorJSON } from "../VWActor";
@@ -19,7 +20,7 @@ import { VWMindCore } from "../mind/core/VWMindCore";
 export class VWActorFactory {
     private constructor() {}
 
-    public static createVWActorFromJSONObject(data: VWActorJSON): VWActor {
+    public static createVWActorFromJSONObject(data: VWActorJSON, userDifficulty: VWUserDifficulty): VWActor {
         if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWActor` cannot be null or undefined.");
         }
@@ -27,7 +28,7 @@ export class VWActorFactory {
             throw new Error("The colour of a `VWActor` cannot be null or undefined.");
         }
         else if (data["colour"] === VWColour.USER) {
-            return this.createVWUserFromJSONObject(data);
+            return this.createVWUserFromJSONObject(data, userDifficulty);
         }
         else if (Object.values(VWColour).includes(data["colour"])) {
             return this.createVWCleaningAgentFromJSONObject(data);
@@ -73,7 +74,7 @@ export class VWActorFactory {
         }
     }
 
-    public static createVWUserFromJSONObject(data: VWActorJSON): VWUser {
+    public static createVWUserFromJSONObject(data: VWActorJSON, userDifficulty: VWUserDifficulty): VWUser {
         if (!VWExistenceChecker.exists(data)) {
             throw new Error("The JSON representation of a `VWUser` cannot be null or undefined.");
         }
@@ -91,7 +92,7 @@ export class VWActorFactory {
         }
         else {
             const orientation: VWOrientation = VWOrientation[data["orientation"]];
-            const mind: VWUserMind = new VWUserMind();
+            const mind: VWUserMind = new VWUserMind(userDifficulty);
             const observationSensor: VWObservationSensor = new VWObservationSensor();
             const physicalActuator: VWUserPhysicalActuator = new VWUserPhysicalActuator();
 
@@ -104,7 +105,7 @@ export class VWActorFactory {
             throw new Error("The colour of a `VWActor` cannot be null or undefined.");
         }
         else if (colour === VWColour.USER) {
-            return this.createVWUserFacingNorth();
+            return this.createVWUserFacingNorth(options);
         }
         else if (Object.values(VWColour).includes(colour)) {
             return this.createVWCleaningAgentFacingNorth(colour, options);
@@ -140,9 +141,9 @@ export class VWActorFactory {
         }
     }
 
-    public static createVWUserFacingNorth(): VWUser {
+    public static createVWUserFacingNorth(options: VWOptions): VWUser {
         const orientation: VWOrientation = VWOrientation.NORTH;
-        const mind: VWUserMind = new VWUserMind();
+        const mind: VWUserMind = new VWUserMind(options.getUserDifficulty());
         const observationSensor: VWObservationSensor = new VWObservationSensor();
         const physicalActuator: VWUserPhysicalActuator = new VWUserPhysicalActuator();
 

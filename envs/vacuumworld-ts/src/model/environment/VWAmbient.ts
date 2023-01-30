@@ -1,4 +1,6 @@
 import { VWActor } from "../actor/VWActor";
+import { VWCleaningAgent } from "../actor/VWCleaningAgent";
+import { VWUser } from "../actor/VWUser";
 import { JOptional } from "../common/JOptional";
 import { VWCoord} from "../common/VWCoord";
 import { VWDirection } from "../common/VWDirection";
@@ -38,6 +40,34 @@ export class VWAmbient {
         }
 
         return actors;
+    }
+
+    public getCleaningAgents(): VWCleaningAgent[] {
+        const cleaningAgents: VWCleaningAgent[] = [];
+
+        for (const [_, location] of this.grid) {
+            const actor = location.getActor();
+
+            if (actor.isPresent() && actor.orElseThrow().isCleaningAgent()) {
+                cleaningAgents.push(actor.orElseThrow() as VWCleaningAgent);
+            }
+        }
+
+        return cleaningAgents;
+    }
+
+    public getUsers(): VWUser[] {
+        const users: VWUser[] = [];
+
+        for (const [_, location] of this.grid) {
+            const actor = location.getActor();
+
+            if (actor.isPresent() && actor.orElseThrow().isUser()) {
+                users.push(actor.orElseThrow() as VWUser);
+            }
+        }
+
+        return users;
     }
 
     public getActorsIDs(): string[] {
