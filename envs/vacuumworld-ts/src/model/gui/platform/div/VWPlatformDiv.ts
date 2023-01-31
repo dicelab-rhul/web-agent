@@ -44,7 +44,7 @@ export class VWPlatformDiv implements VWDiv {
             this.optionsDialogDiv = new VWOptionsDialogDiv(this.saveNewOptions.bind(this), this.discardNewOptions.bind(this), this.loadState.bind(this), this.loadTeleora.bind(this));
             this.gridDiv = new VWGridDiv();
             this.options = new VWOptions();
-            this.internalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this));
+            this.internalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
             this.packed = false;
         }
     }
@@ -53,6 +53,51 @@ export class VWPlatformDiv implements VWDiv {
         this.options.toggleUserDifficulty();
 
         this.simulation.getEnvironment().toggleUserDifficulty();
+    }
+
+    private enlargeEnvironmentAndGrid(): void {
+        const newGridSize: number = this.calculateNewGridSize(+1);
+        console.log(newGridSize);
+
+        if (newGridSize > this.simulation.getEnvironment().getGridSize()) {
+            this.simulation.stop();
+
+            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig(), BigInt(newGridSize)), this.options, this.simulation.getConfig());
+
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+            this.simulation.showSimulation();
+        }
+        else {
+            console.log("The grid size cannot grow any more.");
+        }
+    }
+
+    private shrinkEnvironmentAndGrid(): void {
+        const newGridSize: number = this.calculateNewGridSize(-1);
+
+        if (newGridSize < this.simulation.getEnvironment().getGridSize()) {
+            this.simulation.stop();
+
+            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig(), BigInt(newGridSize)), this.options, this.simulation.getConfig());
+
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+            this.simulation.showSimulation();
+        }
+        else {
+            console.log("The grid size cannot shrink any more.");
+        }
+    }
+
+    private calculateNewGridSize(delta: number): number {
+        const gridSize: number = this.simulation.getEnvironment().getGridSize();
+        const candidate: number = gridSize + delta;
+
+        if (candidate < this.simulation.getConfig()["min_environment_dim"] || candidate > this.simulation.getConfig()["max_environment_dim"]) {
+            return gridSize;
+        }
+        else {
+            return candidate;
+        }
     }
 
     private showOptionsDialog(): void {
@@ -127,9 +172,6 @@ export class VWPlatformDiv implements VWDiv {
         this.showExternalSimulationControls();
         this.showInternalSimulationControls();
 
-        // TODO: show the internal user difficulty toggle button.
-        // TODO: change the displayed buttons, and add the appropriate listeners.
-
         if (autoplay) {
             this.simulation.cycleSimulation();
         }
@@ -145,15 +187,12 @@ export class VWPlatformDiv implements VWDiv {
 
         document.getElementById("external_run_button").addEventListener("click", () => {
             this.showRunningSimulationControls();
-            // TODO: hide the internal user difficulty toggle button.
 
             this.simulation.cycleSimulation();
         });
 
         document.getElementById("external_stop_button").addEventListener("click", () => {
             this.showStoppedSimulationControls();
-            // TODO: show slider.
-            // TODO: show the internal user difficulty toggle button.
 
             this.simulation.stop();
             this.simulation.getEnvironment().resetAndMaintainElements();
@@ -292,7 +331,6 @@ export class VWPlatformDiv implements VWDiv {
         VWExistenceChecker.validateExistence(this.gridDiv.getDraggableBodiesDiv(), "The draggable bodies div cannot be null or undefined.");
 
         let newDraggableBodiesDiv: VWDraggableBodiesDiv = new VWDraggableBodiesDiv(gridSize);
-        // TODO: resize the draggable bodies div
 
         newDraggableBodiesDiv.pack();
 
@@ -316,7 +354,7 @@ export class VWPlatformDiv implements VWDiv {
             throw new Error("The grid size cannot be null or undefined.");
         }
         else {
-            let newInternalSimulationControlsDiv: VWInternalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this));
+            let newInternalSimulationControlsDiv: VWInternalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
 
             newInternalSimulationControlsDiv.setGridSize(gridSize);
             newInternalSimulationControlsDiv.pack();

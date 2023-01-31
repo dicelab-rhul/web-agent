@@ -115,7 +115,7 @@ table {
     border: 1pt solid #000000;
 }
 
-#user_difficulty_toggle_button {
+#user_difficulty_toggle_button, #grid_size_up_button, #grid_size_down_button {
     padding: 5px;
     margin: 5pt;
 }
