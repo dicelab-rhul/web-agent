@@ -1,7 +1,5 @@
 # List of TODOs
 
-* File [src/Main.ts](src/Main.ts) - line 149: `// TODO: This method should be replaced by a function that gets the choices paths from the fs. (How?)`
-
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
 * File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](envs/vacuumworld-ts/src/model/common/VWQueue.ts) - line 3: `// TODO: should this class be moved to a separate npm module?`
