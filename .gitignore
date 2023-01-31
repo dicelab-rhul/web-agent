@@ -65,3 +65,4 @@ test/*.js
 *.map
 *.bak
 vw.sh
+res/envs.json

@@ -16,6 +16,7 @@ cd teleora_editor
 cd ..
 
 echo "Deploying the main page..."
+./discover_envs.py
 npm install
 npm run build
 echo "Done."
