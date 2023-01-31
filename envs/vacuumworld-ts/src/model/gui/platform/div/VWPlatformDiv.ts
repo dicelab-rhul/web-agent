@@ -5,7 +5,7 @@ import { VWIdleAction } from "../../../actions/VWIdleAction";
 import { VWMoveAction } from "../../../actions/VWMoveAction";
 import { VWSpeakAction } from "../../../actions/VWSpeakAction";
 import { VWTurnAction } from "../../../actions/VWTurnAction";
-import { VWEnvironment } from "../../../environment/VWEnvironment";
+import { VWEnvironment, VWEnvironmentJSON } from "../../../environment/VWEnvironment";
 import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
 import { VWErrorDiv } from "../../common/VWErrorDiv";
 import { VWDiv } from "../../common/VWDiv";
@@ -18,6 +18,7 @@ import { VWGridDiv } from "../../simulation/div/VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternalSimulationControlsDiv";
 import { VWSimulation } from "../../simulation/div/VWSimulation";
 import { VWUserDifficulty } from "../../../common/VWUserDifficulty";
+import * as globalConfig from "../../../config.json";
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -136,18 +137,11 @@ export class VWPlatformDiv implements VWDiv {
         try {
             this.setActionEfforts();
 
-            // TODO: load the appropriate config.
-            const config: object = {
-                "initial_environment_dim": 8,
-                "min_environment_dim": 3,
-                "max_environment_dim": 13
-            };
-
             if (this.options.isAutoplayActive()) {
-                this.run(config, true);
+                this.run(globalConfig, true);
             }
             else {
-                this.run(config, false);
+                this.run(globalConfig, false);
             }
         }
         catch (e) {
@@ -173,6 +167,8 @@ export class VWPlatformDiv implements VWDiv {
         this.showInternalSimulationControls();
 
         if (autoplay) {
+            this.showRunningSimulationControls();
+
             this.simulation.cycleSimulation();
         }
         else {
@@ -185,12 +181,27 @@ export class VWPlatformDiv implements VWDiv {
 
         this.showStoppedSimulationControls();
 
+        this.addRunButtonListener();
+        this.addStopButtonListener();
+        this.addPauseButtonListener();
+        this.addResumeButtonListener();
+        this.addSpeedButtonListener();
+        this.addResetButtonListener();
+
+        document.getElementById("external_guide_button").addEventListener("click", this.guide);
+        document.getElementById("external_save_button").addEventListener("click", this.saveEnvironment.bind(this));
+        document.getElementById("external_load_button").addEventListener("click", this.loadStateAndCreateNewSimulation.bind(this));
+    }
+
+    private addRunButtonListener(): void {
         document.getElementById("external_run_button").addEventListener("click", () => {
             this.showRunningSimulationControls();
 
             this.simulation.cycleSimulation();
         });
+    }
 
+    private addStopButtonListener(): void {
         document.getElementById("external_stop_button").addEventListener("click", () => {
             this.showStoppedSimulationControls();
 
@@ -202,23 +213,31 @@ export class VWPlatformDiv implements VWDiv {
             this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
             this.simulation.showSimulation();
         });
+    }
 
+    private addPauseButtonListener(): void {
         document.getElementById("external_pause_button").addEventListener("click", () => {
             this.showPausedSimulationControls();
 
             this.simulation.pause();
         });
+    }
 
+    private addResumeButtonListener(): void {
         document.getElementById("external_resume_button").addEventListener("click", () => {
             this.showRunningSimulationControls();
 
             this.simulation.resume();
         });
+    }
 
+    private addSpeedButtonListener(): void {
         document.getElementById("external_speed_button").addEventListener("click", () => {
             this.options.setSpeed(Math.max(0.999, this.options.getSpeed() + 0.1));
         });
+    }
 
+    private addResetButtonListener(): void {
         document.getElementById("external_reset_button").addEventListener("click", () => {
             this.showStoppedSimulationControls();
 
@@ -230,10 +249,53 @@ export class VWPlatformDiv implements VWDiv {
             this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
             this.simulation.showSimulation();
         });
+    }
 
-        document.getElementById("external_guide_button").addEventListener("click", this.guide);
+    private saveEnvironment(): void {
+        const environment: VWEnvironment = this.simulation.getEnvironment();
+        const state: object = environment.toJsonObject();
 
-        // TODO: add listeners to the save and load buttons.
+        const stateString: string = JSON.stringify(state, null, 4);
+
+        const blob: Blob = new Blob([stateString], {type: "application/json"});
+
+        const url: string = URL.createObjectURL(blob);
+
+        const link: HTMLAnchorElement = document.createElement("a");
+
+        link.setAttribute("href", url);
+        link.setAttribute("download", "state.json");
+
+        link.click();
+    }
+
+    private loadStateAndCreateNewSimulation(): void {
+        const fileInput: HTMLInputElement = document.createElement("input");
+
+        fileInput.setAttribute("type", "file");
+        fileInput.setAttribute("accept", ".json");
+
+        fileInput.addEventListener("change", () => {
+            const file: File = fileInput.files[0];
+
+            const reader: FileReader = new FileReader();
+
+            reader.addEventListener("load", () => {
+                const state: VWEnvironmentJSON = JSON.parse(reader.result as string);
+
+                this.simulation.stop();
+                this.options.setUserDifficulty(VWUserDifficulty.BASIC);
+    
+                this.simulation = new VWSimulation(VWEnvironment.fromJsonObject(state, this.simulation.getConfig()), this.options, this.simulation.getConfig());
+    
+                this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+                this.simulation.showSimulation();
+            });
+
+            reader.readAsText(file);
+        });
+
+        fileInput.click();
     }
 
     private showInternalSimulationControls(): void {

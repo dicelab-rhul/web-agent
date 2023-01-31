@@ -10,10 +10,10 @@ from typing import List
 import os
 
 
-INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js"]
-FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__)]
-DIR_EXCLUSION_LIST: List[str] = ["node_modules", "dist"]
+INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js", ".jsx", ".cjs", ".cjsx", ".html", ".css", ".json", ".py", ".md"]
 TODO_FILE: str = "TODO.md"
+FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__), TODO_FILE]
+DIR_EXCLUSION_LIST: List[str] = ["node_modules", "dist"]
 TODO_PATTERN: str = "TODO"
 TODO_HEADER: str = "# List of TODOs"
 

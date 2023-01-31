@@ -177,8 +177,15 @@ export class VWOptionsDialog implements VWPackable {
     }
 
     public unpack(): void {
-        // TODO: implement this method.
-        this.dialog.close();
+        if (!this.packed) {
+            console.log("The options dialog is already unpacked.");
+        }
+        else if (!VWExistenceChecker.allArgumentsExist(this.dialog)) {
+            throw new Error("Cannot unpack the options dialog: the dialog is null or undefined.");
+        }
+        else {
+            this.dialog.close();
+        }
     }
 
     private constructOptionsDialog(): void {

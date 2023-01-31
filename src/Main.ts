@@ -1,4 +1,4 @@
-import { envs } from "../res/envs.json";
+import * as envs from "../res/envs.json";
 
 type ResourcePaths = {
     favicon: string;
@@ -153,7 +153,7 @@ export class Main {
     
         document.body.appendChild(choiceDiv);
 
-        envs.forEach((envPath) => Main.addEntryToChoiceDiv(envPath));
+        Array.from(envs).forEach((envPath) => Main.addEntryToChoiceDiv(envPath));
     }
     
     private static addEntryToChoiceDiv(choicePath: string): void {

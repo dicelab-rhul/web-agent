@@ -10,7 +10,7 @@ export class VWOptions {
     private maxNumberOfCycles: number;
     private efforts: Map<string, bigint>;
     private teleora: any; // TODO: Add Teleora type.
-    private userDiffiiculty: VWUserDifficulty;
+    private userDifficulty: VWUserDifficulty;
 
     public constructor() {
         this.setDefaultOptions();
@@ -24,7 +24,7 @@ export class VWOptions {
         this.maxNumberOfCycles = undefined; // No limit.
         this.efforts = new Map<string, bigint>(); // Will be filled with the default efforts.
         this.teleora = undefined; // No Teleora file.
-        this.userDiffiiculty = VWUserDifficulty.BASIC;
+        this.userDifficulty = VWUserDifficulty.BASIC;
     }
 
     public getSpeed(): number {
@@ -96,14 +96,14 @@ export class VWOptions {
     }
 
     public getUserDifficulty(): VWUserDifficulty {
-        return this.userDiffiiculty;
+        return this.userDifficulty;
     }
 
     public setUserDifficulty(userDifficulty: VWUserDifficulty): void {
-        this.userDiffiiculty = userDifficulty;
+        this.userDifficulty = userDifficulty;
     }
 
     public toggleUserDifficulty(): void {
-        this.userDiffiiculty = this.userDiffiiculty === VWUserDifficulty.BASIC ? VWUserDifficulty.ADVANCED : VWUserDifficulty.BASIC;
+        this.userDifficulty = this.userDifficulty === VWUserDifficulty.BASIC ? VWUserDifficulty.ADVANCED : VWUserDifficulty.BASIC;
     }
 }

@@ -1,6 +1,9 @@
-let example_div: HTMLDivElement = document.createElement("div");
+import { HelloWorld } from "./model/HelloWorld";
 
-example_div.id = "example_div";
-example_div.textContent = "Hello World!";
-
-document.getElementById("container_div").appendChild(example_div);
+/*
+ *
+ * This script is the enry point of the simulation.
+ * It is responsible for displaying the initial view.
+ * 
+ */
+HelloWorld.main();
