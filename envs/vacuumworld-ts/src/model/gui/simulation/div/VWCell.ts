@@ -181,14 +181,24 @@ export class VWCell implements VWDiv {
         }
         else if (!this.packed) {
             this.cell.appendChild(this.displayedImage);
+
             this.packed = true;
         }
     }
 
     public unpack(): void {
-        // TODO: add checks.
-        if (this.packed) {
+        if (!VWExistenceChecker.allArgumentsExist(this.displayedImage)) {
+            throw new Error("Cannot unpack a cell that has no image.");
+        }
+        else if (!VWExistenceChecker.allArgumentsExist(this.locationAppearance)) {
+            throw new Error("Cannot unpack a cell for which no location appearance is available.");
+        }
+        else if (!VWExistenceChecker.allArgumentsExist(this.cell)) {
+            throw new Error("Cannot unpack a non-existent cell.");
+        }
+        else if (this.packed) {
             this.cell.removeChild(this.displayedImage);
+
             this.locationAppearance = null;
             this.displayedImage = null;
             this.packed = false;
@@ -196,11 +206,33 @@ export class VWCell implements VWDiv {
     }
 
     public show(): void {
-        // TODO: implement this.
+        if (!VWExistenceChecker.allArgumentsExist(this.cell)) {
+            throw new Error("Cannot show: the cell div is null or undefined.");
+        }
+        else if (!this.cell.hidden) {
+            console.log("The cell div is already shown.");
+        }
+        else if (!this.packed) {
+            throw new Error("Cannot show: the cell div is not packed.");
+        }
+        else {
+            this.cell.hidden = false;
+        }
     }
 
     public hide(): void {
-        // TODO: implement this.
+        if (!VWExistenceChecker.allArgumentsExist(this.cell)) {
+            throw new Error("Cannot hide: the cell div is null or undefined.");
+        }
+        else if (this.cell.hidden) {
+            console.log("The cell div is already shown.");
+        }
+        else if (!this.packed) {
+            throw new Error("Cannot hide: the cell div is not packed.");
+        }
+        else {
+            this.cell.hidden = false;
+        }
     }
 
     public getDiv(): HTMLDivElement {

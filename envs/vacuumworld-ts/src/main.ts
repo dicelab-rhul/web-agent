@@ -1,4 +1,5 @@
 import { VacuumWorld } from "./model/VacuumWorld"
+
 /*
  *
  * This script is the enry point of the simulation.

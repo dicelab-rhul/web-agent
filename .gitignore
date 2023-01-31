@@ -66,3 +66,4 @@ test/*.js
 *.bak
 vw.sh
 res/envs.json
+package-lock.json

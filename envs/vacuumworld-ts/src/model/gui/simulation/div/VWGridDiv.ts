@@ -21,7 +21,7 @@ export class VWGridDiv implements VWDiv {
         this.packed = false;
     }
 
-    private static validateGridSize(gridSize: number): number { // TODO: check the min and max grid size from the config file.
+    private static validateGridSize(gridSize: number): number {
         if (!VWExistenceChecker.allArgumentsExist(gridSize) || gridSize <= 0) {
             throw new Error("Cannot create a grid with no size.");
         }
@@ -75,7 +75,7 @@ export class VWGridDiv implements VWDiv {
     }
 
     public pack(): void {
-        if (!VWExistenceChecker.allArgumentsExist(this.gridSize) || this.gridSize <= 0) { // TODO: check the min and max grid size from the config file.
+        if (!VWExistenceChecker.allArgumentsExist(this.gridSize) || this.gridSize <= 0) {
             throw new Error("Cannot pack a grid that has no size.");
         }
         else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
