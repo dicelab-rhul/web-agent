@@ -1,4 +1,4 @@
-# web-agent
+# Web-Agent
 
 WE ARE FINALLY DOING IT.
 
@@ -6,30 +6,34 @@ Browser-based teleoreactive agent development.
 
 ## How to run the system
 
-### Install dependencies
+### The first time (to install the dependencies as well)
 
 ```console
-user@machine:~$ npm install -D live-server webpack webpack-cli typescript ts-loader
+user@machine:~$ ./deploy.sh
 ```
 
-### Build the system
+### From the second time onwards
 
 ```console
-user@machine:~$ cd envs/vacuumworld-ts && npm run build
+user@machine:~$ ./quick_deploy.sh
 ```
 
-### Run the system
+## How to run the experimental code editor
+
+To run the experimental code editor, first install parcel (if you haven't already)...
 
 ```console
-user@machine:~$ live-server
+user@machine:~$ npm install parcel
 ```
 
-## Notes
+...then input the following commands (assuming you are in the root directory of the project):
 
-developer run `parcel index.html`
-install parcel with npm! (its good)
+```console
+user@machine:~$ cd experimental
+user@machine:~$ npm run build
+```
 
-Possible code editors
+## Possible code editors
 
 [https://github.com/codemirror/CodeMirror](https://github.com/codemirror/CodeMirror)
 
@@ -197,9 +201,9 @@ Sets are unordered collections of unique elements e.g. `{a,b,c,}`. Since they ar
 Splitting sets will lead to branching in the program execution.
 
 `Z | Y = X, X = {a,b}` // `Z = a, Y = {b}` or `Z = b, Y = {a}` the program would split here using all possible permutations of the set...
-This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO elaborate on this.
+This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.
 
-TODO other operators...
+TODO: other operators...
 
 ##### Maps
 
