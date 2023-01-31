@@ -60,10 +60,10 @@ export class VWSimulation {
         VWExistenceChecker.validateExistence(environment, "Cannot create a simulation without an environment.");
         VWExistenceChecker.validateExistence(config, "Cannot create a simulation without a config.");
 
-        if (!VWExistenceChecker.exists(config["min_environment_dim"]) || config["min_environment_dim"] <= 0) {
+        if (!VWExistenceChecker.allArgumentsExist(config["min_environment_dim"]) || config["min_environment_dim"] <= 0) {
             throw new Error("The config must have a `min_environment_dim` key.");
         }
-        else if (!VWExistenceChecker.exists(config["max_environment_dim"]) || config["max_environment_dim"] <= 0) {
+        else if (!VWExistenceChecker.allArgumentsExist(config["max_environment_dim"]) || config["max_environment_dim"] <= 0) {
             throw new Error("The config must have a `max_environment_dim` key.");
         }
         else if (config["min_environment_dim"] > config["max_environment_dim"]) {
@@ -187,19 +187,19 @@ export class VWSimulation {
     }
 
     private validateCallbacks(): void {
-        if (!VWExistenceChecker.exists(this.replaceGridDivCallback)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.replaceGridDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to replace the grid div.");
         }
-        else if (!VWExistenceChecker.exists(this.hideDraggableBodiesDivCallback)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.hideDraggableBodiesDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to hide the draggable bodies div.");
         }
-        else if (!VWExistenceChecker.exists(this.replaceDraggableBodiesDivCallback)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.replaceDraggableBodiesDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to replace the draggable bodies div.");
         }
-        else if (!VWExistenceChecker.exists(this.hideSimulationControlsDivCallback)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.hideSimulationControlsDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to hide the simulation controls div.");
         }
-        else if (!VWExistenceChecker.exists(this.replaceSimulationControlsDivCallback)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.replaceSimulationControlsDivCallback)) {
             throw new Error("Cannot cycle the simulation without a callback to replace the simulation controls div.");
         }
     }

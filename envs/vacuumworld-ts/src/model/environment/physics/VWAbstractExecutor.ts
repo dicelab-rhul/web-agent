@@ -21,7 +21,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setActorColourBeforeAction(colour: VWColour): void {
-        if (!VWExistenceChecker.exists(colour)) {
+        if (!VWExistenceChecker.allArgumentsExist(colour)) {
             throw new Error("The actor colour cannot be null or undefined.");
         }
         else {
@@ -34,7 +34,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setActorOrientationBeforeAction(orientation: VWOrientation): void {
-        if (!VWExistenceChecker.exists(orientation)) {
+        if (!VWExistenceChecker.allArgumentsExist(orientation)) {
             throw new Error("The actor orientation cannot be null or undefined.");
         }
         else {
@@ -47,7 +47,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setActorCoordBeforeAction(coord: VWCoord): void {
-        if (!VWExistenceChecker.exists(coord)) {
+        if (!VWExistenceChecker.allArgumentsExist(coord)) {
             throw new Error("The actor coord cannot be null or undefined.");
         }
         else {
@@ -60,7 +60,7 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     protected setDirtBeforeAction(dirt: JOptional<VWDirt>): void {
-        if (!VWExistenceChecker.exists(dirt)) {
+        if (!VWExistenceChecker.allArgumentsExist(dirt)) {
             throw new Error("The dirt cannot be null or undefined.");
         }
         else {
@@ -69,10 +69,10 @@ export abstract class VWAbstractExecutor implements VWActionExecutor {
     }
 
     public attempt(action: VWAction, env: VWEnvironment): VWActionResult {
-        if (!VWExistenceChecker.exists(action)) {
+        if (!VWExistenceChecker.allArgumentsExist(action)) {
             throw new Error("The action cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(env)) {
+        else if (!VWExistenceChecker.allArgumentsExist(env)) {
             throw new Error("The environment cannot be null or undefined.");
         }
         else if (!this.isPossible(action, env)) {

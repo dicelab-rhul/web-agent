@@ -12,7 +12,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
     }
 
     public sink(perception: P) : void {
-        if (!VWExistenceChecker.exists(perception)) {
+        if (!VWExistenceChecker.allArgumentsExist(perception)) {
             throw new Error("The perception cannot be null or undefined.");
         }
         else {
@@ -21,7 +21,7 @@ export abstract class VWAbstractSensor<P extends VWPerception> implements VWSens
     }
 
     public sinkAll(perceptions: P[]) : void {
-        if (!VWExistenceChecker.allExist(perceptions)) {
+        if (!VWExistenceChecker.allValuesExist(perceptions)) {
             throw new Error("The perceptions cannot be null or undefined.");
         }
         else {

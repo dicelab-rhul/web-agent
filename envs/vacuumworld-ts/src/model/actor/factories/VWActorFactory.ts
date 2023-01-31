@@ -21,10 +21,10 @@ export class VWActorFactory {
     private constructor() {}
 
     public static createVWActorFromJSONObject(data: VWActorJSON, userDifficulty: VWUserDifficulty): VWActor {
-        if (!VWExistenceChecker.exists(data)) {
+        if (!VWExistenceChecker.allArgumentsExist(data)) {
             throw new Error("The JSON representation of a `VWActor` cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(data["colour"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["colour"])) {
             throw new Error("The colour of a `VWActor` cannot be null or undefined.");
         }
         else if (data["colour"] === VWColour.USER) {
@@ -39,10 +39,10 @@ export class VWActorFactory {
     }
 
     public static createVWCleaningAgentFromJSONObject(data: VWActorJSON): VWCleaningAgent {
-        if (!VWExistenceChecker.exists(data)) {
+        if (!VWExistenceChecker.allArgumentsExist(data)) {
             throw new Error("The JSON representation of a `VWCleaningAgent` cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(data["colour"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["colour"])) {
             throw new Error("The colour of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else if (data["colour"] === VWColour.USER) {
@@ -51,18 +51,19 @@ export class VWActorFactory {
         else if (!Object.values(VWColour).includes(data["colour"])) {
             throw new Error(`The colour of a \`VWCleaningAgent\` cannot be "${data["colour"]}".`);
         }
-        else if (!VWExistenceChecker.exists(data["orientation"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["orientation"])) {
             throw new Error("The orientation of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else if (!Object.values(VWOrientation).includes(data["orientation"])) {
             throw new Error(`The orientation of a \`VWCleaningAgent\` cannot be "${data["orientation"]}".`);
         }
-        else if (!VWExistenceChecker.exists(data["mind"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["mind"])) {
             throw new Error("The path of the mind of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else {
             const colour: VWColour = VWColour[data["colour"]];
             const orientation: VWOrientation = VWOrientation[data["orientation"]];
+            // TODO: integrate with teleora.
             const mindCore: VWMindCore = data["mind"] === "hysteretic" ? new VWHystereticMindCore() : VWAbstractMindCore.loadFromFile(data["mind"]);
             const mind: VWCleaningAgentMind = new VWCleaningAgentMind(mindCore);
             const observationSensor: VWObservationSensor = new VWObservationSensor();
@@ -75,16 +76,16 @@ export class VWActorFactory {
     }
 
     public static createVWUserFromJSONObject(data: VWActorJSON, userDifficulty: VWUserDifficulty): VWUser {
-        if (!VWExistenceChecker.exists(data)) {
+        if (!VWExistenceChecker.allArgumentsExist(data)) {
             throw new Error("The JSON representation of a `VWUser` cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(data["colour"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["colour"])) {
             throw new Error("The colour of a `VWUser` cannot be null or undefined.");
         }
         else if (data["colour"] !== VWColour.USER) {
             throw new Error(`The colour of a \`VWUser\` must be "${VWColour.USER}".`);
         }
-        else if (!VWExistenceChecker.exists(data["orientation"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["orientation"])) {
             throw new Error("The orientation of a `VWUser` cannot be null or undefined.");
         }
         else if (!Object.values(VWOrientation).includes(data["orientation"])) {
@@ -101,7 +102,7 @@ export class VWActorFactory {
     }
 
     public static createVWActorFacingNorth(colour: VWColour, options: VWOptions): VWActor {
-        if (!VWExistenceChecker.exists(colour)) {
+        if (!VWExistenceChecker.allArgumentsExist(colour)) {
             throw new Error("The colour of a `VWActor` cannot be null or undefined.");
         }
         else if (colour === VWColour.USER) {
@@ -116,7 +117,7 @@ export class VWActorFactory {
     }
 
     public static createVWCleaningAgentFacingNorth(colour: VWColour, options: VWOptions): VWCleaningAgent {
-        if (!VWExistenceChecker.exists(colour)) {
+        if (!VWExistenceChecker.allArgumentsExist(colour)) {
             throw new Error("The colour of a `VWCleaningAgent` cannot be null or undefined.");
         }
         else if (colour === VWColour.USER) {
@@ -130,7 +131,7 @@ export class VWActorFactory {
         }
         else {
             const orientation: VWOrientation = VWOrientation.NORTH;
-            const mindCore: VWMindCore = VWExistenceChecker.exists(options.getTeleora()) ? VWAbstractMindCore.import(options.getTeleora()) : new VWHystereticMindCore();
+            const mindCore: VWMindCore = VWExistenceChecker.allArgumentsExist(options.getTeleora()) ? VWAbstractMindCore.import(options.getTeleora()) : new VWHystereticMindCore();
             const mind: VWCleaningAgentMind = new VWCleaningAgentMind(mindCore);
             const observationSensor: VWObservationSensor = new VWObservationSensor();
             const listeningSensor: VWListeningSensor = new VWListeningSensor();

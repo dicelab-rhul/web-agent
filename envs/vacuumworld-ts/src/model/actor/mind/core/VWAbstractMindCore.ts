@@ -65,7 +65,7 @@ export abstract class VWAbstractMindCore implements VWMindCore {
     }
 
     public incrementEffort(effort: bigint): void {
-        if (!VWExistenceChecker.exists(effort)) {
+        if (!VWExistenceChecker.allArgumentsExist(effort)) {
             throw new Error("The effort cannot be null or undefined.");
         }
         else {

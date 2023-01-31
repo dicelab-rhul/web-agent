@@ -14,7 +14,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     public constructor(difficultyLevel?: VWUserDifficulty) {
         super();
 
-        this.difficultyLevel = VWExistenceChecker.exists(difficultyLevel) ? difficultyLevel : VWUserDifficulty.BASIC;
+        this.difficultyLevel = difficultyLevel ?? VWUserDifficulty.BASIC;
 
         this.setMindCoreFilePath(__filename);
     }
@@ -24,12 +24,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     }
 
     public toggleDifficultyLevel(): void {
-        if (this.difficultyLevel === VWUserDifficulty.BASIC) {
-            this.difficultyLevel = VWUserDifficulty.ADVANCED;
-        }
-        else {
-            this.difficultyLevel = VWUserDifficulty.BASIC;
-        }
+        this.difficultyLevel = (this.difficultyLevel + 1) % 2;
     }
 
     public overrideDifficultyLevel(difficultyLevel: VWUserDifficulty): void {
@@ -41,15 +36,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     }
 
     public decide(): VWAction[] {
-        if (this.difficultyLevel === VWUserDifficulty.BASIC) {
-            return this.decideBasic();
-        }
-        else if (this.difficultyLevel === VWUserDifficulty.ADVANCED) {
-            return this.decideAdvanced();
-        }
-        else {
-            throw new Error("Unknown difficulty level.");
-        }
+        return this.difficultyLevel === VWUserDifficulty.BASIC ? this.decideBasic() : this.decideAdvanced();
     }
 
     private decideBasic(): VWAction[] {
@@ -182,7 +169,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     }
 
     private isActorImmediatelyAhead(): boolean {
-        return !this.getLatestObservation().isWallImmediatelyAhead() && this.getLatestObservation().getCenter().orElseThrow().hasActor();
+        return !this.getLatestObservation().isWallImmediatelyAhead() && this.getLatestObservation().getForward().orElseThrow().hasActor();
     }
 
     private isActorImmediatelyToTheLeft(): boolean {
@@ -196,9 +183,14 @@ export class VWUserMindCore extends VWAbstractMindCore {
     private actRandomly(dropGreenWeight: number, dropOrangeWeight: number, moveWeight: number, turnLeftWeight: number, turnRightWeight: number): VWAction[] {
         VWUserMindCore.validateWeights([dropGreenWeight, dropOrangeWeight, moveWeight, turnLeftWeight, turnRightWeight]);
 
-        const randomValue = Math.random();
-        const cumulativeSum = (sum => (value: number) => sum += value)(0);
-        const cumulativeWeights = [dropGreenWeight, dropOrangeWeight, moveWeight, turnLeftWeight, turnRightWeight].map(cumulativeSum);
+        const randomValue: number = Math.random();
+        const cumulativeWeights: number[] = [0, 0, 0, 0, 0];
+
+        cumulativeWeights[0] = dropGreenWeight;
+        cumulativeWeights[1] = cumulativeWeights[0] + dropOrangeWeight;
+        cumulativeWeights[2] = cumulativeWeights[1] + moveWeight;
+        cumulativeWeights[3] = cumulativeWeights[2] + turnLeftWeight;
+        cumulativeWeights[4] = cumulativeWeights[3] + turnRightWeight;
 
         if (randomValue < cumulativeWeights[0]) {
             return [new VWDropDirtAction(this.getOwnID(), VWColour.GREEN)];
@@ -221,7 +213,7 @@ export class VWUserMindCore extends VWAbstractMindCore {
     }
 
     private static validateWeights(weights: number[]): void {
-        if (!VWExistenceChecker.allExist(weights)) {
+        if (!VWExistenceChecker.allValuesExist(weights)) {
             throw new Error("The weights array cannot be null or undefined, or contain null or undefined values.");
         }
         else if (weights.some(weight => weight < 0.0)) {

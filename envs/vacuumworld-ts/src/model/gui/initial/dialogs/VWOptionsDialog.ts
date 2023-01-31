@@ -131,34 +131,34 @@ export class VWOptionsDialog implements VWPackable {
         if (this.packed) {
             console.log("The options dialog is already packed.");
         }
-        else if (!VWExistenceChecker.exists(this.dialog)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.dialog)) {
             throw new Error("Cannot pack the options dialog: the dialog is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.speedSelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.speedSelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the speed selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.autoplaySelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.autoplaySelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the autoplay selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.stateToLoadSelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.stateToLoadSelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the state to load selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.tooltipsSelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.tooltipsSelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the tooltips selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.maxNumberOfCyclesSelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.maxNumberOfCyclesSelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the max number of cycles selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.effortsSelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.effortsSelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the efforts selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.teleoraSelectorDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.teleoraSelectorDiv)) {
             throw new Error("Cannot pack the options dialog: the teleora selector div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.okButton)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.okButton)) {
             throw new Error("Cannot pack the options dialog: the ok button is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.cancelButton)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.cancelButton)) {
             throw new Error("Cannot pack the options dialog: the cancel button is null or undefined.");
         }
         else {

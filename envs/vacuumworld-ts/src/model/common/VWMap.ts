@@ -34,7 +34,7 @@ export class VWMap<K extends Equalisable, V> {
     public put(key: K, value: V): void {
         let entry: VWMapEntry<K, V> = this.getEntry(key);
 
-        if (!VWExistenceChecker.exists(entry)) {
+        if (!VWExistenceChecker.allArgumentsExist(entry)) {
             this.entries.push(new VWMapEntry(key, value));
         }
         else {
@@ -45,19 +45,19 @@ export class VWMap<K extends Equalisable, V> {
     public get(key: K): V {
         const entry: VWMapEntry<K, V> = this.getEntry(key);
 
-        return VWExistenceChecker.exists(entry) ? entry.getValue() : null;
+        return VWExistenceChecker.allArgumentsExist(entry) ? entry.getValue() : null;
     }
 
     public remove(key: K): void {
         const entry: VWMapEntry<K, V> = this.getEntry(key);
 
-        if (VWExistenceChecker.exists(entry)) {
+        if (VWExistenceChecker.allArgumentsExist(entry)) {
             this.entries.splice(this.entries.indexOf(entry), 1);
         }
     }
 
     public containsKey(key: K): boolean {
-        return VWExistenceChecker.exists(this.getEntry(key));
+        return VWExistenceChecker.allArgumentsExist(this.getEntry(key));
     }
 
     public containsValue(value: V): boolean {

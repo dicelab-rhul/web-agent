@@ -19,7 +19,7 @@ export class VWBroadcastAction extends VWCommunicativeAction {
     }
 
     public static overrideDefaultEffort(newEffort: bigint): void {
-        if (!VWExistenceChecker.exists(newEffort)) {
+        if (!VWExistenceChecker.allArgumentsExist(newEffort)) {
             console.log("The new effort for VWBroadcastAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {

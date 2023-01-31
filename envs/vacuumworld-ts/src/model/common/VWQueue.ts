@@ -9,7 +9,7 @@ export class VWQueue<T> {
     }
 
     public enqueue(elm: T) : void {
-        if (!VWExistenceChecker.exists(elm)) {
+        if (!VWExistenceChecker.allArgumentsExist(elm)) {
             throw new Error("The perception cannot be null or undefined.");
         }
         else {
@@ -20,7 +20,7 @@ export class VWQueue<T> {
     public dequeue() : T {
         const candidate: T | undefined = this.queue.shift();
 
-        if (!VWExistenceChecker.exists(candidate)) {
+        if (!VWExistenceChecker.allArgumentsExist(candidate)) {
             throw new Error("No perceptions to dequeue.");
         }
         else {
@@ -31,7 +31,7 @@ export class VWQueue<T> {
     public peek() : T {
         const candidate: T | undefined = this.queue[0];
 
-        if (!VWExistenceChecker.exists(candidate)) {
+        if (!VWExistenceChecker.allArgumentsExist(candidate)) {
             throw new Error("No perceptions to peek.");
         }
         else {

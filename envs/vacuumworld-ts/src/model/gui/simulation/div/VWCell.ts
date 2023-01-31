@@ -75,7 +75,7 @@ export class VWCell implements VWDiv {
 
                 const draggedImg: HTMLImageElement = document.getElementsByClassName("dragging")[0] as HTMLImageElement;
 
-                if (VWExistenceChecker.exists(draggedImg)) {
+                if (VWExistenceChecker.allArgumentsExist(draggedImg)) {
                     this.locationAppearance = this.dropCallback(draggedImg.src, this.locationAppearance);
 
                     (<HTMLImageElement>event.target).src = this.getCellImageSrc();
@@ -120,7 +120,7 @@ export class VWCell implements VWDiv {
     }
 
     private rotate(event: KeyboardEvent): void {
-        if (VWExistenceChecker.exists(this.displayedImage) && this.displayedImage.classList.contains("selected") && this.locationAppearance.hasActor()) {
+        if (VWExistenceChecker.allArgumentsExist(this.displayedImage) && this.displayedImage.classList.contains("selected") && this.locationAppearance.hasActor()) {
             if (event.code === "ArrowRight") {
                 this.locationAppearance = this.rotateCallback(VWDirection.RIGHT, this.locationAppearance);
 
@@ -139,7 +139,7 @@ export class VWCell implements VWDiv {
     }
 
     private getCellImageSrc(): string {
-        if (!VWExistenceChecker.exists(this.locationAppearance)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.locationAppearance)) {
             throw new Error("Cannot get the image src for a cell for which no location appearance is available.");
         }
         else if (this.locationAppearance.hasActor()) {
@@ -170,13 +170,13 @@ export class VWCell implements VWDiv {
     }
 
     public pack(): void {
-        if (!VWExistenceChecker.exists(this.displayedImage)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.displayedImage)) {
             throw new Error("Cannot pack a cell that has no image.");
         }
-        else if (!VWExistenceChecker.exists(this.locationAppearance)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.locationAppearance)) {
             throw new Error("Cannot pack a cell for which no location appearance is available.");
         }
-        else if (!VWExistenceChecker.exists(this.cell)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.cell)) {
             throw new Error("Cannot pack a non-existent cell.");
         }
         else if (!this.packed) {

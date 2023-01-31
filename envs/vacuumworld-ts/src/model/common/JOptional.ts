@@ -12,7 +12,7 @@ export class JOptional<T> {
     }
 
     public static of<T>(value: T | null | undefined): JOptional<T> {
-        if (!VWExistenceChecker.exists(value)) {
+        if (!VWExistenceChecker.allArgumentsExist(value)) {
             throw new Error("The value cannot be null or undefined.");
         }
         else {
@@ -21,7 +21,7 @@ export class JOptional<T> {
     }
 
     public static ofNullable<T>(value: T | null | undefined): JOptional<T> {
-        if (!VWExistenceChecker.exists(value)) {
+        if (!VWExistenceChecker.allArgumentsExist(value)) {
             return JOptional.empty();
         }
         else {
@@ -46,15 +46,15 @@ export class JOptional<T> {
     }
 
     public orElse(other: T): T {
-        return VWExistenceChecker.exists(this.value) ? this.value : other;
+        return VWExistenceChecker.allArgumentsExist(this.value) ? this.value : other;
     }
 
     public orElseGet(other: () => T): T {
-        return VWExistenceChecker.exists(this.value) ? this.value : other();
+        return VWExistenceChecker.allArgumentsExist(this.value) ? this.value : other();
     }
 
     public orElseThrow(error?: Error): T {
-        if (!VWExistenceChecker.exists(this.value)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.value)) {
             throw error || new Error("The value is null or undefined.");
         }
         else {
@@ -63,13 +63,13 @@ export class JOptional<T> {
     }
 
     public ifPresent(consumer: (value: T) => void): void {
-        if (VWExistenceChecker.exists(this.value)) {
+        if (VWExistenceChecker.allArgumentsExist(this.value)) {
             consumer(this.value);
         }
     }
 
     public ifPresentOrElse(consumer: (value: T) => void, alternative: () => void): void {
-        if (VWExistenceChecker.exists(this.value)) {
+        if (VWExistenceChecker.allArgumentsExist(this.value)) {
             consumer(this.value);
         }
         else {
@@ -78,7 +78,7 @@ export class JOptional<T> {
     }
 
     public filter(predicate: (value: T) => boolean): JOptional<T> {
-        if (!VWExistenceChecker.exists(this.value)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.value)) {
             return JOptional.empty<T>();
         }
         else if (predicate(this.value)) {
@@ -90,7 +90,7 @@ export class JOptional<T> {
     }
 
     public map<U>(mapper: (value: T) => U): JOptional<U> {
-        if (!VWExistenceChecker.exists(this.value)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.value)) {
             return JOptional.empty<U>();
         }
         else {
@@ -99,7 +99,7 @@ export class JOptional<T> {
     }
 
     public flatMap<U>(mapper: (value: T) => JOptional<U>): JOptional<U> {
-        if (!VWExistenceChecker.exists(this.value)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.value)) {
             return JOptional.empty<U>();
         }
         else {
@@ -108,7 +108,7 @@ export class JOptional<T> {
     }
 
     public equals(other: object): boolean {
-        if (!VWExistenceChecker.exists(other)) {
+        if (!VWExistenceChecker.allArgumentsExist(other)) {
             return false;
         }
         else if (this === other) {

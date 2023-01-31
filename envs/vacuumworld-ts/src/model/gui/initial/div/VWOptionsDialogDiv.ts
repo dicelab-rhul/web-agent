@@ -27,13 +27,13 @@ export class VWOptionsDialogDiv implements VWDiv {
         if (this.packed) {
             console.log("The options dialog div is already packed.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot pack: the options dialog div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the options dialog div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.optionsDialog)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.optionsDialog)) {
             throw new Error("Cannot pack: the options dialog is null or undefined.");
         }
         else {
@@ -48,13 +48,13 @@ export class VWOptionsDialogDiv implements VWDiv {
         if (!this.packed) {
             console.log("The options dialog div is already unpacked.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot unpack: the options dialog div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the options dialog div is not hidden (it must be before unpacking it).");
         }
-        else if (!VWExistenceChecker.exists(this.optionsDialog)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.optionsDialog)) {
             throw new Error("Cannot unpack: the options dialog is null or undefined.");
         }
         else {
@@ -66,7 +66,7 @@ export class VWOptionsDialogDiv implements VWDiv {
     }
 
     public show(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot show: the options dialog div is null or undefined.");
         }
         else if (!this.div.hidden) {
@@ -85,7 +85,7 @@ export class VWOptionsDialogDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot hide: the options dialog div is null or undefined.");
         }
         else if (this.div.hidden) {

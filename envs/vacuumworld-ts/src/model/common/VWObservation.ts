@@ -20,10 +20,10 @@ export class VWObservation extends VWPerception {
         this.actionResults = VWObservation.validateActionResults(actionResults);
 
         for (const position of locations.keys()) {
-            if (!VWExistenceChecker.exists(position)) {
+            if (!VWExistenceChecker.allArgumentsExist(position)) {
                 throw new Error("The position cannot be null or undefined.");
             }
-            else if (!VWExistenceChecker.exists(locations.get(position))) {
+            else if (!VWExistenceChecker.allArgumentsExist(locations.get(position))) {
                 throw new Error("The location appearance cannot be null or undefined.");
             }
             else {
@@ -33,7 +33,7 @@ export class VWObservation extends VWPerception {
     }
 
     private static validateActionResults(actionResults: VWActionResult[]): VWActionResult[] {
-        if (!VWExistenceChecker.allExist(actionResults)) {
+        if (!VWExistenceChecker.allValuesExist(actionResults)) {
             throw new Error("The action results cannot be null or undefined, or contain null or undefined elements.");
         }
         else if (actionResults.length === 0) {
@@ -49,7 +49,7 @@ export class VWObservation extends VWPerception {
     }
 
     public getLocationAt(position: VWPosition): JOptional<VWLocationAppearance> {
-        if (this.locations.has(position) && VWExistenceChecker.exists(this.locations.get(position))) {
+        if (this.locations.has(position) && VWExistenceChecker.allArgumentsExist(this.locations.get(position))) {
             return JOptional.of(this.locations.get(position)!);
         }
         else {

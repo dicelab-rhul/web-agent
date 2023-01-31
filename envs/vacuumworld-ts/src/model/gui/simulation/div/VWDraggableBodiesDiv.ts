@@ -65,16 +65,16 @@ export class VWDraggableBodiesDiv implements VWDiv {
         if (this.packed) {
             console.log("The draggable bodies div is already packed.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot pack the draggable bodies div: it is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the draggable bodies div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.gridSize)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.gridSize)) {
             throw new Error("Cannot pack the draggable bodies div: the grid size is null or undefined.");
         }
-        else if (!VWExistenceChecker.allExist(this.draggableBodies)) {
+        else if (!VWExistenceChecker.allValuesExist(this.draggableBodies)) {
             throw new Error("Cannot pack the draggable bodies div: the draggable bodies array is null or undefined, or contains null or undefined elements.");
         }
         else {
@@ -128,16 +128,16 @@ export class VWDraggableBodiesDiv implements VWDiv {
         if (!this.packed) {
             console.log("The draggable bodies div is already unpacked.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot unpack the draggable bodies div: it is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the draggable bodies div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.gridSize)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.gridSize)) {
             throw new Error("Cannot unpack the draggable bodies div: the grid size is null or undefined.");
         }
-        else if (!VWExistenceChecker.allExist(this.draggableBodies)) {
+        else if (!VWExistenceChecker.allValuesExist(this.draggableBodies)) {
             throw new Error("Cannot unpack the draggable bodies div: the draggable bodies array is null or undefined, or contains null or undefined elements.");
         }
         else {
@@ -187,7 +187,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
     }   
 
     public show(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot show: the draggable bodies div is null or undefined.");
         }
         else if (!this.div.hidden) {
@@ -206,7 +206,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot hide: the draggable bodies div is null or undefined.");
         }
         else if (this.div.hidden) {
@@ -234,6 +234,6 @@ export class VWDraggableBodiesDiv implements VWDiv {
     }
 
     public isHidden(): boolean {
-        return VWExistenceChecker.exists(this.div) && this.div.hidden; // this.div can be null or undefined, unlike other class-wrapped divs.
+        return VWExistenceChecker.allArgumentsExist(this.div) && this.div.hidden; // this.div can be null or undefined, unlike other class-wrapped divs.
     }
 }

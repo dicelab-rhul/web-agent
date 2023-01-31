@@ -127,10 +127,10 @@ export class VWAmbient {
     }
 
     public addActorToLocation(coord: VWCoord, actor: VWActor): void {
-        if (!VWExistenceChecker.exists(coord)) {
+        if (!VWExistenceChecker.allArgumentsExist(coord)) {
             throw new Error("The coordinates of the location cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(actor)) {
+        else if (!VWExistenceChecker.allArgumentsExist(actor)) {
             throw new Error("The actor cannot be null or undefined.");
         }
         else if (this.getActorByCoord(coord).isPresent()) {
@@ -146,10 +146,10 @@ export class VWAmbient {
     }
 
     public moveActor(from: VWCoord, to: VWCoord): void {
-        if (!VWExistenceChecker.exists(from)) {
+        if (!VWExistenceChecker.allArgumentsExist(from)) {
             throw new Error("The coordinates of the origin location cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(to)) {
+        else if (!VWExistenceChecker.allArgumentsExist(to)) {
             throw new Error("The coordinates of the destination location cannot be null or undefined.");
         }
         else if (from.equals(to)) {
@@ -170,7 +170,7 @@ export class VWAmbient {
     }
 
     public turnActor(coord: VWCoord, direction: VWDirection): void {
-        if (!VWExistenceChecker.exists(coord)) {
+        if (!VWExistenceChecker.allArgumentsExist(coord)) {
             throw new Error("The coordinates of the actor location cannot be null or undefined.");
         }
         else if (!this.getActorByCoord(coord).isPresent()) {
@@ -226,7 +226,7 @@ export class VWAmbient {
     }
 
     public cleanDirtByCoord(coord: VWCoord): void {
-        if (!VWExistenceChecker.exists(coord)) {
+        if (!VWExistenceChecker.allArgumentsExist(coord)) {
             throw new Error("The coordinates of the dirt location cannot be null or undefined.");
         }
         else if (!this.getDirtByCoord(coord).isPresent()) {
@@ -240,10 +240,10 @@ export class VWAmbient {
     }
 
     public addDirtToLocation(coord: VWCoord, dirt: VWDirt): void {
-        if (!VWExistenceChecker.exists(coord)) {
+        if (!VWExistenceChecker.allArgumentsExist(coord)) {
             throw new Error("The coordinates of the location cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(dirt)) {
+        else if (!VWExistenceChecker.allArgumentsExist(dirt)) {
             throw new Error("The dirt cannot be null or undefined.");
         }
         else if (this.getDirtByCoord(coord).isPresent()) {

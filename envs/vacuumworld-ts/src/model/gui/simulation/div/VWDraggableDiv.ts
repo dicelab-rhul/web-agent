@@ -35,13 +35,13 @@ export class VWDraggableDiv implements VWDiv {
         if (this.packed) {
             console.log("The draggable body is already packed.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot pack: the draggable body's div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the draggable body's div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.displayedImage)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.displayedImage)) {
             throw new Error("Cannot pack: the draggable body's div is null or undefined.");
         }
         else {
@@ -54,13 +54,13 @@ export class VWDraggableDiv implements VWDiv {
         if (!this.packed) {
             console.log("The draggable body's div is already unpacked.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot unpack: the draggable body's div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the draggable body's div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.displayedImage)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.displayedImage)) {
             throw new Error("Cannot unpack: the draggable body's image is null or undefined.");
         }
         else {
@@ -70,7 +70,7 @@ export class VWDraggableDiv implements VWDiv {
     }
 
     public show(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot show: the draggable body's div is null or undefined.");
         }
         else if (!this.div.hidden) {
@@ -85,7 +85,7 @@ export class VWDraggableDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot hide: the draggable body's div is null or undefined.");
         }
         else if (this.div.hidden) {
