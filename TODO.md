@@ -1,8 +1,8 @@
 # List of TODOs
 
-* File [README.md](README.md) - line 200: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO elaborate on this.`
+* File [README.md](README.md) - line 204: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
 
-* File [README.md](README.md) - line 202: `TODO other operators...`
+* File [README.md](README.md) - line 206: `TODO: other operators...`
 
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
