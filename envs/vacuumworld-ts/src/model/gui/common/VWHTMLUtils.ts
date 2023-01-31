@@ -8,7 +8,7 @@ export class VWHTMLUtils {
 
         div.id = divID;
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             div.classList.add(...classes);
         }
 
@@ -25,7 +25,7 @@ export class VWHTMLUtils {
         label.htmlFor = labelFor;
         label.innerText = labelText;
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             label.classList.add(...classes);
         }
 
@@ -37,9 +37,9 @@ export class VWHTMLUtils {
 
         checkbox.type = "checkbox";
         checkbox.id = checkboxID;
-        checkbox.checked = VWExistenceChecker.exists(checked) ? checked : false;
+        checkbox.checked = VWExistenceChecker.allArgumentsExist(checked) ? checked : false;
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             checkbox.classList.add(...classes);
         }
 
@@ -51,9 +51,9 @@ export class VWHTMLUtils {
 
         fileInput.type = "file";
         fileInput.id = fileInputID;
-        fileInput.accept = VWExistenceChecker.exists(accept) ? accept : "";
+        fileInput.accept = VWExistenceChecker.allArgumentsExist(accept) ? accept : "";
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             fileInput.classList.add(...classes);
         }
 
@@ -82,12 +82,12 @@ export class VWHTMLUtils {
 
         numberInput.type = "number";
         numberInput.id = numberInputID;
-        numberInput.min = VWExistenceChecker.exists(min) ? min.toString() : "";
-        numberInput.max = VWExistenceChecker.exists(max) ? max.toString() : "";
-        numberInput.step = VWExistenceChecker.exists(step) ? step.toString() : "";
-        numberInput.value = VWExistenceChecker.exists(value) ? value.toString() : "";
+        numberInput.min = VWExistenceChecker.allArgumentsExist(min) ? min.toString() : "";
+        numberInput.max = VWExistenceChecker.allArgumentsExist(max) ? max.toString() : "";
+        numberInput.step = VWExistenceChecker.allArgumentsExist(step) ? step.toString() : "";
+        numberInput.value = VWExistenceChecker.allArgumentsExist(value) ? value.toString() : "";
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             numberInput.classList.add(...classes);
         }
 
@@ -101,7 +101,7 @@ export class VWHTMLUtils {
         option.value = optionValue;
         option.textContent = optionText;
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             option.classList.add(...classes);
         }
 
@@ -113,12 +113,12 @@ export class VWHTMLUtils {
 
         select.id = selectID;
 
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             select.classList.add(...classes);
         }
 
         optionsValues.forEach((optionValue: string) => {
-            const optionID: string = VWExistenceChecker.exists(option_id_prefix) ? option_id_prefix + optionValue : optionValue;
+            const optionID: string = VWExistenceChecker.allArgumentsExist(option_id_prefix) ? option_id_prefix + optionValue : optionValue;
 
             let option: HTMLOptionElement = VWHTMLUtils.createOptionElement(optionID, optionValue, optionValue);
 

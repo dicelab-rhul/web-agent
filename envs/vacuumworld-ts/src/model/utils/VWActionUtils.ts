@@ -5,7 +5,7 @@ import { VWExistenceChecker } from "./VWExistenceChecker";
 
 export class VWActionUtils {
     public static validateActions(actions: VWAction[]): void {
-        if (!VWExistenceChecker.allExist(actions)) {
+        if (!VWExistenceChecker.allValuesExist(actions)) {
             throw new Error("The actions array cannot be null or undefined, or contain null or undefined elements.");
         }
         else if (actions.length === 0) {

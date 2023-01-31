@@ -67,9 +67,9 @@ export class VWEnvironment {
     }
 
     public toggleUserDifficulty(): void {
-        this.userDifficulty = this.userDifficulty === VWUserDifficulty.BASIC ? VWUserDifficulty.ADVANCED : VWUserDifficulty.BASIC;
+        this.userDifficulty = this.userDifficulty + 1 % 2;
 
-        console.log("New user difficulty: " + this.userDifficulty + ".");
+        console.log("New user difficulty: " + VWUserDifficulty[this.userDifficulty] + ".");
     }
 
     public getGridSize(): number {
@@ -298,7 +298,7 @@ export class VWEnvironment {
     }
 
     private serialiseLocation(location: VWLocation): VWLocationJSON {
-        if (!VWExistenceChecker.exists(location)) {
+        if (!VWExistenceChecker.allArgumentsExist(location)) {
             throw new Error("The location cannot be null or undefined.");
         }
         else if (!location.hasActor()) {
@@ -318,7 +318,7 @@ export class VWEnvironment {
     public static newEnvironment(options: VWOptions, config: any, data?: VWEnvironmentJSON): VWEnvironment {
         VWExistenceChecker.validateExistence(options, "The options cannot be null or undefined.");
 
-        if (!VWExistenceChecker.exists(options.getStateToLoad())) {
+        if (!VWExistenceChecker.allArgumentsExist(options.getStateToLoad())) {
             return VWEnvironment.newEmptyVWEnvironment(config);
         }
         else {
@@ -327,19 +327,19 @@ export class VWEnvironment {
     }
 
     public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {
-        if (!VWExistenceChecker.exists(data)) {
+        if (!VWExistenceChecker.allArgumentsExist(data)) {
             throw new Error("The state to load cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(data["locations"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["locations"])) {
             throw new Error("The state to load must contain a 'locations' property.");
         }
         else if (!Array.isArray(data["locations"])) {
             throw new Error("The 'locations' property must be an array.");
         }
-        else if (!VWExistenceChecker.allExist(data["locations"])) {
+        else if (!VWExistenceChecker.allValuesExist(data["locations"])) {
             throw new Error("The 'locations' array cannot contain null or undefined values.");
         }
-        else if (!VWExistenceChecker.exists(config)) {
+        else if (!VWExistenceChecker.allArgumentsExist(config)) {
             throw new Error("The config cannot be null or undefined.");
         }
         else {
@@ -359,7 +359,7 @@ export class VWEnvironment {
         const grid: VWMap<VWCoord, VWLocation> = new VWMap<VWCoord, VWLocation>();
 
         for (const location of locations) {
-            if (!VWExistenceChecker.exists(location["coord"])) {
+            if (!VWExistenceChecker.allArgumentsExist(location["coord"])) {
                 throw new Error("The location coordinates cannot be null or undefined.");
             }
             else {
@@ -371,16 +371,16 @@ export class VWEnvironment {
     }
 
     private static validateGrid(grid: VWMap<VWCoord, VWLocation>, config: any): void {
-        if (!VWExistenceChecker.exists(grid)) {
+        if (!VWExistenceChecker.allArgumentsExist(grid)) {
             throw new Error("The grid cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(config)) {
+        else if (!VWExistenceChecker.allArgumentsExist(config)) {
             throw new Error("The config cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(config["min_environment_dim"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(config["min_environment_dim"])) {
             throw new Error("The config must contain a 'min_environment_dim' property.");
         }
-        else if (!VWExistenceChecker.exists(config["max_environment_dim"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(config["max_environment_dim"])) {
             throw new Error("The config must contain a 'max_environment_dim' property.");
         }
         else {
@@ -409,7 +409,7 @@ export class VWEnvironment {
     }
 
     public static newEmptyVWEnvironment(config: any, gridSize?: bigint): VWEnvironment {
-        if (!VWExistenceChecker.exists(config)) {
+        if (!VWExistenceChecker.allArgumentsExist(config)) {
             throw new Error("The config cannot be null or undefined.");
         }
         else {
@@ -418,7 +418,7 @@ export class VWEnvironment {
     }
 
     private static newEmptyVWEnvironmentHelper(config: any, gridSize?: bigint): VWEnvironment {
-        const realGridSize: bigint = !VWExistenceChecker.exists(gridSize) ? BigInt(config["initial_environment_dim"]) : gridSize;
+        const realGridSize: bigint = gridSize ?? BigInt(config["initial_environment_dim"]);
 
         VWEnvironment.validateGridSize(Number(realGridSize), config);
 

@@ -14,7 +14,7 @@ export class VWCleaningAgent extends VWActor {
     }
 
     protected static validateColourForCleaningAgent(colour: VWColour): VWColour {
-        if (!VWExistenceChecker.exists(colour)) {
+        if (!VWExistenceChecker.allArgumentsExist(colour)) {
             throw new Error("The colour cannot be null or undefined.");
         }
         else if (colour === VWColour.USER) {

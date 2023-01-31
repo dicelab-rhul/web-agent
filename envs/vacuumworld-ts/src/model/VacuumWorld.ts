@@ -15,7 +15,7 @@ export class VacuumWorld {
     }
 
     private setTitle(title: string): void {
-        if (VWExistenceChecker.exists(title) && title !== "") {
+        if (VWExistenceChecker.allArgumentsExist(title) && title !== "") {
             document.title = title;
         }
     }

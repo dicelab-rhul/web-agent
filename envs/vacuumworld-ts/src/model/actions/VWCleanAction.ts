@@ -13,7 +13,7 @@ export class VWCleanAction extends VWPhysicalAction {
     }
 
     public static overrideDefaultEffort(newEffort: bigint): void {
-        if (!VWExistenceChecker.exists(newEffort)) {
+        if (!VWExistenceChecker.allArgumentsExist(newEffort)) {
             console.log("The new effort for VWCleanAction cannot be null or undefined. The default effort will be used instead.");
         }
         else {

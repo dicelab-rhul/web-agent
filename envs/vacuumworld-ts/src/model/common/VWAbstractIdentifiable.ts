@@ -14,7 +14,7 @@ export class VWAbstractIdentifiable implements VWIdentifiable {
     }
 
     public equals(other: object): boolean {
-        if (!VWExistenceChecker.exists(other)) {
+        if (!VWExistenceChecker.allArgumentsExist(other)) {
             return false;
         }
         else if (this === other) {

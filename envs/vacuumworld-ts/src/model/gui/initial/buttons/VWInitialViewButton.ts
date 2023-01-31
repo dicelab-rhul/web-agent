@@ -6,16 +6,16 @@ export class VWInitialViewButton {
     private tooltip: string;
 
     public constructor(text: string, id: string, title: string, callback: () => void, classes?: string[]) {
-        if (!VWExistenceChecker.exists(text)) {
+        if (!VWExistenceChecker.allArgumentsExist(text)) {
             throw new Error("The text of the button cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(id)) {
+        else if (!VWExistenceChecker.allArgumentsExist(id)) {
             throw new Error("The id of the button cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(title)) {
+        else if (!VWExistenceChecker.allArgumentsExist(title)) {
             throw new Error("The title of the button cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(callback)) {
+        else if (!VWExistenceChecker.allArgumentsExist(callback)) {
             throw new Error("The callback of the button cannot be null or undefined.");
         }
         else {
@@ -32,7 +32,7 @@ export class VWInitialViewButton {
     }
 
     private addClasses(classes: string[]): void {
-        if (VWExistenceChecker.allExist(classes)) {
+        if (VWExistenceChecker.allValuesExist(classes)) {
             classes.forEach(c => this.button.classList.add(c));
         }
     }

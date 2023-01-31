@@ -1,7 +1,6 @@
 import { VWActorAppearance } from "../actor/appearance/VWActorAppearance";
 import { VWAppearance } from "../common/VWAppearance";
 import { JOptional } from "../common/JOptional";
-import { VWColour } from "../common/VWColour";
 import { VWCoord } from "../common/VWCoord";
 import { VWOrientation } from "../common/VWOrientation";
 import { VWDirtAppearance } from "../dirt/VWDirtAppearance";
@@ -21,13 +20,13 @@ export class VWLocationAppearance implements VWAppearance {
     }
 
     private static validateWall(wall: Map<VWOrientation, boolean>): Map<VWOrientation, boolean> {
-        if (!VWExistenceChecker.exists(wall)) {
+        if (!VWExistenceChecker.allArgumentsExist(wall)) {
             throw new Error("The wall cannot be null or undefined.");
         }
         else if (wall.size !== 4) {
             throw new Error("The wall must have 4 sides.");
         }
-        else if (!wall.has(VWOrientation.NORTH) || !wall.has(VWOrientation.EAST) || !wall.has(VWOrientation.SOUTH) || !wall.has(VWOrientation.WEST)) {
+        else if (Object.values(VWOrientation).some(orientation => !wall.has(orientation))) {
             throw new Error("The wall must have 4 sides.");
         }
         else {
@@ -48,11 +47,11 @@ export class VWLocationAppearance implements VWAppearance {
     }
 
     public hasCleaningAgent(): boolean {
-        return this.actorAppearance.isPresent() && this.actorAppearance.orElseThrow().getColour() !== VWColour.USER;
+        return this.actorAppearance.isPresent() && this.actorAppearance.orElseThrow().belongsToCleaningAgent();
     }
 
     public hasUser(): boolean {
-        return this.actorAppearance.isPresent() && this.actorAppearance.orElseThrow().getColour() === VWColour.USER;
+        return this.actorAppearance.isPresent() && this.actorAppearance.orElseThrow().belongsToUser();
     }
 
     public getActorAppearance(): JOptional<VWActorAppearance> {

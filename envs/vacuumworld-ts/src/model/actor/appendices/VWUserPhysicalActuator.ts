@@ -5,7 +5,7 @@ import { VWPhysicalActuator } from "./VWPhysicalActuator";
 
 export class VWUserPhysicalActuator extends VWPhysicalActuator {
     public sink(action: VWPhysicalAction): void {
-        if (!VWExistenceChecker.exists(action)) {
+        if (!VWExistenceChecker.allArgumentsExist(action)) {
             throw new Error("The action cannot be null or undefined.");
         }
         else if (action instanceof VWCleanAction) {

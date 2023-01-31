@@ -9,7 +9,7 @@ export class VWSaveStateManager {
     public static loadStateFromFile(f: File): VWEnvironmentJSON {
         console.log(f)
         try {
-            if (!VWExistenceChecker.exists(f)) {
+            if (!VWExistenceChecker.allArgumentsExist(f)) {
                 throw new Error("Invalid file");
             }
 
@@ -34,7 +34,7 @@ export class VWSaveStateManager {
 
     public static loadState(name: string): VWEnvironmentJSON {
         try {
-            if (!VWExistenceChecker.exists(name) || name === "") {
+            if (!VWExistenceChecker.allArgumentsExist(name) || name === "") {
                 throw new Error("Invalid name");
             }
             else if (!name.endsWith(".json")) {
@@ -64,13 +64,13 @@ export class VWSaveStateManager {
 
     public static saveState(name: string, state: VWEnvironmentJSON): void {
         try {
-            if (!VWExistenceChecker.exists(name) || name === "") {
+            if (!VWExistenceChecker.allArgumentsExist(name) || name === "") {
                 throw new Error("Invalid name");
             }
             else if (!name.endsWith(".json")) {
                 name += ".json";
             }
-            else if (!VWExistenceChecker.exists(state)) {
+            else if (!VWExistenceChecker.allArgumentsExist(state)) {
                 throw new Error("Invalid state");
             }
 

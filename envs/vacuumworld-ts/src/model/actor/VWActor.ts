@@ -44,10 +44,10 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         this.colour = VWExistenceChecker.validateExistence(colour, "The colour cannot be null or undefined.");
         this.orientation = VWExistenceChecker.validateExistence(orientation, "The orientation cannot be null or undefined.");
         this.mind = VWExistenceChecker.validateExistence(mind, "The mind cannot be null or undefined.");
-        this.observationSensor = observationSensor === null || observationSensor === undefined ? JOptional.empty() : JOptional.of(observationSensor);
-        this.listeningSensor = listeningSensor === null || listeningSensor === undefined ? JOptional.empty() : JOptional.of(listeningSensor);
-        this.physicalActuator = physicalActuator === null || physicalActuator === undefined ? JOptional.empty() : JOptional.of(physicalActuator);
-        this.communicativeActuator = communicativeActuator === null || communicativeActuator === undefined ? JOptional.empty() : JOptional.of(communicativeActuator);
+        this.observationSensor = JOptional.ofNullable(observationSensor);
+        this.listeningSensor = JOptional.ofNullable(listeningSensor);
+        this.physicalActuator = JOptional.ofNullable(physicalActuator);
+        this.communicativeActuator = JOptional.ofNullable(communicativeActuator);
     }
 
     public getColour(): VWColour {
@@ -91,7 +91,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public turn(direction: VWDirection) {
-        if (!VWExistenceChecker.exists(direction)) {
+        if (!VWExistenceChecker.allArgumentsExist(direction)) {
             throw new Error("The turning direction cannot be null or undefined.");
         }
         else if (direction === VWDirection.LEFT) {
@@ -130,7 +130,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     private static mergeObservations(observations: VWObservation[]): VWObservation {
-        if (!VWExistenceChecker.allExist(observations)) {
+        if (!VWExistenceChecker.allValuesExist(observations)) {
             throw new Error("The observations array cannot be null or undefined, or contain null or undefined observations.");
         }
         else if (observations.length === 0) {
@@ -164,7 +164,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
     }
 
     public toJsonObject(actorMindCorePath?: string): VWActorJSON {
-        if (!VWExistenceChecker.exists(actorMindCorePath)) {
+        if (!VWExistenceChecker.allArgumentsExist(actorMindCorePath)) {
             throw new Error("The actor mind core path cannot be null or undefined.");
         }
 

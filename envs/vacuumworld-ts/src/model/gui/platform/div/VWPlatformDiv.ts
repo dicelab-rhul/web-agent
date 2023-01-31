@@ -31,7 +31,7 @@ export class VWPlatformDiv implements VWDiv {
     private packed: boolean;
 
     public constructor(initialViewImgPath: string) {
-        if (!VWExistenceChecker.exists(initialViewImgPath)) {
+        if (!VWExistenceChecker.allArgumentsExist(initialViewImgPath)) {
             throw new Error("The path of the initial view image cannot be null or undefined.");
         }
         else {
@@ -56,7 +56,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private showOptionsDialog(): void {
-        if (!VWExistenceChecker.exists(this.optionsDialogDiv)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.optionsDialogDiv)) {
             throw new Error("Cannot show the options dialog div: it is null or undefined.");
         }
         else {
@@ -270,7 +270,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private replaceGridDiv(newGridDiv: VWGridDiv): void {
-        if (!VWExistenceChecker.exists(newGridDiv)) {
+        if (!VWExistenceChecker.allArgumentsExist(newGridDiv)) {
             throw new Error("Cannot replace the grid div: the new grid div is null or undefined.");
         }
         else {
@@ -303,7 +303,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private hideSimulationControlsDiv(): void {
-        if (!VWExistenceChecker.exists(this.internalSimulationControlsDiv)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.internalSimulationControlsDiv)) {
             throw new Error("Cannot hide the simulation controls div: it is null or undefined.");
         }
         else {
@@ -312,7 +312,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private replaceInternalSimulationControlsDiv(gridSize: number): void {
-        if (!VWExistenceChecker.exists(gridSize)) {
+        if (!VWExistenceChecker.allArgumentsExist(gridSize)) {
             throw new Error("The grid size cannot be null or undefined.");
         }
         else {
@@ -340,7 +340,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private saveNewOptions(): void {
-        if (!VWExistenceChecker.exists(this.optionsDialogDiv)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.optionsDialogDiv)) {
             throw new Error("Cannot hide the options dialog div: it is null or undefined.");
         }
         else {
@@ -398,7 +398,7 @@ export class VWPlatformDiv implements VWDiv {
     private parseMaxNumberOfCycles(): void {
         const value = (<HTMLInputElement>document.getElementById("max_number_of_cycles_input")).value;
 
-        if (!VWExistenceChecker.exists(value) || value === "") {
+        if (!VWExistenceChecker.allArgumentsExist(value) || value === "") {
             this.options.setMaxNumberOfCycles(undefined); // No limit.
         }
         else {
@@ -412,7 +412,7 @@ export class VWPlatformDiv implements VWDiv {
         for (const action of VWPlatformDiv.getActionNames()) {
             const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + "_effort_input")).value;
 
-            if (!VWExistenceChecker.exists(value) || value === "") {
+            if (!VWExistenceChecker.allArgumentsExist(value) || value === "") {
                 efforts.set(action, undefined); // Will use the default effort.
             }
             else {
@@ -436,7 +436,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private discardNewOptions(): void {
-        if (!VWExistenceChecker.exists(this.optionsDialogDiv)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.optionsDialogDiv)) {
             throw new Error("Cannot hide the options dialog div: it is null or undefined.");
         }
         else {
@@ -472,25 +472,25 @@ export class VWPlatformDiv implements VWDiv {
         if (this.packed) {
             console.log("The platform div is already packed.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot pack: the platform div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the platform div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.initialViewDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.initialViewDiv)) {
             throw new Error("Cannot pack: the initial view div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.initialViewButtonsDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.initialViewButtonsDiv)) {
             throw new Error("Cannot pack: the initial view buttons div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.optionsDialogDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.optionsDialogDiv)) {
             throw new Error("Cannot pack: the options dialog div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.gridDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.gridDiv)) {
             throw new Error("Cannot pack: the grid div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.internalSimulationControlsDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.internalSimulationControlsDiv)) {
             throw new Error("Cannot pack: the simulation controls div is null or undefined.");
         }
         else {
@@ -514,25 +514,25 @@ export class VWPlatformDiv implements VWDiv {
         if (!this.packed) {
             console.log("The platform div is already unpacked.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot unpack: the platform div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the platform div is not hidden (it must be before unpacking it).");
         }
-        else if (!VWExistenceChecker.exists(this.initialViewDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.initialViewDiv)) {
             throw new Error("Cannot unpack: the initial view div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.initialViewButtonsDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.initialViewButtonsDiv)) {
             throw new Error("Cannot unpack: the initial view buttons div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.optionsDialogDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.optionsDialogDiv)) {
             throw new Error("Cannot unpack: the options dialog div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.gridDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.gridDiv)) {
             throw new Error("Cannot unpack: the grid div is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.internalSimulationControlsDiv)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.internalSimulationControlsDiv)) {
             throw new Error("Cannot unpack: the simulation controls div is null or undefined.");
         }
         else {
@@ -547,7 +547,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     public show(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot show: the platform div is null or undefined.");
         }
         else if (!this.div.hidden) {
@@ -564,7 +564,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     public hide(): void {
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot hide: the platform div is null or undefined.");
         }
         else if (this.div.hidden) {

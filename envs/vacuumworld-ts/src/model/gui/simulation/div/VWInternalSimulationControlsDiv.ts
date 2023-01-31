@@ -28,16 +28,16 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
         if (this.packed) {
             console.log("The internal simulation controls div is already packed.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot pack: the internal simulation controls div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot pack: the internal simulation controls div is not hidden (it must be before packing it).");
         }
-        else if (!VWExistenceChecker.exists(this.userDifficultyToggleButton)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.userDifficultyToggleButton)) {
             throw new Error("Cannot pack: the user difficulty toggle button is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.gridSize)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.gridSize)) {
             throw new Error("Cannot pack: the grid size is null or undefined.");
         }
         else {
@@ -52,16 +52,16 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
         if (!this.packed) {
             console.log("The internal simulation controls div is already unpacked.");
         }
-        else if (!VWExistenceChecker.exists(this.div)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot unpack: the internal simulation controls div is null or undefined.");
         }
         else if (!this.div.hidden) {
             throw new Error("Cannot unpack: the internal simulation controls div is not hidden (it must be before unpacking it).");
         }
-        else if (!VWExistenceChecker.exists(this.userDifficultyToggleButton)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.userDifficultyToggleButton)) {
             throw new Error("Cannot unpack: the user difficulty toggle button is null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(this.gridSize)) {
+        else if (!VWExistenceChecker.allArgumentsExist(this.gridSize)) {
             throw new Error("Cannot unpack: the grid size is null or undefined.");
         }
         else {
@@ -73,7 +73,7 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
 
     public show(): void {
         // TODO: include the slider.
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot show: the internal simulation controls div is null or undefined.");
         }
         else if (!this.div.hidden) {
@@ -89,7 +89,7 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
 
     public hide(): void {
         // TODO: include the slider.
-        if (!VWExistenceChecker.exists(this.div)) {
+        if (!VWExistenceChecker.allArgumentsExist(this.div)) {
             throw new Error("Cannot hide: the internal simulation controls div is null or undefined.");
         }
         else if (this.div.hidden) {

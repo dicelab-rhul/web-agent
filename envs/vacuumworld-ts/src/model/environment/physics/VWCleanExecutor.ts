@@ -31,6 +31,7 @@ export class VWCleanExecutor extends VWAbstractExecutor {
     }
 
     private static canClean(actorColour: VWColour, actorCoord: JOptional<VWCoord>, env: VWEnvironment): boolean {
+        // Assumes a dirt is present.
         return actorColour === VWColour.WHITE || actorColour === env.getLocation(actorCoord.orElseThrow()).orElseThrow().getDirt().orElseThrow().getColour();
     }
 

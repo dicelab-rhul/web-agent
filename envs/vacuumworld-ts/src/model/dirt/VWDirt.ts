@@ -21,7 +21,7 @@ export class VWDirt extends VWAbstractIdentifiable {
     }
 
     public equals(other: object): boolean {
-        if (!VWExistenceChecker.exists(other)) {
+        if (!VWExistenceChecker.allArgumentsExist(other)) {
             return false;
         }
         else if (this === other) {
@@ -48,10 +48,10 @@ export class VWDirt extends VWAbstractIdentifiable {
     }
 
     public static fromJsonObject(data: VWDirtJSON): VWDirt {
-        if (!VWExistenceChecker.exists(data)) {
+        if (!VWExistenceChecker.allArgumentsExist(data)) {
             throw new Error("The dirt JSON object cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.exists(data["colour"])) {
+        else if (!VWExistenceChecker.allArgumentsExist(data["colour"])) {
             throw new Error("The colour of a `VWDirt` cannot be null or undefined.");
         }
 

@@ -25,4 +25,12 @@ export class VWActorAppearance implements VWAppearance {
     public getOrientation(): VWOrientation {
         return this.orientation;
     }
+
+    public belongsToCleaningAgent(): boolean {
+        return this.colour !== VWColour.USER;
+    }
+
+    public belongsToUser(): boolean {
+        return this.colour === VWColour.USER;
+    }
 }
