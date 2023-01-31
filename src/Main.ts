@@ -1,3 +1,5 @@
+import { envs } from "../res/envs.json";
+
 type ResourcePaths = {
     favicon: string;
     envStyle: string;
@@ -13,11 +15,25 @@ export class Main {
     private constructor() {}
 
     public static main(): void {
+        Main.setTitle();
+        Main.loadCharset();
         Main.createContainerDiv();
         Main.loadStyle("/static/css/index.css"); // This is the main style of the page.
         Main.loadChoiceDiv();
         Main.createAndHideSimulationControlsDiv();
         Main.createErrorDiv();
+    }
+
+    public static setTitle(): void {
+        document.title = "Web-Agent";
+    }
+
+    private static loadCharset(): void {
+        let charset: HTMLMetaElement = document.createElement("meta");
+
+        charset.setAttribute("charset", "utf-8");
+
+        document.head.appendChild(charset);
     }
 
     private static getResourcesPaths(envPath: string): ResourcePaths {
@@ -136,22 +152,8 @@ export class Main {
         choiceDiv.classList.add("center-aligned");
     
         document.body.appendChild(choiceDiv);
-    
-        Main.loadChoices();
-    }
-    
-    private static loadChoices(): void {
-        const paths: string[] = Main.getChoicesPaths();
-    
-        paths.forEach((path) => Main.addEntryToChoiceDiv(path));
-    }
-    
-    // TODO: This method should be replaced by a function that gets the choices paths from the fs. (How?)
-    private static getChoicesPaths(): string[] {
-        return [
-            "/envs/vacuumworld-ts",
-            "/envs/example-env-ts"
-        ];
+
+        envs.forEach((envPath) => Main.addEntryToChoiceDiv(envPath));
     }
     
     private static addEntryToChoiceDiv(choicePath: string): void {
