@@ -18,8 +18,11 @@ import { VWGridDiv } from "../../simulation/div/VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternalSimulationControlsDiv";
 import { VWSimulation } from "../../simulation/div/VWSimulation";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
-import * as globalConfig from "../../../model/config.json";
 import { VWCoord } from "../../../model/common/VWCoord";
+
+import config from "../../../model/config.json";
+
+const { minEnvDim, maxEnvDim, wikiPageURL } = config;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -64,7 +67,7 @@ export class VWPlatformDiv implements VWDiv {
         if (newGridSize > this.simulation.getEnvironment().getGridSize()) {
             this.simulation.stop();
 
-            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig(), BigInt(newGridSize)), this.options, this.simulation.getConfig());
+            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(BigInt(newGridSize)), this.options);
 
             this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
@@ -80,7 +83,7 @@ export class VWPlatformDiv implements VWDiv {
         if (newGridSize < this.simulation.getEnvironment().getGridSize()) {
             this.simulation.stop();
 
-            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig(), BigInt(newGridSize)), this.options, this.simulation.getConfig());
+            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(BigInt(newGridSize)), this.options);
 
             this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
@@ -94,7 +97,7 @@ export class VWPlatformDiv implements VWDiv {
         const gridSize: number = this.simulation.getEnvironment().getGridSize();
         const candidate: number = gridSize + delta;
 
-        if (candidate < this.simulation.getConfig()["min_environment_dim"] || candidate > this.simulation.getConfig()["max_environment_dim"]) {
+        if (candidate < minEnvDim || candidate > maxEnvDim) {
             return gridSize;
         }
         else {
@@ -139,10 +142,10 @@ export class VWPlatformDiv implements VWDiv {
             this.setActionEfforts();
 
             if (this.options.isAutoplayActive()) {
-                this.run(globalConfig, true);
+                this.run(true);
             }
             else {
-                this.run(globalConfig, false);
+                this.run(false);
             }
         }
         catch (e) {
@@ -152,10 +155,10 @@ export class VWPlatformDiv implements VWDiv {
         }
     }
 
-    private run(config: object, autoplay: boolean): void {
-        let environment: VWEnvironment = VWEnvironment.newEnvironment(this.options, config, this.options.getStateToLoad());
+    private run(autoplay: boolean): void {
+        let environment: VWEnvironment = VWEnvironment.newEnvironment(this.options, this.options.getStateToLoad());
 
-        this.simulation = new VWSimulation(environment, this.options, config);
+        this.simulation = new VWSimulation(environment, this.options);
 
         this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
 
@@ -209,7 +212,7 @@ export class VWPlatformDiv implements VWDiv {
             this.simulation.stop();
             this.simulation.getEnvironment().resetAndMaintainElements();
 
-            this.simulation = new VWSimulation(this.simulation.getEnvironment(), this.options, this.simulation.getConfig());
+            this.simulation = new VWSimulation(this.simulation.getEnvironment(), this.options);
 
             this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
@@ -245,7 +248,7 @@ export class VWPlatformDiv implements VWDiv {
             this.simulation.stop();
             this.options.setUserDifficulty(VWUserDifficulty.BASIC);
 
-            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig()), this.options, this.simulation.getConfig());
+            this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(), this.options);
 
             this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
@@ -287,7 +290,7 @@ export class VWPlatformDiv implements VWDiv {
                 this.simulation.stop();
                 this.options.setUserDifficulty(VWUserDifficulty.BASIC);
     
-                this.simulation = new VWSimulation(VWEnvironment.fromJsonObject(state, this.simulation.getConfig()), this.options, this.simulation.getConfig());
+                this.simulation = new VWSimulation(VWEnvironment.fromJsonObject(state), this.options);
     
                 this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
                 this.simulation.showSimulation();
@@ -575,7 +578,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private guide(): void {
-        window.open("https://github.com/dicelab-rhul/web-agent/wiki");
+        window.open(wikiPageURL);
     }
 
     public pack(): void {

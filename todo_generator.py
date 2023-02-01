@@ -14,7 +14,7 @@ INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js", ".jsx", ".cjs",
 TODO_FILE: str = "TODO.md"
 FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__), TODO_FILE]
 DIR_EXCLUSION_LIST: List[str] = ["node_modules", "dist"]
-TODO_PATTERN: str = "TODO"
+TODO_PATTERN: str = "config[\""
 TODO_HEADER: str = "# List of TODOs"
 
 
