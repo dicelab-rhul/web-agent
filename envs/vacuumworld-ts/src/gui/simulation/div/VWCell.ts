@@ -1,8 +1,8 @@
-import { VWColour } from "../../../common/VWColour";
-import { VWDirection } from "../../../common/VWDirection";
-import { VWOrientation } from "../../../common/VWOrientation";
-import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWColour } from "../../../model/common/VWColour";
+import { VWDirection } from "../../../model/common/VWDirection";
+import { VWOrientation } from "../../../model/common/VWOrientation";
+import { VWLocationAppearance } from "../../../model/environment/VWLocationAppearance";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 
 export class VWCell implements VWDiv {

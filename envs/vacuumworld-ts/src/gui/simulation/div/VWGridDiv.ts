@@ -1,6 +1,6 @@
-import { VWCoord } from "../../../common/VWCoord";
-import { VWMap } from "../../../common/VWMap";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWCoord } from "../../../model/common/VWCoord";
+import { VWMap } from "../../../model/common/VWMap";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWCell } from "./VWCell";
 import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";

@@ -1,4 +1,4 @@
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWDraggableDiv } from "./VWDraggableDiv";
 

@@ -24,7 +24,7 @@ import { VWObservation } from "../common/VWObservation";
 import { VWPosition } from "../common/VWPosition";
 import { VWUserDifficulty } from "../common/VWUserDifficulty";
 import { VWDirt } from "../dirt/VWDirt";
-import { VWOptions } from "../gui/common/VWOptions";
+import { VWOptions } from "../../gui/common/VWOptions";
 import { VWActionUtils } from "../utils/VWActionUtils";
 import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 import { VWAmbient } from "./VWAmbient";

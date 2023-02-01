@@ -1,7 +1,7 @@
 import { VWColour } from "../../common/VWColour";
 import { VWOrientation } from "../../common/VWOrientation";
 import { VWUserDifficulty } from "../../common/VWUserDifficulty";
-import { VWOptions } from "../../gui/common/VWOptions";
+import { VWOptions } from "../../../gui/common/VWOptions";
 import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
 import { VWActor, VWActorJSON } from "../VWActor";
 import { VWCleaningAgent } from "../VWCleaningAgent";

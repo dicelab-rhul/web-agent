@@ -1,12 +1,12 @@
-import { VWBroadcastAction } from "../../../actions/VWBroadcastAction";
-import { VWCleanAction } from "../../../actions/VWCleanAction";
-import { VWDropDirtAction } from "../../../actions/VWDropDirtAction";
-import { VWIdleAction } from "../../../actions/VWIdleAction";
-import { VWMoveAction } from "../../../actions/VWMoveAction";
-import { VWSpeakAction } from "../../../actions/VWSpeakAction";
-import { VWTurnAction } from "../../../actions/VWTurnAction";
-import { VWEnvironment, VWEnvironmentJSON } from "../../../environment/VWEnvironment";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWBroadcastAction } from "../../../model/actions/VWBroadcastAction";
+import { VWCleanAction } from "../../../model/actions/VWCleanAction";
+import { VWDropDirtAction } from "../../../model/actions/VWDropDirtAction";
+import { VWIdleAction } from "../../../model/actions/VWIdleAction";
+import { VWMoveAction } from "../../../model/actions/VWMoveAction";
+import { VWSpeakAction } from "../../../model/actions/VWSpeakAction";
+import { VWTurnAction } from "../../../model/actions/VWTurnAction";
+import { VWEnvironment, VWEnvironmentJSON } from "../../../model/environment/VWEnvironment";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWErrorDiv } from "../../common/VWErrorDiv";
 import { VWDiv } from "../../common/VWDiv";
 import { VWOptions } from "../../common/VWOptions";
@@ -17,8 +17,8 @@ import { VWDraggableBodiesDiv } from "../../simulation/div/VWDraggableBodiesDiv"
 import { VWGridDiv } from "../../simulation/div/VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternalSimulationControlsDiv";
 import { VWSimulation } from "../../simulation/div/VWSimulation";
-import { VWUserDifficulty } from "../../../common/VWUserDifficulty";
-import * as globalConfig from "../../../config.json";
+import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
+import * as globalConfig from "../../../model/config.json";
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
