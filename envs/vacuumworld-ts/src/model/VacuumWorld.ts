@@ -1,4 +1,4 @@
-import { VWPlatformDiv } from "./gui/platform/div/VWPlatformDiv";
+import { VWPlatformDiv } from "../gui/platform/div/VWPlatformDiv";
 import { VWExistenceChecker } from "./utils/VWExistenceChecker";
 
 export class VacuumWorld {

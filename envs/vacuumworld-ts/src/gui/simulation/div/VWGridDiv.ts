@@ -1,6 +1,6 @@
-import { VWCoord } from "../../../common/VWCoord";
-import { VWMap } from "../../../common/VWMap";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWCoord } from "../../../model/common/VWCoord";
+import { VWMap } from "../../../model/common/VWMap";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWCell } from "./VWCell";
 import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
@@ -18,6 +18,7 @@ export class VWGridDiv implements VWDiv {
         this.div.classList.add("grid", "center-aligned");
         this.div.hidden = true;
         this.draggableBodiesDiv = new VWDraggableBodiesDiv();
+
         this.packed = false;
     }
 
@@ -91,6 +92,7 @@ export class VWGridDiv implements VWDiv {
             this.gridMap.forEach((cell: VWCell) => cell.pack());
 
             let table: HTMLTableElement = this.createTableForGrid();
+
             this.div.appendChild(table);
             this.div.appendChild(this.draggableBodiesDiv.getDiv());
             this.packed = true;

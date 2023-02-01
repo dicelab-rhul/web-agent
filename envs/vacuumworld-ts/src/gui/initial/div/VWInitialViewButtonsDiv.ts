@@ -1,6 +1,6 @@
 import { VWInitialViewButton } from "../buttons/VWInitialViewButton";
 import { VWDiv } from "../../common/VWDiv";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 
 export class VWInitialViewButtonsDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "initial_view_buttons_div";

@@ -1,4 +1,4 @@
-import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
+import { VWExistenceChecker } from "../../model/utils/VWExistenceChecker";
 
 export class VWHTMLUtils {
     private constructor() {}

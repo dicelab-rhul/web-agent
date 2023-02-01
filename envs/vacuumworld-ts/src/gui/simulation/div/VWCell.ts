@@ -1,8 +1,9 @@
-import { VWColour } from "../../../common/VWColour";
-import { VWDirection } from "../../../common/VWDirection";
-import { VWOrientation } from "../../../common/VWOrientation";
-import { VWLocationAppearance } from "../../../environment/VWLocationAppearance";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWColour } from "../../../model/common/VWColour";
+import { VWCoord } from "../../../model/common/VWCoord";
+import { VWDirection } from "../../../model/common/VWDirection";
+import { VWOrientation } from "../../../model/common/VWOrientation";
+import { VWLocationAppearance } from "../../../model/environment/VWLocationAppearance";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 
 export class VWCell implements VWDiv {
@@ -12,6 +13,7 @@ export class VWCell implements VWDiv {
     private dropCallback: (imageSrc: string, locationAppearance: VWLocationAppearance) => VWLocationAppearance;
     private rotateCallback: (direction: VWDirection, locationAppearance: VWLocationAppearance) => VWLocationAppearance;
     private doubleClickCallback: (locationAppearance: VWLocationAppearance) => VWLocationAppearance;
+    private clickCallback: (coord?: VWCoord) => void;
     private packed: boolean;
 
     public constructor(locApp: VWLocationAppearance) {
@@ -26,10 +28,11 @@ export class VWCell implements VWDiv {
         this.packed = false;
     }
 
-    public addCallbacks(drop: (imgSrc: string, locApp: VWLocationAppearance) => VWLocationAppearance, rotate: (dir: VWDirection, locApp: VWLocationAppearance) => VWLocationAppearance, dClick: (locApp: VWLocationAppearance) => VWLocationAppearance) {
+    public addCallbacks(drop: (imgSrc: string, locApp: VWLocationAppearance) => VWLocationAppearance, rotate: (dir: VWDirection, locApp: VWLocationAppearance) => VWLocationAppearance, dClick: (locApp: VWLocationAppearance) => VWLocationAppearance, click: (c?: VWCoord) => void) {
         this.dropCallback = drop;
         this.rotateCallback = rotate;
         this.doubleClickCallback = dClick;
+        this.clickCallback = click;
 
         this.addListeners();
     }
@@ -42,15 +45,26 @@ export class VWCell implements VWDiv {
 
     // Public because it is called when the simulation is stopped to re-add the listeners.
     public addListeners(): void {
-        this.addDropListeners();
+        this.addDragOverListener();
+        this.addDragEnterListener();
+        this.addDragLeaveListener();
+        this.addDropListener();
         this.addClickListener();
         this.addDoubleClickListener();
         this.addRotateListener();
     }
 
-    private addDropListeners(): void {
-        this.displayedImage.addEventListener("dragover", (event: DragEvent) => event.preventDefault());
+    private addDragOverListener(): void {
+        this.displayedImage.addEventListener("dragover", (event: DragEvent) => {
+            event.preventDefault();
 
+            if (event.dataTransfer.getData("source") === "draggable-image" && (<HTMLElement>event.target).classList.contains("dropzone")) {
+                this.clickCallback(this.locationAppearance.getCoord());
+            }
+        });
+    }
+
+    private addDragEnterListener(): void {
         this.displayedImage.addEventListener("dragenter", (event: DragEvent) => {
             if (event.dataTransfer.getData("source") === "draggable-image" && (<HTMLElement>event.target).classList.contains("dropzone")) {
                 (<HTMLElement>event.target).classList.add("dragover");
@@ -58,15 +72,27 @@ export class VWCell implements VWDiv {
                 for (const element of document.getElementsByClassName("selected")) {
                     element.classList.remove("selected");
                 }
+
+                this.manageSingleClick(event);
             }
         });
+    }
 
+    private addDragLeaveListener(): void {
         this.displayedImage.addEventListener("dragleave", (event: DragEvent) => {
             if ((<HTMLElement>event.target).classList.contains("dropzone")) {
                 (<HTMLElement>event.target).classList.remove("dragover");
+
+                for (const element of document.getElementsByClassName("selected")) {
+                    element.classList.remove("selected");
+                }
+
+                this.clickCallback();
             }
         });
+    }
 
+    private addDropListener(): void {
         this.displayedImage.addEventListener("drop", (event: DragEvent) => {
             event.preventDefault();
 
@@ -80,6 +106,14 @@ export class VWCell implements VWDiv {
 
                     (<HTMLImageElement>event.target).src = this.getCellImageSrc();
 
+                    for (const element of document.getElementsByClassName("selected")) {
+                        element.classList.remove("selected");
+                    }
+
+                    this.displayedImage.classList.add("selected");
+
+                    this.clickCallback(this.locationAppearance.getCoord());
+
                     console.log("Dropped.");
                 }
             }
@@ -87,20 +121,26 @@ export class VWCell implements VWDiv {
     }
 
     private addClickListener(): void {
-        // TODO: show the coordinates of the selected cell.
-        this.displayedImage.addEventListener("click", (event: MouseEvent) => {
-            if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
-                const toHighlight: boolean = !this.displayedImage.classList.contains("selected");
+        this.displayedImage.addEventListener("click", (event: MouseEvent) => this.manageSingleClick(event));
+    }
 
-                for (const element of document.getElementsByClassName("selected")) {
-                    element.classList.remove("selected");
-                }
+    private manageSingleClick(event: MouseEvent): void {
+        if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
+            const toHighlight: boolean = !this.displayedImage.classList.contains("selected");
 
-                if (toHighlight) {
-                    this.displayedImage.classList.add("selected");
-                }
+            for (const element of document.getElementsByClassName("selected")) {
+                element.classList.remove("selected");
             }
-        });
+
+            if (toHighlight) {
+                this.displayedImage.classList.add("selected");
+
+                this.clickCallback(this.locationAppearance.getCoord());
+            }
+            else {
+                this.clickCallback();
+            }
+        }
     }
 
     private addDoubleClickListener(): void {

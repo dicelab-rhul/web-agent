@@ -1,4 +1,4 @@
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWDraggableDiv } from "./VWDraggableDiv";
 
@@ -95,15 +95,14 @@ export class VWDraggableBodiesDiv implements VWDiv {
 
     private packTwoColumns(): void {
         const draggableBodiesLength: number = this.draggableBodies.length;
-        const draggableBodiesHalfLength: number = Math.floor(draggableBodiesLength / 2);
 
-        for (let i: number = 0; i < draggableBodiesHalfLength; i++) {
+        for (let i: number = 0; i < this.gridSize; i++) {
             this.draggableBodies[i].pack();
 
             this.leftDiv.appendChild(this.draggableBodies[i].getDiv());
         }
 
-        for (let i: number = draggableBodiesHalfLength; i < draggableBodiesLength; i++) {
+        for (let i: number = this.gridSize; i < draggableBodiesLength; i++) {
             this.draggableBodies[i].pack();
 
             this.rightDiv.appendChild(this.draggableBodies[i].getDiv());

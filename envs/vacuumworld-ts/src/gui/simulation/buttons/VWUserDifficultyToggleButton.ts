@@ -1,5 +1,5 @@
-import { VWUserDifficulty } from "../../../common/VWUserDifficulty";
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 
 export class VWUserDifficultyToggleButton {
     private button: HTMLButtonElement;

@@ -1,4 +1,4 @@
-import { VWExistenceChecker } from "../../../utils/VWExistenceChecker";
+import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWHTMLUtils } from "../../common/VWHTMLUtils";
 import { VWPackable } from "../../common/VWPackable";
 import { VWInitialViewButton } from "../buttons/VWInitialViewButton";

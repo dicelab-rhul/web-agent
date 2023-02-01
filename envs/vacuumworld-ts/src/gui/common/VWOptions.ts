@@ -1,6 +1,6 @@
-import { VWUserDifficulty } from "../../common/VWUserDifficulty";
-import { VWEnvironmentJSON } from "../../environment/VWEnvironment";
-import { VWExistenceChecker } from "../../utils/VWExistenceChecker";
+import { VWUserDifficulty } from "../../model/common/VWUserDifficulty";
+import { VWEnvironmentJSON } from "../../model/environment/VWEnvironment";
+import { VWExistenceChecker } from "../../model/utils/VWExistenceChecker";
 
 export class VWOptions {
     private speed: number;
