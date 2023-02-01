@@ -1,7 +1,7 @@
 import { EditorView, basicSetup } from "codemirror";
 import { javascript } from "@codemirror/lang-javascript"
 
-export class TeleoraEditor {
+export class TeleoraEditorDiv {
     private editorDiv: HTMLDivElement;
     private editorView: EditorView;
 

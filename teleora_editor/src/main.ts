@@ -1,6 +1,5 @@
-/*import { TeleoraEditor } from "./gui/TeleoraEditor";
+import { TeleoraDiv } from "./gui/TeleoraDiv";
 
-const teleoraEditor: TeleoraEditor = new TeleoraEditor();
+const teleoraDiv: TeleoraDiv = new TeleoraDiv();
 
-document.body.insertBefore(teleoraEditor.getDiv(), document.body.firstChild as Node);
-*/
+document.body.appendChild(teleoraDiv.getDiv());
