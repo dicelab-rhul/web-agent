@@ -16,17 +16,13 @@
 
 * File [envs/vacuumworld-ts/src/model/actor/factories/VWActorFactory.ts](envs/vacuumworld-ts/src/model/actor/factories/VWActorFactory.ts) - line 66: `// TODO: integrate with teleora.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 12: `private teleora: any; // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/gui/common/VWOptions.ts) - line 12: `private teleora: any; // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 90: `public getTeleora(): any { // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/gui/common/VWOptions.ts) - line 90: `public getTeleora(): any { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/model/gui/common/VWOptions.ts) - line 94: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/gui/common/VWOptions.ts) - line 94: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts](envs/vacuumworld-ts/src/model/gui/simulation/div/VWCell.ts) - line 90: `// TODO: show the coordinates of the selected cell.`
-
-* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 130: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
-
-* File [envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/model/gui/platform/div/VWPlatformDiv.ts) - line 568: `window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.`
+* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts) - line 131: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 
 * File [experimental/src/modal.ts](experimental/src/modal.ts) - line 1: `// TODO: there is a lot to do here:`
 

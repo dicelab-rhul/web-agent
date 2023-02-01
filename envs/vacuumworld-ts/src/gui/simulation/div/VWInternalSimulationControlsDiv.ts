@@ -1,3 +1,4 @@
+import { VWCoord } from "../../../model/common/VWCoord";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
@@ -9,6 +10,7 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
     private userDifficultyToggleButton: VWUserDifficultyToggleButton;
     private enlargeGridButton: VWGridResizeButton;
     private shrinkGridButton: VWGridResizeButton;
+    private selectedCellInfoSpan: HTMLSpanElement; // Will have ID "selected_cell_info_div";
     private gridSize: number;
     private packed: boolean;
 
@@ -21,11 +23,26 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
         this.enlargeGridButton = new VWGridResizeButton("grid_size_up_button", "Size+", "Grid size + 1.", sizeUpCallback);
         this.shrinkGridButton = new VWGridResizeButton("grid_size_down_button", "Size-", "Grid size - 1.", sizeDownCallback);
 
+        this.selectedCellInfoSpan = document.createElement("span");
+        this.selectedCellInfoSpan.id = "selected_cell_info_div";
+        this.selectedCellInfoSpan.hidden = true;
+
         this.packed = false;
     }
 
     public setGridSize(gridSize: number): void {
         this.gridSize = VWExistenceChecker.validateExistence(gridSize, "The grid size cannot be null or undefined.");
+    }
+
+    public showSelectedCellInfo(coord: VWCoord): void {
+        let coordString: string = coord.toString();
+
+        this.selectedCellInfoSpan.innerText = `Selected: ${coordString}`;
+        this.selectedCellInfoSpan.hidden = false;
+    }
+
+    public resetSelectedCellInfo(): void {
+        this.selectedCellInfoSpan.innerText = "Selected: (-, -)";
     }
 
     public pack(): void {
@@ -47,6 +64,9 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
         else if (!VWExistenceChecker.allArgumentsExist(this.shrinkGridButton)) {
             throw new Error("Cannot pack: the shrink grid button is null or undefined.");
         }
+        else if (!VWExistenceChecker.allArgumentsExist(this.selectedCellInfoSpan)) {
+            throw new Error("Cannot pack: the selected cell info div is null or undefined.");
+        }
         else if (!VWExistenceChecker.allArgumentsExist(this.gridSize)) {
             throw new Error("Cannot pack: the grid size is null or undefined.");
         }
@@ -54,6 +74,7 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
             this.div.appendChild(this.userDifficultyToggleButton.getButton());
             this.div.appendChild(this.enlargeGridButton.getButton());
             this.div.appendChild(this.shrinkGridButton.getButton());
+            this.div.appendChild(this.selectedCellInfoSpan);
 
             this.packed = true;
         }
@@ -77,6 +98,9 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
         }
         else if (!VWExistenceChecker.allArgumentsExist(this.shrinkGridButton)) {
             throw new Error("Cannot unpack: the shrink grid button is null or undefined.");
+        }
+        else if (!VWExistenceChecker.allArgumentsExist(this.selectedCellInfoSpan)) {
+            throw new Error("Cannot unpack: the selected cell info div is null or undefined.");
         }
         else if (!VWExistenceChecker.allArgumentsExist(this.gridSize)) {
             throw new Error("Cannot unpack: the grid size is null or undefined.");

@@ -25,6 +25,7 @@ export class VWSimulation {
     private replaceDraggableBodiesDivCallback: (gridSize: number) => void;
     private hideSimulationControlsDivCallback: () => void;
     private replaceSimulationControlsDivCallback: (gridSize: number) => void;
+    private cellSelectedCallback: (coord?: VWCoord) => void;
 
     public constructor(environment: VWEnvironment, options: VWOptions, config: any) {
         this.config = VWExistenceChecker.validateExistence(config, "Cannot create a simulation without a config.");
@@ -36,12 +37,13 @@ export class VWSimulation {
         this.paused = false;
     }
 
-    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (s: number) => void, simCtrlHide: () => void, simCtrlReplace: (s: number) => void): void {
+    public setCallbacks(gridRepl: (g: VWGridDiv) => void, dragHide: () => void, dragReplace: (s: number) => void, simCtrlHide: () => void, simCtrlReplace: (s: number) => void, selected: (c?: VWCoord) => void): void {
         this.replaceGridDivCallback = gridRepl;
         this.replaceDraggableBodiesDivCallback = dragReplace;
         this.hideDraggableBodiesDivCallback = dragHide;
         this.hideSimulationControlsDivCallback = simCtrlHide;
         this.replaceSimulationControlsDivCallback = simCtrlReplace;
+        this.cellSelectedCallback = selected;
     }
 
     public getGridDiv(): VWGridDiv {
@@ -84,7 +86,7 @@ export class VWSimulation {
             let cell: VWCell = new VWCell(loc.getAppearance());
 
             if (addListeners) {
-                cell.addCallbacks(this.dropCallback.bind(this), this.rotateCallback.bind(this), this.doubleClickCallback.bind(this));
+                cell.addCallbacks(this.dropCallback.bind(this), this.rotateCallback.bind(this), this.doubleClickCallback.bind(this), this.cellSelectedCallback);
             }
 
             gridMap.put(coord, cell);

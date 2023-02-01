@@ -129,3 +129,9 @@ table {
     border: 5px solid #ff0000;
     border-radius: 5px;
 }
+
+#selected_cell_info_div {
+    border: 2px solid #000000;
+    margin: 5pt;
+    padding: 5px;
+}

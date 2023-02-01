@@ -19,6 +19,7 @@ import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternal
 import { VWSimulation } from "../../simulation/div/VWSimulation";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import * as globalConfig from "../../../model/config.json";
+import { VWCoord } from "../../../model/common/VWCoord";
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -65,7 +66,7 @@ export class VWPlatformDiv implements VWDiv {
 
             this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig(), BigInt(newGridSize)), this.options, this.simulation.getConfig());
 
-            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
         }
         else {
@@ -81,7 +82,7 @@ export class VWPlatformDiv implements VWDiv {
 
             this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig(), BigInt(newGridSize)), this.options, this.simulation.getConfig());
 
-            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
         }
         else {
@@ -156,7 +157,7 @@ export class VWPlatformDiv implements VWDiv {
 
         this.simulation = new VWSimulation(environment, this.options, config);
 
-        this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+        this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
 
         this.initialViewDiv.hide();
         this.initialViewButtonsDiv.hide();
@@ -210,7 +211,7 @@ export class VWPlatformDiv implements VWDiv {
 
             this.simulation = new VWSimulation(this.simulation.getEnvironment(), this.options, this.simulation.getConfig());
 
-            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
         });
     }
@@ -246,7 +247,7 @@ export class VWPlatformDiv implements VWDiv {
 
             this.simulation = new VWSimulation(VWEnvironment.newEmptyVWEnvironment(this.simulation.getConfig()), this.options, this.simulation.getConfig());
 
-            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+            this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
             this.simulation.showSimulation();
         });
     }
@@ -288,7 +289,7 @@ export class VWPlatformDiv implements VWDiv {
     
                 this.simulation = new VWSimulation(VWEnvironment.fromJsonObject(state, this.simulation.getConfig()), this.options, this.simulation.getConfig());
     
-                this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this));
+                this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
                 this.simulation.showSimulation();
             });
 
@@ -429,6 +430,15 @@ export class VWPlatformDiv implements VWDiv {
         }
     }
 
+    private highlightSelectedCell(selectedCellCoord?: VWCoord): void {
+        if (VWExistenceChecker.allArgumentsExist(selectedCellCoord)) {
+            this.internalSimulationControlsDiv.showSelectedCellInfo(selectedCellCoord);
+        }
+        else {
+            this.internalSimulationControlsDiv.resetSelectedCellInfo();
+        }
+    }
+
     private setActionEfforts(): void {
         VWIdleAction.overrideDefaultEffort(this.options.getEfforts().get("VWIdleAction"));
         VWMoveAction.overrideDefaultEffort(this.options.getEfforts().get("VWMoveAction"));
@@ -565,7 +575,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private guide(): void {
-        window.open("https://github.com/dicelab-rhul/web-agent/") // TODO: Create a Wiki page on GitHub, and adjust the URL accordingly.
+        window.open("https://github.com/dicelab-rhul/web-agent/wiki");
     }
 
     public pack(): void {
