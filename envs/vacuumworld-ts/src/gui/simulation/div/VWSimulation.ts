@@ -12,9 +12,12 @@ import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
 import { VWGridDiv } from "./VWGridDiv";
 
+import config from "../../../model/config.json";
+
+const { minEnvDim, maxEnvDim } = config;
+
 export class VWSimulation {
     private gridSize: number;
-    private config: any;
     private gridDiv: VWGridDiv;
     private environment: VWEnvironment;
     private options: VWOptions
@@ -27,9 +30,8 @@ export class VWSimulation {
     private replaceSimulationControlsDivCallback: (gridSize: number) => void;
     private cellSelectedCallback: (coord?: VWCoord) => void;
 
-    public constructor(environment: VWEnvironment, options: VWOptions, config: any) {
-        this.config = VWExistenceChecker.validateExistence(config, "Cannot create a simulation without a config.");
-        this.gridSize = VWSimulation.validateGridSize(environment, config);
+    public constructor(environment: VWEnvironment, options: VWOptions) {
+        this.gridSize = VWSimulation.validateGridSize(environment);
         this.environment = VWExistenceChecker.validateExistence(environment, "Cannot create a simulation without an environment.");
         this.gridDiv = this.createGrid(true);
         this.options = VWExistenceChecker.validateExistence(options, "Cannot create a simulation without options.");
@@ -54,25 +56,14 @@ export class VWSimulation {
         return this.environment;
     }
 
-    public getConfig(): any {
-        return this.config;
-    }
-
-    private static validateGridSize(environment: VWEnvironment, config: any): number {
+    private static validateGridSize(environment: VWEnvironment): number {
         VWExistenceChecker.validateExistence(environment, "Cannot create a simulation without an environment.");
-        VWExistenceChecker.validateExistence(config, "Cannot create a simulation without a config.");
 
-        if (!VWExistenceChecker.allArgumentsExist(config["min_environment_dim"]) || config["min_environment_dim"] <= 0) {
-            throw new Error("The config must have a `min_environment_dim` key.");
-        }
-        else if (!VWExistenceChecker.allArgumentsExist(config["max_environment_dim"]) || config["max_environment_dim"] <= 0) {
-            throw new Error("The config must have a `max_environment_dim` key.");
-        }
-        else if (config["min_environment_dim"] > config["max_environment_dim"]) {
+        if (minEnvDim > maxEnvDim) {
             throw new Error("Invalid config: the value of `max_environment_dim` must be greater or equal to the value of `min_environment_dim`.");
         }
-        else if (environment.getGridSize() < config["min_environment_dim"] || environment.getGridSize() > config["max_environment_dim"]) {
-            throw new Error(`The grid size must be between ${config["min_environment_dim"]} and ${config["max_environment_dim"]} (inclusive).`);
+        else if (environment.getGridSize() < minEnvDim || environment.getGridSize() > maxEnvDim) {
+            throw new Error(`The grid size must be between ${minEnvDim} and ${maxEnvDim} (inclusive).`);
         }
         else {
             return environment.getGridSize();

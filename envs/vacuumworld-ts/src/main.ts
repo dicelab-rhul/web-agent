@@ -6,6 +6,4 @@ import { VacuumWorld } from "./model/VacuumWorld"
  * It is responsible for displaying the initial view and calling the `Vacuumworld` script.
  * 
  */
-const vacuumworld: VacuumWorld = new VacuumWorld();
-
-vacuumworld.run();
+VacuumWorld.run();

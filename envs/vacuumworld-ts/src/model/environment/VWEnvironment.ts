@@ -39,6 +39,10 @@ import { VWMoveExecutor } from "./physics/VWMoveExecutor";
 import { VWSpeakExecutor } from "./physics/VWSpeakExecutor";
 import { VWTurnExecutor } from "./physics/VWTurnExecutor";
 
+import config from "../config.json";
+
+const { minEnvDim, maxEnvDim, initialEnvDim } = config;
+
 export type VWEnvironmentJSON = {
     locations: VWLocationJSON[];
 }
@@ -176,12 +180,13 @@ export class VWEnvironment {
         if (actor.getPhysicalActuator().orElseThrow().hasPendingActions()) {
             actor.getPhysicalActuator().orElseThrow().sourceAll().forEach((action: VWPhysicalAction) => actions.push(action));
         }
-    
+
         if (actor.getCommunicativeActuator().isPresent() && actor.getCommunicativeActuator().orElseThrow().hasPendingActions()) {
             actor.getCommunicativeActuator().orElseThrow().sourceAll().forEach((action: VWCommunicativeAction) => actions.push(action));
         }
-    
+
         VWActionUtils.validateActions(actions);
+        VWActionUtils.checkSenderID(actions, actor.getID());
 
         actions.forEach((action: VWAction) => this.executeAction(action));
     }
@@ -315,18 +320,18 @@ export class VWEnvironment {
         return mindCore.getMindCoreFilePath();
     }
 
-    public static newEnvironment(options: VWOptions, config: any, data?: VWEnvironmentJSON): VWEnvironment {
+    public static newEnvironment(options: VWOptions, data?: VWEnvironmentJSON): VWEnvironment {
         VWExistenceChecker.validateExistence(options, "The options cannot be null or undefined.");
 
         if (!VWExistenceChecker.allArgumentsExist(options.getStateToLoad())) {
-            return VWEnvironment.newEmptyVWEnvironment(config);
+            return VWEnvironment.newEmptyVWEnvironment();
         }
         else {
-            return VWEnvironment.fromJsonObject(data, config);
+            return VWEnvironment.fromJsonObject(data);
         }
     }
 
-    public static fromJsonObject(data: VWEnvironmentJSON, config: any): VWEnvironment {
+    public static fromJsonObject(data: VWEnvironmentJSON): VWEnvironment {
         if (!VWExistenceChecker.allArgumentsExist(data)) {
             throw new Error("The state to load cannot be null or undefined.");
         }
@@ -339,18 +344,15 @@ export class VWEnvironment {
         else if (!VWExistenceChecker.allValuesExist(data["locations"])) {
             throw new Error("The 'locations' array cannot contain null or undefined values.");
         }
-        else if (!VWExistenceChecker.allArgumentsExist(config)) {
-            throw new Error("The config cannot be null or undefined.");
-        }
         else {
-            return VWEnvironment.fromJsonObjectHelper(data, config);
+            return VWEnvironment.fromJsonObjectHelper(data);
         }
     }
 
-    private static fromJsonObjectHelper(data: VWEnvironmentJSON, config: any): VWEnvironment {
+    private static fromJsonObjectHelper(data: VWEnvironmentJSON): VWEnvironment {
         const grid: VWMap<VWCoord, VWLocation> = VWEnvironment.loadLocations(data["locations"]);
 
-        VWEnvironment.validateGrid(grid, config);
+        VWEnvironment.validateGrid(grid);
 
         return new VWEnvironment(new VWAmbient(grid));
     }
@@ -370,57 +372,35 @@ export class VWEnvironment {
         return grid;
     }
 
-    private static validateGrid(grid: VWMap<VWCoord, VWLocation>, config: any): void {
+    private static validateGrid(grid: VWMap<VWCoord, VWLocation>): void {
         if (!VWExistenceChecker.allArgumentsExist(grid)) {
             throw new Error("The grid cannot be null or undefined.");
         }
-        else if (!VWExistenceChecker.allArgumentsExist(config)) {
-            throw new Error("The config cannot be null or undefined.");
-        }
-        else if (!VWExistenceChecker.allArgumentsExist(config["min_environment_dim"])) {
-            throw new Error("The config must contain a 'min_environment_dim' property.");
-        }
-        else if (!VWExistenceChecker.allArgumentsExist(config["max_environment_dim"])) {
-            throw new Error("The config must contain a 'max_environment_dim' property.");
-        }
         else {
-            VWEnvironment.validateGridHelper(grid, config);
+            const gridSize: number = Math.sqrt(grid.size());
+
+            VWEnvironment.validateGridSize(gridSize);
         }
     }
 
-    private static validateGridHelper(grid: VWMap<VWCoord, VWLocation>, config: any): void {
-        const gridSize: number = Math.sqrt(grid.size());
-
-        VWEnvironment.validateGridSize(gridSize, config);
-    }
-
-    private static validateGridSize(gridSize: number, config: any): void {
+    private static validateGridSize(gridSize: number): void {
         const gridSizeInt: number = Math.floor(gridSize);
 
         if (gridSize !== gridSizeInt) {
             throw new Error("The grid must be a square.");
         }
-        else if (gridSize < config["min_environment_dim"]) {
-            throw new Error(`The grid size is too small (min: "${config["min_environment_dim"]}").`);
+        else if (gridSize < minEnvDim) {
+            throw new Error(`The grid size is too small (min: "${minEnvDim}").`);
         }
-        else if (gridSize > config["max_environment_dim"]) {
-            throw new Error(`The grid size is too big (max: "${config["max_environment_dim"]}").`);
-        }
-    }
-
-    public static newEmptyVWEnvironment(config: any, gridSize?: bigint): VWEnvironment {
-        if (!VWExistenceChecker.allArgumentsExist(config)) {
-            throw new Error("The config cannot be null or undefined.");
-        }
-        else {
-            return VWEnvironment.newEmptyVWEnvironmentHelper(config, gridSize);
+        else if (gridSize > maxEnvDim) {
+            throw new Error(`The grid size is too big (max: "${maxEnvDim}").`);
         }
     }
 
-    private static newEmptyVWEnvironmentHelper(config: any, gridSize?: bigint): VWEnvironment {
-        const realGridSize: bigint = gridSize ?? BigInt(config["initial_environment_dim"]);
+    public static newEmptyVWEnvironment(gridSize?: bigint): VWEnvironment {
+        const realGridSize: bigint = gridSize ?? BigInt(initialEnvDim);
 
-        VWEnvironment.validateGridSize(Number(realGridSize), config);
+        VWEnvironment.validateGridSize(Number(realGridSize));
 
         const grid: VWMap<VWCoord, VWLocation> = new VWMap<VWCoord, VWLocation>();
 

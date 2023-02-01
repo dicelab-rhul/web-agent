@@ -2,8 +2,10 @@ import { VWPlatformDiv } from "../gui/platform/div/VWPlatformDiv";
 import { VWExistenceChecker } from "./utils/VWExistenceChecker";
 
 export class VacuumWorld {
-    public run(): void {
-        this.setTitle("VacuumWorld");
+    private constructor() {}
+
+    public static run(): void {
+        VacuumWorld.setTitle("VacuumWorld");
 
         let platformDiv: VWPlatformDiv = new VWPlatformDiv("/envs/vacuumworld-ts/res/images/start_menu.png");
 
@@ -14,7 +16,7 @@ export class VacuumWorld {
         platformDiv.show();
     }
 
-    private setTitle(title: string): void {
+    private static setTitle(title: string): void {
         if (VWExistenceChecker.allArgumentsExist(title) && title !== "") {
             document.title = title;
         }
