@@ -17,7 +17,7 @@ export class TeleoraEditorDiv {
         this.editorView = new EditorView({
             extensions: [
                 basicSetup,
-                javascript()
+                javascript() // TODO: Replace this with Teleora.
             ],
             parent: this.editorDiv
         });
@@ -25,5 +25,9 @@ export class TeleoraEditorDiv {
 
     public getDiv(): HTMLDivElement {
         return this.editorDiv;
+    }
+
+    public getEditorView(): EditorView {
+        return this.editorView;
     }
 }
