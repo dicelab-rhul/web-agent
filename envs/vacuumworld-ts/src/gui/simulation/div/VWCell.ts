@@ -15,6 +15,7 @@ export class VWCell implements VWDiv {
     private doubleClickCallback: (locationAppearance: VWLocationAppearance) => VWLocationAppearance;
     private clickCallback: (coord?: VWCoord) => void;
     private packed: boolean;
+    private static debug: boolean = false;
 
     public constructor(locApp: VWLocationAppearance) {
         this.locationAppearance = VWExistenceChecker.validateExistence(locApp, "Cannot create a cell without a location appearance.");
@@ -198,8 +199,9 @@ export class VWCell implements VWDiv {
         const actorColour: VWColour = this.locationAppearance.getActorAppearance().orElseThrow().getColour();
         const orientation: string = actorOrientation.toString().toLowerCase();
         const colour: string = actorColour.toString().toLowerCase();
+        const debugPath: string = VWCell.debug ? "debug/" : "";
 
-        return `envs/vacuumworld-ts/res/images/locations/actor/${colour}_${orientation}.png`;
+        return `envs/vacuumworld-ts/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
     }
 
     private getCellImageSrcIfDirtIsPresent(): string {
@@ -285,5 +287,13 @@ export class VWCell implements VWDiv {
 
     public isHidden(): boolean {
         return this.getDiv().hidden;
+    }
+
+    public static turnDebugOn(): void {
+        VWCell.debug = true;
+    }
+
+    public static turnDebugOff(): void {
+        VWCell.debug = false;
     }
 }
