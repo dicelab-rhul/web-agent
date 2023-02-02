@@ -8,6 +8,8 @@ import os
 
 def main() -> None:
     envs_dir: str = "envs"
+
+    # The first `/` is not a typo, it is for `src` purposes in HTML tags.
     envs: List[str] = ["/" + os.path.join(envs_dir, subdir) for subdir in os.listdir(envs_dir)]
 
     with open(os.path.join("res", "envs.json"), "w") as f:

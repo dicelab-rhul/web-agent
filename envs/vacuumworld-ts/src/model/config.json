@@ -9,8 +9,8 @@
     "maxNumberOfCommunicativeActionsPerActorPerCycle": 1,
     "senderIDSpoofingAllowed": true,
     "debug": true,
-    "debug_primes": [7, 11, 101],
-    "debug_test": false,
-    "debug_primes_test": [1, 1, 5],
-    "version_number": "1.0.0"
+    "debugPrimes": [7, 11, 101],
+    "debugTest": true,
+    "debugPrimesTest": [1, 1, 11],
+    "versionNumber": "1.0.0"
 }

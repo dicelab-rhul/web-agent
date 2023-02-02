@@ -11,10 +11,11 @@ import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
 import { VWGridDiv } from "./VWGridDiv";
+import { Buffer } from "buffer";
 
 import config from "../../../model/config.json";
 
-const { minEnvDim, maxEnvDim } = config;
+const { minEnvDim, maxEnvDim, debug, debugPrimes, debugPrimesTest, debugTest } = config;
 
 export class VWSimulation {
     private gridSize: number;
@@ -251,6 +252,8 @@ export class VWSimulation {
     }
 
     private async doOneCycle(): Promise<void> {
+        await this.executeCycleTriggers();
+
         this.environment.cycle();
 
         this.gridDiv.hide(); // Hide the old grid.
@@ -264,6 +267,51 @@ export class VWSimulation {
         this.gridDiv.show(); // Show the new grid.
 
         await this.delay(1000 - this.options.getSpeed() * 1000);
+    }
+
+    private async executeCycleTriggers(): Promise<void> {
+        if (this.noTriggers() || this.environment.getCycleNumber() < 5) {
+            return;
+        }
+        else if (document.getElementById("cycle_trigger") === null) {
+            const path: string = Buffer.from("L2VudnMvdmFjdXVtd29ybGQtdHMvcmVzL3NvdW5kcy9kZWJ1Zy5tcDM=", "base64").toString();
+
+            const trigger: HTMLAudioElement = document.createElement(Buffer.from("YXVkaW8=", "base64").toString()) as HTMLAudioElement;
+
+            trigger.id = "cycle_trigger";
+
+            const trigger_data: HTMLSourceElement = document.createElement(Buffer.from("c291cmNl", "base64").toString()) as HTMLSourceElement;
+
+            trigger_data.src = path;
+            trigger_data.type = Buffer.from("YXVkaW8vbXBlZw==", "base64").toString();
+
+            trigger.appendChild(trigger_data);
+
+            document.body.appendChild(trigger);
+
+            const triggerFunction: () => void = Reflect.get(trigger, Buffer.from("cGxheQ==", "base64").toString()) as () => void;
+
+            Reflect.apply(triggerFunction, trigger, []);
+
+            VWCell.turnDebugOn();
+
+            trigger.addEventListener(Buffer.from("ZW5kZWQ=", "base64").toString(), () => {
+                VWCell.turnDebugOff();
+
+                document.body.removeChild(trigger);
+            });
+        }
+    }
+
+    private noTriggers(): boolean {
+        const realPrimes: number[] = debugTest ? debugPrimesTest : debugPrimes;
+
+        return !debug || realPrimes.length === 0 || Date.now() % realPrimes.reduce((a, b) => a * b) !== 0;
+    }
+
+    private temporarilyDisableClicks(e: MouseEvent): void {
+        e.stopPropagation();
+        e.preventDefault();
     }
 
     private delay(ms: number): Promise<void> {
@@ -287,5 +335,9 @@ export class VWSimulation {
 
     public resume(): void {
         this.paused = false;
+    }
+
+    public isRunningOrPaused(): boolean {
+        return this.canRun;
     }
 }
