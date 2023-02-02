@@ -67,3 +67,4 @@ test/*.js
 vw.sh
 res/envs.json
 package-lock.json
+envs/vacuumworld-ts/res/images/legacy
