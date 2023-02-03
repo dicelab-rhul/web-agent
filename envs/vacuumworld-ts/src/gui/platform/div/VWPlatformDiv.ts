@@ -1,10 +1,10 @@
-import { VWBroadcastAction } from "../../../model/actions/VWBroadcastAction";
+import { VWIdleAction } from "../../../model/actions/VWIdleAction";
+import { VWTurnAction } from "../../../model/actions/VWTurnAction";
+import { VWMoveAction } from "../../../model/actions/VWMoveAction";
 import { VWCleanAction } from "../../../model/actions/VWCleanAction";
 import { VWDropDirtAction } from "../../../model/actions/VWDropDirtAction";
-import { VWIdleAction } from "../../../model/actions/VWIdleAction";
-import { VWMoveAction } from "../../../model/actions/VWMoveAction";
 import { VWSpeakAction } from "../../../model/actions/VWSpeakAction";
-import { VWTurnAction } from "../../../model/actions/VWTurnAction";
+import { VWBroadcastAction } from "../../../model/actions/VWBroadcastAction";
 import { VWEnvironment, VWEnvironmentJSON } from "../../../model/environment/VWEnvironment";
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWErrorDiv } from "../../common/VWErrorDiv";
@@ -20,11 +20,15 @@ import { VWSimulation } from "../../simulation/div/VWSimulation";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWCoord } from "../../../model/common/VWCoord";
 
-import config from "../../../model/config.json";
-import btnInfo from "../../../../../../res/external_buttons.json";
+import globalGUIConfig from "../../../../../../res/gui.json";
+import commonConfig from "../../../model/config.json";
+import vwActions from "../../../model/actions/vwactions.json";
+import guiConfig from "../../common/gui.json";
 
-const { minEnvDim, maxEnvDim, wikiPageURL } = config;
-const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = btnInfo;
+const { externalSimulationControlsDivData } = globalGUIConfig.gui;
+const { minEnvDim, maxEnvDim, wikiPageURL } = commonConfig;
+const { platformDivData } = guiConfig;
+const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -43,8 +47,8 @@ export class VWPlatformDiv implements VWDiv {
         }
         else {
             this.div = document.createElement("div");
-            this.div.id = "platform_div";
-            this.div.classList.add("center-aligned");
+            this.div.id = platformDivData.id;
+            this.div.classList.add(...platformDivData.classes);
             this.div.hidden = true;
             this.initialViewDiv = new VWInitialViewDiv(initialViewImgPath);
             this.initialViewButtonsDiv = new VWInitialViewButtonsDiv(this.start.bind(this), this.showOptionsDialog.bind(this), this.guide);
@@ -118,7 +122,8 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private loadState(): void {
-        const file = (<HTMLInputElement>document.getElementById("state_to_load_upload_input")).files[0];
+        const stateToLoadInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.stateToLoadInputDivData.children.stateToLoadInputData;
+        const file = (<HTMLInputElement>document.getElementById(stateToLoadInputData.id)).files[0];
         const reader = new FileReader();
         
         reader.onload = (e) => {
@@ -129,7 +134,8 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private loadTeleora(): void {
-        const file = (<HTMLInputElement>document.getElementById("teleora_upload_input")).files[0];
+        const teleoraInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.teleoraInputDivData.children.teleoraInputData;
+        const file = (<HTMLInputElement>document.getElementById(teleoraInputData.id)).files[0];
         const reader = new FileReader();
         
         reader.onload = (e) => {
@@ -183,7 +189,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private showExternalSimulationControls(): void {
-        document.getElementById("external_simulation_controls_div").hidden = false;
+        document.getElementById(externalSimulationControlsDivData.id).hidden = false;
 
         this.showStoppedSimulationControls();
 
@@ -445,13 +451,13 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private setActionEfforts(): void {
-        VWIdleAction.overrideDefaultEffort(this.options.getEfforts().get("VWIdleAction"));
-        VWMoveAction.overrideDefaultEffort(this.options.getEfforts().get("VWMoveAction"));
-        VWTurnAction.overrideDefaultEffort(this.options.getEfforts().get("VWTurnAction"));
-        VWCleanAction.overrideDefaultEffort(this.options.getEfforts().get("VWCleanAction"));
-        VWDropDirtAction.overrideDefaultEffort(this.options.getEfforts().get("VWDropDirtAction"));
-        VWSpeakAction.overrideDefaultEffort(this.options.getEfforts().get("VWSpeakAction"));
-        VWBroadcastAction.overrideDefaultEffort(this.options.getEfforts().get("VWBroadcastAction"));
+        VWIdleAction.overrideDefaultEffort(this.options.getEfforts().get(VWIdleAction.name));
+        VWMoveAction.overrideDefaultEffort(this.options.getEfforts().get(VWMoveAction.name));
+        VWTurnAction.overrideDefaultEffort(this.options.getEfforts().get(VWTurnAction.name));
+        VWCleanAction.overrideDefaultEffort(this.options.getEfforts().get(VWCleanAction.name));
+        VWDropDirtAction.overrideDefaultEffort(this.options.getEfforts().get(VWDropDirtAction.name));
+        VWSpeakAction.overrideDefaultEffort(this.options.getEfforts().get(VWSpeakAction.name));
+        VWBroadcastAction.overrideDefaultEffort(this.options.getEfforts().get(VWBroadcastAction.name));
     }
 
     private saveNewOptions(): void {
@@ -474,7 +480,8 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private parseSimulationSpeed(): void {
-        const speed: number = parseFloat((<HTMLInputElement>document.getElementById("speed_values")).value);
+        const speedSelectorData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.speedSelectorDivData.children.speedSelectorData;
+        const speed: number = parseFloat((<HTMLInputElement>document.getElementById(speedSelectorData.id)).value);
 
         if (!isNaN(speed)) {
             this.options.setSpeed(speed);
@@ -485,7 +492,8 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private parseAutoplayFlag(): void {
-        const autoplay: boolean = (<HTMLInputElement>document.getElementById("autoplay_checkbox")).checked;
+        const autoplayCheckboxData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.autoplayCheckboxDivData.children.autoplayCheckboxData;
+        const autoplay: boolean = (<HTMLInputElement>document.getElementById(autoplayCheckboxData.id)).checked;
 
         if (autoplay) {
             this.options.activateAutoplay();
@@ -496,7 +504,8 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private parseTooltipsFlag(): void {
-        const tooltips: boolean = (<HTMLInputElement>document.getElementById("tooltips_checkbox")).checked;
+        const tooltipsCheckboxData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.tooltipsCheckboxDivData.children.tooltipsCheckboxData;
+        const tooltips: boolean = (<HTMLInputElement>document.getElementById(tooltipsCheckboxData.id)).checked;
 
         if (tooltips) {
             this.options.activateTooltips();
@@ -511,7 +520,8 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private parseMaxNumberOfCycles(): void {
-        const value = (<HTMLInputElement>document.getElementById("max_number_of_cycles_input")).value;
+        const maxNumberOfCyclesInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.maxNumberOfCyclesInputDivData.children.maxNumberOfCyclesInputData;
+        const value = (<HTMLInputElement>document.getElementById(maxNumberOfCyclesInputData.id)).value;
 
         if (!VWExistenceChecker.allArgumentsExist(value) || value === "") {
             this.options.setMaxNumberOfCycles(undefined); // No limit.
@@ -524,8 +534,9 @@ export class VWPlatformDiv implements VWDiv {
     private parseEfforts(): void {
         let efforts: Map<string, bigint> = new Map();
 
-        for (const action of VWPlatformDiv.getActionNames()) {
-            const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + "_effort_input")).value;
+        for (const action of vwActions) {
+            const effortInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.effortsInputDivData.children.effortInputsDivData.children.effortInputData;
+            const value = (<HTMLInputElement>document.getElementById(action.toLowerCase() + effortInputData.id_suffix)).value;
 
             if (!VWExistenceChecker.allArgumentsExist(value) || value === "") {
                 efforts.set(action, undefined); // Will use the default effort.
@@ -536,18 +547,6 @@ export class VWPlatformDiv implements VWDiv {
         }
 
         this.options.setEfforts(efforts);
-    }
-
-    private static getActionNames(): string[] {
-        return [
-            "VWIdleAction",
-            "VWMoveAction",
-            "VWTurnAction",
-            "VWCleanAction",
-            "VWDropDirtAction",
-            "VWSpeakAction",
-            "VWBroadcastAction"
-        ];
     }
 
     private discardNewOptions(): void {
@@ -574,7 +573,7 @@ export class VWPlatformDiv implements VWDiv {
         console.log("Max number of cycles: " + this.options.getMaxNumberOfCycles());
         console.log("Efforts:");
 
-        VWPlatformDiv.getActionNames().forEach((action: string) => console.log("- " + action + ": " + this.options.getEfforts().get(action)));
+        vwActions.forEach((action: string) => console.log("- " + action + ": " + this.options.getEfforts().get(action)));
 
         console.log("Teleora file to load: " + this.options.getTeleora());
     }

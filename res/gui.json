@@ -1,0 +1,142 @@
+{
+    "gui": {
+        "containerDivData": {
+            "id": "container_div"
+        },
+        "choiceDivData": {
+            "id": "choice_div",
+            "classes": [
+                "center-aligned"
+            ],
+            "children": {
+                "choicesImagesData": {
+                    "classes": [
+                        "choice"
+                    ]
+                }
+            }
+        },
+        "externalSimulationControlsDivData": {
+            "id": "external_simulation_controls_div",
+            "classes": [
+                "center-aligned"
+            ],
+            "children": {
+                "runBtn": {
+                    "id": "external_run_button",
+                    "text": "Run",
+                    "title": "Run the simulation.",
+                    "hiddenWhileRunning": true,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": false,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will run the simulation."
+                },
+                "pauseBtn": {
+                    "id": "external_pause_button",
+                    "text": "Pause",
+                    "title": "Pause the simulation.",
+                    "hiddenWhileRunning": false,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": true,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will pause the simulation."
+                },
+                "resumeBtn": {
+                    "id": "external_resume_button",
+                    "text": "Resume",
+                    "title": "Resume the simulation.",
+                    "hiddenWhileRunning": true,
+                    "hiddenWhilePaused": false,
+                    "hiddenWhileStopped": true,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will resume the simulation."
+                },
+                "stopBtn": {
+                    "id": "external_stop_button",
+                    "text": "Stop",
+                    "title": "Stop the simulation.",
+                    "hiddenWhileRunning": false,
+                    "hiddenWhilePaused": false,
+                    "hiddenWhileStopped": true,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will stop the simulation."
+                },
+                "resetBtn": {
+                    "id": "external_reset_button",
+                    "text": "Reset",
+                    "title": "Reset the simulation.",
+                    "hiddenWhileRunning": true,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": false,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will reset the simulation."
+                },
+                "speedUpBtn": {
+                    "id": "external_speed_button",
+                    "text": "Speed up",
+                    "title": "Increase the simulation speed.",
+                    "hiddenWhileRunning": false,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": true,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will increase the simulation speed."
+                },
+                "saveStateBtn": {
+                    "id": "external_save_button",
+                    "text": "Save",
+                    "title": "Save the environment to a JSON file.",
+                    "hiddenWhileRunning": true,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": false,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will save the simulation state."
+                },
+                "loadStateBtn": {
+                    "id": "external_load_button",
+                    "text": "Load",
+                    "title": "Load the environment from a JSON file.",
+                    "hiddenWhileRunning": true,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": false,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will load a new state for the simulation."
+                },
+                "guideBtn": {
+                    "id": "external_guide_button",
+                    "text": "Guide",
+                    "title": "Show the guide in a new browser tab.",
+                    "hiddenWhileRunning": true,
+                    "hiddenWhilePaused": true,
+                    "hiddenWhileStopped": false,
+                    "classes": [
+                        "external_simulation_control_button"
+                    ],
+                    "defaultLogMessage": "This will open the relevant guide."
+                }
+            }
+        },
+        "errorDivData": {
+            "id": "error_div",
+            "classes": [
+                "center-aligned"
+            ]
+        }
+    }
+}

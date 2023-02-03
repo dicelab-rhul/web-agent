@@ -1,0 +1,20 @@
+{
+    "teleoraDivData": {
+        "id": "teleora_div",
+        "children": {
+            "teleoraEditorDivData": {
+                "id": "teleora_editor_div"
+            },
+            "teleoraSaveButtonDivData": {
+                "id": "teleora_save_button_div",
+                "children": {
+                    "teleoraSaveButtonData": {
+                        "id": "teleora_save_button",
+                        "text": "Save",
+                        "title": "Save the Teleora file"
+                    }
+                }
+            }
+        }
+    }
+}

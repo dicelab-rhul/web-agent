@@ -1,6 +1,10 @@
 import { EditorView, basicSetup } from "codemirror";
 import { javascript } from "@codemirror/lang-javascript"
 
+import teleoraGUIData from "./gui.json";
+
+const { teleoraEditorDivData } = teleoraGUIData.teleoraDivData.children;
+
 export class TeleoraEditorDiv {
     private editorDiv: HTMLDivElement;
     private editorView: EditorView;
@@ -8,7 +12,7 @@ export class TeleoraEditorDiv {
     public constructor() {
         this.editorDiv = document.createElement("div");
 
-        this.editorDiv.id = "teleora_editor_div";
+        this.editorDiv.id = teleoraEditorDivData.id;
 
         this.constructEditor();
     }
