@@ -2,6 +2,11 @@ import { VWInitialViewButton } from "../buttons/VWInitialViewButton";
 import { VWDiv } from "../../common/VWDiv";
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 
+import guiConfig from "../../common/gui.json";
+
+const { initialViewButtonsDivData } = guiConfig.platformDivData.children;
+const { startBtn, optionsBtn, guideBtn } = initialViewButtonsDivData.children;
+
 export class VWInitialViewButtonsDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "initial_view_buttons_div";
     private startButton: VWInitialViewButton; // Will have ID "start_button";
@@ -21,12 +26,12 @@ export class VWInitialViewButtonsDiv implements VWDiv {
         }
         else {
             this.div = document.createElement("div");
-            this.div.id = "initial_view_buttons_div";
+            this.div.id = initialViewButtonsDivData.id;
             this.div.hidden = true;
 
-            this.startButton = new VWInitialViewButton("Start", "start_button", "Open the simulation view", startCallback.bind(this), ["initial_buttons"]);
-            this.optionsButton = new VWInitialViewButton("Options", "options_button", "Set the simulation options", optionsCallback.bind(this), ["initial_buttons"]);
-            this.guideButton = new VWInitialViewButton("Guide", "guide_button", "Open the guide in the browser", guideCallback.bind(this), ["initial_buttons"]);
+            this.startButton = new VWInitialViewButton(startBtn.text, startBtn.id, startBtn.title, startCallback.bind(this), startBtn.classes);
+            this.optionsButton = new VWInitialViewButton(optionsBtn.text, optionsBtn.id, optionsBtn.title, optionsCallback.bind(this), optionsBtn.classes);
+            this.guideButton = new VWInitialViewButton(guideBtn.text, guideBtn.id, guideBtn.title, guideCallback.bind(this), guideBtn.classes);
 
             this.packed = false;
         }

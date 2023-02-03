@@ -1,5 +1,9 @@
 import { TeleoraEditorDiv } from "./TeleoraEditorDiv";
 
+import teleoraGUIData from "./gui.json";
+
+const { teleoraDivData } = teleoraGUIData;
+
 export class TeleoraDiv {
     private div: HTMLDivElement;
     private editorDiv: TeleoraEditorDiv;
@@ -9,16 +13,16 @@ export class TeleoraDiv {
     constructor() {
         this.div = document.createElement("div");
 
-        this.div.id = "teleora_div";
+        this.div.id = teleoraDivData.id;
 
         this.editorDiv = new TeleoraEditorDiv();
 
         this.saveButtonDiv = document.createElement("div");
-        this.saveButtonDiv.id = "teleora_save_button_div";
+        this.saveButtonDiv.id = teleoraDivData.children.teleoraSaveButtonDivData.id;
 
         this.saveButton = document.createElement("button");
-        this.saveButton.textContent = "Save";
-        this.saveButton.id = "teleora_save_button";
+        this.saveButton.textContent = teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData.text;
+        this.saveButton.id = teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData.id;
 
         this.saveButtonDiv.appendChild(this.saveButton);
 

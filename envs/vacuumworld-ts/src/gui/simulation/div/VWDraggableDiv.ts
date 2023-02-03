@@ -1,6 +1,11 @@
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 
+import guiConfig from "../../common/gui.json";
+
+const { draggableBodyDivData } = guiConfig.platformDivData.children.gridDivData.children.draggableBodiesDivData.grandChildren;
+const { draggableImagesData } = draggableBodyDivData.children;
+
 export class VWDraggableDiv implements VWDiv {
     private div: HTMLDivElement;
     private displayedImage: HTMLImageElement;
@@ -8,14 +13,14 @@ export class VWDraggableDiv implements VWDiv {
 
     public constructor(imageSrc: string) {
         this.div = document.createElement("div");
-        this.div.classList.add("draggable-body-div");
+        this.div.classList.add(...draggableBodyDivData.classes);
         this.div.hidden = true;
 
         this.addDragEventsListeners();
 
         this.displayedImage = document.createElement("img");
         this.displayedImage.src = imageSrc;
-        this.displayedImage.classList.add("draggable-image");
+        this.displayedImage.classList.add(...draggableImagesData.classes);
         this.packed = false;
     }
 
@@ -23,7 +28,7 @@ export class VWDraggableDiv implements VWDiv {
         this.div.addEventListener("dragstart", (event: DragEvent) => {
             (<HTMLElement>event.target).classList.add("dragging");
 
-            event.dataTransfer.setData("source", "draggable-image");
+            event.dataTransfer.setData("source", draggableImagesData.classes[0]);
         });
 
         this.div.addEventListener("dragend", (event: DragEvent) => {

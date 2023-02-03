@@ -1,0 +1,333 @@
+{
+    "platformDivData": {
+        "id": "platform_div",
+        "classes": [
+            "center-aligned"
+        ],
+        "children": {
+            "initialViewDivData": {
+                "id": "initial_view_div",
+                "children": {
+                    "initialViewImgData": {
+                        "id": "initial_view_img"
+                    }
+                }
+            },
+            "initialViewButtonsDivData": {
+                "id": "initial_view_buttons_div",
+                "children": {
+                    "startBtn": {
+                        "id": "start_button",
+                        "text": "Start",
+                        "title": "Display the simulation view",
+                        "classes": [
+                            "initial_buttons"
+                        ]
+                    },
+                    "optionsBtn": {
+                        "id": "options_button",
+                        "text": "Options",
+                        "title": "Choose the simulation options",
+                        "classes": [
+                            "initial_buttons"
+                        ]
+                    },
+                    "guideBtn": {
+                        "id": "guide_button",
+                        "text": "Guide",
+                        "title": "Show the guide in a new browser tab.",
+                        "classes": [
+                            "initial_buttons"
+                        ]
+                    }
+                }
+            },
+            "optionsDialogDivData": {
+                "id": "options_dialog_div",
+                "children": {
+                    "optionsDialogData": {
+                        "id": "options_dialog",
+                        "children": {
+                            "speedSelectorDivData": {
+                                "id": "speed_selector_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "speedSelectorLabelData": {
+                                        "text": "Speed",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "speedSelectorData": {
+                                        "id": "speed_selector",
+                                        "classes": [
+                                            "option_subdiv"
+                                        ],
+                                        "children": {
+                                            "speedSelectorOptionData": {
+                                                "id_prefix": "speed_value_"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "autoplayCheckboxDivData": {
+                                "id": "autoplay_checkbox_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "autoplayCheckboxLabelData": {
+                                        "text": "Autoplay",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "autoplayCheckboxData": {
+                                        "id": "autoplay_checkbox",
+                                        "classes": [
+                                            "option_subdiv"
+                                        ],
+                                        "tickedByDefault": false
+                                    }
+                                }
+                            },
+                            "stateToLoadInputDivData": {
+                                "id": "state_to_load_input_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "stateToLoadInputLabelData": {
+                                        "text": "State to load",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "stateToLoadInputData": {
+                                        "id": "state_to_load_upload_input",
+                                        "accept": ".json",
+                                        "classes": [
+                                            "option_subdiv"
+                                        ]
+                                    }
+                                }
+                            },
+                            "tooltipsCheckboxDivData": {
+                                "id": "tooltips_checkbox_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "tooltipsCheckboxLabelData": {
+                                        "text": "Tooltips",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "tooltipsCheckboxData": {
+                                        "id": "tooltips_checkbox",
+                                        "classes": [
+                                            "option_subdiv"
+                                        ],
+                                        "tickedByDefault": true
+                                    }
+                                }
+                            },
+                            "maxNumberOfCyclesInputDivData": {
+                                "id": "max_number_of_cycles_input_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "maxNumberOfCyclesInputLabelData": {
+                                        "text": "Max number of cycles",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "maxNumberOfCyclesInputData": {
+                                        "id": "max_number_of_cycles_input",
+                                        "classes": [
+                                            "option_subdiv"
+                                        ]
+                                    }
+                                }
+                            },
+                            "effortsInputDivData": {
+                                "id": "efforts_inputs_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "effortsInputLabelData": {
+                                        "for": "efforts_inputs",
+                                        "text": "Efforts",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "effortInputsDivData": {
+                                        "id_suffix": "_effort_div",
+                                        "children": {
+                                            "effortInputLabelData": {
+                                                "text": "",
+                                                "classes": [
+                                                    "option_div_label"
+                                                ]
+                                            },
+                                            "effortInputData": {
+                                                "id_suffix": "_effort_input",
+                                                "classes": [
+                                                    "effort_option_div"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "teleoraInputDivData": {
+                                "id": "teleora_input_div",
+                                "classes": [
+                                    "option_div"
+                                ],
+                                "children": {
+                                    "teleoraInputLabelData": {
+                                        "text": "Teleora mind cores to load",
+                                        "classes": [
+                                            "option_div_label"
+                                        ]
+                                    },
+                                    "teleoraInputData": {
+                                        "id": "teleora_upload_input",
+                                        "accept": ".tel",
+                                        "classes": [
+                                            "option_subdiv"
+                                        ]
+                                    }
+                                }
+                            },
+                            "optionsOKBtn": {
+                                "id": "options_dialog_ok_button",
+                                "text": "OK",
+                                "title": "Close and save the options.",
+                                "classes": [
+                                    "options_dialog_buttons"
+                                ]
+                            },
+                            "optionsCancelBtn": {
+                                "id": "options_dialog_cancel_button",
+                                "text": "Cancel",
+                                "title": "Close without saving the options.",
+                                "classes": [
+                                    "options_dialog_buttons"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "gridDivData": {
+                "id": "grid_div",
+                "classes": [
+                    "grid",
+                    "center-aligned"
+                ],
+                "children": {
+                    "gridTableData": {
+                        "classes": [
+                            "grid-table"
+                        ],
+                        "children": {
+                            "gridRowData": {
+                                "id_prefix": "cell-tr-",
+                                "classes": [
+                                    "grid-row"
+                                ],
+                                "children": {
+                                    "gridCellData": {
+                                        "id_prefix": "cell-td-",
+                                        "classes": [
+                                            "grid-cell"
+                                        ],
+                                        "children": {
+                                            "gridCellDivData": {
+                                                "id_prefix": "cell-",
+                                                "classes": [
+                                                    "cell"
+                                                ],
+                                                "children": {
+                                                    "gridCellImgData": {
+                                                        "classes": [
+                                                            "location-image",
+                                                            "drop-zone"
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "draggableBodiesDivData": {
+                        "id": "draggable_bodies_div",
+                        "children": {
+                            "leftDraggableBodiesDivData": {
+                                "id": "draggable_bodies_left_div"
+                            },
+                            "rightDraggableBodiesDivData": {
+                                "id": "draggable_bodies_right_div"
+                            }
+                        },
+                        "grandChildren": {
+                            "draggableBodyDivData": {
+                                "classes": [
+                                    "draggable-body-div"
+                                ],
+                                "children": {
+                                    "draggableImagesData": {
+                                        "classes": [
+                                            "draggable-image"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "internalSimulationControlsDivData": {
+                "id": "internal_simulation_controls_div",
+                "children": {
+                    "userDifficultyToggleButtonData": {
+                        "id": "user_difficulty_toggle_button",
+                        "basicText": "Difficulty up",
+                        "advancedText": "Difficulty down",
+                        "title": "Toggle the user difficulty.",
+                        "classes": [
+                            "basic",
+                            "advanced"
+                        ]
+                    },
+                    "enlargeGridButtonData": {
+                        "id": "grid_size_up_button",
+                        "text": "Size+",
+                        "title": "Grid size + 1."
+                    },
+                    "shrinkGridButtonData": {
+                        "id": "grid_size_down_button",
+                        "text": "Size-",
+                        "title": "Grid size - 1."
+                    },
+                    "selectedCellInfoSpanData": {
+                        "id": "selected_cell_info_div"
+                    }
+                }
+            }
+        }
+    }
+}

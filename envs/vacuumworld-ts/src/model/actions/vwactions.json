@@ -1,0 +1,9 @@
+[
+    "VWIdleAction",
+    "VWTurnAction",
+    "VWMoveAction",
+    "VWCleanAction",
+    "VWDropDirtAction",
+    "VWSpeakAction",
+    "VWBroadcastAction"
+]

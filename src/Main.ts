@@ -1,4 +1,8 @@
 import * as envs from "../res/envs.json";
+import globalGUIConfig from "../res/gui.json";
+
+const { containerDivData, choiceDivData, errorDivData, externalSimulationControlsDivData } = globalGUIConfig.gui;
+const externalButtonsData = externalSimulationControlsDivData.children;
 
 type ResourcePaths = {
     favicon: string;
@@ -69,10 +73,10 @@ export class Main {
     }
     
     private static createContainerDiv(): void {
-        if (document.getElementById("container_div") === null) {
+        if (document.getElementById(containerDivData.id) === null) {
             let containerDiv: HTMLDivElement = document.createElement("div");
     
-            containerDiv.id = "container_div";
+            containerDiv.id = containerDivData.id;
     
             document.body.appendChild(containerDiv);
         }
@@ -82,11 +86,11 @@ export class Main {
     }
     
     private static createErrorDiv(): void {
-        if (document.getElementById("error_div") === null) {
+        if (document.getElementById(errorDivData.id) === null) {
             let errorDiv: HTMLDivElement = document.createElement("div");
     
-            errorDiv.id = "error_div";
-            errorDiv.classList.add("center-aligned");
+            errorDiv.id = errorDivData.id;
+            errorDiv.classList.add(...errorDivData.classes);
             errorDiv.hidden = true;
     
             document.body.appendChild(errorDiv);
@@ -148,8 +152,8 @@ export class Main {
     private static loadChoiceDiv(): void {
         let choiceDiv: HTMLDivElement = document.createElement("div");
     
-        choiceDiv.id = "choice_div";
-        choiceDiv.classList.add("center-aligned");
+        choiceDiv.id = choiceDivData.id;
+        choiceDiv.classList.add(...choiceDivData.classes);
     
         document.body.appendChild(choiceDiv);
 
@@ -169,16 +173,16 @@ export class Main {
     
         const imgPath: string = choicePath + "/res/images/choice.png";
     
-        let choiceDiv: HTMLDivElement = document.getElementById("choice_div") as HTMLDivElement;
+        let choiceDiv: HTMLDivElement = document.getElementById(choiceDivData.id) as HTMLDivElement;
         let choice: HTMLImageElement = document.createElement("img");
     
         choice.src = imgPath;
-        choice.classList.add("choice");
+        choice.classList.add(...choiceDivData.children.choicesImagesData.classes);
     
         choiceDiv.appendChild(choice);
     
         choice.addEventListener("click", () => {
-            document.querySelectorAll(".choice").forEach((choice) => choiceDiv.removeChild(choice));
+            document.querySelectorAll(`.${choiceDivData.children.choicesImagesData.classes[0]}`).forEach((choice) => choiceDiv.removeChild(choice));
     
             choiceDiv.hidden = true;
     
@@ -198,8 +202,8 @@ export class Main {
     private static createAndHideSimulationControlsDiv(): void {
         let simulationControlsDiv: HTMLDivElement = document.createElement("div");
     
-        simulationControlsDiv.id = "external_simulation_controls_div";
-        simulationControlsDiv.classList.add("center-aligned");
+        simulationControlsDiv.id = externalSimulationControlsDivData.id;
+        simulationControlsDiv.classList.add(...externalSimulationControlsDivData.classes);
         simulationControlsDiv.hidden = true;
     
         Main.createSimulationControls().forEach((control: HTMLButtonElement) => simulationControlsDiv.appendChild(control));
@@ -209,17 +213,11 @@ export class Main {
     
     private static createSimulationControls(): HTMLButtonElement[] {
         let controls: HTMLButtonElement[] = [];
-    
-        controls.push(Main.createSimulationControlButton("external_run_button", "Run", ["external_simulation_control_button"], () => console.log("This will run the simulation.")));
-        controls.push(Main.createSimulationControlButton("external_pause_button", "Pause", ["external_simulation_control_button"], () => console.log("This will pause the simulation.")));
-        controls.push(Main.createSimulationControlButton("external_resume_button", "Resume", ["external_simulation_control_button"], () => console.log("This will resume a paused simulation.")));
-        controls.push(Main.createSimulationControlButton("external_stop_button", "Stop", ["external_simulation_control_button"], () => console.log("This will stop the simulation.")));
-        controls.push(Main.createSimulationControlButton("external_reset_button", "Reset", ["external_simulation_control_button"], () => console.log("This will reset the simulation.")));
-        controls.push(Main.createSimulationControlButton("external_speed_button", "Speed Up", ["external_simulation_control_button"], () => console.log("This will increase the simulation speed.")));
-        controls.push(Main.createSimulationControlButton("external_save_button", "Save", ["external_simulation_control_button"], () => console.log("This will save the simulation state.")));
-        controls.push(Main.createSimulationControlButton("external_load_button", "Load", ["external_simulation_control_button"], () => console.log("This will load a new state for the simulation.")));
-        controls.push(Main.createSimulationControlButton("external_guide_button", "Guide", ["external_simulation_control_button"], () => console.log("This will open the relevant guide.")));
-    
+
+        for (let btnData of Object.values(externalButtonsData)) {
+            controls.push(Main.createSimulationControlButton(btnData.id, btnData.text, btnData.classes, () => console.log(btnData.defaultLogMessage)));
+        }
+
         return controls;
     }
     

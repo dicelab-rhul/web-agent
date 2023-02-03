@@ -13,8 +13,10 @@ import { VWCell } from "./VWCell";
 import { VWGridDiv } from "./VWGridDiv";
 import { Buffer } from "buffer";
 
+import globalGUIConfig from "../../../../../../res/gui.json";
 import config from "../../../model/config.json";
 
+const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = globalGUIConfig.gui.externalSimulationControlsDivData.children;
 const { minEnvDim, maxEnvDim, debug, debugPrimes, debugPrimesTest, debugTest } = config;
 
 export class VWSimulation {
@@ -218,15 +220,15 @@ export class VWSimulation {
     }
 
     private showStoppedSimulationControls(): void {
-        document.getElementById("external_run_button").hidden = false;
-        document.getElementById("external_pause_button").hidden = true;
-        document.getElementById("external_resume_button").hidden = true;
-        document.getElementById("external_stop_button").hidden = true;
-        document.getElementById("external_reset_button").hidden = false;
-        document.getElementById("external_speed_button").hidden = true;
-        document.getElementById("external_save_button").hidden = false;
-        document.getElementById("external_load_button").hidden = false;
-        document.getElementById("external_guide_button").hidden = false;
+        document.getElementById(runBtn.id).hidden = runBtn.hiddenWhileStopped;
+        document.getElementById(pauseBtn.id).hidden = pauseBtn.hiddenWhileStopped;
+        document.getElementById(resumeBtn.id).hidden = resumeBtn.hiddenWhileStopped;
+        document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhileStopped;
+        document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhileStopped;
+        document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhileStopped;
+        document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhileStopped;
+        document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhileStopped;
+        document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileStopped;
     }
 
     private async loopForever(): Promise<void> {

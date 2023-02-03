@@ -5,6 +5,11 @@ import { VWDiv } from "../../common/VWDiv";
 import { VWGridResizeButton } from "../buttons/VWGridResizeButton";
 import { VWUserDifficultyToggleButton } from "../buttons/VWUserDifficultyToggleButton";
 
+import guiConfig from "../../common/gui.json";
+
+const { internalSimulationControlsDivData } = guiConfig.platformDivData.children;
+const { enlargeGridButtonData, shrinkGridButtonData, selectedCellInfoSpanData } = internalSimulationControlsDivData.children;
+
 export class VWInternalSimulationControlsDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "internal_simulation_controls_div";
     private userDifficultyToggleButton: VWUserDifficultyToggleButton;
@@ -16,15 +21,15 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
 
     public constructor(userDifficulty: VWUserDifficulty, userDiffCallback: () => void, sizeUpCallback: () => void, sizeDownCallback: () => void) {
         this.div = document.createElement("div");
-        this.div.id = "internal_simulation_controls_div";
+        this.div.id = internalSimulationControlsDivData.id;
         this.div.hidden = true;
 
         this.userDifficultyToggleButton = new VWUserDifficultyToggleButton(userDifficulty, userDiffCallback);
-        this.enlargeGridButton = new VWGridResizeButton("grid_size_up_button", "Size+", "Grid size + 1.", sizeUpCallback);
-        this.shrinkGridButton = new VWGridResizeButton("grid_size_down_button", "Size-", "Grid size - 1.", sizeDownCallback);
+        this.enlargeGridButton = new VWGridResizeButton(enlargeGridButtonData.id, enlargeGridButtonData.text, enlargeGridButtonData.title, sizeUpCallback);
+        this.shrinkGridButton = new VWGridResizeButton(shrinkGridButtonData.id, shrinkGridButtonData.text, shrinkGridButtonData.title, sizeDownCallback);
 
         this.selectedCellInfoSpan = document.createElement("span");
-        this.selectedCellInfoSpan.id = "selected_cell_info_div";
+        this.selectedCellInfoSpan.id = selectedCellInfoSpanData.id;
         this.selectedCellInfoSpan.hidden = true;
 
         this.packed = false;

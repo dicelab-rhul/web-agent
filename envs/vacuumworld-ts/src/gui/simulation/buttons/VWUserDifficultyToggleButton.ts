@@ -1,22 +1,26 @@
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 
+import guiConfig from "../../common/gui.json";
+
+const { userDifficultyToggleButtonData } = guiConfig.platformDivData.children.internalSimulationControlsDivData.children;
+
 export class VWUserDifficultyToggleButton {
     private button: HTMLButtonElement;
     private basicText: string;
     private advancedText: string;
 
     public constructor(difficulty: VWUserDifficulty, clickCallback: () => void) {
-        this.basicText = "Difficulty up";
-        this.advancedText = "Difficulty down";
+        this.basicText = userDifficultyToggleButtonData.basicText;
+        this.advancedText = userDifficultyToggleButtonData.advancedText;
 
         this.button = document.createElement("button");
 
-        this.button.id = "user_difficulty_toggle_button";
+        this.button.id = userDifficultyToggleButtonData.id;
 
         VWExistenceChecker.validateExistence(difficulty, "The user difficulty cannot be null or undefined.");
 
-        this.button.classList.add(difficulty === VWUserDifficulty.BASIC ? "basic" : "advanced");
+        this.button.classList.add(difficulty === VWUserDifficulty.BASIC ? userDifficultyToggleButtonData.classes[0] : userDifficultyToggleButtonData.classes[1]);
         this.button.innerText = difficulty === VWUserDifficulty.BASIC ? this.basicText : this.advancedText;
 
         this.button.addEventListener("click", () => {
@@ -27,22 +31,22 @@ export class VWUserDifficultyToggleButton {
     }
 
     public toggleDifficulty(): void {
-        if (this.button.classList.contains("basic")) {
-            this.button.classList.remove("basic");
-            this.button.classList.add("advanced");
+        if (this.button.classList.contains(userDifficultyToggleButtonData.classes[0])) {
+            this.button.classList.remove(userDifficultyToggleButtonData.classes[0]);
+            this.button.classList.add(userDifficultyToggleButtonData.classes[1]);
 
             this.button.innerText = this.advancedText;
         }
         else {
-            this.button.classList.remove("advanced");
-            this.button.classList.add("basic");
+            this.button.classList.remove(userDifficultyToggleButtonData.classes[1]);
+            this.button.classList.add(userDifficultyToggleButtonData.classes[0]);
 
             this.button.innerText = this.basicText;
         }
     }
 
     public showTooltip(): void {
-        this.button.title = "Toggle the user difficulty.";
+        this.button.title = userDifficultyToggleButtonData.title;
     }
 
     public hideTooltip(): void {

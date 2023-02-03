@@ -2,6 +2,10 @@ import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWOptionsDialog } from "../dialogs/VWOptionsDialog";
 
+import guiConfig from "../../common/gui.json";
+
+const { optionsDialogDivData } = guiConfig.platformDivData.children;
+
 export class VWOptionsDialogDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "options_dialog_div";
     private optionsDialog: VWOptionsDialog;
@@ -13,7 +17,7 @@ export class VWOptionsDialogDiv implements VWDiv {
 
     public constructor(okButtonCallback: () => void, cancelButtonCallback: () => void, stateToLoadInputCallback: () => void, teleoraInputCallback: () => void) {
         this.div = document.createElement("div");
-        this.div.id = "options_dialog_div";
+        this.div.id = optionsDialogDivData.id;
         this.div.hidden = true;
         this.okButtonCallback = okButtonCallback;
         this.cancelButtonCallback = cancelButtonCallback;
