@@ -5,6 +5,10 @@ import { VWDiv } from "../../common/VWDiv";
 import { VWCell } from "./VWCell";
 import { VWDraggableBodiesDiv } from "./VWDraggableBodiesDiv";
 
+import guiConfig from "../../common/gui.json";
+
+const { gridDivData } = guiConfig.platformDivData.children;
+
 export class VWGridDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "grid_div";
     private gridSize: number; // The length of the grid's side.
@@ -14,8 +18,8 @@ export class VWGridDiv implements VWDiv {
 
     public constructor() {
         this.div = document.createElement("div");
-        this.div.id = "grid_div";
-        this.div.classList.add("grid", "center-aligned");
+        this.div.id = gridDivData.id;
+        this.div.classList.add(...gridDivData.classes);
         this.div.hidden = true;
         this.draggableBodiesDiv = new VWDraggableBodiesDiv();
 
@@ -47,17 +51,26 @@ export class VWGridDiv implements VWDiv {
     }
 
     private createTableForGrid(): HTMLTableElement {
+        const gridTableData = gridDivData.children.gridTableData;
+        const gridRowData = gridTableData.children.gridRowData;
+        const gridCellData = gridRowData.children.gridCellData;
+
         let table: HTMLTableElement = document.createElement("table");
-        table.classList.add("grid-table");
+
+        table.classList.add(...gridTableData.classes);
 
         for (let row: number = 0; row < this.gridSize; row++) {
             let tableRow: HTMLTableRowElement = document.createElement("tr");
-            tableRow.classList.add("grid-row");
+
+            tableRow.classList.add(...gridRowData.classes);
 
             for (let col: number = 0; col < this.gridSize; col++) {
                 let tableCell: HTMLTableCellElement = document.createElement("td");
-                tableCell.classList.add("grid-cell");
+
+                tableCell.classList.add(...gridCellData.classes);
+
                 const coord: VWCoord = new VWCoord(BigInt(col), BigInt(row));
+
                 tableCell.appendChild(this.gridMap.get(coord).getDiv());
                 tableRow.appendChild(tableCell);
             }

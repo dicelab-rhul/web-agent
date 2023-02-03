@@ -21,8 +21,10 @@ import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWCoord } from "../../../model/common/VWCoord";
 
 import config from "../../../model/config.json";
+import btnInfo from "../../../../../../res/external_buttons.json";
 
 const { minEnvDim, maxEnvDim, wikiPageURL } = config;
+const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = btnInfo;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -192,13 +194,13 @@ export class VWPlatformDiv implements VWDiv {
         this.addSpeedButtonListener();
         this.addResetButtonListener();
 
-        document.getElementById("external_guide_button").addEventListener("click", this.guide);
-        document.getElementById("external_save_button").addEventListener("click", this.saveEnvironment.bind(this));
-        document.getElementById("external_load_button").addEventListener("click", this.loadStateAndCreateNewSimulation.bind(this));
+        document.getElementById(guideBtn.id).addEventListener("click", this.guide);
+        document.getElementById(saveStateBtn.id).addEventListener("click", this.saveEnvironment.bind(this));
+        document.getElementById(loadStateBtn.id).addEventListener("click", this.loadStateAndCreateNewSimulation.bind(this));
     }
 
     private addRunButtonListener(): void {
-        document.getElementById("external_run_button").addEventListener("click", () => {
+        document.getElementById(runBtn.id).addEventListener("click", () => {
             this.showRunningSimulationControls();
 
             this.simulation.cycleSimulation();
@@ -206,7 +208,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private addStopButtonListener(): void {
-        document.getElementById("external_stop_button").addEventListener("click", () => {
+        document.getElementById(stopBtn.id).addEventListener("click", () => {
             this.showStoppedSimulationControls();
 
             this.simulation.stop();
@@ -220,7 +222,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private addPauseButtonListener(): void {
-        document.getElementById("external_pause_button").addEventListener("click", () => {
+        document.getElementById(pauseBtn.id).addEventListener("click", () => {
             this.showPausedSimulationControls();
 
             this.simulation.pause();
@@ -228,7 +230,7 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private addResumeButtonListener(): void {
-        document.getElementById("external_resume_button").addEventListener("click", () => {
+        document.getElementById(resumeBtn.id).addEventListener("click", () => {
             this.showRunningSimulationControls();
 
             this.simulation.resume();
@@ -236,13 +238,13 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private addSpeedButtonListener(): void {
-        document.getElementById("external_speed_button").addEventListener("click", () => {
-            this.options.setSpeed(Math.max(0.999, this.options.getSpeed() + 0.1));
+        document.getElementById(speedUpBtn.id).addEventListener("click", () => {
+            this.options.setSpeed(Math.min(0.999, this.options.getSpeed() + 0.1));
         });
     }
 
     private addResetButtonListener(): void {
-        document.getElementById("external_reset_button").addEventListener("click", () => {
+        document.getElementById(resetBtn.id).addEventListener("click", () => {
             this.showStoppedSimulationControls();
 
             this.simulation.stop();
@@ -313,15 +315,15 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private showRunningSimulationControls(): void {
-        document.getElementById("external_run_button").hidden = true;
-        document.getElementById("external_pause_button").hidden = false;
-        document.getElementById("external_resume_button").hidden = true;
-        document.getElementById("external_stop_button").hidden = false;
-        document.getElementById("external_reset_button").hidden = true;
-        document.getElementById("external_speed_button").hidden = false;
-        document.getElementById("external_save_button").hidden = true;
-        document.getElementById("external_load_button").hidden = true;
-        document.getElementById("external_guide_button").hidden = true;
+        document.getElementById(runBtn.id).hidden = runBtn.hiddenWhileRunning;
+        document.getElementById(pauseBtn.id).hidden = pauseBtn.hiddenWhileRunning;
+        document.getElementById(resumeBtn.id).hidden = resumeBtn.hiddenWhileRunning;
+        document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhileRunning;
+        document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhileRunning;
+        document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhileRunning;
+        document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhileRunning;
+        document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhileRunning;
+        document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileRunning;
 
         this.hideInternalSimulationControls();
 
@@ -329,15 +331,15 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private showStoppedSimulationControls(): void {
-        document.getElementById("external_run_button").hidden = false;
-        document.getElementById("external_pause_button").hidden = true;
-        document.getElementById("external_resume_button").hidden = true;
-        document.getElementById("external_stop_button").hidden = true;
-        document.getElementById("external_reset_button").hidden = false;
-        document.getElementById("external_speed_button").hidden = true;
-        document.getElementById("external_save_button").hidden = false;
-        document.getElementById("external_load_button").hidden = false;
-        document.getElementById("external_guide_button").hidden = false;
+        document.getElementById(runBtn.id).hidden = runBtn.hiddenWhileStopped;
+        document.getElementById(pauseBtn.id).hidden = pauseBtn.hiddenWhileStopped;
+        document.getElementById(resumeBtn.id).hidden = resumeBtn.hiddenWhileStopped;
+        document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhileStopped;
+        document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhileStopped;
+        document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhileStopped;
+        document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhileStopped;
+        document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhileStopped;
+        document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileStopped;
 
         this.showInternalSimulationControls();
 
@@ -345,15 +347,15 @@ export class VWPlatformDiv implements VWDiv {
     }
 
     private showPausedSimulationControls(): void {
-        document.getElementById("external_run_button").hidden = true;
-        document.getElementById("external_pause_button").hidden = true;
-        document.getElementById("external_resume_button").hidden = false;
-        document.getElementById("external_stop_button").hidden = false;
-        document.getElementById("external_reset_button").hidden = true;
-        document.getElementById("external_speed_button").hidden = true;
-        document.getElementById("external_save_button").hidden = true;
-        document.getElementById("external_load_button").hidden = true;
-        document.getElementById("external_guide_button").hidden = true;
+        document.getElementById(runBtn.id).hidden = runBtn.hiddenWhilePaused;
+        document.getElementById(pauseBtn.id).hidden = pauseBtn.hiddenWhilePaused;
+        document.getElementById(resumeBtn.id).hidden = resumeBtn.hiddenWhilePaused;
+        document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhilePaused;
+        document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhilePaused;
+        document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhilePaused;
+        document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhilePaused;
+        document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhilePaused;
+        document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhilePaused;
 
         this.hideInternalSimulationControls();
 
@@ -362,15 +364,15 @@ export class VWPlatformDiv implements VWDiv {
 
     private showTooltips(): void {
         if (this.options.areTooltipsActive()) {
-            document.getElementById("external_run_button").title = "Run the simulation.";
-            document.getElementById("external_pause_button").title = "Pause the simulation.";
-            document.getElementById("external_resume_button").title = "Resume the simulation.";
-            document.getElementById("external_stop_button").title = "Stop the simulation.";
-            document.getElementById("external_reset_button").title = "Reset the simulation.";
-            document.getElementById("external_speed_button").title = "Increase the simulation speed.";
-            document.getElementById("external_save_button").title = "Save the environment to a JSON file.";
-            document.getElementById("external_load_button").title = "Load the environment from a JSON file.";
-            document.getElementById("external_guide_button").title = "Show the guide in the browser.";
+            document.getElementById(runBtn.id).title = runBtn.title;
+            document.getElementById(pauseBtn.id).title = pauseBtn.title;
+            document.getElementById(resumeBtn.id).title = resumeBtn.title;
+            document.getElementById(stopBtn.id).title = stopBtn.title;
+            document.getElementById(resetBtn.id).title = resetBtn.title;
+            document.getElementById(speedUpBtn.id).title = speedUpBtn.title;
+            document.getElementById(saveStateBtn.id).title = saveStateBtn.title;
+            document.getElementById(loadStateBtn.id).title = loadStateBtn.title;
+            document.getElementById(guideBtn.id).title = guideBtn.title;
         }
     }
 

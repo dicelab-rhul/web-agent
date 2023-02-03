@@ -6,6 +6,12 @@ import { VWLocationAppearance } from "../../../model/environment/VWLocationAppea
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 
+import guiConfig from "../../common/gui.json";
+
+const { gridCellDivData } = guiConfig.platformDivData.children.gridDivData.children.gridTableData.children.gridRowData.children.gridCellData.children;
+const { gridCellImgData } = gridCellDivData.children;
+const { draggableImagesData } = guiConfig.platformDivData.children.gridDivData.children.draggableBodiesDivData.grandChildren.draggableBodyDivData.children;
+
 export class VWCell implements VWDiv {
     private cell: HTMLDivElement;
     private locationAppearance: VWLocationAppearance;
@@ -23,8 +29,8 @@ export class VWCell implements VWDiv {
         this.createLocationImage();
 
         this.cell = document.createElement("div");
-        this.cell.classList.add("cell");
-        this.cell.id = `cell-${locApp.getCoord().getX()}-${locApp.getCoord().getY()}`;
+        this.cell.classList.add(...gridCellDivData.classes);
+        this.cell.id = gridCellDivData.id_prefix + `${locApp.getCoord().getX()}-${locApp.getCoord().getY()}`;
 
         this.packed = false;
     }
@@ -41,7 +47,7 @@ export class VWCell implements VWDiv {
     private createLocationImage(): void {
         this.displayedImage = document.createElement("img");
         this.displayedImage.src = this.getCellImageSrc();
-        this.displayedImage.classList.add("location-image", "dropzone");
+        this.displayedImage.classList.add(...gridCellImgData.classes);
     }
 
     // Public because it is called when the simulation is stopped to re-add the listeners.
@@ -59,7 +65,7 @@ export class VWCell implements VWDiv {
         this.displayedImage.addEventListener("dragover", (event: DragEvent) => {
             event.preventDefault();
 
-            if (event.dataTransfer.getData("source") === "draggable-image" && (<HTMLElement>event.target).classList.contains("dropzone")) {
+            if (event.dataTransfer.getData("source") === draggableImagesData.classes[0] && (<HTMLElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 this.clickCallback(this.locationAppearance.getCoord());
             }
         });
@@ -67,7 +73,7 @@ export class VWCell implements VWDiv {
 
     private addDragEnterListener(): void {
         this.displayedImage.addEventListener("dragenter", (event: DragEvent) => {
-            if (event.dataTransfer.getData("source") === "draggable-image" && (<HTMLElement>event.target).classList.contains("dropzone")) {
+            if (event.dataTransfer.getData("source") === draggableImagesData.classes[0] && (<HTMLElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 (<HTMLElement>event.target).classList.add("dragover");
 
                 for (const element of document.getElementsByClassName("selected")) {
@@ -81,7 +87,7 @@ export class VWCell implements VWDiv {
 
     private addDragLeaveListener(): void {
         this.displayedImage.addEventListener("dragleave", (event: DragEvent) => {
-            if ((<HTMLElement>event.target).classList.contains("dropzone")) {
+            if ((<HTMLElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 (<HTMLElement>event.target).classList.remove("dragover");
 
                 for (const element of document.getElementsByClassName("selected")) {
@@ -97,7 +103,7 @@ export class VWCell implements VWDiv {
         this.displayedImage.addEventListener("drop", (event: DragEvent) => {
             event.preventDefault();
 
-            if ((<HTMLElement>event.target).classList.contains("dropzone")) {
+            if ((<HTMLElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 (<HTMLElement>event.target).classList.remove("dragover");
 
                 const draggedImg: HTMLImageElement = document.getElementsByClassName("dragging")[0] as HTMLImageElement;
@@ -126,7 +132,7 @@ export class VWCell implements VWDiv {
     }
 
     private manageSingleClick(event: MouseEvent): void {
-        if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
+        if ((<HTMLImageElement>event.target).classList.contains(gridCellImgData.classes[1])) {
             const toHighlight: boolean = !this.displayedImage.classList.contains("selected");
 
             for (const element of document.getElementsByClassName("selected")) {
@@ -146,7 +152,7 @@ export class VWCell implements VWDiv {
 
     private addDoubleClickListener(): void {
         this.displayedImage.addEventListener("dblclick", (event: MouseEvent) => {
-            if ((<HTMLImageElement>event.target).classList.contains("dropzone")) {
+            if ((<HTMLImageElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 this.locationAppearance = this.doubleClickCallback(this.locationAppearance);
 
                 (<HTMLImageElement>event.target).src = this.getCellImageSrc();

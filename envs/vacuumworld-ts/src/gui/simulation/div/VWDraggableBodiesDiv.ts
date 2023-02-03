@@ -2,6 +2,11 @@ import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWDraggableDiv } from "./VWDraggableDiv";
 
+import guiConfig from "../../common/gui.json";
+
+const { draggableBodiesDivData } = guiConfig.platformDivData.children.gridDivData.children;
+const { leftDraggableBodiesDivData, rightDraggableBodiesDivData } = draggableBodiesDivData.children;
+
 export class VWDraggableBodiesDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "draggable_bodies_div";
     private leftDiv: HTMLDivElement; // Will have ID "draggable_bodies_left_div";
@@ -12,15 +17,15 @@ export class VWDraggableBodiesDiv implements VWDiv {
 
     public constructor(gridSize?: number) {
         this.div = document.createElement("div");
-        this.div.id = "draggable_bodies_div";
+        this.div.id = draggableBodiesDivData.id;
         this.div.hidden = true;
 
         this.leftDiv = document.createElement("div");
-        this.leftDiv.id = "draggable_bodies_left_div";
+        this.leftDiv.id = leftDraggableBodiesDivData.id;
         this.div.hidden = true;
 
         this.rightDiv = document.createElement("div");
-        this.rightDiv.id = "draggable_bodies_right_div";
+        this.rightDiv.id = rightDraggableBodiesDivData.id;
         this.div.hidden = true;
 
         this.createDraggableBodies();

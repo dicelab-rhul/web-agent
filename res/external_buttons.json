@@ -1,0 +1,74 @@
+{
+    "runBtn": {
+        "id": "external_run_button",
+        "text": "Run",
+        "title": "Run the simulation.",
+        "hiddenWhileRunning": true,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": false
+    },
+    "pauseBtn": {
+        "id": "external_pause_button",
+        "text": "Pause",
+        "title": "Pause the simulation.",
+        "hiddenWhileRunning": false,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": true
+    },
+    "resumeBtn": {
+        "id": "external_resume_button",
+        "text": "Resume",
+        "title": "Resume the simulation.",
+        "hiddenWhileRunning": true,
+        "hiddenWhilePaused": false,
+        "hiddenWhileStopped": true
+    },
+    "stopBtn": {
+        "id": "external_stop_button",
+        "text": "Stop",
+        "title": "Stop the simulation.",
+        "hiddenWhileRunning": false,
+        "hiddenWhilePaused": false,
+        "hiddenWhileStopped": true
+    },
+    "resetBtn": {
+        "id": "external_reset_button",
+        "text": "Reset",
+        "title": "Reset the simulation.",
+        "hiddenWhileRunning": true,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": false
+    },
+    "speedUpBtn": {
+        "id": "external_speed_button",
+        "text": "Speed up",
+        "title": "Increase the simulation speed.",
+        "hiddenWhileRunning": false,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": true
+    },
+    "saveStateBtn": {
+        "id": "external_save_button",
+        "text": "Save",
+        "title": "Save the environment to a JSON file.",
+        "hiddenWhileRunning": true,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": false
+    },
+    "loadStateBtn": {
+        "id": "external_load_button",
+        "text": "Load",
+        "title": "Load the environment from a JSON file.",
+        "hiddenWhileRunning": true,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": false
+    },
+    "guideBtn": {
+        "id": "external_guide_button",
+        "text": "Guide",
+        "title": "Show the guide in a new browser tab.",
+        "hiddenWhileRunning": true,
+        "hiddenWhilePaused": true,
+        "hiddenWhileStopped": false
+    }
+}
