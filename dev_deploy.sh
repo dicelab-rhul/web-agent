@@ -2,7 +2,7 @@
 
 for dir in envs/*/; do
     cd $dir
-    ./deploy.sh
+    ./dev_deploy.sh
     cd ../..
 done
 
@@ -12,14 +12,14 @@ done
 # cd ..
 
 cd teleora_editor
-./deploy.sh
+./dev_deploy.sh
 cd ..
 
 echo "Deploying the main page..."
 ./discover_envs.py
 npm prune
 npm install
-npm run build
+npm run dev-build
 echo "Done."
 
 ./run.sh
