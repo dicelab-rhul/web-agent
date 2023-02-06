@@ -213,8 +213,9 @@ export class VWCell implements VWDiv {
     private getCellImageSrcIfDirtIsPresent(): string {
         const dirtColour: VWColour = this.locationAppearance.getDirtAppearance().orElseThrow().getColour();
         const colour: string = dirtColour.toString().toLowerCase();
+        const debugPath: string = VWCell.debug ? "debug/" : "";
 
-        return `envs/vacuumworld-ts/res/images/locations/dirt/${colour}_dirt.png`;
+        return `envs/vacuumworld-ts/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
     }
 
     public pack(): void {
