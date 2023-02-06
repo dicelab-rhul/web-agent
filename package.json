@@ -4,8 +4,8 @@
     "description": "",
     "main": "static/js/index.js",
     "scripts": {
-        "build": "webpack --config webpack.prod-config.cjs",
-        "dev-build": "webpack --config webpack.dev-config.cjs"
+        "build": "webpack --config webpack_config/webpack.prod-config.cjs",
+        "dev-build": "webpack --config webpack_config/webpack.dev-config.cjs"
     },
     "dependencies": {
         "ts-loader": "^9.4.2",

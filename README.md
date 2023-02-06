@@ -2,7 +2,7 @@
 
 Browser-based Teleo-Reactive agent development.
 
-## How to run the system
+## How to run the system (production)
 
 ### The first time (to install the dependencies as well)
 
@@ -14,6 +14,20 @@ user@machine:~$ ./deploy.sh
 
 ```console
 user@machine:~$ ./quick_deploy.sh
+```
+
+## How to run the system (development)
+
+### The first time (to install the dependencies as well) - no minified code
+
+```console
+user@machine:~$ ./dev_deploy.sh
+```
+
+### From the second time onwards - no minified code
+
+```console
+user@machine:~$ ./quick_dev_deploy.sh
 ```
 
 ## How to run the experimental code editor

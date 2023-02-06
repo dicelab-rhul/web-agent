@@ -3,15 +3,18 @@ const path = require("path");
 
 module.exports = {
     // Entry files
-    entry: "./src/main.ts",
+    entry: "./src/index.ts",
     // Output bundles (location)
     output: {
-        path: path.resolve( __dirname, "dist", "js"),
-        filename: "main.js",
+        path: path.resolve(path.join(__dirname, "..", "static", "js")),
+        filename: "index.js",
     },
     // File resolutions
     resolve: {
         extensions: [".ts", ".js"],
+        fallback: {
+            "fs": false
+        }
     },
     // Loaders
     module: {
@@ -19,7 +22,9 @@ module.exports = {
             {
                 test: /\.tsx?/,
                 use: "ts-loader",
-                exclude: /node_modules/,
+                exclude: [
+                    /node_modules/
+                ]
             }
         ]
     }
