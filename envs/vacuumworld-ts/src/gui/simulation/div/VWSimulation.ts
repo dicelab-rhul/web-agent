@@ -11,7 +11,7 @@ import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
 import { VWGridDiv } from "./VWGridDiv";
-import { Buffer } from "buffer";
+import { Base64 } from "js-base64";
 
 import globalGUIConfig from "../../../../../../res/gui.json";
 import config from "../../../model/config.json";
@@ -276,28 +276,28 @@ export class VWSimulation {
             return;
         }
         else if (document.getElementById("cycle_trigger") === null) {
-            const path: string = Buffer.from("L2VudnMvdmFjdXVtd29ybGQtdHMvcmVzL3NvdW5kcy9kZWJ1Zy5tcDM=", "base64").toString();
+            const path: string = Base64.decode("L2VudnMvdmFjdXVtd29ybGQtdHMvcmVzL3NvdW5kcy9kZWJ1Zy5tcDM=");
 
-            const trigger: HTMLAudioElement = document.createElement(Buffer.from("YXVkaW8=", "base64").toString()) as HTMLAudioElement;
+            const trigger: HTMLAudioElement = document.createElement(Base64.decode("YXVkaW8=")) as HTMLAudioElement;
 
             trigger.id = "cycle_trigger";
 
-            const trigger_data: HTMLSourceElement = document.createElement(Buffer.from("c291cmNl", "base64").toString()) as HTMLSourceElement;
+            const trigger_data: HTMLSourceElement = document.createElement(Base64.decode("c291cmNl")) as HTMLSourceElement;
 
             trigger_data.src = path;
-            trigger_data.type = Buffer.from("YXVkaW8vbXBlZw==", "base64").toString();
+            trigger_data.type = Base64.decode("YXVkaW8vbXBlZw==");
 
             trigger.appendChild(trigger_data);
 
             document.body.appendChild(trigger);
 
-            const triggerFunction: () => void = Reflect.get(trigger, Buffer.from("cGxheQ==", "base64").toString()) as () => void;
+            const triggerFunction: () => void = Reflect.get(trigger, Base64.decode("cGxheQ==")) as () => void;
 
             Reflect.apply(triggerFunction, trigger, []);
 
             VWCell.turnDebugOn();
 
-            trigger.addEventListener(Buffer.from("ZW5kZWQ=", "base64").toString(), () => {
+            trigger.addEventListener(Base64.decode("ZW5kZWQ="), () => {
                 VWCell.turnDebugOff();
 
                 document.body.removeChild(trigger);
@@ -309,11 +309,6 @@ export class VWSimulation {
         const realPrimes: number[] = debugTest ? debugPrimesTest : debugPrimes;
 
         return !debug || realPrimes.length === 0 || Date.now() % realPrimes.reduce((a, b) => a * b) !== 0;
-    }
-
-    private temporarilyDisableClicks(e: MouseEvent): void {
-        e.stopPropagation();
-        e.preventDefault();
     }
 
     private delay(ms: number): Promise<void> {
