@@ -1,8 +1,6 @@
 # Web-Agent
 
-WE ARE FINALLY DOING IT.
-
-Browser-based teleoreactive agent development.
+Browser-based Teleo-Reactive agent development.
 
 ## How to run the system
 

@@ -1,8 +1,10 @@
 # List of TODOs
 
-* File [README.md](README.md) - line 204: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
+* File [TELEORA.md](TELEORA.md) - line 159: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
 
-* File [README.md](README.md) - line 206: `TODO: other operators...`
+* File [TELEORA.md](TELEORA.md) - line 161: `TODO: other operators...`
+
+* File [teleora_editor/src/gui/TeleoraEditorDiv.ts](teleora_editor/src/gui/TeleoraEditorDiv.ts) - line 24: `javascript() // TODO: Replace this with Teleora.`
 
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
 
@@ -22,7 +24,7 @@
 
 * File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/gui/common/VWOptions.ts) - line 94: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts) - line 134: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
+* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts) - line 142: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 
 * File [experimental/src/modal.ts](experimental/src/modal.ts) - line 1: `// TODO: there is a lot to do here:`
 
