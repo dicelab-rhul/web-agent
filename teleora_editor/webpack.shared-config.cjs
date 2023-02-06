@@ -2,25 +2,18 @@
 const path = require("path");
 
 module.exports = {
-
-    // bundling mode
-    mode: "production",
-
-    // entry files
+    // Entry files
     entry: "./src/main.ts",
-
-    // output bundles (location)
+    // Output bundles (location)
     output: {
         path: path.resolve( __dirname, "dist", "js"),
         filename: "main.js",
     },
-
-    // file resolutions
+    // File resolutions
     resolve: {
         extensions: [".ts", ".js"],
     },
-
-    // loaders
+    // Loaders
     module: {
         rules: [
             {
@@ -29,8 +22,5 @@ module.exports = {
                 exclude: /node_modules/,
             }
         ]
-    },
-    optimization: {
-        minimize: true
     }
 };

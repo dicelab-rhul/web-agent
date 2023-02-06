@@ -9,8 +9,6 @@ module.exports = {
             "process.platform": JSON.stringify(process.platform)
         }),
     ],
-    // Bundling mode
-    mode: "production",
     // Entry files
     entry: "./src/main.ts",
     // Output bundles (location)
@@ -34,8 +32,5 @@ module.exports = {
                 exclude: /node_modules/,
             }
         ]
-    },
-    optimization: {
-        minimize: true
     }
 };
