@@ -1,17 +1,27 @@
-// This assignment cannot be converted to an import because it is used by webpack.
+// These assignments cannot be converted to imports because they are used by webpack.
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
+    // Plugins
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.platform": JSON.stringify(process.platform)
+        }),
+    ],
     // Entry files
     entry: "./src/main.ts",
     // Output bundles (location)
     output: {
-        path: path.resolve( __dirname, "dist", "js"),
+        path: path.resolve(path.join(__dirname), "..", "dist", "js"),
         filename: "main.js",
     },
     // File resolutions
     resolve: {
         extensions: [".ts", ".js"],
+        fallback: {
+            "fs": false
+        }
     },
     // Loaders
     module: {
