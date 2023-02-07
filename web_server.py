@@ -37,14 +37,27 @@ class WebAgentServer:
     @staticmethod
     def __generate_csp(nonce: str) -> str:
         # It would be nice to be able to include `style-src 'nonce-{nonce}'`.
-        # Unfortunately, the CodeMirror editor library is full of scripts that add both inline style elements and style attributes without propagating the nonce.
-        # As such, `style-src-elem` and `style-src-attr` cannot be used either.
-        # Hashing all those scripts, and including them in `style-src` (or `style-src-elem`), would be a nightmare.
-        return f"base-uri 'self', frame-ancestors 'self', object-src 'none'; script-src 'nonce-{nonce}'; upgrade-insecure-requests;"
+        # Unfortunately, the CodeMirror editor adds a lot of `style` attributes/elements.
+        # As such, `style-src-elem` with the nonce and a set of hashes + `style-src-attr` with 'unsafe-hashes' and a set of hashes is a good compromise.
+        # At the moment, removing all the style attributes from the CodeMirror editor is not an option.
+        return f"base-uri 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'nonce-{nonce}'; style-src-elem 'nonce-{nonce}' {' '.join(WebAgentServer.__get_inline_styles_hashes())}; style-src-attr 'nonce-{nonce}' 'unsafe-hashes' {' '.join(WebAgentServer.__get_attr_styles_hashes())}; upgrade-insecure-requests;"
 
     @staticmethod
     def __generate_csp_nonce() -> str:
         return token_urlsafe(32)
+
+    @staticmethod
+    def __get_inline_styles_hashes() -> list[str]:
+        return [
+            "'sha256-qVvPl0vp1SoXFHXl+VfRXjyKNAjlZvJDeXDMCnMbSeM='", # CodeMirror-injected style.
+            "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='", # CodeMirror-injected style.
+        ]
+
+    @staticmethod
+    def __get_attr_styles_hashes() -> list[str]:
+        return [
+            "'sha256-qokx773Tl626SVTuhxQSccr23ixTSkbnBXWRqLjyuIg='" # CodeMirror-injected style.
+        ]
 
 
 if __name__ == "__main__":
