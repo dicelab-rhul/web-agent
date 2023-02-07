@@ -54,6 +54,8 @@ experimental/dist
 envs/*/dist/js
 teleora_editor/dist/js
 static/js/
+static/envs
+static/teleora_editor
 
 # IDE files
 .vscode/
@@ -65,6 +67,6 @@ test/*.js
 *.map
 *.bak
 vw.sh
-res/envs.json
+static/json/envs.json
 package-lock.json
 envs/vacuumworld-ts/res/images/legacy

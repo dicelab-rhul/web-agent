@@ -20,7 +20,7 @@ import { VWSimulation } from "../../simulation/div/VWSimulation";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWCoord } from "../../../model/common/VWCoord";
 
-import globalGUIConfig from "../../../../../../res/gui.json";
+import globalGUIConfig from "../../../../../../static/json/gui.json";
 import commonConfig from "../../../model/config.json";
 import vwActions from "../../../model/actions/vwactions.json";
 import guiConfig from "../../common/gui.json";

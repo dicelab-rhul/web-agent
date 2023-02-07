@@ -1,5 +1,6 @@
 import { VWPlatformDiv } from "../gui/platform/div/VWPlatformDiv";
 import { VWExistenceChecker } from "./utils/VWExistenceChecker";
+import envData from "../../../../static/json/envs.json"
 
 export class VacuumWorld {
     private constructor() {}
@@ -7,7 +8,7 @@ export class VacuumWorld {
     public static run(): void {
         VacuumWorld.setTitle("VacuumWorld");
 
-        let platformDiv: VWPlatformDiv = new VWPlatformDiv("/envs/vacuumworld-ts/res/images/start_menu.png");
+        let platformDiv: VWPlatformDiv = new VWPlatformDiv(`/static/${envData["vacuumworld-ts"]}/res/images/start_menu.png`);
 
         platformDiv.pack();
 

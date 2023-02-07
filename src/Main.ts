@@ -1,5 +1,6 @@
-import * as envs from "../res/envs.json";
-import globalGUIConfig from "../res/gui.json";
+import envsData from "../static/json/envs.json";
+import globalGUIConfig from "../static/json/gui.json";
+import teleoraData from "../static/json/teleora.json";
 
 const { containerDivData, choiceDivData, errorDivData, externalSimulationControlsDivData } = globalGUIConfig.gui;
 const externalButtonsData = externalSimulationControlsDivData.children;
@@ -16,9 +17,11 @@ type TeleoraResourcePaths = {
 }
 
 export class Main {
+    private static NONCE: string = undefined;
     private constructor() {}
 
     public static main(): void {
+        Main.setNonce();
         Main.setTitle();
         Main.loadCharset();
         Main.createContainerDiv();
@@ -26,6 +29,12 @@ export class Main {
         Main.loadChoiceDiv();
         Main.createAndHideSimulationControlsDiv();
         Main.createErrorDiv();
+    }
+
+    public static setNonce(): void {
+        if (document.getElementById("index_script").nonce !== null && document.getElementById("index_script").nonce !== undefined) {
+            Main.NONCE = document.getElementById("index_script").nonce;
+        }
     }
 
     public static setTitle(): void {
@@ -42,12 +51,12 @@ export class Main {
 
     private static getResourcesPaths(envPath: string): ResourcePaths {
         return {
-            favicon: `${envPath}/res/images/favicon.ico`,
-            envStyle: `${envPath}/dist/css/style.css`,
-            envScript: `${envPath}/dist/js/main.js`
+            favicon: `/static/${envPath}/res/images/favicon.ico`,
+            envStyle: `/static/${envPath}/dist/css/style.css`,
+            envScript: `/static/${envPath}/dist/js/main.js`
         };
     }
-    
+
     private static loadFavicon(faviconPath: string): void {
         if (faviconPath === null || faviconPath === undefined) {
             throw new Error("The favicon path is null or undefined.");
@@ -63,43 +72,43 @@ export class Main {
         }
         else {
             let favicon: HTMLLinkElement = document.createElement("link");
-    
+
             favicon.href = faviconPath;
             favicon.rel = "icon";
             favicon.type = "image/x-icon";
-    
+
             document.head.appendChild(favicon);
         }
     }
-    
+
     private static createContainerDiv(): void {
         if (document.getElementById(containerDivData.id) === null) {
             let containerDiv: HTMLDivElement = document.createElement("div");
-    
+
             containerDiv.id = containerDivData.id;
-    
+
             document.body.appendChild(containerDiv);
         }
         else {
             throw new Error("The container div already exists.");
         }
     }
-    
+
     private static createErrorDiv(): void {
         if (document.getElementById(errorDivData.id) === null) {
             let errorDiv: HTMLDivElement = document.createElement("div");
-    
+
             errorDiv.id = errorDivData.id;
             errorDiv.classList.add(...errorDivData.classes);
             errorDiv.hidden = true;
-    
+
             document.body.appendChild(errorDiv);
         }
         else {
             throw new Error("The error div already exists.");
         }
     }
-    
+
     private static loadStyle(stylePath: string): void {
         if (stylePath === null || stylePath === undefined) {
             throw new Error("The style path is null or undefined.");
@@ -115,15 +124,15 @@ export class Main {
         }
         else {
             let mainStyle: HTMLLinkElement = document.createElement("link");
-    
+
             mainStyle.href = stylePath;
             mainStyle.rel = "stylesheet";
             mainStyle.type = "text/css";
-    
-            document.head.appendChild(mainStyle);
+
+            document.head.appendChild(Main.propagateNonceToElement(mainStyle));
         }
     }
-    
+
     private static loadScript(scriptPath: string, defer?: boolean): void {
         if (scriptPath === null || scriptPath === undefined) {
             throw new Error("The script path is null or undefined.");
@@ -139,27 +148,35 @@ export class Main {
         }
         else {
             let script: HTMLScriptElement = document.createElement("script");
-    
+
             script.src = scriptPath;
             script.type = "text/javascript";
             script.async = false;
             script.defer = defer === undefined || defer === null ? false : defer;
-    
-            document.body.appendChild(script);
+
+            document.body.appendChild(Main.propagateNonceToElement(script));
         }
     }
-    
+
+    private static propagateNonceToElement(element: HTMLElement): HTMLElement {
+        if (element !== null && element !== undefined && Main.NONCE !== null && Main.NONCE !== undefined) {
+            element.setAttribute("nonce", Main.NONCE);
+        }
+
+        return element;
+    }
+
     private static loadChoiceDiv(): void {
         let choiceDiv: HTMLDivElement = document.createElement("div");
-    
+
         choiceDiv.id = choiceDivData.id;
         choiceDiv.classList.add(...choiceDivData.classes);
-    
+
         document.body.appendChild(choiceDiv);
 
-        Array.from(envs).forEach((envPath) => Main.addEntryToChoiceDiv(envPath));
+        Object.values(envsData).forEach((envPath) => Main.addEntryToChoiceDiv(envPath));
     }
-    
+
     private static addEntryToChoiceDiv(choicePath: string): void {
         if (choicePath === null || choicePath === undefined) {
             throw new Error("The choice path is null or undefined.");
@@ -170,47 +187,47 @@ export class Main {
         else if (choicePath.length === 0) {
             throw new Error("The choice path is empty.");
         }
-    
-        const imgPath: string = choicePath + "/res/images/choice.png";
-    
+
+        const imgPath: string = `/static/${choicePath}/res/images/choice.png`;
+
         let choiceDiv: HTMLDivElement = document.getElementById(choiceDivData.id) as HTMLDivElement;
         let choice: HTMLImageElement = document.createElement("img");
-    
+
         choice.src = imgPath;
         choice.classList.add(...choiceDivData.children.choicesImagesData.classes);
-    
+
         choiceDiv.appendChild(choice);
-    
+
         choice.addEventListener("click", () => {
             document.querySelectorAll(`.${choiceDivData.children.choicesImagesData.classes[0]}`).forEach((choice) => choiceDiv.removeChild(choice));
-    
+
             choiceDiv.hidden = true;
-    
+
             Main.loadEnvironmentDiv(choicePath);
             Main.loadTeleoraDiv();
         });
     }
-    
+
     private static loadEnvironmentDiv(choicePath: string): void {
         const resourcesPaths: ResourcePaths = Main.getResourcesPaths(choicePath);
-    
+
         Main.loadFavicon(resourcesPaths.favicon);
         Main.loadStyle(resourcesPaths.envStyle); // This is the main style of the environment.
         Main.loadScript(resourcesPaths.envScript); // This is the main script of the environment.
     }
-    
+
     private static createAndHideSimulationControlsDiv(): void {
         let simulationControlsDiv: HTMLDivElement = document.createElement("div");
-    
+
         simulationControlsDiv.id = externalSimulationControlsDivData.id;
         simulationControlsDiv.classList.add(...externalSimulationControlsDivData.classes);
         simulationControlsDiv.hidden = true;
-    
+
         Main.createSimulationControls().forEach((control: HTMLButtonElement) => simulationControlsDiv.appendChild(control));
-    
+
         document.body.appendChild(simulationControlsDiv);
     }
-    
+
     private static createSimulationControls(): HTMLButtonElement[] {
         let controls: HTMLButtonElement[] = [];
 
@@ -220,24 +237,24 @@ export class Main {
 
         return controls;
     }
-    
+
     private static createSimulationControlButton(buttonID: string, buttonText: string, buttonClasses: string[], buttonDefaultClickFunction: () => void): HTMLButtonElement {
         let button: HTMLButtonElement = document.createElement("button");
-    
+
         button.id = buttonID;
         button.innerText = buttonText;
         button.classList.add(...buttonClasses);
         button.hidden = true;
-    
+
         button.addEventListener("click", buttonDefaultClickFunction);
-    
+
         return button;
     }
 
     private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
         return {
-            teleoraScript: "/teleora_editor/dist/js/main.js",
-            teleoraStyle: "/teleora_editor/dist/css/style.css"
+            teleoraScript: `/static/${teleoraData.editor}/dist/js/main.js`,
+            teleoraStyle: `/static/${teleoraData.editor}/dist/css/style.css`,
         }
     }
 

@@ -8,8 +8,8 @@
         "allowSyntheticDefaultImports": true
     },
     "exclude": [
-        "./envs/",
-        "./experimental/",
-        "./teleora_editor/"
+        "./envs",
+        "./experimental",
+        "./teleora_editor"
     ]
 }
