@@ -5,7 +5,7 @@
 // - Fix the types.
 
 import './utils.js'
-import {Editor} from './editor'
+import {Editor} from './editor.js'
 
 $(function(){
     

@@ -11,9 +11,10 @@ import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWOptions } from "../../common/VWOptions";
 import { VWCell } from "./VWCell";
 import { VWGridDiv } from "./VWGridDiv";
+import envData from "../../../../../../static/json/envs.json"
 import { Base64 } from "js-base64";
 
-import globalGUIConfig from "../../../../../../res/gui.json";
+import globalGUIConfig from "../../../../../../static/json/gui.json";
 import config from "../../../model/config.json";
 
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = globalGUIConfig.gui.externalSimulationControlsDivData.children;
@@ -276,7 +277,7 @@ export class VWSimulation {
             return;
         }
         else if (document.getElementById("cycle_trigger") === null) {
-            const path: string = Base64.decode("L2VudnMvdmFjdXVtd29ybGQtdHMvcmVzL3NvdW5kcy9kZWJ1Zy5tcDM=");
+            const path: string = `/static/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`;
 
             const trigger: HTMLAudioElement = document.createElement(Base64.decode("YXVkaW8=")) as HTMLAudioElement;
 

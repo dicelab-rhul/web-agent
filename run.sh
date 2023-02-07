@@ -1,3 +1,3 @@
 #!/bin/bash
 
-live-server
+./web_server.py
