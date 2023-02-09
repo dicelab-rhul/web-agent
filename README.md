@@ -16,6 +16,12 @@ user@machine:~$ ./deploy.sh
 user@machine:~$ ./quick_deploy.sh
 ```
 
+### If nothing was modified
+
+```console
+user@machine:~$ ./run.sh
+```
+
 ## How to run the system (development)
 
 ### The first time (to install the dependencies as well) - no minified code
@@ -28,6 +34,12 @@ user@machine:~$ ./dev_deploy.sh
 
 ```console
 user@machine:~$ ./quick_dev_deploy.sh
+```
+
+### If nothing was modified - no minified code
+
+```console
+user@machine:~$ ./run.sh
 ```
 
 ## How to run the experimental code editor
