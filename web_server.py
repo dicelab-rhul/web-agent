@@ -7,6 +7,8 @@ from flask.wrappers import Response
 from secrets import token_urlsafe
 from typing import Any
 from json import loads
+from webbrowser import open_new_tab
+from threading import Timer
 
 import os
 import flask.helpers as helpers
@@ -16,7 +18,10 @@ class WebAgentServer:
     CSP_SELF: str = "'self'"
     CSP_NONE: str = "'none'"
 
-    def __init__(self) -> None:
+    def __init__(self, host: str="127.0.0.1", port: int=5000) -> None:
+        self.__host: str = host
+        self.__port: int = port
+
         self.__app: Flask = Flask(__name__, template_folder=os.path.abspath("templates"))
 
         self.__csp_endpoint_route: str = "/csp-endpoint"
@@ -94,7 +99,7 @@ class WebAgentServer:
         }
 
     def run(self) -> None:
-        self.__app.run(debug=False)
+        self.__app.run(host=self.__host, port=self.__port, debug=False)
 
     def index(self) -> tuple[str | dict[str, Any], int, dict[str, Any]]:
         nonce: str = WebAgentServer.__generate_csp_nonce()
@@ -219,6 +224,11 @@ class WebAgentServer:
 
 
 if __name__ == "__main__":
-    server = WebAgentServer()
+    host: str = "127.0.0.1"
+    port: int = 5000
+
+    server = WebAgentServer(host=host, port=port)
+
+    Timer(1, lambda: open_new_tab(f"http://{host}:{port}/")).start()
 
     server.run()
