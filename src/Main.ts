@@ -1,6 +1,7 @@
 import envsData from "../static/json/envs.json";
 import globalGUIConfig from "../static/json/gui.json";
 import teleoraData from "../static/json/teleora.json";
+import { DOMPurifyPolicy } from "./TTPolicies";
 
 const { containerDivData, choiceDivData, errorDivData, externalSimulationControlsDivData } = globalGUIConfig.gui;
 const externalButtonsData = externalSimulationControlsDivData.children;
@@ -125,7 +126,7 @@ export class Main {
         else {
             let mainStyle: HTMLLinkElement = document.createElement("link");
 
-            mainStyle.href = stylePath;
+            mainStyle.href = DOMPurifyPolicy.createScriptURL(stylePath) as TrustedScriptURL&string; // Why not :)
             mainStyle.rel = "stylesheet";
             mainStyle.type = "text/css";
 
@@ -149,7 +150,7 @@ export class Main {
         else {
             let script: HTMLScriptElement = document.createElement("script");
 
-            script.src = scriptPath;
+            script.src = DOMPurifyPolicy.createScriptURL(scriptPath) as TrustedScriptURL&string;
             script.type = "text/javascript";
             script.async = false;
             script.defer = defer === undefined || defer === null ? false : defer;
@@ -205,6 +206,7 @@ export class Main {
 
             Main.loadEnvironmentDiv(choicePath);
             Main.loadTeleoraDiv();
+            Main.disableFurtherScriptsLoading();
         });
     }
 
@@ -242,7 +244,7 @@ export class Main {
         let button: HTMLButtonElement = document.createElement("button");
 
         button.id = buttonID;
-        button.innerText = buttonText;
+        button.textContent = buttonText;
         button.classList.add(...buttonClasses);
         button.hidden = true;
 
@@ -263,5 +265,14 @@ export class Main {
 
         Main.loadStyle(resourcesPaths.teleoraStyle); // This is the main Teleora style.
         Main.loadScript(resourcesPaths.teleoraScript); // This is the main Teleora script.
+    }
+
+    private static disableFurtherScriptsLoading(): void {
+        let metaTag = document.createElement("meta");
+
+        metaTag.setAttribute("http-equiv", "Content-Security-Policy");
+        metaTag.setAttribute("content", "script-src 'none';");
+
+        document.head.appendChild(metaTag);
     }
 }

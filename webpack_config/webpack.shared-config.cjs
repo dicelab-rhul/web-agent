@@ -7,7 +7,7 @@ module.exports = {
     // Output bundles (location)
     output: {
         path: path.resolve(path.join(__dirname, "..", "static", "js")),
-        filename: "index.js",
+        filename: "index.js"
     },
     // File resolutions
     resolve: {

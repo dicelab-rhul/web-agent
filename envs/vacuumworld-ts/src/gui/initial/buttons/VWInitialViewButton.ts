@@ -22,7 +22,7 @@ export class VWInitialViewButton {
             this.callback = callback;
             this.button = document.createElement("button");
             this.button.id = id;
-            this.button.innerHTML = text;
+            this.button.textContent = text;
             this.button.addEventListener("click", this.callback);
 
             this.tooltip = title;
