@@ -3,6 +3,13 @@
 # This script is used to deploy the whole project.
 # It is used for quick deployment, i.e., it assumes that all the dependencies are already installed.
 
+rm -rf static/envs/*
+rm -rf static/js/*
+rm -rf static/json/envs.json
+rm -rf static/teleora_editor/*
+
+./discover_envs.py
+
 for dir in envs/*/; do
     cd $dir
     ./quick_dev_deploy.sh
@@ -24,7 +31,6 @@ cp -r dist ../static/teleora_editor/
 cd -
 
 echo "Deploying the main page..."
-./discover_envs.py
 npm run dev-build
 echo "Done."
 
