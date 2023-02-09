@@ -111,6 +111,14 @@ table {
     margin: auto;
 }
 
+#options_dialog_ok_button {
+    margin: 5pt;
+}
+
+#options_dialog_cancel_button {
+    margin: 5pt;
+}
+
 #teleora_upload_input, #state_to_load_upload_input {
     border: 1pt solid #000000;
 }
