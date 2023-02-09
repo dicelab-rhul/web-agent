@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# For Python < 3.9
+from __future__ import annotations
+
 from flask.app import Flask
 from flask.globals import request
 from flask.templating import render_template
@@ -229,6 +232,7 @@ if __name__ == "__main__":
 
     server = WebAgentServer(host=host, port=port)
 
+    # TODO: change this to https.
     Timer(1, lambda: open_new_tab(f"http://{host}:{port}/")).start()
 
     server.run()
