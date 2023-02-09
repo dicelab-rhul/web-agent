@@ -1,5 +1,12 @@
 #!/bin/bash
 
+rm -rf static/envs/*
+rm -rf static/js/*
+rm -rf static/json/envs.json
+rm -rf static/teleora_editor/*
+
+./discover_envs.py
+
 for dir in envs/*/; do
     cd $dir
     ./deploy.sh
@@ -16,12 +23,11 @@ done
 
 cd teleora_editor
 ./deploy.sh
-mkdir -p ../static/teleora_editor
+mkdir -p ../static/teleora_editor/
 cp -r dist ../static/teleora_editor/
 cd -
 
 echo "Deploying the main page..."
-./discover_envs.py
 npm prune
 npm install
 npm run build
