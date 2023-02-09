@@ -12,7 +12,7 @@ import os
 
 INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js"]
 FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__)]
-DIR_EXCLUSION_LIST: List[str] = ["node_modules"]
+DIR_EXCLUSION_LIST: List[str] = ["node_modules", "static"]
 OUTPUT_FILE: str = "LOOSE_EQUALITY_CHECKS.md"
 PATTERNS: List[str] = [" == ", " != "]
 HEADER: str = "# List of loose equality checks"

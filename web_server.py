@@ -19,6 +19,8 @@ class WebAgentServer:
     def __init__(self) -> None:
         self.__app: Flask = Flask(__name__, template_folder=os.path.abspath("templates"))
 
+        self.__csp_endpoint_route: str = "/csp-endpoint"
+
         self.__register_routes()
 
         # It would be nice to be able to include `style-src 'nonce-{nonce}'`.
@@ -35,6 +37,11 @@ class WebAgentServer:
             "style-src-attr": "'nonce-{nonce}' 'unsafe-hashes' {hashes}".format(nonce="{nonce}" , hashes=" ".join(self.__get_attr_styles_hashes())),
             "trusted-types": "webagent dompurify literal-string default",
 
+            # TODO: keep an eye on `report-to` support in Firefox and bugfixes in Chromium, so that `report-uri` can be replaced by `report-to`.
+            # `report-uri` is deprecated, but `report-to` is broken in Chromium (see https://bugs.chromium.org/p/chromium/issues/detail?id=1098885), and not supported by Firefox.
+            "report-uri": self.__csp_endpoint_route
+
+            # TODO: keep an eye on TypeScript support for non-string values in DOM sinks, so the `require-trusted-types-for` directive can be included.
             # Unfortunately, the following directive will cause issues with TypeScript (see https://github.com/microsoft/TypeScript/issues/30024).
             # "require-trusted-types-for": "'script'"
         }
@@ -56,13 +63,34 @@ class WebAgentServer:
                 "endpoints":
                     [
                         {
-                            "url": "/csp-endpoint"
+                            "url": self.__csp_endpoint_route
                         }
                     ],
                 "include_subdomains": "true"
             },
-            # Unfortunately, `report-to` is broken in Chromium (see https://bugs.chromium.org/p/chromium/issues/detail?id=1098885), and not supported by Firefox.
-            "Content-Security-Policy-Report-Only": "require-trusted-types-for 'script'; report-uri /csp-endpoint;",
+            "X-Content-Type-Options": "nosniff",
+            "X-Frame-Options": "DENY",
+            "X-XSS-Protection": "1; mode=block", # TODO: is this still worth it?
+            "Referrer-Policy": "same-origin",
+            "Permissions-Policy": "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), sync-xhr=(), usb=(), xr-spatial-tracking=()",
+            "Cross-Origin-Opener-Policy": "same-origin",
+            "Cross-Origin-Embedder-Policy": "require-corp",
+            "Cross-Origin-Resource-Policy": "same-origin",
+            "Cross-Origin-Window-Policy": "deny",
+            "Server": "Web-Agent",
+            "Vary": "Accept-Encoding, Sec-Fetch-Site, Sec-Fetch-Mode, Sec-Fetch-Dest",
+
+            # TODO: uncomment when served over HTTPS + preloaded.
+            # "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+
+            # TODO: uncomment when served over HTTPS with a real certificate.
+            # "Expect-CT": "enforce, max-age=63072000, report-uri=\"/expect-ct-endpoint\"",
+
+            # TODO: keep an eye on `report-to` support in Firefox and bugfixes in Chromium, so that `report-uri` can be replaced by `report-to`.
+            # TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.
+            # `report-uri` is deprecated, but `report-to` is broken in Chromium (see https://bugs.chromium.org/p/chromium/issues/detail?id=1098885), and not supported by Firefox.
+            # Also, see the comment above regarding `require-trusted-types-for` and TypeScript.
+            "Content-Security-Policy-Report-Only": f"require-trusted-types-for 'script'; report-uri {self.__csp_endpoint_route};",
         }
 
     def run(self) -> None:
@@ -109,7 +137,7 @@ class WebAgentServer:
     def __register_routes(self) -> None:
         self.__app.add_url_rule("/", "index", self.index, methods=["GET"])
         self.__app.add_url_rule("/favicon.ico", "favicon", self.favicon, methods=["GET"])
-        self.__app.add_url_rule("/csp-endpoint", "csp_endpoint", self.csp_endpoint, methods=["GET", "POST"])
+        self.__app.add_url_rule(self.__csp_endpoint_route, "csp_endpoint", self.csp_endpoint, methods=["GET", "POST"])
         self.__app.register_error_handler(404, self.__handle_404)
         self.__app.register_error_handler(403, lambda err: self.__deny_request(err, self.__get_default_additional_headers()))
         self.__app.register_error_handler(500, self.__handle_500)
