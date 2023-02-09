@@ -4,8 +4,6 @@
 
 * File [TELEORA.md](TELEORA.md) - line 161: `TODO: other operators...`
 
-* File [static/js/index.js](static/js/index.js) - line 207: `//TODO: Replace these hardcoded paths with dynamic ones.`
-
 * File [teleora_editor/src/gui/TeleoraEditorDiv.ts](teleora_editor/src/gui/TeleoraEditorDiv.ts) - line 24: `javascript() // TODO: Replace this with Teleora.`
 
 * File [envs/vacuumworld-ts/src/model/common/JOptional.ts](envs/vacuumworld-ts/src/model/common/JOptional.ts) - line 1: `// TODO: should this classes be moved to a separate npm module?`
