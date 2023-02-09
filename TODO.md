@@ -1,5 +1,19 @@
 # List of TODOs
 
+* File [web_server.py](web_server.py) - line 40: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+
+* File [web_server.py](web_server.py) - line 44: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks, so the 'require-trusted-types-for' directive can be included.`
+
+* File [web_server.py](web_server.py) - line 73: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it?`
+
+* File [web_server.py](web_server.py) - line 83: `# TODO: uncomment when served over HTTPS + preloaded.`
+
+* File [web_server.py](web_server.py) - line 86: `# TODO: uncomment when served over HTTPS with a real certificate.`
+
+* File [web_server.py](web_server.py) - line 89: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+
+* File [web_server.py](web_server.py) - line 90: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
+
 * File [TELEORA.md](TELEORA.md) - line 159: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
 
 * File [TELEORA.md](TELEORA.md) - line 161: `TODO: other operators...`
