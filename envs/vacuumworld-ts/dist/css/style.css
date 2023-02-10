@@ -73,6 +73,13 @@ table {
     align-items: center;
 }
 
+.initial_buttons {
+    width: 20%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin: 5pt;
+}
+
 .cell {
     padding-bottom: 0%;
     display: flex;
@@ -84,6 +91,10 @@ table {
 
 #draggable_bodies_div {
     display: flex;
+}
+
+#options_dialog {
+    max-height: 75vh;
 }
 
 .option_div {
