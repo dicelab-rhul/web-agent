@@ -198,7 +198,7 @@ export class VWCell implements VWDiv {
         }
         else {
             return `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
-        }        
+        }
     }
 
     private getCellImageSrcIfActorIsPresent(): string {

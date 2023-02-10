@@ -23,7 +23,7 @@ tr {
 
 td {
     border: 1px black solid;
-    padding: 0; 
+    padding: 0;
     margin: 0;
     border-collapse: collapse;
     width: auto;
@@ -33,7 +33,7 @@ td {
 
 table {
     border: 0px;
-    padding: 0; 
+    padding: 0;
     margin: 0;
     border-collapse: collapse;
     border-spacing: 0;

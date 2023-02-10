@@ -242,7 +242,7 @@ export class VWEnvironment {
         if (this.ambient.getGrid().containsKey(actorCoord)) {
             locations.set(VWPosition.CENTER, this.ambient.getGrid().get(actorCoord)!.getAppearance());
         }
-        
+
         if (this.ambient.getGrid().containsKey(forwardCoord)) {
             locations.set(VWPosition.FORWARD, this.ambient.getGrid().get(forwardCoord)!.getAppearance());
         }

@@ -45,7 +45,7 @@
 
     class Atom extends Term { constructor(name) { super(name); }}
     class Variable extends Term { constructor(name) { super(name); }}
-    
+
     class Clause { // a sequence of terms "t1, t2, t3, ..., tn"
         constructor(terms) {
             this.terms = terms;
@@ -63,16 +63,16 @@
     }
 
     class Goal { // a goal is of the form "name : conditions -> action"
-        constructor(statement, conditions, actions) { 
-            this.statement = statement 
+        constructor(statement, conditions, actions) {
+            this.statement = statement
             this.conditions = conditions
             this.actions = actions
         }
-    } 
+    }
 
     class Condition { // a goal is of the form "name : clause"
-        constructor(statement, conditions) { 
-            this.statement = statement 
+        constructor(statement, conditions) {
+            this.statement = statement
             this.conditions = conditions
         }
 
@@ -81,9 +81,9 @@
         }
     }
 
-    class Program { 
-        constructor(goals, conditions) { 
-            this.goals = goals; 
+    class Program {
+        constructor(goals, conditions) {
+            this.goals = goals;
             this.conditions = conditions;
         }
 
@@ -99,7 +99,7 @@
         neg()     { }
         add(y)    { }
         sub(y)    { }
-        mult(y)   { } 
+        mult(y)   { }
         div(y)    { }
         idiv(y)   { }
         pow(y)    { }
@@ -124,7 +124,7 @@ expressions
 
 program
     :  block ';' program         { $$ = [$1].concat($3); }
-    |  block ';'                 { $$ = [$1] }; 
+    |  block ';'                 { $$ = [$1] };
 
 block // blocks can be goals, conditions, facts, actuator defs, sensor defs, or imports
     : hstatement ':' clause ARROW clause     { $$ = new Goal($1, $3, $5); }
@@ -136,8 +136,8 @@ block // blocks can be goals, conditions, facts, actuator defs, sensor defs, or 
 hstatement // statement that can be used in a header
     : ATOM '(' clause ')'       { $$ = new Statement($1, $3); }
     | ATOM '(' ')'              { $$ = new Statement($1, []); };
-    
-clause 
+
+clause
     : statement ',' clause      { $$ = [$1].concat($3); }
     | statement                 { $$ = [$1]; };
 
@@ -149,21 +149,21 @@ statement
     | ATOM                      { $$ = new Statement($1, []); }
     | lxp                       { $$ = $1; }
     | exp                       { $$ = $1; };
- 
+
 lxp
-    : exp LT exp          {$$ = [$1,$3]} 
-    | exp GT exp          {$$ = [$1,$3]} 
-    | exp GTE exp         {$$ = [$1,$3]} 
-    | exp LTE exp         {$$ = [$1,$3]} 
-    | exp EQ exp          {$$ = [$1,$3]} 
+    : exp LT exp          {$$ = [$1,$3]}
+    | exp GT exp          {$$ = [$1,$3]}
+    | exp GTE exp         {$$ = [$1,$3]}
+    | exp LTE exp         {$$ = [$1,$3]}
+    | exp EQ exp          {$$ = [$1,$3]}
     | exp NEQ exp         {$$ = [$1,$3]};
 
 exp
-    : exp '+' exp           {$$ = [$1,$3]} 
-    | exp '-' exp           {$$ = [$1,$3]}    
-    | exp '*' exp           {$$ = [$1,$3]}  
-    | exp '/' exp           {$$ = [$1,$3]} 
-    | exp '^' exp           {$$ = [$1,$3]} 
+    : exp '+' exp           {$$ = [$1,$3]}
+    | exp '-' exp           {$$ = [$1,$3]}
+    | exp '*' exp           {$$ = [$1,$3]}
+    | exp '/' exp           {$$ = [$1,$3]}
+    | exp '^' exp           {$$ = [$1,$3]}
     | '-' exp %prec UMINUS  {$$ = [$2]}
     | '(' exp ')'           {$$ = [$2]}
     | NUMBER                {$$ = [$1]}

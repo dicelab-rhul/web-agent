@@ -144,7 +144,7 @@ This will only work if the operator is defined for the element type.
 
 #### Sets
 
-Sets are unordered collections of unique elements e.g. `{a,b,c,}`. Since they are unordered they have unique semantics when it comes to the basic collection operator.  
+Sets are unordered collections of unique elements e.g. `{a,b,c,}`. Since they are unordered they have unique semantics when it comes to the basic collection operator.
 
 ##### Pipe `|` operator for sets
 

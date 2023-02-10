@@ -7,10 +7,10 @@ conditions :
 actions :
     ATOM;
 
-args : 
+args :
       arg ','
     | arg;
-    
-arg : 
+
+arg :
       ATOM
     | VARIABLE;

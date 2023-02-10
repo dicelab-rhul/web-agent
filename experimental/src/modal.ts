@@ -29,7 +29,7 @@ export function createNewModal(modal_id, modal_body) {
 
 export abstract class Modal {
 
-    modal_id : string; 
+    modal_id : string;
 
     constructor(modal_id : string) {
         this.modal_id = modal_id

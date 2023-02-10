@@ -1,6 +1,6 @@
 import {basicSetup} from "codemirror"
 import {EditorView, keymap} from "@codemirror/view"
-import {createNewModal, Modal} from './modal'; 
+import {createNewModal, Modal} from './modal';
 
 const UNTITLED_NAME : string = "Untitled";
 const LOCAL_STORAGE_PREFIX : string = "00001_webagent_"
@@ -24,7 +24,7 @@ export class Editor {
     active_tab_id : string | null;
     new_tab_id : string;
     editor_view : EditorView;
-    
+
     newFileModal : NewFileModal;
     recoverModal : RecoverModal;
 
@@ -35,8 +35,8 @@ export class Editor {
         this.newEditorTab(new_file, false);
 
         this.new_tab_id = new_file.tab_id;
-        this.active_tab_id = null; 
-        
+        this.active_tab_id = null;
+
         this.editor_view = this.initialiseEditorView();
 
         this.newFileModal = new NewFileModal(this);
@@ -47,7 +47,7 @@ export class Editor {
         var editor_view : EditorView = new EditorView({
             extensions: [
                 basicSetup
-            ],        
+            ],
             parent: document.getElementById("editor")!
         })
         //$("#editor").on("click", function() { console.log("EDITING!")} )
@@ -63,22 +63,22 @@ export class Editor {
             insert: content
         }})
     }
-    
+
     updateLocalStorage(tab_id : string | null) {
         if (tab_id !== null && tab_id !== this.new_tab_id) {
             var value : string = JSON.stringify(this.tabs.get(tab_id));
-            localStorage.setItem(LOCAL_STORAGE_PREFIX + tab_id, value); 
+            localStorage.setItem(LOCAL_STORAGE_PREFIX + tab_id, value);
             console.log("LOCAL STORAGE UPDATE", localStorage.getItem(LOCAL_STORAGE_PREFIX + tab_id));
         }
     }
 
-    updateFileContent(tab_id : string | null) { 
+    updateFileContent(tab_id : string | null) {
         if (tab_id !== null) {
             var content : string = this.editor_view.state.doc.toString();
             this.tabs.get(tab_id)!.content = content;
         }
     }
-   
+
     activateTab(tab_id : string) {
         if (tab_id === this.new_tab_id) {
             this.newFileModal.show()
@@ -95,15 +95,15 @@ export class Editor {
         }
     }
 
-    newEditorTab(editor_file : EditorFile, save : boolean = true) { 
+    newEditorTab(editor_file : EditorFile, save : boolean = true) {
 
         var file_name : string = editor_file.file_name;
-       
+
         var tab_id : string = "editor_tab_" + String(this.tabs.size);
         editor_file.tab_id = tab_id;
 
         $(EDITOR_TABS_ELEMENT_ID).prepend(`
-        <li id=${tab_id} class="nav-item"> 
+        <li id=${tab_id} class="nav-item">
             <a class="nav-link" href="#">${file_name}</a>
         </li>`)
 
@@ -117,7 +117,7 @@ export class Editor {
         /*if (closable) {
             var close_button_html : string = `
             <button id="btn-stop", type="button" class="close_button">
-                <i class="bi bi-x"></i> 
+                <i class="bi bi-x"></i>
             </button>`;
             var close_button = $("#" + tab_id).append(close_button_html)
             //close_button.on("click", function(){
@@ -134,7 +134,7 @@ export class Editor {
 class EditorFile {
 
     tab_id : string;
-    file_name : string; 
+    file_name : string;
     file_extension : string;
     content : string;
 
@@ -145,7 +145,7 @@ class EditorFile {
         this.file_extension = "";   // TODO: set this properly!
     }
 
-    rename(file_name : string) { 
+    rename(file_name : string) {
         this.file_name = file_name;
         //this.save();
     }
@@ -156,13 +156,13 @@ class EditorFile {
         console.log("SAVE FILE", this.tab_id);
     }
 
-    load() { 
+    load() {
         var string_data = localStorage.getItem(LOCAL_STORAGE_PREFIX + this.tab_id);
         if (string_data !== null) {
             var data = JSON.parse(string_data);
             // TODO: do smoething with this data.
         }
-        // error? 
+        // error?
     }
 }
 
@@ -175,10 +175,10 @@ class NewFileModal extends Modal {
         const NEW_ID : string = `${MODAL_NEW_FILE_ID}_new"`
         const BUTTON_CREATE_ID : string = `${MODAL_NEW_FILE_ID}_btn_create`
         const MODAL_BODY : string = `
-            <h5> Create new file:</h5> 
+            <h5> Create new file:</h5>
             <input type="text" class="form-control" id="${NEW_ID}" placeholder="${UNTITLED_NAME}${SOURCE_FILE_EXTENSION}">
 
-            <h5> Upload new file:</h5> 
+            <h5> Upload new file:</h5>
             <input type="file" class="form-control" id="${UPLOAD_ID}" placeholder="${UNTITLED_NAME}${SOURCE_FILE_EXTENSION}">
 
             <div class="mt-2">
@@ -240,13 +240,13 @@ class RecoverModal extends Modal {
                 <button id="${BUTTON_RECOVER_ID}", type="button" class="btn btn-success p-10">Recover</button>
                 <button id="${BUTTON_FRESH_ID}", type="button" class="btn btn-success p-10">Start Fresh</button>
             </div>`
-        createNewModal(MODAL_RECOVER_ID, MODAL_BODY) 
+        createNewModal(MODAL_RECOVER_ID, MODAL_BODY)
         var modal = this;
         $(`#${BUTTON_RECOVER_ID}`).on("click", function() { modal.recover(editor) } );
         $(`#${BUTTON_FRESH_ID}`).on("click", function() { modal.fresh(editor) } );
 
         // check local storage, we might need to show this...
-        
+
         if (localStorage.length > 0) {
             this.show()
         }
