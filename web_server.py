@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# For Python < 3.9
+from __future__ import annotations
+
 from flask.app import Flask
 from flask.globals import request
 from flask.templating import render_template
@@ -34,12 +37,12 @@ class WebAgentServer:
         # At the moment, removing all the style attributes from the CodeMirror editor is not an option.
         # At the end of the day, not having to use `'strict-dynamic'` is good enough.
         self.__nonce_based_csp_dict: dict[str, str] = {
-            "base-uri": WebAgentServer.CSP_SELF,
+            "base-uri": WebAgentServer.CSP_NONE,
             "frame-ancestors": WebAgentServer.CSP_SELF,
             "object-src": WebAgentServer.CSP_NONE,
-            "script-src": "'nonce-{nonce}'",
-            "style-src-elem": "'nonce-{nonce}' {hashes}".format(nonce="{nonce}" , hashes=" ".join(self.__get_inline_styles_hashes())),
-            "style-src-attr": "'nonce-{nonce}' 'unsafe-hashes' {hashes}".format(nonce="{nonce}" , hashes=" ".join(self.__get_attr_styles_hashes())),
+            "script-src": "'nonce-{nonce}' 'report-sample'",
+            "style-src-elem": "'nonce-{nonce}' {hashes} 'report-sample'".format(nonce="{nonce}" , hashes=" ".join(self.__get_inline_styles_hashes())),
+            "style-src-attr": "'nonce-{nonce}' 'unsafe-hashes' {hashes} 'report-sample'".format(nonce="{nonce}" , hashes=" ".join(self.__get_attr_styles_hashes())),
             "trusted-types": "webagent dompurify literal-string default",
 
             # TODO: keep an eye on `report-to` support in Firefox and bugfixes in Chromium, so that `report-uri` can be replaced by `report-to`.
@@ -75,7 +78,7 @@ class WebAgentServer:
             },
             "X-Content-Type-Options": "nosniff",
             "X-Frame-Options": "DENY",
-            "X-XSS-Protection": "1; mode=block", # TODO: is this still worth it?
+            "X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.
             "Referrer-Policy": "same-origin",
             "Permissions-Policy": "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), sync-xhr=(), usb=(), xr-spatial-tracking=()",
             "Cross-Origin-Opener-Policy": "same-origin",
@@ -158,7 +161,7 @@ class WebAgentServer:
 
     def __pack_nonce_based_csp_list(self) -> str:
         return "; ".join(self._nonce_based_csp_list)
-   
+
     def __pack_whitelist_based_csp(self) -> str:
         return "; ".join([f"{key} {value}" for key, value in self.__whitelist_based_csp_dict.items()])
 
@@ -229,6 +232,7 @@ if __name__ == "__main__":
 
     server = WebAgentServer(host=host, port=port)
 
+    # TODO: change this to https.
     Timer(1, lambda: open_new_tab(f"http://{host}:{port}/")).start()
 
     server.run()
