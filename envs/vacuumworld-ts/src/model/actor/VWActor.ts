@@ -125,7 +125,7 @@ export abstract class VWActor extends VWAbstractIdentifiable {
         const messages: VWMessage[] = [];
 
         this.getListeningSensor().ifPresent((listeningSensor: VWListeningSensor) => listeningSensor.sourceAll().ifPresent((sourced: VWMessage[]) => messages.push(...sourced)));
-    
+
         return messages;
     }
 

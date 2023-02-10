@@ -189,7 +189,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
         });
 
         this.div.removeChild(this.leftDiv);
-    }   
+    }
 
     public show(): void {
         if (!VWExistenceChecker.allArgumentsExist(this.div)) {

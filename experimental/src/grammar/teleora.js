@@ -84,40 +84,40 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
- return $$[$0-1]; 
+ return $$[$0-1];
 break;
 case 2: case 11:
- this.$ = [$$[$0-2]].concat($$[$0]); 
+ this.$ = [$$[$0-2]].concat($$[$0]);
 break;
 case 3:
- this.$ = [$$[$0-1]] 
+ this.$ = [$$[$0-1]]
 break;
 case 4:
- this.$ = new Goal($$[$0-4], $$[$0-2], $$[$0]); 
+ this.$ = new Goal($$[$0-4], $$[$0-2], $$[$0]);
 break;
 case 5:
- this.$ = new Goal($$[$0-2], [], $$[$0]); 
+ this.$ = new Goal($$[$0-2], [], $$[$0]);
 break;
 case 6:
- this.$ = new Condition($$[$0-2], $$[$0]); 
+ this.$ = new Condition($$[$0-2], $$[$0]);
 break;
 case 7: case 8:
- this.$ = new Condition($$[$0], []); 
+ this.$ = new Condition($$[$0], []);
 break;
 case 9: case 13: case 14:
- this.$ = new Statement($$[$0-3], $$[$0-1]); 
+ this.$ = new Statement($$[$0-3], $$[$0-1]);
 break;
 case 10: case 15: case 16:
- this.$ = new Statement($$[$0-2], []); 
+ this.$ = new Statement($$[$0-2], []);
 break;
 case 12:
- this.$ = [$$[$0]]; 
+ this.$ = [$$[$0]];
 break;
 case 17:
- this.$ = new Statement($$[$0], []); 
+ this.$ = new Statement($$[$0], []);
 break;
 case 18: case 19:
- this.$ = $$[$0]; 
+ this.$ = $$[$0];
 break;
 case 20: case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29: case 30:
 this.$ = [$$[$0-2],$$[$0]]
@@ -284,7 +284,7 @@ parse: function parse(input) {
 
     class Atom extends Term { constructor(name) { super(name); }}
     class Variable extends Term { constructor(name) { super(name); }}
-    
+
     class Clause { // a sequence of terms "t1, t2, t3, ..., tn"
         constructor(terms) {
             this.terms = terms;
@@ -302,16 +302,16 @@ parse: function parse(input) {
     }
 
     class Goal { // a goal is of the form "name : conditions -> action"
-        constructor(statement, conditions, actions) { 
-            this.statement = statement 
+        constructor(statement, conditions, actions) {
+            this.statement = statement
             this.conditions = conditions
             this.actions = actions
         }
-    } 
+    }
 
     class Condition { // a goal is of the form "name : clause"
-        constructor(statement, conditions) { 
-            this.statement = statement 
+        constructor(statement, conditions) {
+            this.statement = statement
             this.conditions = conditions
         }
 
@@ -320,9 +320,9 @@ parse: function parse(input) {
         }
     }
 
-    class Program { 
-        constructor(goals, conditions) { 
-            this.goals = goals; 
+    class Program {
+        constructor(goals, conditions) {
+            this.goals = goals;
             this.conditions = conditions;
         }
 
@@ -338,7 +338,7 @@ parse: function parse(input) {
         neg()     { }
         add(y)    { }
         sub(y)    { }
-        mult(y)   { } 
+        mult(y)   { }
         div(y)    { }
         idiv(y)   { }
         pow(y)    { }

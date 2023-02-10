@@ -8,7 +8,7 @@ import './utils.js'
 import {Editor} from './editor.js'
 
 $(function(){
-    
+
     // BUTTONS
     $("#btn-stop").hide()
     $("#btn-run").on("click", function(){
@@ -27,6 +27,6 @@ $(function(){
 
     window.onbeforeunload = function() {
         editor.updateLocalStorage(editor.active_tab_id);
-        return '' 
+        return ''
     }
-}); 
+});

@@ -125,7 +125,7 @@ export class VWPlatformDiv implements VWDiv {
         const stateToLoadInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.stateToLoadInputDivData.children.stateToLoadInputData;
         const file = (<HTMLInputElement>document.getElementById(stateToLoadInputData.id)).files[0];
         const reader = new FileReader();
-        
+
         reader.onload = (e) => {
             this.options.setStateToLoad(JSON.parse(<string>e.target.result));
         }
@@ -137,7 +137,7 @@ export class VWPlatformDiv implements VWDiv {
         const teleoraInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.teleoraInputDivData.children.teleoraInputData;
         const file = (<HTMLInputElement>document.getElementById(teleoraInputData.id)).files[0];
         const reader = new FileReader();
-        
+
         reader.onload = (e) => {
             this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.
         }
@@ -297,9 +297,9 @@ export class VWPlatformDiv implements VWDiv {
 
                 this.simulation.stop();
                 this.options.setUserDifficulty(VWUserDifficulty.BASIC);
-    
+
                 this.simulation = new VWSimulation(VWEnvironment.fromJsonObject(state), this.options);
-    
+
                 this.simulation.setCallbacks(this.replaceGridDiv.bind(this), this.hideDraggableBodiesDiv.bind(this), this.replaceDraggableBodiesDiv.bind(this), this.hideSimulationControlsDiv.bind(this), this.replaceInternalSimulationControlsDiv.bind(this), this.highlightSelectedCell.bind(this));
                 this.simulation.showSimulation();
             });
