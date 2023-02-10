@@ -53,11 +53,13 @@ export class VWOptionsDialog implements VWPackable {
     private generateSpeedValues(): string[] {
         let values: string[] = [];
 
-        for (let i = 0; i < 1000; i++) {
-            const val: number = i / 1000;
+        for (let i = 0; i < 10; i++) {
+            const val: number = i / 10;
 
             values.push(val.toString());
         }
+
+        values.push("0.999");
 
         return values;
     }
@@ -123,7 +125,7 @@ export class VWOptionsDialog implements VWPackable {
 
         this.effortsSelectorDiv = VWHTMLUtils.createDivWithLabel(effortsInputDivData.id, effortsInputLabelData.for, effortsInputLabelData.text, effortsInputDivData.classes, effortsInputLabelData.classes);
 
-        let numberInputsIDsDivs: HTMLDivElement[] = VWHTMLUtils.createNumberInputsDivs(vwActions, numberInputsIDsDivSuffix, numberInputsIDsSuffix, effortInputLabelData.classes, effortInputLabelData.classes);
+        let numberInputsIDsDivs: HTMLDivElement[] = VWHTMLUtils.createNumberInputsDivs(vwActions, numberInputsIDsDivSuffix, numberInputsIDsSuffix, effortsInputDivData.classes, effortInputLabelData.classes);
 
         numberInputsIDsDivs.forEach((numberInputsIDsDiv: HTMLDivElement) => this.effortsSelectorDiv.appendChild(numberInputsIDsDiv));
     }
@@ -145,13 +147,13 @@ export class VWOptionsDialog implements VWPackable {
     private constructOkButton(): void {
         const optionsOKBtn = optionsDialogData.children.optionsOKBtn;
 
-        this.okButton = new VWInitialViewButton(optionsOKBtn.text, optionsOKBtn.id, optionsOKBtn.title, this.okButtonCallback.bind(this));
+        this.okButton = new VWInitialViewButton(optionsOKBtn.text, optionsOKBtn.id, optionsOKBtn.title, this.okButtonCallback.bind(this), optionsOKBtn.classes);
     }
 
     private constructCancelButton(): void {
         const optionsCancelBtn = optionsDialogData.children.optionsCancelBtn;
 
-        this.cancelButton = new VWInitialViewButton(optionsCancelBtn.text, optionsCancelBtn.id, optionsCancelBtn.title, this.cancelButtonCallback.bind(this));
+        this.cancelButton = new VWInitialViewButton(optionsCancelBtn.text, optionsCancelBtn.id, optionsCancelBtn.title, this.cancelButtonCallback.bind(this), optionsCancelBtn.classes);
     }
 
     public pack(): void {
