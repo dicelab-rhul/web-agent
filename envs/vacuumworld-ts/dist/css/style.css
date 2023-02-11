@@ -65,10 +65,6 @@ table {
     display: inline-flex;
 }
 
-#draggable_bodies_div {
-    padding-left: 10px;
-}
-
 #initial_view_buttons_div {
     align-items: center;
 }
@@ -91,6 +87,10 @@ table {
 
 #draggable_bodies_div {
     display: flex;
+}
+
+.draggable_bodies_div_visible {
+    padding-left: 10px;
 }
 
 #options_dialog {

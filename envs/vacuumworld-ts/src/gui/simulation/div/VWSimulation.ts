@@ -171,6 +171,7 @@ export class VWSimulation {
 
     public cycleSimulation(): void {
         this.validateCallbacks();
+        this.hideDraggableBodiesDivCallback();
 
         this.paused = false;
         this.canRun = true;
