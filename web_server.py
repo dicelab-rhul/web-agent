@@ -3,6 +3,12 @@
 # For Python < 3.9
 from __future__ import annotations
 
+from importlib.util import find_spec
+
+# Safeguard (mainly) for MS Windows.
+if find_spec("flask") is None:
+    raise ImportError("Flask is not installed. Please run `pip install flask`.")
+
 from flask.app import Flask
 from flask.globals import request
 from flask.templating import render_template
