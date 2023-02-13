@@ -1,20 +1,20 @@
 # List of TODOs
 
-* File [web_server.py](web_server.py) - line 48: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+* File [web_server.py](web_server.py) - line 54: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
-* File [web_server.py](web_server.py) - line 52: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks, so the 'require-trusted-types-for' directive can be included.`
+* File [web_server.py](web_server.py) - line 58: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks, so the 'require-trusted-types-for' directive can be included.`
 
-* File [web_server.py](web_server.py) - line 81: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.`
+* File [web_server.py](web_server.py) - line 87: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.`
 
-* File [web_server.py](web_server.py) - line 91: `# TODO: uncomment when served over HTTPS + preloaded.`
+* File [web_server.py](web_server.py) - line 97: `# TODO: uncomment when served over HTTPS + preloaded.`
 
-* File [web_server.py](web_server.py) - line 94: `# TODO: uncomment when served over HTTPS with a real certificate.`
+* File [web_server.py](web_server.py) - line 100: `# TODO: uncomment when served over HTTPS with a real certificate.`
 
-* File [web_server.py](web_server.py) - line 97: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+* File [web_server.py](web_server.py) - line 103: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
-* File [web_server.py](web_server.py) - line 98: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
+* File [web_server.py](web_server.py) - line 104: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
 
-* File [web_server.py](web_server.py) - line 235: `# TODO: change this to https.`
+* File [web_server.py](web_server.py) - line 241: `# TODO: change this to https.`
 
 * File [TELEORA.md](TELEORA.md) - line 159: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
 

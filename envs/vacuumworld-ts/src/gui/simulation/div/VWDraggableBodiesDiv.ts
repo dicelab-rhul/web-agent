@@ -29,6 +29,8 @@ export class VWDraggableBodiesDiv implements VWDiv {
         this.rightDiv.id = rightDraggableBodiesDivData.id;
         this.div.hidden = true;
 
+        this.div.classList.add("hidden");
+
         this.createDraggableBodies();
 
         this.gridSize = gridSize;
@@ -207,6 +209,9 @@ export class VWDraggableBodiesDiv implements VWDiv {
             this.leftDiv.hidden = false;
             this.rightDiv.hidden = false;
             this.div.hidden = false;
+
+            this.div.classList.remove("hidden");
+            this.div.classList.add("draggable_bodies_div_visible");
         }
     }
 
@@ -226,6 +231,9 @@ export class VWDraggableBodiesDiv implements VWDiv {
             this.div.hidden = true;
             this.leftDiv.hidden = true;
             this.rightDiv.hidden = true;
+
+            this.div.classList.add("hidden");
+            this.div.classList.remove("draggable_bodies_div_visible");
         }
     }
 
