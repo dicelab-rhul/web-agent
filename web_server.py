@@ -94,8 +94,7 @@ class WebAgentServer:
             "Server": "Web-Agent",
             "Vary": "Accept-Encoding, Sec-Fetch-Site, Sec-Fetch-Mode, Sec-Fetch-Dest",
 
-            # TODO: uncomment when served over HTTPS + preloaded.
-            # "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 
             # TODO: uncomment when served over HTTPS with a real certificate.
             # "Expect-CT": "enforce, max-age=63072000, report-uri=\"/expect-ct-endpoint\"",
@@ -107,8 +106,11 @@ class WebAgentServer:
             "Content-Security-Policy-Report-Only": f"require-trusted-types-for 'script'; report-uri {self.__csp_endpoint_route};",
         }
 
-    def run(self) -> None:
-        self.__app.run(host=self.__host, port=self.__port, debug=False)
+    def run(self, https: bool, tls_folder: str="") -> None:
+        if https and tls_folder:
+            self.__app.run(host=self.__host, port=self.__port, debug=False, ssl_context=(os.path.join(tls_folder, "localhost+2.pem"), os.path.join(tls_folder, "secp521r1.pem")))
+        else:
+            self.__app.run(host=self.__host, port=self.__port, debug=False)
 
     def index(self) -> tuple[str | dict[str, Any], int, dict[str, Any]]:
         nonce: str = WebAgentServer.__generate_csp_nonce()
@@ -235,10 +237,11 @@ class WebAgentServer:
 if __name__ == "__main__":
     host: str = "127.0.0.1"
     port: int = 5000
-
+    tls_folder: str = os.path.abspath("tls")
+    https: bool = os.path.exists(tls_folder) and os.path.isdir(tls_folder)
     server = WebAgentServer(host=host, port=port)
+    protocol: str = "https" if https else "http"
 
-    # TODO: change this to https.
-    Timer(1, lambda: open_new_tab(f"http://{host}:{port}/")).start()
+    Timer(1, lambda: open_new_tab(f"{protocol}://{host}:{port}/")).start()
 
-    server.run()
+    server.run(https=https, tls_folder=tls_folder if https else "")

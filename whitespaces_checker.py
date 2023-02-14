@@ -3,19 +3,23 @@
 import os
 
 
+INTERESTING_EXTENSIONS = [".py", ".js", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt"]
+DIRECTORIES_TO_IGNORE = ["node_modules", ".git"]
+
+
 def main() -> None:
     for d, _, files in os.walk("."):
-        if "node_modules" in d or ".git" in d:
+        if any(ignored in d for ignored in DIRECTORIES_TO_IGNORE):
             continue
         else:
             __scan_files(d, files)
 
+
 def __scan_files(d: str, files: list[str]) -> None:
     for f in files:
-        if f.endswith(".mp3") or f.endswith(".png") or f.endswith(".ico"):
-            continue
-        else:
+        if any(f.endswith(ext) for ext in INTERESTING_EXTENSIONS):
             __scan_file(d, f)
+
 
 def __scan_file(d: str, f: str) -> None:
     lines: list[str] = open(os.path.join(d, f)).readlines()

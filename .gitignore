@@ -60,6 +60,9 @@ static/teleora_editor
 # IDE files
 .vscode/
 
+# TLS files
+tls/
+
 # Other stuff
 typings/
 lib/*.js
@@ -70,3 +73,4 @@ vw.sh
 static/json/envs.json
 package-lock.json
 envs/vacuumworld-ts/res/images/legacy
+test.js
