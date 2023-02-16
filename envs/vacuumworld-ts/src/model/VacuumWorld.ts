@@ -12,7 +12,7 @@ export class VacuumWorld {
 
         platformDiv.pack();
 
-        document.getElementById("container_div").appendChild(platformDiv.getDiv());
+        document.getElementById("right_container_div").appendChild(platformDiv.getDiv());
 
         platformDiv.show();
     }

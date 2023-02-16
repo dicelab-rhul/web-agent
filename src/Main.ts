@@ -4,6 +4,7 @@ import teleoraData from "../static/json/teleora.json";
 import { DOMPurifyPolicy } from "./TTPolicies";
 
 const { containerDivData, choiceDivData, errorDivData, externalSimulationControlsDivData } = globalGUIConfig.gui;
+const { leftContainerDivData, rightContainerDivData } = containerDivData.children;
 const externalButtonsData = externalSimulationControlsDivData.children;
 
 type ResourcePaths = {
@@ -204,10 +205,21 @@ export class Main {
 
             choiceDiv.hidden = true;
 
+            Main.loadSubContainerDiv(leftContainerDivData.id, leftContainerDivData.classes);
+            Main.loadSubContainerDiv(rightContainerDivData.id, rightContainerDivData.classes);
             Main.loadEnvironmentDiv(choicePath);
             Main.loadTeleoraDiv();
             Main.disableFurtherScriptsLoading();
         });
+    }
+
+    private static loadSubContainerDiv(id: string, classes: string[]): void {
+        let subContainerDiv: HTMLDivElement = document.createElement("div");
+
+        subContainerDiv.id = id;
+        subContainerDiv.classList.add(...classes);
+
+        document.getElementById(containerDivData.id).appendChild(subContainerDiv);
     }
 
     private static loadEnvironmentDiv(choicePath: string): void {
@@ -234,10 +246,30 @@ export class Main {
         let controls: HTMLButtonElement[] = [];
 
         for (let btnData of Object.values(externalButtonsData)) {
-            controls.push(Main.createSimulationControlButton(btnData.id, btnData.text, btnData.classes, () => console.log(btnData.defaultLogMessage)));
+            if (btnData.id === externalButtonsData.toggleTeleoraEditorBtn.id) {
+                controls.push(Main.createSimulationControlButton(btnData.id, btnData.text, btnData.classes, Main.toggleTeleoraEditor));
+            }
+            else {
+                controls.push(Main.createSimulationControlButton(btnData.id, btnData.text, btnData.classes, () => console.log(btnData.defaultLogMessage)));
+            }
         }
 
         return controls;
+    }
+
+    private static toggleTeleoraEditor(): void {
+        if (document.getElementById(leftContainerDivData.id).classList.contains("hidden")) {
+            document.getElementById(leftContainerDivData.id).classList.remove("hidden");
+            document.getElementById(leftContainerDivData.id).classList.add(...leftContainerDivData.classes);
+            document.getElementById(rightContainerDivData.id).classList.remove(rightContainerDivData.classAlone);
+            document.getElementById(rightContainerDivData.id).classList.add(rightContainerDivData.classNotAlone);
+        }
+        else {
+            document.getElementById(leftContainerDivData.id).classList.remove(...leftContainerDivData.classes);
+            document.getElementById(leftContainerDivData.id).classList.add("hidden");
+            document.getElementById(rightContainerDivData.id).classList.remove(rightContainerDivData.classNotAlone);
+            document.getElementById(rightContainerDivData.id).classList.add(rightContainerDivData.classAlone);
+        }
     }
 
     private static createSimulationControlButton(buttonID: string, buttonText: string, buttonClasses: string[], buttonDefaultClickFunction: () => void): HTMLButtonElement {

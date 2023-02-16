@@ -18,6 +18,7 @@ from typing import Any
 from json import loads
 from webbrowser import open_new_tab
 from threading import Timer
+from ssl import SSLContext, PROTOCOL_TLS_CLIENT
 
 import os
 import flask.helpers as helpers
@@ -108,6 +109,13 @@ class WebAgentServer:
 
     def run(self, https: bool, tls_folder: str="") -> None:
         if https and tls_folder:
+            context: SSLContext = SSLContext(protocol=PROTOCOL_TLS_CLIENT)
+
+            # TLS 1.3+ only.
+            context.minimum_version = context.maximum_version
+
+            context.load_cert_chain(os.path.join(tls_folder, "localhost+2.pem"), os.path.join(tls_folder, "secp521r1.pem"))
+
             self.__app.run(host=self.__host, port=self.__port, debug=False, ssl_context=(os.path.join(tls_folder, "localhost+2.pem"), os.path.join(tls_folder, "secp521r1.pem")))
         else:
             self.__app.run(host=self.__host, port=self.__port, debug=False)
