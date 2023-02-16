@@ -12,6 +12,8 @@
 
 * File [web_server.py](web_server.py) - line 104: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
 
+* File [web_server.py](web_server.py) - line 111: `# TODO: Either SSLContext or Flask are bugged, because TLS breaks when Chromium includes GREASE supported versions in the Client Hello.`
+
 * File [TELEORA.md](TELEORA.md) - line 159: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
 
 * File [TELEORA.md](TELEORA.md) - line 161: `TODO: other operators...`
