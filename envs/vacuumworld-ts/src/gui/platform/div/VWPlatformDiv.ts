@@ -28,7 +28,7 @@ import guiConfig from "../../common/gui.json";
 const { externalSimulationControlsDivData } = globalGUIConfig.gui;
 const { minEnvDim, maxEnvDim, wikiPageURL } = commonConfig;
 const { platformDivData } = guiConfig;
-const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
+const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, toggleTeleoraEditorBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -327,6 +327,7 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhileRunning;
         document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhileRunning;
         document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhileRunning;
+        document.getElementById(toggleTeleoraEditorBtn.id).hidden = saveStateBtn.hiddenWhileRunning;
         document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhileRunning;
         document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhileRunning;
         document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileRunning;
@@ -343,6 +344,7 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhileStopped;
         document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhileStopped;
         document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhileStopped;
+        document.getElementById(toggleTeleoraEditorBtn.id).hidden = saveStateBtn.hiddenWhileStopped;
         document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhileStopped;
         document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhileStopped;
         document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileStopped;
@@ -359,6 +361,7 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById(stopBtn.id).hidden = stopBtn.hiddenWhilePaused;
         document.getElementById(resetBtn.id).hidden = resetBtn.hiddenWhilePaused;
         document.getElementById(speedUpBtn.id).hidden = speedUpBtn.hiddenWhilePaused;
+        document.getElementById(toggleTeleoraEditorBtn.id).hidden = saveStateBtn.hiddenWhilePaused;
         document.getElementById(saveStateBtn.id).hidden = saveStateBtn.hiddenWhilePaused;
         document.getElementById(loadStateBtn.id).hidden = loadStateBtn.hiddenWhilePaused;
         document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhilePaused;
@@ -376,6 +379,7 @@ export class VWPlatformDiv implements VWDiv {
             document.getElementById(stopBtn.id).title = stopBtn.title;
             document.getElementById(resetBtn.id).title = resetBtn.title;
             document.getElementById(speedUpBtn.id).title = speedUpBtn.title;
+            document.getElementById(toggleTeleoraEditorBtn.id).title = toggleTeleoraEditorBtn.title;
             document.getElementById(saveStateBtn.id).title = saveStateBtn.title;
             document.getElementById(loadStateBtn.id).title = loadStateBtn.title;
             document.getElementById(guideBtn.id).title = guideBtn.title;

@@ -46,3 +46,29 @@ body {
 .hidden {
     display: none;
 }
+
+#container_div {
+    display: flex;
+    overflow: auto;
+}
+
+.left_container_div {
+    display: flex;
+}
+
+#left_container_div {
+    border: 1px solid #000000;
+}
+
+.right_container_div_alone {
+    border: 1px solid #000000;
+}
+
+.right_container_div_not_alone {
+    border: 1px solid #000000;
+    border-width: 1px 1px 1px 0;
+}
+
+#right_container_div {
+    display: flex;
+}

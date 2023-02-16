@@ -39,11 +39,6 @@ table {
     border-spacing: 0;
 }
 
-#container_div {
-    display: grid;
-    overflow: auto;
-}
-
 #error_div {
     border: 3px solid black;
     padding: 10px;
