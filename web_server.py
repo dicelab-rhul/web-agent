@@ -108,6 +108,7 @@ class WebAgentServer:
         }
 
     def run(self, https: bool, tls_folder: str="") -> None:
+        # TODO: Either SSLContext or Flask are bugged, because TLS breaks when Chromium includes GREASE supported versions in the Client Hello.
         if https and tls_folder:
             context: SSLContext = SSLContext(protocol=PROTOCOL_TLS_SERVER)
 
