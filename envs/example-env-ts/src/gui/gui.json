@@ -1,0 +1,8 @@
+{
+    "gui": {
+        "exampleDivData": {
+            "id": "example_div",
+            "textContent": "Hello World!"
+        }
+    }
+}

@@ -1,5 +1,5 @@
-import { VWPlatformDiv } from "../gui/platform/div/VWPlatformDiv";
-import { VWExistenceChecker } from "./utils/VWExistenceChecker";
+import { VWPlatformDiv } from "./platform/div/VWPlatformDiv";
+import { VWExistenceChecker } from "../model/utils/VWExistenceChecker";
 import envData from "../../../../static/json/envs.json"
 
 export class VacuumWorld {
