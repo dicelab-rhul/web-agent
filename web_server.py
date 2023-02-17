@@ -107,19 +107,40 @@ class WebAgentServer:
             "Content-Security-Policy-Report-Only": f"require-trusted-types-for 'script'; report-uri {self.__csp_endpoint_route};",
         }
 
-    def run(self, https: bool, tls_folder: str="") -> None:
-        # TODO: Either SSLContext or Flask are bugged, because TLS breaks when Chromium includes GREASE supported versions in the Client Hello.
-        if https and tls_folder:
+    def run(self, authentication_data: dict[str, str]) -> None:
+        if authentication_data:
             context: SSLContext = SSLContext(protocol=PROTOCOL_TLS_SERVER)
 
             # TLS 1.3+ only.
             context.minimum_version = context.maximum_version
 
-            context.load_cert_chain(os.path.join(tls_folder, "localhost+2.pem"), os.path.join(tls_folder, "secp521r1.pem"))
+            context.load_cert_chain(certfile=authentication_data["cert_file_path"], keyfile=authentication_data["key_file_path"])
 
             self.__app.run(host=self.__host, port=self.__port, debug=False, ssl_context=context)
         else:
             self.__app.run(host=self.__host, port=self.__port, debug=False)
+
+    @staticmethod
+    def get_authentication_data(tls_folder: str) -> dict[str, str]:
+        # Ed448 is not supported by mkcert, so it is not included.
+        algorithms: list[str] = [
+            "secp256r1",
+            "ed25519",
+            "secp384r1",
+            "secp521r1", # Not supported by Chromium. Therefore, it is the last resort.
+        ]
+
+        for algorithm in algorithms:
+            key_file_path: str = os.path.join(tls_folder, f"{algorithm}-key.pem")
+            cert_file_path: str = os.path.join(tls_folder, f"{algorithm}-cert.pem")
+
+            if os.path.exists(key_file_path) and os.path.exists(cert_file_path):
+                return {
+                    "key_file_path": key_file_path,
+                    "cert_file_path": cert_file_path
+                }
+
+        return {}
 
     def index(self) -> tuple[str | dict[str, Any], int, dict[str, Any]]:
         nonce: str = WebAgentServer.__generate_csp_nonce()
@@ -247,10 +268,10 @@ if __name__ == "__main__":
     host: str = "127.0.0.1"
     port: int = 5000
     tls_folder: str = os.path.abspath("tls")
-    https: bool = os.path.exists(tls_folder) and os.path.isdir(tls_folder)
+    authentication_data: dict[str, str] = WebAgentServer.get_authentication_data(tls_folder=tls_folder)
     server = WebAgentServer(host=host, port=port)
-    protocol: str = "https" if https else "http"
+    protocol: str = "https" if authentication_data else "http"
 
     Timer(1, lambda: open_new_tab(f"{protocol}://{host}:{port}/")).start()
 
-    server.run(https=https, tls_folder=tls_folder if https else "")
+    server.run(authentication_data=authentication_data)

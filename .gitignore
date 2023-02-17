@@ -61,7 +61,9 @@ static/teleora_editor
 .vscode/
 
 # TLS files
-tls/
+*.pem
+*.csr
+
 
 # Other stuff
 typings/
@@ -74,3 +76,4 @@ static/json/envs.json
 package-lock.json
 envs/vacuumworld-ts/res/images/legacy
 test.js
+test.py

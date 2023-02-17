@@ -3,7 +3,7 @@
 import os
 
 
-INTERESTING_EXTENSIONS = [".py", ".js", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt"]
+INTERESTING_EXTENSIONS = [".py", ".js", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh"]
 DIRECTORIES_TO_IGNORE = ["node_modules", ".git"]
 
 
