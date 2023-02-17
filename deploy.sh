@@ -34,4 +34,8 @@ npm run build
 find static -name "*.LICENSE.txt" -type f | xargs rm -f
 echo "Done."
 
+cd tls
+./gen_keys_and_certs.sh
+cd -
+
 ./run.sh

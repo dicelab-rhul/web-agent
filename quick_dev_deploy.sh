@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script is used to deploy the whole project.
-# It is used for quick deployment, i.e., it assumes that all the dependencies are already installed.
+# It is used for quick deployment, i.e., it assumes that all the dependencies and X.509 certificates are already installed.
 
 rm -rf static/envs/*
 rm -rf static/js/*

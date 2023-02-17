@@ -61,7 +61,9 @@ static/teleora_editor
 .vscode/
 
 # TLS files
-tls/
+*.pem
+*.csr
+
 
 # Other stuff
 typings/
