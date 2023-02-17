@@ -1,4 +1,4 @@
-import { VacuumWorld } from "./model/VacuumWorld"
+import { VacuumWorld } from "./gui/VacuumWorld"
 
 /*
  *

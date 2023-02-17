@@ -1,4 +1,4 @@
-import { HelloWorld } from "./model/HelloWorld";
+import { HelloWorld } from "./gui/HelloWorld";
 
 /*
  *
