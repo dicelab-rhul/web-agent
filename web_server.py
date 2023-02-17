@@ -115,7 +115,8 @@ class WebAgentServer:
             # TLS 1.3+ only.
             context.minimum_version = context.maximum_version
 
-            context.load_cert_chain(os.path.join(tls_folder, "localhost+2.pem"), os.path.join(tls_folder, "secp521r1.pem"))
+            # Chromium does not support secp521r1, so secp384r1 is used instead.
+            context.load_cert_chain(os.path.join(tls_folder, "secp384r1-cert.pem"), os.path.join(tls_folder, "secp384r1-key.pem"))
 
             self.__app.run(host=self.__host, port=self.__port, debug=False, ssl_context=context)
         else:

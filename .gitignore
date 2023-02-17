@@ -74,3 +74,4 @@ static/json/envs.json
 package-lock.json
 envs/vacuumworld-ts/res/images/legacy
 test.js
+test.py
