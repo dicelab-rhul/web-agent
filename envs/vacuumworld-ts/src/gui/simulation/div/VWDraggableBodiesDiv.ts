@@ -1,7 +1,7 @@
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
 import { VWDraggableDiv } from "./VWDraggableDiv";
-import envData from "../../../../../../static/json/envs.json"
+import envData from "../../../../../../static/json/envs.json";
 
 import guiConfig from "../../common/gui.json";
 
@@ -40,7 +40,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
     private createDraggableBodies(): void {
         this.draggableBodies = [];
 
-        const draggableBodiesActorImgNames: string[] = ["green_north", "orange_north", "white_north", "user_north"]
+        const draggableBodiesActorImgNames: string[] = ["green_north", "orange_north", "white_north", "user_north"];
         const draggableBodiesDirtImgNames: string[] = ["green_dirt", "orange_dirt"];
         const draggableBodiesImgSuffix: string = ".png";
         const draggableBodiesImgPrefix: string = `/static/${envData["vacuumworld-ts"]}/res/images/locations/`;

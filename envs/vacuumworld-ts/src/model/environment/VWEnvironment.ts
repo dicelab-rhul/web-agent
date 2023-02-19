@@ -175,7 +175,7 @@ export class VWEnvironment {
     }
 
     private executeActorActions(actor: VWActor): void {
-        const actions: VWAction[] = []
+        const actions: VWAction[] = [];
 
         if (actor.getPhysicalActuator().orElseThrow().hasPendingActions()) {
             actor.getPhysicalActuator().orElseThrow().sourceAll().forEach((action: VWPhysicalAction) => actions.push(action));

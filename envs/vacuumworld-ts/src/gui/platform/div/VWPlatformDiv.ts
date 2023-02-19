@@ -16,17 +16,19 @@ import { VWOptionsDialogDiv } from "../../initial/div/VWOptionsDialogDiv";
 import { VWDraggableBodiesDiv } from "../../simulation/div/VWDraggableBodiesDiv";
 import { VWGridDiv } from "../../simulation/div/VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternalSimulationControlsDiv";
-import { VWSimulation } from "../../simulation/div/VWSimulation";
+import { VWSimulation } from "../../simulation/VWSimulation";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWCoord } from "../../../model/common/VWCoord";
 
+import globalConfig from "../../../../../../static/json/config.json";
 import globalGUIConfig from "../../../../../../static/json/gui.json";
 import commonConfig from "../../../model/config.json";
 import vwActions from "../../../model/actions/vwactions.json";
 import guiConfig from "../../common/gui.json";
 
+const wikiPageURL: string = globalConfig.wikiPageURL;
 const { externalSimulationControlsDivData } = globalGUIConfig.gui;
-const { minEnvDim, maxEnvDim, wikiPageURL } = commonConfig;
+const { minEnvDim, maxEnvDim } = commonConfig;
 const { platformDivData } = guiConfig;
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, toggleTeleoraEditorBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
 

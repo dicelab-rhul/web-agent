@@ -5,7 +5,7 @@ import { VWOrientation } from "../../../model/common/VWOrientation";
 import { VWLocationAppearance } from "../../../model/environment/VWLocationAppearance";
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
-import envData from "../../../../../../static/json/envs.json"
+import envData from "../../../../../../static/json/envs.json";
 
 import guiConfig from "../../common/gui.json";
 

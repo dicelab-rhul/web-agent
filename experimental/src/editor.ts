@@ -1,9 +1,9 @@
-import {basicSetup} from "codemirror"
-import {EditorView, keymap} from "@codemirror/view"
-import {createNewModal, Modal} from './modal';
+import {basicSetup} from "codemirror";
+import {EditorView, keymap} from "@codemirror/view";
+import {createNewModal, Modal} from "./modal";
 
 const UNTITLED_NAME : string = "Untitled";
-const LOCAL_STORAGE_PREFIX : string = "00001_webagent_"
+const LOCAL_STORAGE_PREFIX : string = "00001_webagent_";
 const EDITOR_TABS_ELEMENT_ID : string = "#editor-tabs";
 const SOURCE_FILE_EXTENSION : string = ".tel";
 const MODAL_NEW_FILE_ID : string = "modal_new_file";
@@ -171,9 +171,9 @@ class NewFileModal extends Modal {
 
     constructor(editor : Editor) {
         super(MODAL_NEW_FILE_ID)
-        const UPLOAD_ID : string = `${MODAL_NEW_FILE_ID}_upload`
-        const NEW_ID : string = `${MODAL_NEW_FILE_ID}_new"`
-        const BUTTON_CREATE_ID : string = `${MODAL_NEW_FILE_ID}_btn_create`
+        const UPLOAD_ID : string = `${MODAL_NEW_FILE_ID}_upload`;
+        const NEW_ID : string = `${MODAL_NEW_FILE_ID}_new"`;
+        const BUTTON_CREATE_ID : string = `${MODAL_NEW_FILE_ID}_btn_create`;
         const MODAL_BODY : string = `
             <h5> Create new file:</h5>
             <input type="text" class="form-control" id="${NEW_ID}" placeholder="${UNTITLED_NAME}${SOURCE_FILE_EXTENSION}">
@@ -183,7 +183,7 @@ class NewFileModal extends Modal {
 
             <div class="mt-2">
                 <button id="${BUTTON_CREATE_ID}", type="button" class="btn btn-success w3-bar-item p-10">Create</button>
-            </div>`
+            </div>`;
         createNewModal(MODAL_NEW_FILE_ID, MODAL_BODY)
         // TODO: refactor this majorly!
         $(`#${BUTTON_CREATE_ID}`).on("click", function() {
@@ -232,14 +232,14 @@ class RecoverModal extends Modal {
 
     constructor(editor : Editor) {
         super(MODAL_RECOVER_ID)
-        const BUTTON_FRESH_ID : string = `${MODAL_RECOVER_ID}_btn_fresh`
-        const BUTTON_RECOVER_ID : string = `${MODAL_RECOVER_ID}_btn_recover`
+        const BUTTON_FRESH_ID : string = `${MODAL_RECOVER_ID}_btn_fresh`;
+        const BUTTON_RECOVER_ID : string = `${MODAL_RECOVER_ID}_btn_recover`;
         const MODAL_BODY : string = `
             <h5> Session Recovered </h5>
             <div class="mt-3">
                 <button id="${BUTTON_RECOVER_ID}", type="button" class="btn btn-success p-10">Recover</button>
                 <button id="${BUTTON_FRESH_ID}", type="button" class="btn btn-success p-10">Start Fresh</button>
-            </div>`
+            </div>`;
         createNewModal(MODAL_RECOVER_ID, MODAL_BODY)
         var modal = this;
         $(`#${BUTTON_RECOVER_ID}`).on("click", function() { modal.recover(editor) } );

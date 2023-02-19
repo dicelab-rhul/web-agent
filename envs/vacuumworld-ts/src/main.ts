@@ -1,4 +1,4 @@
-import { VacuumWorld } from "./gui/VacuumWorld"
+import { VacuumWorld } from "./gui/VacuumWorld";
 
 /*
  *

@@ -1,6 +1,5 @@
 {
-    "projectRepoURL": "https://github.com/dicelab-rhul/web-agent",
-    "wikiPageURL": "https://github.com/dicelab-rhul/web-agent/wiki",
+    "envName": "vacuumworld-ts",
     "initialEnvDim": 8,
     "minEnvDim": 3,
     "maxEnvDim": 13,

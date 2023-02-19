@@ -36,7 +36,7 @@
 
 * File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](envs/vacuumworld-ts/src/gui/common/VWOptions.ts) - line 94: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts) - line 142: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
+* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts) - line 144: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 
 * File [experimental/src/modal.ts](experimental/src/modal.ts) - line 1: `// TODO: there is a lot to do here:`
 
