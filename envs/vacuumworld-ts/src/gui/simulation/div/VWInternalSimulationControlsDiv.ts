@@ -19,14 +19,14 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
     private gridSize: number;
     private packed: boolean;
 
-    public constructor(userDifficulty: VWUserDifficulty, userDiffCallback: () => void, sizeUpCallback: () => void, sizeDownCallback: () => void) {
+    public constructor(userDifficulty: VWUserDifficulty, showTooltips: boolean, userDiffCallback: () => void, sizeUpCallback: () => void, sizeDownCallback: () => void) {
         this.div = document.createElement("div");
         this.div.id = internalSimulationControlsDivData.id;
         this.div.hidden = true;
 
-        this.userDifficultyToggleButton = new VWUserDifficultyToggleButton(userDifficulty, userDiffCallback);
-        this.enlargeGridButton = new VWGridResizeButton(enlargeGridButtonData.id, enlargeGridButtonData.text, enlargeGridButtonData.title, sizeUpCallback);
-        this.shrinkGridButton = new VWGridResizeButton(shrinkGridButtonData.id, shrinkGridButtonData.text, shrinkGridButtonData.title, sizeDownCallback);
+        this.userDifficultyToggleButton = new VWUserDifficultyToggleButton(userDifficulty, showTooltips, userDiffCallback);
+        this.enlargeGridButton = new VWGridResizeButton(enlargeGridButtonData.id, enlargeGridButtonData.text, enlargeGridButtonData.title, showTooltips, sizeUpCallback);
+        this.shrinkGridButton = new VWGridResizeButton(shrinkGridButtonData.id, shrinkGridButtonData.text, shrinkGridButtonData.title, showTooltips, sizeDownCallback);
 
         this.selectedCellInfoSpan = document.createElement("span");
         this.selectedCellInfoSpan.id = selectedCellInfoSpanData.id;
@@ -42,12 +42,12 @@ export class VWInternalSimulationControlsDiv implements VWDiv {
     public showSelectedCellInfo(coord: VWCoord): void {
         let coordString: string = coord.toString();
 
-        this.selectedCellInfoSpan.innerText = `Selected: ${coordString}`;
+        this.selectedCellInfoSpan.textContent = `Selected: ${coordString}`; // This is automatically escaped by the browser.
         this.selectedCellInfoSpan.hidden = false;
     }
 
     public resetSelectedCellInfo(): void {
-        this.selectedCellInfoSpan.innerText = "Selected: (-, -)";
+        this.selectedCellInfoSpan.textContent = "Selected: (-, -)"; // This is automatically escaped by the browser.
     }
 
     public pack(): void {

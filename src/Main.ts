@@ -89,6 +89,8 @@ export class Main {
 
             containerDiv.id = containerDivData.id;
 
+            containerDiv.classList.add(...containerDivData.classesVisible);
+
             document.body.appendChild(containerDiv);
         }
         else {

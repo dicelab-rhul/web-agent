@@ -20,20 +20,23 @@ export class VWInitialViewButton {
         }
         else {
             this.callback = callback;
+
             this.button = document.createElement("button");
             this.button.id = id;
             this.button.textContent = text;
+
             this.button.addEventListener("click", this.callback);
 
             this.tooltip = title;
 
             this.addClasses(classes);
+            this.showTooltip(); // The tooltip is shown by default.
         }
     }
 
     private addClasses(classes: string[]): void {
         if (VWExistenceChecker.allValuesExist(classes)) {
-            classes.forEach(c => this.button.classList.add(c));
+            this.button.classList.add(...classes);
         }
     }
 

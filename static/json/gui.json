@@ -2,6 +2,12 @@
     "gui": {
         "containerDivData": {
             "id": "container_div",
+            "classesVisible": [
+                "flex_div"
+            ],
+            "classesHidden": [
+                "hidden"
+            ],
             "children": {
                 "leftContainerDivData": {
                     "id": "left_container_div",

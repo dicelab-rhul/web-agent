@@ -10,7 +10,7 @@ export class VWUserDifficultyToggleButton {
     private basicText: string;
     private advancedText: string;
 
-    public constructor(difficulty: VWUserDifficulty, clickCallback: () => void) {
+    public constructor(difficulty: VWUserDifficulty, showTooltip: boolean, clickCallback: () => void) {
         this.basicText = userDifficultyToggleButtonData.basicText;
         this.advancedText = userDifficultyToggleButtonData.advancedText;
 
@@ -21,7 +21,9 @@ export class VWUserDifficultyToggleButton {
         VWExistenceChecker.validateExistence(difficulty, "The user difficulty cannot be null or undefined.");
 
         this.button.classList.add(difficulty === VWUserDifficulty.BASIC ? userDifficultyToggleButtonData.classes[0] : userDifficultyToggleButtonData.classes[1]);
-        this.button.innerText = difficulty === VWUserDifficulty.BASIC ? this.basicText : this.advancedText;
+        this.button.textContent = difficulty === VWUserDifficulty.BASIC ? this.basicText : this.advancedText; // This is automatically escaped by the browser.
+
+        this.showTooltipIfRequired(showTooltip);
 
         this.button.addEventListener("click", () => {
             VWExistenceChecker.validateExistence(clickCallback, "The click callback cannot be null or undefined.")();
@@ -35,13 +37,19 @@ export class VWUserDifficultyToggleButton {
             this.button.classList.remove(userDifficultyToggleButtonData.classes[0]);
             this.button.classList.add(userDifficultyToggleButtonData.classes[1]);
 
-            this.button.innerText = this.advancedText;
+            this.button.textContent = this.advancedText; // This is automatically escaped by the browser.
         }
         else {
             this.button.classList.remove(userDifficultyToggleButtonData.classes[1]);
             this.button.classList.add(userDifficultyToggleButtonData.classes[0]);
 
-            this.button.innerText = this.basicText;
+            this.button.textContent = this.basicText; // This is automatically escaped by the browser.
+        }
+    }
+
+    private showTooltipIfRequired(showTooltip: boolean): void {
+        if (showTooltip) {
+            this.showTooltip();
         }
     }
 

@@ -28,13 +28,17 @@ export class VacuumWorld {
             platformDiv.show();
         }
         else {
+            document.title = "Error";
+
+            document.getElementById(containerDivData.id).classList.remove(...containerDivData.classesVisible);
+            document.getElementById(containerDivData.id).classList.add(...containerDivData.classesHidden);
+
             let paragraph: HTMLParagraphElement = document.createElement("p");
 
-            paragraph.textContent = "Could not find the selected environment."
+            paragraph.textContent = "Could not find the selected environment." // This is automatically escaped by the browser.
 
             document.getElementById(errorDivData.id).appendChild(paragraph);
 
-            document.body.removeChild(document.getElementById(containerDivData.id));
             document.getElementById(errorDivData.id).hidden = false;
         }
     }
