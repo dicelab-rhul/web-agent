@@ -1,11 +1,14 @@
 import envsData from "../static/json/envs.json";
 import globalGUIConfig from "../static/json/gui.json";
 import teleoraData from "../static/json/teleora.json";
+import globalConfig from "../static/json/config.json";
+
 import { DOMPurifyPolicy } from "./TTPolicies";
 
 const { containerDivData, choiceDivData, errorDivData, externalSimulationControlsDivData } = globalGUIConfig.gui;
 const { leftContainerDivData, rightContainerDivData } = containerDivData.children;
 const externalButtonsData = externalSimulationControlsDivData.children;
+const { projectName, indexScriptID } = globalConfig;
 
 type ResourcePaths = {
     favicon: string;
@@ -34,13 +37,16 @@ export class Main {
     }
 
     public static setNonce(): void {
-        if (document.getElementById("index_script").nonce !== null && document.getElementById("index_script").nonce !== undefined) {
-            Main.NONCE = document.getElementById("index_script").nonce;
+        if (document.getElementById(indexScriptID).nonce !== null && document.getElementById(indexScriptID).nonce !== undefined) {
+            // This is to propagate the `nonce` attribute to dynamically created/loaded scripts.
+            // Main.NONCE is private, so it can't be accessed from outside the class.
+            // This script should have a `nonce` attribute (set by the server).
+            Main.NONCE = document.getElementById(indexScriptID).nonce;
         }
     }
 
     public static setTitle(): void {
-        document.title = "Web-Agent";
+        document.title = projectName;
     }
 
     private static loadCharset(): void {
