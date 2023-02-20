@@ -23,7 +23,7 @@ export class VWHTMLUtils {
         let label: HTMLLabelElement = document.createElement("label");
 
         label.htmlFor = labelFor;
-        label.innerText = labelText;
+        label.textContent = labelText; // This is automatically escaped by the browser.
 
         if (VWExistenceChecker.allValuesExist(classes)) {
             label.classList.add(...classes);
@@ -99,7 +99,7 @@ export class VWHTMLUtils {
 
         option.id = optionID;
         option.value = optionValue;
-        option.textContent = optionText;
+        option.textContent = optionText; // This is automatically escaped by the browser.
 
         if (VWExistenceChecker.allValuesExist(classes)) {
             option.classList.add(...classes);

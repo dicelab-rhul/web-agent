@@ -16,19 +16,23 @@ import { VWOptionsDialogDiv } from "../../initial/div/VWOptionsDialogDiv";
 import { VWDraggableBodiesDiv } from "../../simulation/div/VWDraggableBodiesDiv";
 import { VWGridDiv } from "../../simulation/div/VWGridDiv";
 import { VWInternalSimulationControlsDiv } from "../../simulation/div/VWInternalSimulationControlsDiv";
-import { VWSimulation } from "../../simulation/div/VWSimulation";
+import { VWSimulation } from "../../simulation/VWSimulation";
 import { VWUserDifficulty } from "../../../model/common/VWUserDifficulty";
 import { VWCoord } from "../../../model/common/VWCoord";
 
+import globalConfig from "../../../../../../static/json/config.json";
 import globalGUIConfig from "../../../../../../static/json/gui.json";
+import teleoraConfig from "../../../../../../teleora_editor/src/gui/gui.json";
 import commonConfig from "../../../model/config.json";
 import vwActions from "../../../model/actions/vwactions.json";
 import guiConfig from "../../common/gui.json";
 
+const wikiPageURL: string = globalConfig.wikiPageURL;
 const { externalSimulationControlsDivData } = globalGUIConfig.gui;
-const { minEnvDim, maxEnvDim, wikiPageURL } = commonConfig;
+const { minEnvDim, maxEnvDim } = commonConfig;
 const { platformDivData } = guiConfig;
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, toggleTeleoraEditorBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
+const teleoraSaveButtonData = teleoraConfig.teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -55,7 +59,7 @@ export class VWPlatformDiv implements VWDiv {
             this.optionsDialogDiv = new VWOptionsDialogDiv(this.saveNewOptions.bind(this), this.discardNewOptions.bind(this), this.loadState.bind(this), this.loadTeleora.bind(this));
             this.gridDiv = new VWGridDiv();
             this.options = new VWOptions();
-            this.internalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
+            this.internalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.options.areTooltipsActive(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
             this.packed = false;
         }
     }
@@ -432,7 +436,7 @@ export class VWPlatformDiv implements VWDiv {
             throw new Error("The grid size cannot be null or undefined.");
         }
         else {
-            let newInternalSimulationControlsDiv: VWInternalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
+            let newInternalSimulationControlsDiv: VWInternalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.options.areTooltipsActive(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
 
             newInternalSimulationControlsDiv.setGridSize(gridSize);
             newInternalSimulationControlsDiv.pack();
@@ -515,12 +519,24 @@ export class VWPlatformDiv implements VWDiv {
             this.options.activateTooltips();
             this.initialViewButtonsDiv.showTooltips();
             this.optionsDialogDiv.showTooltips();
+
+            this.showTeleoraSaveButtonTooltip();
         }
         else {
             this.options.deactivateTooltips();
             this.initialViewButtonsDiv.hideTooltips();
             this.optionsDialogDiv.hideTooltips();
+
+            this.hideTeleoraSaveButtonTooltip();
         }
+    }
+
+    private showTeleoraSaveButtonTooltip(): void {
+        document.getElementById(teleoraSaveButtonData.id).title = teleoraSaveButtonData.title;
+    }
+
+    private hideTeleoraSaveButtonTooltip(): void {
+        document.getElementById(teleoraSaveButtonData.id).title = "";
     }
 
     private parseMaxNumberOfCycles(): void {

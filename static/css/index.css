@@ -47,7 +47,7 @@ body {
     display: none;
 }
 
-#container_div {
+.flex_div {
     display: flex;
     overflow: auto;
 }

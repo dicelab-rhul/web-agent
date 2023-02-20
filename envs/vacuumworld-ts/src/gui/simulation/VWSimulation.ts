@@ -1,21 +1,21 @@
-import { VWActorFactory } from "../../../model/actor/factories/VWActorFactory";
-import { VWColour } from "../../../model/common/VWColour";
-import { VWCoord } from "../../../model/common/VWCoord";
-import { VWDirection } from "../../../model/common/VWDirection";
-import { VWMap } from "../../../model/common/VWMap";
-import { VWDirt } from "../../../model/dirt/VWDirt";
-import { VWEnvironment } from "../../../model/environment/VWEnvironment";
-import { VWLocation } from "../../../model/environment/VWLocation";
-import { VWLocationAppearance } from "../../../model/environment/VWLocationAppearance";
-import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
-import { VWOptions } from "../../common/VWOptions";
-import { VWCell } from "./VWCell";
-import { VWGridDiv } from "./VWGridDiv";
-import envData from "../../../../../../static/json/envs.json"
+import { VWActorFactory } from "../../model/actor/factories/VWActorFactory";
+import { VWColour } from "../../model/common/VWColour";
+import { VWCoord } from "../../model/common/VWCoord";
+import { VWDirection } from "../../model/common/VWDirection";
+import { VWMap } from "../../model/common/VWMap";
+import { VWDirt } from "../../model/dirt/VWDirt";
+import { VWEnvironment } from "../../model/environment/VWEnvironment";
+import { VWLocation } from "../../model/environment/VWLocation";
+import { VWLocationAppearance } from "../../model/environment/VWLocationAppearance";
+import { VWExistenceChecker } from "../../model/utils/VWExistenceChecker";
+import { VWOptions } from "../common/VWOptions";
+import { VWCell } from "./div/VWCell";
+import { VWGridDiv } from "./div/VWGridDiv";
+import envData from "../../../../../static/json/envs.json";
 import { Base64 } from "js-base64";
 
-import globalGUIConfig from "../../../../../../static/json/gui.json";
-import config from "../../../model/config.json";
+import globalGUIConfig from "../../../../../static/json/gui.json";
+import config from "../../model/config.json";
 
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, saveStateBtn, loadStateBtn, guideBtn } = globalGUIConfig.gui.externalSimulationControlsDivData.children;
 const { minEnvDim, maxEnvDim, debug, debugPrimes, debugPrimesTest, debugTest } = config;

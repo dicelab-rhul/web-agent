@@ -18,7 +18,7 @@ const MODAL_HTML : string = `
             </div>
         </div>
     </div>
-</div>`
+</div>`;
 
 export function createNewModal(modal_id, modal_body) {
     // add the modal to the document body

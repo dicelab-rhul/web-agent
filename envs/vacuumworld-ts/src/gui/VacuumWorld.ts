@@ -1,25 +1,45 @@
 import { VWPlatformDiv } from "./platform/div/VWPlatformDiv";
+
+import envConfig from "../model/config.json";
+import globalGUIConfig from "../../../../static/json/gui.json";
+import envData from "../../../../static/json/envs.json";
 import { VWExistenceChecker } from "../model/utils/VWExistenceChecker";
-import envData from "../../../../static/json/envs.json"
+
+const envName: string = envConfig.envName;
+const containerDivData = globalGUIConfig.gui.containerDivData;
+const rightContainerDivData = containerDivData.children.rightContainerDivData;
+const errorDivData = globalGUIConfig.gui.errorDivData;
 
 export class VacuumWorld {
     private constructor() {}
 
     public static run(): void {
-        VacuumWorld.setTitle("VacuumWorld");
+        const envPath: string = Object.entries(envData).find((entry) => entry[0] === envName)[1];
 
-        let platformDiv: VWPlatformDiv = new VWPlatformDiv(`/static/${envData["vacuumworld-ts"]}/res/images/start_menu.png`);
+        if (VWExistenceChecker.allArgumentsExist(envPath)) {
+            document.title = "VacuumWorld";
 
-        platformDiv.pack();
+            let platformDiv: VWPlatformDiv = new VWPlatformDiv(`/static/${envPath}/res/images/start_menu.png`);
 
-        document.getElementById("right_container_div").appendChild(platformDiv.getDiv());
+            platformDiv.pack();
 
-        platformDiv.show();
-    }
+            document.getElementById(rightContainerDivData.id).appendChild(platformDiv.getDiv());
 
-    private static setTitle(title: string): void {
-        if (VWExistenceChecker.allArgumentsExist(title) && title !== "") {
-            document.title = title;
+            platformDiv.show();
+        }
+        else {
+            document.title = "Error";
+
+            document.getElementById(containerDivData.id).classList.remove(...containerDivData.classesVisible);
+            document.getElementById(containerDivData.id).classList.add(...containerDivData.classesHidden);
+
+            let paragraph: HTMLParagraphElement = document.createElement("p");
+
+            paragraph.textContent = "Could not find the selected environment." // This is automatically escaped by the browser.
+
+            document.getElementById(errorDivData.id).appendChild(paragraph);
+
+            document.getElementById(errorDivData.id).hidden = false;
         }
     }
 }

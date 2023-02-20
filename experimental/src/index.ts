@@ -4,8 +4,8 @@
 // - Refactor the methods that are too long.
 // - Fix the types.
 
-import './utils.js'
-import {Editor} from './editor.js'
+import "./utils.js";
+import {Editor} from "./editor.js";
 
 $(function(){
 
@@ -27,6 +27,6 @@ $(function(){
 
     window.onbeforeunload = function() {
         editor.updateLocalStorage(editor.active_tab_id);
-        return ''
+        return ""
     }
 });

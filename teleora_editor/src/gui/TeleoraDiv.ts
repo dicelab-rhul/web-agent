@@ -23,6 +23,7 @@ export class TeleoraDiv {
         this.saveButton = document.createElement("button");
         this.saveButton.textContent = teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData.text;
         this.saveButton.id = teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData.id;
+        this.saveButton.title = teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData.title;
 
         this.saveButtonDiv.appendChild(this.saveButton);
 

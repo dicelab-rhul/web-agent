@@ -55,7 +55,7 @@ export class VWDirt extends VWAbstractIdentifiable {
             throw new Error("The colour of a `VWDirt` cannot be null or undefined.");
         }
 
-        const colour: VWColour = data["colour"]
+        const colour: VWColour = data["colour"];
 
         return new VWDirt(colour);
     }
