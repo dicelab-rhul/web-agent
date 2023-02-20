@@ -6,11 +6,11 @@
 
 * File [web_server.py](web_server.py) - line 88: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.`
 
-* File [web_server.py](web_server.py) - line 100: `# TODO: uncomment when served over HTTPS with a real certificate.`
+* File [web_server.py](web_server.py) - line 99: `# TODO: uncomment when served over HTTPS with a real certificate.`
 
-* File [web_server.py](web_server.py) - line 103: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+* File [web_server.py](web_server.py) - line 102: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
-* File [web_server.py](web_server.py) - line 104: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
+* File [web_server.py](web_server.py) - line 103: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
 
 * File [TELEORA.md](TELEORA.md) - line 159: `This could similarly be the case for slicing and ellipsis... but would be complex to implement? maybe not TODO: elaborate on this.`
 

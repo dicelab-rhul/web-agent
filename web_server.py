@@ -91,7 +91,6 @@ class WebAgentServer:
             "Cross-Origin-Opener-Policy": "same-origin",
             "Cross-Origin-Embedder-Policy": "require-corp",
             "Cross-Origin-Resource-Policy": "same-origin",
-            "Cross-Origin-Window-Policy": "deny",
             "Server": "Web-Agent",
             "Vary": "Accept-Encoding, Sec-Fetch-Site, Sec-Fetch-Mode, Sec-Fetch-Dest",
 
