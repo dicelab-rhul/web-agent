@@ -1,3 +1,4 @@
+import { VWDirection } from "../common/VWDirection";
 import { VWOrientation } from "../common/VWOrientation";
 
 export class VWOrientationUtils {
@@ -30,6 +31,17 @@ export class VWOrientationUtils {
                 return VWOrientation.NORTH;
             default:
                 throw new Error("Invalid orientation.");
+        }
+    }
+
+    public static get(orientation: VWOrientation, direction: VWDirection): VWOrientation {
+        switch (direction) {
+            case VWDirection.LEFT:
+                return VWOrientationUtils.getLeft(orientation);
+            case VWDirection.RIGHT:
+                return VWOrientationUtils.getRight(orientation);
+            default:
+                throw new Error("Invalid direction.");
         }
     }
 
