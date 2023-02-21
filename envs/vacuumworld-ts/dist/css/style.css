@@ -39,15 +39,6 @@ table {
     border-spacing: 0;
 }
 
-#error_div {
-    border: 3px solid black;
-    padding: 10px;
-    color: #ff0000;
-    font-weight: bold;
-    margin: 10px;
-    width: auto;
-}
-
 #platform_div {
     width: auto;
     border: 3px solid black;
@@ -132,6 +123,7 @@ table {
 #user_difficulty_toggle_button, #grid_size_up_button, #grid_size_down_button {
     padding: 5px;
     margin: 5pt;
+    width: fit-content;
 }
 
 .basic {

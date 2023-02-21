@@ -9,10 +9,17 @@ body {
 }
 
 .external_simulation_control_button {
-    width: 5%;
+    min-width: 5%;
+    width: fit-content;
     padding-top: 0.5%;
     padding-bottom: 0.5%;
     margin: 5pt;
+}
+
+.external_simulation_control_buttons {
+    background-color: #00ffff;
+    border: 1px solid #000000;
+    margin-bottom: 1vh;
 }
 
 .choice {
@@ -71,4 +78,13 @@ body {
 
 #right_container_div {
     display: flex;
+}
+
+#error_div {
+    border: 3px solid #000000;
+    padding: 1vw 1vh 1vw 1vh;
+    color: #ff0000;
+    font-weight: bold;
+    margin: 1vw 1vh 1vw 1vh;
+    width: auto;
 }

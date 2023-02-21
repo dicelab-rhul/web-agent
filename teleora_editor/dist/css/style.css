@@ -1,15 +1,12 @@
-#teleora_div {
-    margin-right: 1%;
-}
-
 #teleora_editor_div {
-    border: 3px solid #000000;
     margin: auto;
     width: 50vw;
+    border-bottom: 1px solid #000000;
 }
 
 #teleora_save_button {
-    width: 10%;
+    min-width: 10%;
+    width: fit-content;
     padding-top: 0.75%;
     padding-bottom: 0.75%;
     margin: 5pt;

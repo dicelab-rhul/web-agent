@@ -42,7 +42,8 @@
         "externalSimulationControlsDivData": {
             "id": "external_simulation_controls_div",
             "classes": [
-                "center-aligned"
+                "center-aligned",
+                "external_simulation_control_buttons"
             ],
             "children": {
                 "runBtn": {

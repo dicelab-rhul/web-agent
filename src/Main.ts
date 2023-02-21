@@ -29,10 +29,10 @@ export class Main {
         Main.setNonce();
         Main.setTitle();
         Main.loadCharset();
+        Main.createAndHideSimulationControlsDiv();
         Main.createContainerDiv();
         Main.loadStyle("/static/css/index.css"); // This is the main style of the page.
         Main.loadChoiceDiv();
-        Main.createAndHideSimulationControlsDiv();
         Main.createErrorDiv();
     }
 
@@ -111,6 +111,10 @@ export class Main {
             errorDiv.id = errorDivData.id;
             errorDiv.classList.add(...errorDivData.classes);
             errorDiv.hidden = true;
+
+            errorDiv.addEventListener("click", () => {
+                errorDiv.hidden = true;
+            });
 
             document.body.appendChild(errorDiv);
         }
