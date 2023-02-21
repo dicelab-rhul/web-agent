@@ -11,7 +11,8 @@ for dir in envs/*/; do
     cd $dir
     ./dev_deploy.sh
     mkdir -p ../../static/$dir
-    find dist ! -name "*.LICENSE.txt" | xargs cp -r -t ../../static/$dir/
+    cp -r dist ../../static/$dir/
+    find ../../static/$dir/ -name "*.LICENSE.txt" -type f | xargs rm -f
     cp -r res ../../static/$dir/
     cd -
 done
@@ -24,7 +25,8 @@ done
 cd teleora_editor
 ./dev_deploy.sh
 mkdir -p ../static/teleora_editor
-find dist ! -name "*.LICENSE.txt" | xargs cp -r -t ../static/teleora_editor/
+cp -r dist ../static/teleora_editor/
+find ../static/teleora_editor/ -name "*.LICENSE.txt" -type f | xargs rm -f
 cd -
 
 echo "Deploying the main page..."

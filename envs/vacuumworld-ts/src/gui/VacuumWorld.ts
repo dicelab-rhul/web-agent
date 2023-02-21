@@ -16,7 +16,7 @@ export class VacuumWorld {
     public static run(): void {
         const envPath: string = Object.entries(envData).find((entry) => entry[0] === envName)[1];
 
-        if (VWExistenceChecker.allArgumentsExist(envPath)) {
+        if (!VWExistenceChecker.allArgumentsExist(envPath)) {
             document.title = "VacuumWorld";
 
             let platformDiv: VWPlatformDiv = new VWPlatformDiv(`/static/${envPath}/res/images/start_menu.png`);

@@ -42,31 +42,50 @@ user@machine:~$ ./quick_dev_deploy.sh
 user@machine:~$ ./run.sh
 ```
 
-## How to run the experimental code editor
+## How to add a new environment to the deployment pipeline
 
-To run the experimental code editor, first install parcel (if you haven't already)...
-
-```console
-user@machine:~$ npm install parcel
-```
-
-...then input the following commands (assuming you are in the root directory of the project):
-
-```console
-user@machine:~$ cd experimental
-user@machine:~$ npm run build
-```
+* Create a child directory (let's say `new_env`) in `envs`.
+&NewLine;
+&NewLine;
+* Make sure that `new_env` has minimally the following structure:
+    | `new_env`
+    |---- `dist`
+    |-------- `css`
+    |------------ `style.css`
+    |-------- `js`
+    |---- `node_modules`
+    |---- `res`
+    |-------- `images`
+    |------------ `choice.png`
+    |------------ `favicon.ico`
+    |---- `src`
+    |-------- `main.ts`
+    |---- `webpack-config`
+    |-------- `webpack.dev_config.cjs`
+    |-------- `webpack.prod_config.cjs`
+    |-------- `webpack.shared_config.cjs`
+    |---- `deploy.sh`
+    |---- `dev_deploy.sh`
+    |---- `package.json`
+    |---- `quick_deploy.sh`
+    |---- `quick_dev_deploy.sh`
+    |---- `tsconfig.json`
+&NewLine;
+&NewLine;
+* Make sure that `new_env/res/images/choice.png` is a `200x200` pixel image (it will be used as a clickable image in the environment selection view).
+&NewLine;
+&NewLine;
+* Make sure that `new_env/res/images/favicon.ico` is a `32x32` pixel image (it will be used as the favicon of the environment).
+&NewLine;
+&NewLine;
+* Make sure that your TypeScript code adds new listeners to the external controls (check out the children of `externalSimulationControlsDivData` in `static/json/gui.json` for the list of available controls).
+&NewLine;
+&NewLine;
+* Make sure that your TypeScript code adds a new listener to the Teleora save button (check out `teleoraSaveButtonData` in `teleora/src/gui/gui.json` for details on such button).
+&NewLine;
+&NewLine;
+* Have a look at `envs/example-env-ts` for a concrete example (including the content of the relevant scripts / configuration files).
 
 ## Teleora
 
-The specification is [here](TELEORA.md).
-
-### Possible code editors
-
-[https://github.com/codemirror/CodeMirror](https://github.com/codemirror/CodeMirror)
-
-[https://csplayground.io/how-to-build-website-like-codecademy](https://csplayground.io/how-to-build-website-like-codecademy)
-
-Yacc/Bison for JavaScript for the interpreter
-
-[https://gerhobbelt.github.io/jison/docs/](https://gerhobbelt.github.io/jison/docs/)
+The agent behaviour in each environment can be programmed in the Teleora editor to the left of the environment. The Teleora language specification can be found [here](TELEORA.md).
