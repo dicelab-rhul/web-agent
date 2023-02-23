@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" xml:lang="en">
     <head>
         <!-- Most of the head content, including the title, will be set by JavaScript -->
         <title></title>
-        <script id="index_script" src="/static/js/index.js" nonce={{nonce_value}}></script>
+        <link rel="shortcut icon" type="image/png" href="{% static "images/favicon.ico" %}"/>
+        <script id="index_script" src="{% static "js/index.js" %}" nonce={{nonce_value}}></script>
     </head>
     <body>
         <!-- The body content will be set by JavaScript -->

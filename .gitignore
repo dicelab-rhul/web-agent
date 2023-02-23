@@ -56,6 +56,7 @@ teleora_editor/dist/js
 static/js/
 static/envs
 static/teleora_editor
+webserver/web_agent_server/static
 
 # IDE files
 .vscode/
@@ -77,3 +78,5 @@ package-lock.json
 envs/vacuumworld-ts/res/images/legacy
 test.js
 test.py
+__pycache__
+*.sqlite3

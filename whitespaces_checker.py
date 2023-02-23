@@ -25,7 +25,7 @@ def __scan_file(d: str, f: str) -> None:
     lines: list[str] = open(os.path.join(d, f)).readlines()
 
     for i in range(len(lines)):
-        if " \n" in lines[i]:
+        if lines[i].endswith(" ") or lines[i].endswith("\t") or lines[i].endswith(" \n") or lines[i].endswith("\t\n"):
             print(os.path.join(d, f) + ": line " + str(i + 1) + ".")
 
 
