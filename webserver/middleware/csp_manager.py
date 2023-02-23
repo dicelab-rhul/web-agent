@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, FileResponse, JsonResponse
 from django.template.response import TemplateResponse
 
 from web_agent_server.csp.csp import CSP
@@ -13,8 +13,8 @@ from secrets import token_urlsafe
 
 
 class CSPMiddleware():
-    def __init__(self, get_response: Callable[..., HttpResponse]) -> None:
-        self.__get_response: Callable[..., HttpResponse] = get_response
+    def __init__(self, get_response: Callable[..., HttpResponse | TemplateResponse | FileResponse]) -> None:
+        self.__get_response: Callable[..., HttpResponse | TemplateResponse | FileResponse] = get_response
         self.__csps: list[CSP] = [
             XSSMitigatingCSP(),
             DOMXSSMitigatingCSP(),
@@ -23,15 +23,18 @@ class CSPMiddleware():
             SecureContextCSP()
         ]
 
-    def __call__(self, request: HttpRequest) -> Optional[HttpResponse]:
+    def __call__(self, request: HttpRequest) -> Optional[HttpResponse | TemplateResponse | FileResponse]:
         self.__nonce: str = f"{token_urlsafe(32)}"
 
-        response: HttpResponse = self.__get_response(request)
+        response: HttpResponse | TemplateResponse | FileResponse = self.__get_response(request)
 
         if isinstance(response, TemplateResponse) and  response.context_data:
             response.context_data["nonce_value"] = self.__nonce
 
-        response["Content-Security-Policy"] = self.__generate_csp()
+        if isinstance(response, (FileResponse, JsonResponse)):
+            response["Content-Security-Policy"] = "sandbox"
+        else:
+            response["Content-Security-Policy"] = self.__generate_csp()
 
         return response
 

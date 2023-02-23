@@ -26,7 +26,19 @@
 
 * File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts) - line 146: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
 
-* File [webserver/web_agent_server/views.py](webserver/web_agent_server/views.py) - line 21: `# TODO: validate the request body and filter out uninteresting reports.`
+* File [webserver/web_agent_server/views.py](webserver/web_agent_server/views.py) - line 28: `# TODO: validate the request body and filter out uninteresting reports.`
+
+* File [webserver/web_agent_server/headers/static_subresources_headers.py](webserver/web_agent_server/headers/static_subresources_headers.py) - line 28: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.`
+
+* File [webserver/web_agent_server/headers/static_subresources_headers.py](webserver/web_agent_server/headers/static_subresources_headers.py) - line 34: `# TODO: uncomment when served over HTTPS with a real certificate.`
+
+* File [webserver/web_agent_server/headers/document_headers.py](webserver/web_agent_server/headers/document_headers.py) - line 27: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.`
+
+* File [webserver/web_agent_server/headers/document_headers.py](webserver/web_agent_server/headers/document_headers.py) - line 33: `# TODO: uncomment when served over HTTPS with a real certificate.`
+
+* File [webserver/web_agent_server/headers/document_headers.py](webserver/web_agent_server/headers/document_headers.py) - line 36: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+
+* File [webserver/web_agent_server/headers/document_headers.py](webserver/web_agent_server/headers/document_headers.py) - line 37: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
 
 * File [webserver/web_agent_server/csp/xss_mitigating_csp.py](webserver/web_agent_server/csp/xss_mitigating_csp.py) - line 30: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
@@ -43,14 +55,6 @@
 * File [webserver/webserver/settings.py](webserver/webserver/settings.py) - line 18: `# TODO: Change this in production. This is just for testing purposes. It can be safely committed to the repo.`
 
 * File [webserver/middleware/allow_requests.py](webserver/middleware/allow_requests.py) - line 17: `return HttpResponse(status=403) # TODO: add the appropriate headers.`
-
-* File [webserver/middleware/security_headers.py](webserver/middleware/security_headers.py) - line 27: `"X-XSS-Protection": "1; mode=block", # TODO: is this still worth it? Only Safari supports it, and it is notoriously unreliable.`
-
-* File [webserver/middleware/security_headers.py](webserver/middleware/security_headers.py) - line 38: `# TODO: uncomment when served over HTTPS with a real certificate.`
-
-* File [webserver/middleware/security_headers.py](webserver/middleware/security_headers.py) - line 41: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
-
-* File [webserver/middleware/security_headers.py](webserver/middleware/security_headers.py) - line 42: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
 
 * File [experimental/src/modal.ts](experimental/src/modal.ts) - line 1: `// TODO: there is a lot to do here:`
 
