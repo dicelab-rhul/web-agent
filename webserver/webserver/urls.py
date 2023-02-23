@@ -12,10 +12,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path("blog/", include("blog.urls"))
 """
-from django.urls import include, path, URLResolver
+from django.urls import include, path, re_path, URLResolver
 from django.conf import settings
 
-urlpatterns: list[URLResolver] = [
-    path("", include("web_agent_server.urls")),
-    path(settings.CSP_ENDPOINT[1:], include("web_agent_server.urls"))
-]
+RELEVANT_PATHS: list[str] = ["", settings.CSP_ENDPOINT[1:]]
+RELEVANT_RE_PATHS: list[str] = [r"^static/"]
+
+urlpatterns: list[URLResolver] = [path(p, include("web_agent_server.urls")) for p in RELEVANT_PATHS] + [re_path(p, include("web_agent_server.urls")) for p in RELEVANT_RE_PATHS]
