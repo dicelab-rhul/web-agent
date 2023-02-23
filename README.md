@@ -78,6 +78,12 @@ user@machine:~$ ./run.sh
 
 * Make sure that your TypeScript code adds a new listener to the Teleora save button (check out `teleoraSaveButtonData` in `teleora/src/gui/gui.json` for details on such button).
 
+* Make sure you **NEVER** use inline event handlers (e.g., `onclick="..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy. Instead, use the `addEventListener()` function in one of your TypeScript files.
+
+* Make sure you **NEVER** use JavaScript URIs (e.g., `href="javascript:..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy.
+
+* Make sure you **NEVER** use `eval()` in your HTML/TypeScript code. It will be ungracefully blocked by the Content Security Policy.
+
 * Have a look at `envs/example-env-ts` for a concrete example (including the content of the relevant scripts / configuration files).
 
 ## Teleora
