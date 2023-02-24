@@ -1,26 +1,18 @@
 from typing import Any
+from json import dumps
 
-from django.conf import settings
+from web_agent_server.headers.headers import Headers
+from web_agent_server.headers.reporting_groups import ReportingGroups
 
 
-class DocumentHeaders():
-    def __init__(self) -> None:
-        # Multiple CSPs are added by a different middleware.
-        self.__headers: dict[str, Any] = {
-            "Report-To": {
-                "group": "default",
-                "max_age": 10886400,
-                "endpoints":
-                    [
-                        {
-                            "url": f"{settings.CSP_ENDPOINT}"
-                        }
-                    ],
-                "include_subdomains": "true"
-            },
-            "Cross-Origin-Opener-Policy": "same-origin",
-            "Cross-Origin-Resource-Policy": "same-origin",
-            "Cross-Origin-Embedder-Policy": "require-corp",
+class DocumentHeaders(Headers):
+    @staticmethod
+    def get_headers(report_to: bool=False, report_uri: bool=True) -> dict[str, Any]:
+        return {
+            "Report-To": ", ".join(dumps(group) for group in ReportingGroups.get_report_to_header_dicts()),
+            "Cross-Origin-Opener-Policy": f"same-origin;{Headers.get_coop_report_directive(report_to=report_to, report_uri=report_uri)}",
+            "Cross-Origin-Resource-Policy": f"same-origin",
+            "Cross-Origin-Embedder-Policy": f"require-corp;{Headers.get_coep_report_directive(report_to=report_to, report_uri=report_uri)}",
             "Vary": "Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site, Sec-Fetch-User",
             "X-Content-Type-Options": "nosniff",
             "X-Frame-Options": "SAMEORIGIN",
@@ -30,15 +22,7 @@ class DocumentHeaders():
             "Server": "Web-Agent",
             "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
 
-            # TODO: uncomment when served over HTTPS with a real certificate.
-            # "Expect-CT": "enforce, max-age=63072000, report-uri=\"/expect-ct-endpoint\"",
-
-            # TODO: keep an eye on `report-to` support in Firefox and bugfixes in Chromium, so that `report-uri` can be replaced by `report-to`.
             # TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.
-            # `report-uri` is deprecated, but `report-to` is broken in Chromium (see https://bugs.chromium.org/p/chromium/issues/detail?id=1098885), and not supported by Firefox.
             # Also, see the comment above regarding `require-trusted-types-for` and TypeScript.
-            "Content-Security-Policy-Report-Only": f"require-trusted-types-for 'script'; report-uri {settings.CSP_ENDPOINT};"
+            "Content-Security-Policy-Report-Only": f"require-trusted-types-for 'script';{Headers.get_csp_report_directive(report_to=report_to, report_uri=report_uri)}"
         }
-
-    def get_headers(self) -> dict[str, Any]:
-        return self.__headers

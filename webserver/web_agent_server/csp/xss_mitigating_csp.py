@@ -2,8 +2,9 @@ from .csp import CSP
 
 
 class XSSMitigatingCSP(CSP):
-    def __init__(self) -> None:
-        super(XSSMitigatingCSP, self).__init__()
+    # `report-uri` is on by default, unless report_to is set to True.
+    def __init__(self, report_to: bool=False) -> None:
+        super(XSSMitigatingCSP, self).__init__(report_to=report_to)
 
         self.__inline_styles_hashes: list[str] = [
             "'sha256-qVvPl0vp1SoXFHXl+VfRXjyKNAjlZvJDeXDMCnMbSeM='", # CodeMirror-injected style.
@@ -29,7 +30,7 @@ class XSSMitigatingCSP(CSP):
 
             # TODO: keep an eye on `report-to` support in Firefox and bugfixes in Chromium, so that `report-uri` can be replaced by `report-to`.
             # `report-uri` is deprecated, but `report-to` is broken in Chromium (see https://bugs.chromium.org/p/chromium/issues/detail?id=1098885), and not supported by Firefox.
-            "report-uri": self.get_csp_endpoint_route()
+            self.get_report_directive_name(): self.get_report_directive_value()
         }
 
     def generate(self, nonce: str) -> str:

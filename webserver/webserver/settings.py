@@ -110,7 +110,13 @@ STATICFILES_DIRS = [os.path.join(WEB_AGENT_DIR, "static")]
 
 DEFAULT_AUTO_FIELD: str = "django.db.models.BigAutoField"
 
-CSP_ENDPOINT: str = "/csp-report"
+REPORTING_ENDPOINTS: dict[str, str] = {
+    "csp": "/csp-endpoint",
+    "coep": "/coep-endpoint",
+    "coop": "/coop-endpoint"
+}
+
+REPORT_TO_ACTIVE: bool = False
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

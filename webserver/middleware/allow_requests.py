@@ -12,13 +12,13 @@ class AllowRequestsMiddleware():
         self.__get_response: Callable[..., HttpResponse] = get_response
 
     def __call__(self, request: HttpRequest) -> Optional[HttpResponse]:
-        if request.method is None or not self.__allow_request(request.method, request.headers):
+        if request.method is None or not self.__allow_request(request.method, request.headers, request.path):
             print(f"Request blocked: {request.method} {request.path} {request.headers}")
             return HttpResponse(status=403) # TODO: add the appropriate headers.
         else:
             return self.__get_response(request)
 
-    def __allow_request(self, method: Optional[str], headers: HttpHeaders) -> bool:
+    def __allow_request(self, method: Optional[str], headers: HttpHeaders, path: str) -> bool:
         assert method is not None
 
         # Allow requests from browsers which don't send Fetch Metadata
@@ -31,6 +31,10 @@ class AllowRequestsMiddleware():
 
         # Allow simple top-level navigations except <object> and <embed>
         if headers[self.__sec_fetch_mode] == "navigate" and method == "GET" and headers[self.__sec_fetch_dest] not in ("object", "embed"):
+            return True
+
+        # Allow fetching the favicon from any origin
+        if path == "/favicon.ico":
             return True
 
         # Reject all other requests that are cross-site and not navigational

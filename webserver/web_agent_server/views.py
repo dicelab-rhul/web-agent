@@ -13,7 +13,7 @@ from posixpath import normpath
 from pathlib import Path
 from mimetypes import guess_type
 
-from .csp.reports import CSPReportsLog
+from .csp.reports import ReportsLogs
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -23,10 +23,34 @@ def index(request: HttpRequest) -> HttpResponse:
 @csrf_exempt
 def csp_endpoint(request: HttpRequest) -> JsonResponse | HttpResponse:
     if request.method == "GET":
-        return JsonResponse({"reports": CSPReportsLog.get_reports()})
+        return JsonResponse({"reports": ReportsLogs.get_csp_reports()})
     elif request.method == "POST":
         # TODO: validate the request body and filter out uninteresting reports.
-        result: bool = CSPReportsLog.add_report(loads(request.body))
+        result: bool = ReportsLogs.add_csp_report(loads(request.body))
+
+        return JsonResponse({"result": result})
+    else:
+        return HttpResponse(status=403)
+
+@csrf_exempt
+def coep_endpoint(request: HttpRequest) -> JsonResponse | HttpResponse:
+    if request.method == "GET":
+        return JsonResponse({"reports": ReportsLogs.get_coep_reports()})
+    elif request.method == "POST":
+        # TODO: validate the request body and filter out uninteresting reports.
+        result: bool = ReportsLogs.add_coep_report(loads(request.body))
+
+        return JsonResponse({"result": result})
+    else:
+        return HttpResponse(status=403)
+
+@csrf_exempt
+def coop_endpoint(request: HttpRequest) -> JsonResponse | HttpResponse:
+    if request.method == "GET":
+        return JsonResponse({"reports": ReportsLogs.get_coop_reports()})
+    elif request.method == "POST":
+        # TODO: validate the request body and filter out uninteresting reports.
+        result: bool = ReportsLogs.add_coop_report(loads(request.body))
 
         return JsonResponse({"result": result})
     else:
@@ -36,6 +60,9 @@ def static_files(request: HttpRequest) -> HttpResponse | FileResponse:
     path: str = normpath(request.path).lstrip("/")
     fullpath: Path = Path(safe_join(settings.STATICFILES_DIRS[0].replace("/static", ""), path))
 
+    return __serve_static_file(request, fullpath)
+
+def __serve_static_file(request: HttpRequest, fullpath: Path) -> HttpResponse | FileResponse:
     if fullpath.is_dir():
         raise Http404("Directory listing is not allowed.")
 
@@ -58,3 +85,9 @@ def static_files(request: HttpRequest) -> HttpResponse | FileResponse:
         response["Content-Encoding"] = encoding
 
     return response
+
+def favicon(request: HttpRequest) -> HttpResponse | FileResponse:
+    path: str = normpath(request.path).lstrip("/")
+    fullpath: Path = Path(safe_join(settings.STATICFILES_DIRS[0], "images", path))
+
+    return __serve_static_file(request, fullpath)

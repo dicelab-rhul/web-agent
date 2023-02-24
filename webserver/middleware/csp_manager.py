@@ -1,5 +1,6 @@
 from django.http import HttpRequest, HttpResponse, FileResponse, JsonResponse
 from django.template.response import TemplateResponse
+from django.conf import settings
 
 from web_agent_server.csp.csp import CSP
 from web_agent_server.csp.xss_mitigating_csp import XSSMitigatingCSP
@@ -7,6 +8,7 @@ from web_agent_server.csp.dom_xss_mitigating_csp import DOMXSSMitigatingCSP
 from web_agent_server.csp.exfiltration_mitigating_csp import ExfiltrationMitigatingCSP
 from web_agent_server.csp.isolation_based_csp import IsolationBasedCSP
 from web_agent_server.csp.secure_context_csp import SecureContextCSP
+from web_agent_server.headers.static_subresources_headers import StaticSubResourcesHeaders
 
 from typing import Optional, Callable
 from secrets import token_urlsafe
@@ -16,10 +18,10 @@ class CSPMiddleware():
     def __init__(self, get_response: Callable[..., HttpResponse | TemplateResponse | FileResponse]) -> None:
         self.__get_response: Callable[..., HttpResponse | TemplateResponse | FileResponse] = get_response
         self.__csps: list[CSP] = [
-            XSSMitigatingCSP(),
-            DOMXSSMitigatingCSP(),
-            ExfiltrationMitigatingCSP(),
-            IsolationBasedCSP(),
+            XSSMitigatingCSP(report_to=settings.REPORT_TO_ACTIVE),
+            DOMXSSMitigatingCSP(report_to=settings.REPORT_TO_ACTIVE),
+            ExfiltrationMitigatingCSP(report_to=settings.REPORT_TO_ACTIVE),
+            IsolationBasedCSP(report_to=settings.REPORT_TO_ACTIVE),
             SecureContextCSP()
         ]
 
@@ -32,7 +34,7 @@ class CSPMiddleware():
             response.context_data["nonce_value"] = self.__nonce
 
         if isinstance(response, (FileResponse, JsonResponse)):
-            response["Content-Security-Policy"] = "sandbox"
+            response["Content-Security-Policy"] = f"sandbox;{StaticSubResourcesHeaders.get_csp_report_directive(report_to=settings.REPORT_TO_ACTIVE, report_uri=not settings.REPORT_TO_ACTIVE)}"
         else:
             response["Content-Security-Policy"] = self.__generate_csp()
 
