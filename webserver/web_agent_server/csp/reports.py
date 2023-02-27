@@ -1,15 +1,14 @@
-from typing import Any
+from typing import Any, Optional
 
 
 class ReportsLogs():
     csp_reports: list[dict[str, Any]] = []
     coop_reports: list[dict[str, Any]] = []
     coep_reports: list[dict[str, Any]] = []
-    expect_ct_reports: list[dict[str, Any]] = []
     MAX_LENGTH: int = 100
 
     @staticmethod
-    def add_csp_report(report: dict[str, Any] | None) -> bool:
+    def add_csp_report(report: Optional[dict[str, Any]]) -> bool:
         if report is not None and ReportsLogs.__interesting(report):
             ReportsLogs.__append_and_shift(report, ReportsLogs.csp_reports)
 
@@ -18,7 +17,7 @@ class ReportsLogs():
             return False
 
     @staticmethod
-    def add_coop_report(report: dict[str, Any] | None) -> bool:
+    def add_coop_report(report: Optional[dict[str, Any]]) -> bool:
         if report is not None and ReportsLogs.__interesting(report):
             ReportsLogs.__append_and_shift(report, ReportsLogs.coop_reports)
 
@@ -27,18 +26,9 @@ class ReportsLogs():
             return False
 
     @staticmethod
-    def add_coep_report(report: dict[str, Any] | None) -> bool:
+    def add_coep_report(report: Optional[dict[str, Any]]) -> bool:
         if report is not None and ReportsLogs.__interesting(report):
             ReportsLogs.__append_and_shift(report, ReportsLogs.coep_reports)
-
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def add_expect_ct_report(report: dict[str, Any] | None) -> bool:
-        if report is not None and ReportsLogs.__interesting(report):
-            ReportsLogs.__append_and_shift(report, ReportsLogs.expect_ct_reports)
 
             return True
         else:
@@ -57,13 +47,16 @@ class ReportsLogs():
         return ReportsLogs.coep_reports
 
     @staticmethod
-    def get_expect_ct_reports() -> list[dict[str, Any]]:
-        return ReportsLogs.expect_ct_reports
+    def __interesting(report: dict[str, Any]) -> bool:
+        return not ReportsLogs.__is_csp_report_caused_by_extension(report)
 
     @staticmethod
-    def __interesting(report: dict[str, Any]) -> bool:
-        # TODO: add more filters.
-        return True
+    def __is_csp_report_caused_by_extension(report: dict[str, Any]) -> bool:
+        csp_report_key: str = "csp-report"
+        source_file_key: str = "source-file"
+        moz_extension: str = "moz-extension"
+
+        return csp_report_key in report and source_file_key in report[csp_report_key] and report[csp_report_key][source_file_key] == moz_extension
 
     @staticmethod
     def __append_and_shift(report: dict[str, Any], sink: list[dict[str, Any]]) -> None:

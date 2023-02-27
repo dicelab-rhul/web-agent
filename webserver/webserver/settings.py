@@ -16,7 +16,7 @@ WEB_AGENT_DIR: Path = Path(BASE_DIR, "web_agent_server")
 # Quick-start development settings - unsuitable for production
 # SECURITY WARNING: keep the secret key used in production secret!
 # TODO: Change this in production. This is just for testing purposes. It can be safely committed to the repo.
-SECRET_KEY: str = "django-insecure-328)$vdbhzc^)fq*(0*3tmbgl1v5t7f*gzo_+e0h@-@x85lae="
+SECRET_KEY: str = "cCqOwRaWU6d53sCjI8kh4m45kwm7EYNez_p5N6JqO2GTVMY1-g3zefTqQG-vsDArcBzvxIvrsZOQvEReC1bOfw"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG: bool = False
@@ -116,7 +116,8 @@ REPORTING_ENDPOINTS: dict[str, str] = {
     "coop": "/coop-endpoint"
 }
 
-REPORT_TO_ACTIVE: bool = False
+# If `False``, the `Report-To` header will not be sent, and all the `report-to` directives will be replaced by `report-uri` directives.
+REPORT_TO_ACTIVE: bool = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

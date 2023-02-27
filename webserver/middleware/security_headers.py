@@ -22,6 +22,6 @@ class SecurityHeadersMiddleware():
 
     def __load_headers(self, request: HttpRequest) -> dict[str, Any]:
         if request.path.startswith(settings.STATIC_URL) or request.path == "/favicon.ico":
-            return StaticSubResourcesHeaders.get_headers()
+            return StaticSubResourcesHeaders.get_headers(request=request)
         else:
-            return DocumentHeaders.get_headers(report_to=settings.REPORT_TO_ACTIVE, report_uri=not settings.REPORT_TO_ACTIVE)
+            return DocumentHeaders.get_headers(request=request, report_to=settings.REPORT_TO_ACTIVE, report_uri=not settings.REPORT_TO_ACTIVE)
