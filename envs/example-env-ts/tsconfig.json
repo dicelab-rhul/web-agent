@@ -6,5 +6,10 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true
-    }
+    },
+    "exclude": [
+        "./dist",
+        "./res",
+        "./webpack-config"
+    ]
 }

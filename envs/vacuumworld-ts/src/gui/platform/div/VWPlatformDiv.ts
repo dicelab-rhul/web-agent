@@ -32,7 +32,7 @@ const { externalSimulationControlsDivData } = globalGUIConfig.gui;
 const { minEnvDim, maxEnvDim } = commonConfig;
 const { platformDivData } = guiConfig;
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, toggleTeleoraEditorBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
-const teleoraSaveButtonData = teleoraConfig.teleoraDivData.children.teleoraSaveButtonDivData.children.teleoraSaveButtonData;
+const teleoraSaveButtonData = teleoraConfig.teleoraDivData.children.teleoraButtonsDivData.children.teleoraSaveButtonData;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";

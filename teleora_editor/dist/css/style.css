@@ -4,7 +4,7 @@
     border-bottom: 1px solid #000000;
 }
 
-#teleora_save_button {
+.teleora_button {
     min-width: 10%;
     width: fit-content;
     padding-top: 0.75%;
@@ -12,6 +12,6 @@
     margin: 5pt;
 }
 
-#teleora_save_button_div {
+#teleora_buttons_div {
     text-align: center;
 }
