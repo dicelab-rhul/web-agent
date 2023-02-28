@@ -1,7 +1,7 @@
 import { EditorView, basicSetup } from "codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 
-import teleoraGUIData from "./gui.json";
+import teleoraGUIData from "../gui.json";
 
 const { teleoraEditorDivData } = teleoraGUIData.teleoraDivData.children;
 

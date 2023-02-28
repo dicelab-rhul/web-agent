@@ -1,4 +1,4 @@
-import { TeleoraDiv } from "./gui/TeleoraDiv";
+import { TeleoraDiv } from "./gui/div/TeleoraDiv";
 
 import globalGUIConfig from "../../static/json/gui.json";
 

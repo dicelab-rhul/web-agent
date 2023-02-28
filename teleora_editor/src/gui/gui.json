@@ -5,13 +5,67 @@
             "teleoraEditorDivData": {
                 "id": "teleora_editor_div"
             },
-            "teleoraSaveButtonDivData": {
-                "id": "teleora_save_button_div",
+            "teleoraButtonsDivData": {
+                "id": "teleora_buttons_div",
+                "classes": [
+                    "teleora_buttons_div"
+                ],
                 "children": {
                     "teleoraSaveButtonData": {
                         "id": "teleora_save_button",
                         "text": "Save",
-                        "title": "Save the Teleora file"
+                        "title": "Save the Teleora file",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
+                    "teleoraLoadButtonData": {
+                        "id": "teleora_load_button",
+                        "text": "Load",
+                        "title": "Load a Teleora file in a new Teleora tab",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
+                    "teleoraClearButtonData": {
+                        "id": "teleora_clear_button",
+                        "text": "Clear",
+                        "title": "Clear the Teleora tab",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
+                    "teleoraNextButtonData": {
+                        "id": "teleora_next_button",
+                        "text": "Next",
+                        "title": "Switch to the next Teleora tab",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
+                    "teleoraPreviousButtonData": {
+                        "id": "teleora_previous_button",
+                        "text": "Previous",
+                        "title": "Switch to the previous Teleora tab",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
+                    "teleoraNewTabButtonData": {
+                        "id": "teleora_new_button",
+                        "text": "New",
+                        "title": "Create a new Teleora tab",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
+                    "teleoraCloseTabButtonData": {
+                        "id": "teleora_close_button",
+                        "text": "Close",
+                        "title": "Close the current Teleora tab",
+                        "classes": [
+                            "teleora_button"
+                        ]
                     }
                 }
             }
