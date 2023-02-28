@@ -78,11 +78,18 @@ user@machine:~$ ./run.sh
 
 * Make sure that your TypeScript code adds a new listener to the Teleora save button (check out `teleoraSaveButtonData` in `teleora/src/gui/gui.json` for details on such button).
 
-* Make sure you **NEVER** use inline event handlers (e.g., `onclick="..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy. Instead, use the `addEventListener()` function in one of your TypeScript files.
+* Make sure you **NEVER** use inline event handlers (e.g., `onclick="..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy. Instead, use the `addEventListener()` function in one of your TypeScript files. For the same reason, you **MUST NOT** use libraries that create such inline event handlers.
 
-* Make sure you **NEVER** use JavaScript URIs (e.g., `href="javascript:..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy.
+* Make sure you **NEVER** use JavaScript URIs (e.g., `href="javascript:..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy. For the same reason, you **MUST NOT** use libraries that create such JavaScript URIs.
 
-* Make sure you **NEVER** use `eval()` in your HTML/TypeScript code. It will be ungracefully blocked by the Content Security Policy.
+* Make sure you **NEVER** use `eval()` in your HTML/TypeScript code. It will be ungracefully blocked by the Content Security Policy. For the same reason, you **MUST NOT** use libraries that use `eval()`.
+
+* Make sure you **NEVER** use style attributes (e.g., `style="..."`) in your HMTL/TypeScript code. They will be ungracefully blocked by the Content Security Policy. For the same reason, you **MUST NOT** use libraries that create such style attributes.
+
+* If your TypeScript (then converted to JavaScript) code creates any inline script/style tags:
+  * Make sure they are created using the `document.createElement()` function, and inserted with the `appendChild()` function (or similar functions). In particular, you **MUST NOT** use API methods that call the parser (e.g., `document.write()`). Otherwise, your script/style tags will be ungracefully blocked by the Content Security Policy.
+
+  * Make sure to propagate the `nonce` attribute from you main script. Otherwise, your script/style tags will be ungracefully blocked by the Content Security Policy.
 
 * Have a look at `envs/example-env-ts` for a concrete example (including the content of the relevant scripts / configuration files).
 

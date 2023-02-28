@@ -47,13 +47,59 @@ export class TeleoraDiv {
     }
 
     public save(): void {
+        // This will be replaced by a custom listener in the loaded environment.
         console.log("This will save the code.");
-        // TODO: Save the code.
     }
 
     public load(): void {
-        console.log("This will load the code from file in a new tab.");
-        // TODO: Load the code.
+        let fileInput: HTMLInputElement = document.createElement("input");
+
+        fileInput.type = "file";
+        fileInput.accept = teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.accept;
+
+        fileInput.addEventListener("change", (event: Event) => {
+            let file: File = (event.target as HTMLInputElement).files[0];
+
+            let fileReader: FileReader = new FileReader();
+
+            // TODO: Validate the file size.
+            fileReader.addEventListener("load", (event: Event) => this.loadTeleoraFileToNewEditorTab(event));
+
+            fileReader.readAsText(file);
+        });
+
+        fileInput.click();
+        fileInput.remove();
+    }
+
+    private loadTeleoraFileToNewEditorTab(event: Event): void {
+        let fileContents: string = (event.target as FileReader).result as string;
+
+        this.newEditor();
+
+        const lines: string[] = this.validateTeleoraFile(fileContents);
+        const cmContent: HTMLDivElement = document.getElementsByClassName("cm-content")[0] as HTMLDivElement;
+
+        cmContent.removeChild(cmContent.firstChild);
+
+        lines.forEach((line: string) => {
+            const cmLine: HTMLDivElement = document.createElement("div");
+
+            cmLine.classList.add("cm-line");
+            cmLine.textContent = line;
+
+            cmContent.appendChild(cmLine);
+        });
+
+        (<HTMLDivElement>cmContent.firstChild).classList.add("cm-activeLine");
+    }
+
+    private validateTeleoraFile(fileContents: string): string[] {
+        const lines: string[] = fileContents.split("\n");
+
+        // TODO: Validate the file contents.
+
+        return lines;
     }
 
     public clear(): void {
