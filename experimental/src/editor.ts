@@ -28,7 +28,7 @@ export class Editor {
     newFileModal : NewFileModal;
     recoverModal : RecoverModal;
 
-    constructor() {
+    public constructor() {
         //localStorage.clear() // TODO: REMOVE THIS IN PRODUCTION
         this.tabs = new Map<string, EditorFile>();
         var new_file = new EditorFile("+", "");

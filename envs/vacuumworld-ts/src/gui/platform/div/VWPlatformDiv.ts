@@ -32,7 +32,7 @@ const { externalSimulationControlsDivData } = globalGUIConfig.gui;
 const { minEnvDim, maxEnvDim } = commonConfig;
 const { platformDivData } = guiConfig;
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, toggleTeleoraEditorBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
-const teleoraSaveButtonData = teleoraConfig.teleoraDivData.children.teleoraButtonsDivData.children.teleoraSaveButtonData;
+const teleoraButtonsData = teleoraConfig.teleoraDivData.children.teleoraButtonsDivData.children;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -520,23 +520,23 @@ export class VWPlatformDiv implements VWDiv {
             this.initialViewButtonsDiv.showTooltips();
             this.optionsDialogDiv.showTooltips();
 
-            this.showTeleoraSaveButtonTooltip();
+            this.showTeleoraButtonsTooltips();
         }
         else {
             this.options.deactivateTooltips();
             this.initialViewButtonsDiv.hideTooltips();
             this.optionsDialogDiv.hideTooltips();
 
-            this.hideTeleoraSaveButtonTooltip();
+            this.hideTeleoraButtonsTooltips();
         }
     }
 
-    private showTeleoraSaveButtonTooltip(): void {
-        document.getElementById(teleoraSaveButtonData.id).title = teleoraSaveButtonData.title;
+    private showTeleoraButtonsTooltips(): void {
+        Object.values(teleoraButtonsData).forEach(buttonData => document.getElementById(buttonData.id).title = buttonData.title);
     }
 
-    private hideTeleoraSaveButtonTooltip(): void {
-        document.getElementById(teleoraSaveButtonData.id).title = "";
+    private hideTeleoraButtonsTooltips(): void {
+        Object.values(teleoraButtonsData).forEach(buttonData => document.getElementById(buttonData.id).title = "");
     }
 
     private parseMaxNumberOfCycles(): void {

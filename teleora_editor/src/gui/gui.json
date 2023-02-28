@@ -23,6 +23,7 @@
                         "id": "teleora_load_button",
                         "text": "Load",
                         "title": "Load a Teleora file in a new Teleora tab",
+                        "accept": ".tel",
                         "classes": [
                             "teleora_button"
                         ]
