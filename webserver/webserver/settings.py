@@ -42,7 +42,8 @@ MIDDLEWARE: list[str] = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "middleware.security_headers.SecurityHeadersMiddleware"
+    "middleware.security_headers.SecurityHeadersMiddleware",
+    "middleware.internal_errors_handler.InternalServerErrorMiddleware"
 ]
 
 ROOT_URLCONF: str = "webserver.urls"

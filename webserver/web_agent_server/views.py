@@ -68,7 +68,6 @@ def __serve_static_file(request: HttpRequest, fullpath: Path) -> HttpResponse | 
     if not fullpath.exists():
         return http404(request=request)
 
-    # Respect the If-Modified-Since header.
     statobj = fullpath.stat()
 
     if not was_modified_since(request.META.get("HTTP_IF_MODIFIED_SINCE"), statobj.st_mtime):

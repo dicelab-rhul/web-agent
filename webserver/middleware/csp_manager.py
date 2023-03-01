@@ -30,7 +30,7 @@ class CSPMiddleware():
 
         response: HttpResponse | TemplateResponse | FileResponse = self.__get_response(request)
 
-        if isinstance(response, TemplateResponse) and  response.context_data:
+        if isinstance(response, TemplateResponse) and response.context_data:
             response.context_data["nonce_value"] = self.__nonce
 
         if isinstance(response, (FileResponse, JsonResponse)):
