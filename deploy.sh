@@ -44,4 +44,4 @@ cd webserver/tls
 ./gen_keys_and_certs.sh
 cd -
 
-./run.sh
+./run.sh --launch

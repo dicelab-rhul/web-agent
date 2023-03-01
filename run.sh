@@ -26,8 +26,19 @@ elif [ ${PROTOCOL} == "https" ]; then
     if [ "${1}" == "--launch" ]; then
         sleep 2 && open ${PROTOCOL}://${HOST}:${PORT} &
     fi
-    # TODO: go through all the possible keys/certs and try to find one that works.
-    python3 manage.py runserver_plus --cert tls/secp256r1-cert.pem --key-file tls/secp256r1-key.pem --nostatic
+
+    cd tls
+    python3 find_key_and_cert.py
+    cd -
+
+    KEY_PATH="tls/active/cert.pem"
+    CERT_PATH="tls/active/key.pem"
+    if [ ! -f "${KEY_PATH}" ] || [ ! -f "${CERT_PATH}" ]; then
+        echo "Could not find a valid certificate and key. The content will be served in plain HTTP."
+        python3 manage.py runserver --nostatic
+    else
+        python3 manage.py runserver_plus --cert tls/active/cert.pem --key-file tls/active/key.pem --nostatic
+    fi
 elif [ ${PROTOCOL} == "http" ]; then
     if [ "${1}" == "--launch" ]; then
         sleep 2 && open ${PROTOCOL}://${HOST}:${PORT} &
