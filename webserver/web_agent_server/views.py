@@ -100,14 +100,17 @@ def __validate_report(request_body: bytes, mandatory_report_key: str, allowed_in
         if not isinstance(report[mandatory_report_key], dict):
             return False
 
-        csp_report: dict[Any, Any] = report[mandatory_report_key]
+        inner_report: dict[Any, Any] = report[mandatory_report_key]
 
-        if any(not isinstance(key, str) for key in csp_report.keys()):
+        if any(not isinstance(key, str) for key in inner_report.keys()):
             return False
 
-        if any(not isinstance(value, tuple(allowed_inner_dict_values_types)) for value in csp_report.values()):
+        if any(not isinstance(value, tuple(allowed_inner_dict_values_types)) for value in inner_report.values()):
             return False
 
         return True
     except Exception:
         return False
+
+def default(request: HttpRequest) -> HttpResponse:
+    return http404(request=request)
