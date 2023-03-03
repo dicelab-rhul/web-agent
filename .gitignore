@@ -80,3 +80,4 @@ test.js
 test.py
 __pycache__
 *.sqlite3
+teleora.sh

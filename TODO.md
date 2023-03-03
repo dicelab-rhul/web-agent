@@ -4,11 +4,11 @@
 
 * File [TELEORA.md](TELEORA.md) - line 161: `TODO: other operators...`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts) - line 43: `this.div.insertBefore(this.hiddenEditorDivList[0], this.div.firstChild); // TODO: Do we want to always display the first editor when we remove an editor?`
+* File [whitespaces_checker.py](whitespaces_checker.py) - line 36: `if line[i] == " " and line[i + 1] == " " and not line[i + 1:].strip().startswith("//"): # TODO: check for spaces in strings, and filter those cases out.`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts) - line 65: `// TODO: Validate the file size.`
+* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts) - line 58: `// TODO: Validate the file size.`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts) - line 100: `// TODO: Validate the file contents.`
+* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts) - line 93: `// TODO: Validate the file contents.`
 
 * File [teleora_editor/src/gui/div/TeleoraEditorDiv.ts](teleora_editor/src/gui/div/TeleoraEditorDiv.ts) - line 24: `javascript() // TODO: Replace this with Teleora.`
 

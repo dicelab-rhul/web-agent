@@ -5,6 +5,21 @@
             "teleoraEditorDivData": {
                 "id": "teleora_editor_div"
             },
+            "teleoraTabMarkersDivData": {
+                "id": "teleora_tabs_div",
+                "classes": [],
+                "children": {
+                    "teleoraTabMarkerData": {
+                        "idPrefix": "teleora_tab_",
+                        "classes": [
+                            "teleora_tab"
+                        ],
+                        "classesDisplayed": [
+                            "displayed_teleora_tab"
+                        ]
+                    }
+                }
+            },
             "teleoraButtonsDivData": {
                 "id": "teleora_buttons_div",
                 "classes": [
@@ -32,38 +47,6 @@
                         "id": "teleora_clear_button",
                         "text": "Clear",
                         "title": "Clear the Teleora tab",
-                        "classes": [
-                            "teleora_button"
-                        ]
-                    },
-                    "teleoraNextButtonData": {
-                        "id": "teleora_next_button",
-                        "text": "Next",
-                        "title": "Switch to the next Teleora tab",
-                        "classes": [
-                            "teleora_button"
-                        ]
-                    },
-                    "teleoraPreviousButtonData": {
-                        "id": "teleora_previous_button",
-                        "text": "Previous",
-                        "title": "Switch to the previous Teleora tab",
-                        "classes": [
-                            "teleora_button"
-                        ]
-                    },
-                    "teleoraNewTabButtonData": {
-                        "id": "teleora_new_button",
-                        "text": "New",
-                        "title": "Create a new Teleora tab",
-                        "classes": [
-                            "teleora_button"
-                        ]
-                    },
-                    "teleoraCloseTabButtonData": {
-                        "id": "teleora_close_button",
-                        "text": "Close",
-                        "title": "Close the current Teleora tab",
                         "classes": [
                             "teleora_button"
                         ]

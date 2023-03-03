@@ -4,6 +4,22 @@
     border-bottom: 1px solid #000000;
 }
 
+#teleora_tabs_div {
+    display: flex;
+}
+
+.teleora_tab {
+    border: 1px solid #000000;
+    font-weight: bolder;
+    padding: 0.5vh 0.5vh 0.5vh 0.5vh;
+    background-color: #a0a0a0;
+    border-collapse: collapse;
+}
+
+.displayed_teleora_tab {
+    background-color: #c0c0c0;
+}
+
 .teleora_button {
     min-width: 10%;
     width: fit-content;

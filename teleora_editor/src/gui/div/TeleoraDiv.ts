@@ -1,13 +1,17 @@
 import { TeleoraEditorDiv } from "./TeleoraEditorDiv";
 import { TeleoraButtonsDiv } from "./TeleoraButtonsDiv";
+import { TeleoraTabMarkersDiv } from "./TeleoraTabsDiv";
 
 import teleoraGUIData from "../gui.json";
 
 const { teleoraDivData } = teleoraGUIData;
+const teleoraTabMarkersDivData = teleoraGUIData.teleoraDivData.children.teleoraTabMarkersDivData;
 
 export class TeleoraDiv {
     private div: HTMLDivElement;
-    private hiddenEditorDivList: HTMLDivElement[]; // The tabs that are not currently displayed.
+    private editorDivList: HTMLDivElement[]; // The tabs that are not currently displayed.
+    private tabMarkersDiv: TeleoraTabMarkersDiv;
+    private static tabLimit: number = 10;
     private buttonsDiv: TeleoraButtonsDiv;
 
     public constructor() {
@@ -15,35 +19,24 @@ export class TeleoraDiv {
 
         this.div.id = teleoraDivData.id;
 
-        this.hiddenEditorDivList = [];
+        this.editorDivList = [];
 
-        this.buttonsDiv = new TeleoraButtonsDiv(this.save.bind(this), this.load.bind(this), this.clear.bind(this), this.next.bind(this), this.previous.bind(this), this.newEditor.bind(this), this.close.bind(this));
+        const editorDiv: TeleoraEditorDiv = new TeleoraEditorDiv();
 
-        this.div.appendChild(new TeleoraEditorDiv().getDiv());
+        this.editorDivList.push(editorDiv.getDiv());
+
+        this.buttonsDiv = new TeleoraButtonsDiv(this.save.bind(this), this.load.bind(this), this.clear.bind(this));
+
+        this.div.appendChild(editorDiv.getDiv());
+
+        this.tabMarkersDiv = new TeleoraTabMarkersDiv(this.editorDivList, this.displayTab.bind(this), this.addTab.bind(this), this.removeTab.bind(this));
+
+        this.div.appendChild(this.tabMarkersDiv.getDiv());
         this.div.appendChild(this.buttonsDiv.getDiv());
     }
 
     public getDiv(): HTMLDivElement {
         return this.div;
-    }
-
-    public newEditor(): void {
-        this.hiddenEditorDivList.push(this.div.firstChild as HTMLDivElement);
-
-        this.div.replaceChild(new TeleoraEditorDiv().getDiv(), this.div.firstChild);
-    }
-
-    public close(): void {
-        this.div.removeChild(this.div.firstChild);
-
-        if (this.hiddenEditorDivList.length === 0) {
-            this.div.insertBefore(new TeleoraEditorDiv().getDiv(), this.div.firstChild);
-        }
-        else {
-            this.div.insertBefore(this.hiddenEditorDivList[0], this.div.firstChild); // TODO: Do we want to always display the first editor when we remove an editor?
-
-            this.hiddenEditorDivList.splice(0, 1);
-        }
     }
 
     public save(): void {
@@ -75,7 +68,7 @@ export class TeleoraDiv {
     private loadTeleoraFileToNewEditorTab(event: Event): void {
         let fileContents: string = (event.target as FileReader).result as string;
 
-        this.newEditor();
+        this.addTab();
 
         const lines: string[] = this.validateTeleoraFile(fileContents);
         const cmContent: HTMLDivElement = document.getElementsByClassName("cm-content")[0] as HTMLDivElement;
@@ -103,28 +96,57 @@ export class TeleoraDiv {
     }
 
     public clear(): void {
-        this.div.replaceChild(new TeleoraEditorDiv().getDiv(), this.div.firstChild);
+        const currentTabIndex: number = Number(document.getElementsByClassName(teleoraTabMarkersDivData.children.teleoraTabMarkerData.classesDisplayed[0])[0].textContent);
+
+        this.editorDivList[currentTabIndex] = new TeleoraEditorDiv().getDiv();
+
+        this.displayTab(currentTabIndex);
     }
 
-    public next(): void {
-        if (this.hiddenEditorDivList.length > 0) {
-            this.hiddenEditorDivList.push(this.div.firstChild as HTMLDivElement);
+    public addTab(): void {
+        if (this.editorDivList.length < TeleoraDiv.tabLimit) {
+            // Create a new tab.
+            const editorDiv: TeleoraEditorDiv = new TeleoraEditorDiv();
 
-            this.div.replaceChild(this.hiddenEditorDivList.shift(), this.div.firstChild);
+            // Add the tab to the list.
+            this.editorDivList.push(editorDiv.getDiv());
+
+            // Create a new tab marker.
+            this.tabMarkersDiv.addTabMarker();
+
+            // Highlight the new tab marker.
+            this.tabMarkersDiv.highlightTabMarker(this.editorDivList.length - 1);
+
+            // Display the new tab.
+            this.div.replaceChild(editorDiv.getDiv(), this.div.firstChild);
         }
         else {
-            console.log("Cannot switch: there is only one Teleora tab.")
+            console.log("You have reached the tab limit.");
         }
     }
 
-    public previous(): void {
-        if (this.hiddenEditorDivList.length > 0) {
-            this.hiddenEditorDivList.unshift(this.div.firstChild as HTMLDivElement);
+    public displayTab(num: number): void {
+        // Change the displayed tab.
+        this.div.replaceChild(this.editorDivList[num], this.div.firstChild);
 
-            this.div.replaceChild(this.hiddenEditorDivList.pop(), this.div.firstChild);
+        // Hightlight the tab marker.
+        this.tabMarkersDiv.highlightTabMarker(num);
+    }
+
+    public removeTab(num: number): void {
+        if (this.editorDivList.length > 1) {
+            this.editorDivList.splice(num, 1);
         }
         else {
-            console.log("Cannot switch: there is only one Teleora tab.")
+            this.editorDivList[0] = new TeleoraEditorDiv().getDiv();
         }
+
+        const newMarkersDiv: TeleoraTabMarkersDiv = new TeleoraTabMarkersDiv(this.editorDivList, this.displayTab.bind(this), this.addTab.bind(this), this.removeTab.bind(this))
+
+        this.div.replaceChild(newMarkersDiv.getDiv(), this.tabMarkersDiv.getDiv());
+
+        this.tabMarkersDiv = newMarkersDiv;
+
+        this.displayTab(Math.min(num, this.editorDivList.length - 1));
     }
 }
