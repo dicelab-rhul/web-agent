@@ -10,7 +10,7 @@ class DocumentHeaders(Headers):
     def get_headers(request: HttpRequest, report_to: bool=False, report_uri: bool=True) -> dict[str, Any]:
         return Headers.get_common_headers(request=request) | {
             "Cross-Origin-Opener-Policy": f"same-origin;{Headers.get_coop_report_directive(report_to=report_to, report_uri=report_uri)}",
-            "Cross-Origin-Resource-Policy": f"same-origin",
+            "Cross-Origin-Resource-Policy": "same-origin",
             "Cross-Origin-Embedder-Policy": f"require-corp;{Headers.get_coep_report_directive(report_to=report_to, report_uri=report_uri)}",
             "Vary": "Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site, Sec-Fetch-User",
 

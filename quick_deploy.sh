@@ -41,4 +41,4 @@ find static/ -name "*.LICENSE.txt" -type f | xargs rm -f
 find webserver/web_agent_server/static/ -name "*.LICENSE.txt" -type f | xargs rm -f
 echo "Done."
 
-./run.sh
+./run.sh --launch

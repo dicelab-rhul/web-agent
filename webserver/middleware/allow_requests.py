@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.http.request import HttpHeaders
 
-from web_agent_server.utils import http403
+from web_agent_server.views import handler403
 
 from typing import Optional, Callable
 
@@ -17,7 +17,7 @@ class AllowRequestsMiddleware():
         if request.method is None or not self.__allow_request(request.method, request.headers, request.path):
             print(f"Request blocked: {request.method} {request.path} {request.headers}")
 
-            return http403(request=request)
+            return handler403(request=request)
         else:
             return self.__get_response(request)
 
