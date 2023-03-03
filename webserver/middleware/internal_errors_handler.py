@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 
-from web_agent_server.utils import http500
+from web_agent_server.views import handler500
 
 from typing import Callable
 
@@ -14,7 +14,7 @@ class InternalServerErrorMiddleware():
         try:
             return self.__get_response(request)
         except Exception:
-            return http500(request=request)
+            return handler500(request=request)
 
     def process_exception(self, request: HttpRequest, _: Exception) -> TemplateResponse:
-        return http500(request=request)
+        return handler500(request=request)
