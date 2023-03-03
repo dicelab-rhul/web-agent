@@ -25,8 +25,17 @@ def __scan_file(d: str, f: str) -> None:
     lines: list[str] = open(os.path.join(d, f)).readlines()
 
     for i in range(len(lines)):
-        if lines[i].endswith(" ") or lines[i].endswith("\t") or lines[i].endswith(" \n") or lines[i].endswith("\t\n"):
+        if lines[i].endswith(" ") or lines[i].endswith("\t") or lines[i].endswith(" \n") or lines[i].endswith("\t\n") or __multiple_space(lines[i]):
             print(os.path.join(d, f) + ": line " + str(i + 1) + ".")
+
+
+def __multiple_space(line: str) -> bool:
+    line = line.strip()
+
+    for i in range(len(line) - 1):
+        if line[i] == " " and line[i + 1] == " " and not line[i + 1:].strip().startswith("//"): # TODO: check for spaces in strings, and filter those cases out.
+            return True
+    return False
 
 
 if __name__ == "__main__":
