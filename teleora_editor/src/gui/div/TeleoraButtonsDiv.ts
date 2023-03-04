@@ -7,14 +7,14 @@ export class TeleoraButtonsDiv {
     private callbacks: (() => void)[]
     private buttonsDiv: HTMLDivElement;
 
-    public constructor(saveCallback: () => void, loadCallback: () => void, clearCallback: () => void) {
+    public constructor(useCallback: () => void, saveCallback: () => void, loadCallback: () => void, clearCallback: () => void) {
         this.buttonsDiv = document.createElement("div");
 
         this.buttonsDiv.id = teleoraButtonsDivData.id;
 
         this.buttonsDiv.classList.add(...teleoraButtonsDivData.classes);
 
-        this.callbacks = [saveCallback, loadCallback, clearCallback];
+        this.callbacks = [useCallback, saveCallback, loadCallback, clearCallback];
 
         const buttonsData = Object.values(teleoraButtonsDivData.children);
 

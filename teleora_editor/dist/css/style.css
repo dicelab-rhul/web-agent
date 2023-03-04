@@ -8,7 +8,7 @@
     display: flex;
 }
 
-.teleora_tab {
+.teleora_tab_marker {
     border: 1px solid #000000;
     font-weight: bolder;
     padding: 0.5vh 0.5vh 0.5vh 0.5vh;
@@ -16,7 +16,7 @@
     border-collapse: collapse;
 }
 
-.displayed_teleora_tab {
+.displayed_teleora_tab_marker {
     background-color: #c0c0c0;
 }
 

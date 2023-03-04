@@ -10,12 +10,12 @@
                 "classes": [],
                 "children": {
                     "teleoraTabMarkerData": {
-                        "idPrefix": "teleora_tab_",
+                        "idPrefix": "teleora_tab_marker_",
                         "classes": [
-                            "teleora_tab"
+                            "teleora_tab_marker"
                         ],
                         "classesDisplayed": [
-                            "displayed_teleora_tab"
+                            "displayed_teleora_tab_marker"
                         ]
                     }
                 }
@@ -26,6 +26,14 @@
                     "teleora_buttons_div"
                 ],
                 "children": {
+                    "teleoraUseButtonData": {
+                        "id": "teleora_use_button",
+                        "text": "Use",
+                        "title": "Use the Teleora file in the environemnt",
+                        "classes": [
+                            "teleora_button"
+                        ]
+                    },
                     "teleoraSaveButtonData": {
                         "id": "teleora_save_button",
                         "text": "Save",
