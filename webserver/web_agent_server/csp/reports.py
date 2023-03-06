@@ -1,6 +1,7 @@
 from typing import Any, Optional
 
 
+# TODO: use a database in production.
 class ReportsLogs():
     csp_reports: list[dict[str, Any]] = []
     coop_reports: list[dict[str, Any]] = []
@@ -9,7 +10,7 @@ class ReportsLogs():
 
     @staticmethod
     def add_csp_report(report: Optional[dict[str, Any]]) -> bool:
-        if report is not None and ReportsLogs.__interesting(report):
+        if report is not None and ReportsLogs.__csp_report_interesting(report):
             ReportsLogs.__append_and_shift(report, ReportsLogs.csp_reports)
 
             return True
@@ -18,7 +19,7 @@ class ReportsLogs():
 
     @staticmethod
     def add_coop_report(report: Optional[dict[str, Any]]) -> bool:
-        if report is not None and ReportsLogs.__interesting(report):
+        if report is not None and ReportsLogs.__coop_report_interesting(report):
             ReportsLogs.__append_and_shift(report, ReportsLogs.coop_reports)
 
             return True
@@ -27,7 +28,7 @@ class ReportsLogs():
 
     @staticmethod
     def add_coep_report(report: Optional[dict[str, Any]]) -> bool:
-        if report is not None and ReportsLogs.__interesting(report):
+        if report is not None and ReportsLogs.__coep_report_interesting(report):
             ReportsLogs.__append_and_shift(report, ReportsLogs.coep_reports)
 
             return True
@@ -47,8 +48,16 @@ class ReportsLogs():
         return ReportsLogs.coep_reports
 
     @staticmethod
-    def __interesting(report: dict[str, Any]) -> bool:
+    def __csp_report_interesting(report: dict[str, Any]) -> bool:
         return not ReportsLogs.__is_csp_report_caused_by_extension(report)
+
+    @staticmethod
+    def __coop_report_interesting(report: dict[str, Any]) -> bool:
+        return True # TODO: filter out uninteresting reports.
+
+    @staticmethod
+    def __coep_report_interesting(report: dict[str, Any]) -> bool:
+        return True # TODO: filter out uninteresting reports.
 
     @staticmethod
     def __is_csp_report_caused_by_extension(report: dict[str, Any]) -> bool:

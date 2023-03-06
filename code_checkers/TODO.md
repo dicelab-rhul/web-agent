@@ -44,9 +44,15 @@
 
 * File [webserver/web_agent_server/csp/dom_xss_mitigating_csp.py](/webserver/web_agent_server/csp/dom_xss_mitigating_csp.py): line 21: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
+* File [webserver/web_agent_server/csp/reports.py](/webserver/web_agent_server/csp/reports.py): line 4: `# TODO: use a database in production.`
+
+* File [webserver/web_agent_server/csp/reports.py](/webserver/web_agent_server/csp/reports.py): line 56: `return True # TODO: filter out uninteresting reports.`
+
+* File [webserver/web_agent_server/csp/reports.py](/webserver/web_agent_server/csp/reports.py): line 60: `return True # TODO: filter out uninteresting reports.`
+
 * File [webserver/web_agent_server/csp/exfiltration_mitigating_csp.py](/webserver/web_agent_server/csp/exfiltration_mitigating_csp.py): line 13: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
-* File [webserver/webserver/settings.py](/webserver/webserver/settings.py): line 18: `# TODO: Change this in production. This is just for testing purposes. It can be safely committed to the repo.`
+* File [webserver/webserver/settings.py](/webserver/webserver/settings.py): line 12: `# TODO: Change this in production. This is just for testing purposes. It can be safely committed to the repo.`
 
 * File [experimental/src/modal.ts](/experimental/src/modal.ts): line 1: `// TODO: there is a lot to do here:`
 

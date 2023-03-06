@@ -1,5 +1,3 @@
-# Create your views here.
-
 from django.http import HttpRequest, HttpResponse, JsonResponse, HttpResponseNotModified, FileResponse
 from django.template.response import TemplateResponse
 from django.views.decorators.csrf import csrf_exempt
