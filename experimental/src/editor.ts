@@ -113,17 +113,7 @@ export class Editor {
         $("#" + tab_id).on("click", function(){
             editor.activateTab(tab_id);
         });
-        // close button
-        /*if (closable) {
-            var close_button_html : string = `
-            <button id="btn-stop", type="button" class="close_button">
-                <i class="bi bi-x"></i>
-            </button>`;
-            var close_button = $("#" + tab_id).append(close_button_html)
-            //close_button.on("click", function(){
-            //   editortabs.closeTab(tab_id);
-            //});
-        }*/
+
         this.tabs.set(tab_id, editor_file);
         if (save) {
             this.updateLocalStorage(tab_id);

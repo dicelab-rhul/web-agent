@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
+from re import match
+
 import os
 
 
-INTERESTING_EXTENSIONS = [".py", ".js", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
+INTERESTING_EXTENSIONS = [".py", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
 DIRECTORIES_TO_IGNORE = ["node_modules", ".git"]
+PATTERNS = [r"[ \t]+$", r"[ \t]+\n$"]
 
 
 def main() -> None:
@@ -25,15 +28,15 @@ def __scan_file(d: str, f: str) -> None:
     lines: list[str] = open(os.path.join(d, f)).readlines()
 
     for i in range(len(lines)):
-        if lines[i].endswith(" ") or lines[i].endswith("\t") or lines[i].endswith(" \n") or lines[i].endswith("\t\n") or __multiple_space(lines[i]):
+        if any(match(pattern, lines[i]) for pattern in PATTERNS) or __multiple_spaces_within_line(lines[i].strip()):
             print(os.path.join(d, f) + ": line " + str(i + 1) + ".")
 
 
-def __multiple_space(line: str) -> bool:
-    line = line.strip()
+def __multiple_spaces_within_line(line: str) -> bool:
+    line = line.replace(r"\"\s+\"", "").replace(r"'\s+'", "")
 
     for i in range(len(line) - 1):
-        if line[i] == " " and line[i + 1] == " " and not line[i + 1:].strip().startswith("//"): # TODO: check for spaces in strings, and filter those cases out.
+        if line[i] == " " and line[i + 1] == " " and not line[i + 1:].strip().startswith(("//", "/*", "#")):
             return True
     return False
 

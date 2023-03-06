@@ -42,7 +42,7 @@ def main() -> None:
 def __look_for_todos(path: str) -> List[str]:
     to_add: List[str] = []
     path_to_print: str = __get_relative_path(absolute_path=path)
-    prefix: str = "* File [{}]({}) - line ".format(path_to_print, path_to_print)
+    prefix: str = "* File [{}]({}): line ".format(path_to_print, path_to_print)
     lines: List[str] = []
 
     with open(path, "r") as f:

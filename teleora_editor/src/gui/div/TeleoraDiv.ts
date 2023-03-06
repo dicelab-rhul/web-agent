@@ -25,7 +25,7 @@ export class TeleoraDiv {
 
         this.editorDivList.push(editorDiv.getDiv());
 
-        this.buttonsDiv = new TeleoraButtonsDiv(this.save.bind(this), this.load.bind(this), this.clear.bind(this));
+        this.buttonsDiv = new TeleoraButtonsDiv(this.use.bind(this), this.save.bind(this), this.load.bind(this), this.clear.bind(this));
 
         this.div.appendChild(editorDiv.getDiv());
 
@@ -39,9 +39,21 @@ export class TeleoraDiv {
         return this.div;
     }
 
-    public save(): void {
+    public use(): void {
         // This will be replaced by a custom listener in the loaded environment.
         console.log("This will save the code.");
+    }
+
+    public save(): void {
+        const lines: string[] = Array.from(this.editorDivList[0].getElementsByClassName("cm-line")).map((line: HTMLDivElement) => line.textContent);
+        const blob: Blob = new Blob([lines.join("\n")], {type:"application/teleora"});
+        const url: string = URL.createObjectURL(blob);
+        const link: HTMLAnchorElement = document.createElement("a");
+
+        link.setAttribute("href", url);
+        link.setAttribute("download", "mind_core.tel");
+
+        link.click();
     }
 
     public load(): void {

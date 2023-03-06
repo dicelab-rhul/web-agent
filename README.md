@@ -76,7 +76,7 @@ user@machine:~$ ./run.sh
 
 * Make sure that your TypeScript code adds new listeners to the external controls (check out the children of `externalSimulationControlsDivData` in `static/json/gui.json` for the list of available controls).
 
-* Make sure that your TypeScript code adds a new listener to the Teleora save button (check out `teleoraSaveButtonData` in `teleora/src/gui/gui.json` for details on such button).
+* Make sure that your TypeScript code adds a new listener to the Teleora `use` button (check out `teleoraUseButtonData` in `teleora/src/gui/gui.json` for details on such button). The idea is to invoke a parser that translates the code in the currently displayed Teleora tab into something usable by the environment. The parser itself must be provided by the environment.
 
 * Make sure you **NEVER** use inline event handlers (e.g., `onclick="..."`) in your HTML/TypeScript code. They will be ungracefully blocked by the Content Security Policy. Instead, use the `addEventListener()` function in one of your TypeScript files. For the same reason, you **MUST NOT** use libraries that create such inline event handlers.
 
@@ -87,7 +87,9 @@ user@machine:~$ ./run.sh
 * Make sure you **NEVER** use style attributes (e.g., `style="..."`) in your HMTL/TypeScript code. They will be ungracefully blocked by the Content Security Policy. For the same reason, you **MUST NOT** use libraries that create such style attributes.
 
 * If your TypeScript (then converted to JavaScript) code creates any inline script/style tags:
-  * Make sure they are created using the `document.createElement()` function, and inserted with the `appendChild()` function (or similar functions). In particular, you **MUST NOT** use API methods that call the parser (e.g., `document.write()`). Otherwise, your script/style tags will be ungracefully blocked by the Content Security Policy.
+  * Make sure they are created using the `document.createElement()` function (or similar functions), and inserted using the `appendChild()` function (or similar functions).
+
+  * In particular, you **MUST NOT** use API methods that call the parser (e.g., `document.write()`) to create/insert script/style tags. Otherwise, your script/style tags will be ungracefully blocked by the Content Security Policy.
 
   * Make sure to propagate the `nonce` attribute from you main script. Otherwise, your script/style tags will be ungracefully blocked by the Content Security Policy.
 
