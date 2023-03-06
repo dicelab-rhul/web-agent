@@ -6,12 +6,12 @@ import teleoraGUIData from "../gui.json";
 
 const { teleoraDivData } = teleoraGUIData;
 const teleoraTabMarkersDivData = teleoraGUIData.teleoraDivData.children.teleoraTabMarkersDivData;
+const tabsLimit: number = teleoraDivData.tabsLimit;
 
 export class TeleoraDiv {
     private div: HTMLDivElement;
     private editorDivList: HTMLDivElement[]; // The tabs that are not currently displayed.
     private tabMarkersDiv: TeleoraTabMarkersDiv;
-    private static tabLimit: number = 10;
     private buttonsDiv: TeleoraButtonsDiv;
 
     public constructor() {
@@ -116,7 +116,7 @@ export class TeleoraDiv {
     }
 
     public addTab(): void {
-        if (this.editorDivList.length < TeleoraDiv.tabLimit) {
+        if (this.editorDivList.length < tabsLimit) {
             // Create a new tab.
             const editorDiv: TeleoraEditorDiv = new TeleoraEditorDiv();
 

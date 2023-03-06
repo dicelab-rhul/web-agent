@@ -4,9 +4,9 @@
 
 * File [TELEORA.md](TELEORA.md): line 161: `TODO: other operators...`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts): line 58: `// TODO: Validate the file size.`
+* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts): line 70: `// TODO: Validate the file size.`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts): line 93: `// TODO: Validate the file contents.`
+* File [teleora_editor/src/gui/div/TeleoraDiv.ts](teleora_editor/src/gui/div/TeleoraDiv.ts): line 105: `// TODO: Validate the file contents.`
 
 * File [teleora_editor/src/gui/div/TeleoraEditorDiv.ts](teleora_editor/src/gui/div/TeleoraEditorDiv.ts): line 24: `javascript() // TODO: Replace this with Teleora.`
 
