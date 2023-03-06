@@ -33,6 +33,7 @@ elif [ ${PROTOCOL} == "https" ]; then
 
     KEY_PATH="tls/active/cert.pem"
     CERT_PATH="tls/active/key.pem"
+
     if [ ! -f "${KEY_PATH}" ] || [ ! -f "${CERT_PATH}" ]; then
         echo "Could not find a valid certificate and key. The content will be served in plain HTTP."
         python3 manage.py runserver --nostatic

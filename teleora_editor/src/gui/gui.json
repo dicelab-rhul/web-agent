@@ -1,6 +1,7 @@
 {
     "teleoraDivData": {
         "id": "teleora_div",
+        "tabsLimit": 10,
         "children": {
             "teleoraEditorDivData": {
                 "id": "teleora_editor_div"
