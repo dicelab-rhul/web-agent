@@ -170,6 +170,7 @@
         },
         "errorDivData": {
             "id": "error_div",
+            "title": "Error",
             "classes": [
                 "center-aligned"
             ]

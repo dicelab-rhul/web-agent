@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 '''
-Please run this file as ./todo_generator.py from within its parent directory.
+Please run this file as ./loose_equality_checks_searcher.py from within its parent directory.
 Otherwise, the paths will not be generated/printed correctly.
 '''
 
@@ -10,27 +10,28 @@ from typing import List
 import os
 
 
-INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js", ".jsx", ".cjs", ".cjsx", ".html", ".css", ".json", ".py", ".md", ".sh"]
-TODO_FILE: str = "TODO.md"
-FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__), TODO_FILE]
-DIR_EXCLUSION_LIST: List[str] = ["node_modules", "dist"]
-TODO_PATTERN: str = "TODO"
-TODO_HEADER: str = "# List of TODOs"
+INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js", ".cjs"]
+FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__)]
+DIR_EXCLUSION_LIST: List[str] = ["node_modules", "static"]
+OUTPUT_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "LOOSE_EQUALITY_CHECKS.md"))
+PATTERNS: List[str] = [" == ", " != "]
+HEADER: str = "# List of loose equality checks"
+PROJECT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
 def main() -> None:
     lines: List[str] = []
 
-    for dir, _, files in os.walk(os.getcwd()):
+    for dir, _, files in os.walk(PROJECT_DIR):
         if os.path.basename(dir) in DIR_EXCLUSION_LIST or any(d in dir for d in DIR_EXCLUSION_LIST):
             continue
 
         for f in filter(lambda candidate: any(filter(lambda ext: isinstance(ext, str) and candidate.endswith(ext), INTERESTING_FILES_EXTENSIONS)), files):
             if f not in FILES_EXCLUSION_LIST:
-                lines += __look_for_todos(os.path.join(dir, f))
+                lines += __look_for_loose_equality_checks(os.path.join(dir, f))
 
-    with open(TODO_FILE, "w") as f:
-        f.write(TODO_HEADER + "\n\n")
+    with open(OUTPUT_FILE, "w") as f:
+        f.write(HEADER + "\n\n")
 
         for line in lines:
             f.write(line + "\n\n")
@@ -39,10 +40,10 @@ def main() -> None:
         f.flush()
 
 
-def __look_for_todos(path: str) -> List[str]:
+def __look_for_loose_equality_checks(path: str) -> List[str]:
     to_add: List[str] = []
     path_to_print: str = __get_relative_path(absolute_path=path)
-    prefix: str = "* File [{}]({}): line ".format(path_to_print, path_to_print)
+    prefix: str = "* File [{}]({}) - line ".format(path_to_print, path_to_print)
     lines: List[str] = []
 
     with open(path, "r") as f:
@@ -51,7 +52,7 @@ def __look_for_todos(path: str) -> List[str]:
     for i in range(len(lines)):
         line_number = i + 1
 
-        if TODO_PATTERN in lines[i]:
+        if any(pattern in lines[i] for pattern in PATTERNS):
             to_add.append(prefix + "{}: `{}`".format(line_number, lines[i].strip().replace("`", "'")))
 
     return to_add
@@ -59,7 +60,7 @@ def __look_for_todos(path: str) -> List[str]:
 
 def __get_relative_path(absolute_path: str) -> str:
     tokens: List[str] = absolute_path.split(os.path.sep)
-    vw_top_dir: str = os.path.basename(os.getcwd())
+    vw_top_dir: str = os.path.basename(PROJECT_DIR)
 
     while tokens[0] != vw_top_dir:
         tokens = tokens[1:]
