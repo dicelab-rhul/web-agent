@@ -11,25 +11,24 @@ python3 discover_envs.py
 
 for dir in envs/*/; do
     cd $dir
+
     ./quick_dev_deploy.sh
     mkdir -p ../../webserver/web_agent_server/static/$dir/
     cp -r dist ../../webserver/web_agent_server/static/$dir/
     find ../../webserver/web_agent_server/static/$dir/ -name "*.LICENSE.txt" -type f | xargs rm -f
     cp -r res ../../webserver/web_agent_server/static/$dir/
-    cd -
+
+    cd - &> /dev/null
 done
 
-# The experimental module is not to be deployed on the main page.
-# cd experimental
-# ./quick_dev_deploy.sh
-# cd -
-
 cd teleora_editor
+
 ./quick_dev_deploy.sh
 mkdir -p ../webserver/web_agent_server/static/teleora_editor/
 cp -r dist ../webserver/web_agent_server/static/teleora_editor/
 find ../webserver/web_agent_server/static/teleora_editor/ -name "*.LICENSE.txt" -type f | xargs rm -f
-cd -
+
+cd -&> /dev/null
 
 echo "Deploying the main page..."
 npm run dev-build
