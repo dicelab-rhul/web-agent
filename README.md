@@ -7,40 +7,52 @@ Browser-based Teleo-Reactive agent development.
 ### The first time (to install the dependencies as well)
 
 ```console
-user@machine:~$ ./deploy.sh
+user@machine:~$ ./deploy.sh [--launch]
 ```
+
+The optional `--launch` flag will automatically open the system in your default browser.
 
 ### From the second time onwards
 
 ```console
-user@machine:~$ ./quick_deploy.sh
+user@machine:~$ ./quick_deploy.sh [--launch]
 ```
+
+The optional `--launch` flag will automatically open the system in your default browser.
 
 ### If nothing was modified
 
 ```console
-user@machine:~$ ./run.sh
+user@machine:~$ ./run.sh [--launch]
 ```
+
+The optional `--launch` flag will automatically open the system in your default browser.
 
 ## How to run the system (development)
 
 ### The first time (to install the dependencies as well) - no minified code
 
 ```console
-user@machine:~$ ./dev_deploy.sh
+user@machine:~$ ./dev_deploy.sh [--launch]
 ```
+
+The optional `--launch` flag will automatically open the system in your default browser.
 
 ### From the second time onwards - no minified code
 
 ```console
-user@machine:~$ ./quick_dev_deploy.sh
+user@machine:~$ ./quick_dev_deploy.sh [--launch]
 ```
+
+The optional `--launch` flag will automatically open the system in your default browser.
 
 ### If nothing was modified - no minified code
 
 ```console
-user@machine:~$ ./run.sh
+user@machine:~$ ./run.sh [--launch]
 ```
+
+The optional `--launch` flag will automatically open the system in your default browser.
 
 ## How to add a new environment to the deployment pipeline
 
