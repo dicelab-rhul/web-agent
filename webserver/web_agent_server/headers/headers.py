@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpRequest
 
-from web_agent_server.headers.reporting_groups import ReportingGroups
+from webserver.web_agent_server.headers.reporting_groups import ReportingGroups
 
 from typing import Any
 from json import dumps

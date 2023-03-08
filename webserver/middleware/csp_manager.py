@@ -2,13 +2,13 @@ from django.http import HttpRequest, HttpResponse, FileResponse, JsonResponse
 from django.template.response import TemplateResponse
 from django.conf import settings
 
-from web_agent_server.csp.csp import CSP
-from web_agent_server.csp.xss_mitigating_csp import XSSMitigatingCSP
-from web_agent_server.csp.dom_xss_mitigating_csp import DOMXSSMitigatingCSP
-from web_agent_server.csp.exfiltration_mitigating_csp import ExfiltrationMitigatingCSP
-from web_agent_server.csp.isolation_based_csp import IsolationBasedCSP
-from web_agent_server.csp.secure_context_csp import SecureContextCSP
-from web_agent_server.headers.static_subresources_headers import StaticSubResourcesHeaders
+from webserver.web_agent_server.csp.csp import CSP
+from webserver.web_agent_server.csp.xss_mitigating_csp import XSSMitigatingCSP
+from webserver.web_agent_server.csp.dom_xss_mitigating_csp import DOMXSSMitigatingCSP
+from webserver.web_agent_server.csp.exfiltration_mitigating_csp import ExfiltrationMitigatingCSP
+from webserver.web_agent_server.csp.isolation_based_csp import IsolationBasedCSP
+from webserver.web_agent_server.csp.secure_context_csp import SecureContextCSP
+from webserver.web_agent_server.headers.static_subresources_headers import StaticSubResourcesHeaders
 
 from typing import Optional, Callable
 from secrets import token_urlsafe

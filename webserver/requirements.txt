@@ -1,0 +1,4 @@
+django
+django-extensions
+Twisted[tls, http2]
+daphne

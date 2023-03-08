@@ -12,7 +12,7 @@ from pathlib import Path
 from mimetypes import guess_type
 from typing import Any, Type
 
-from web_agent_server.headers.headers import Headers
+from webserver.web_agent_server.headers.headers import Headers
 from .csp.reports import ReportsLogs
 
 

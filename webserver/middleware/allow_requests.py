@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.http.request import HttpHeaders
 
-from web_agent_server.views import handler403
+from webserver.web_agent_server.views import handler403
 
 from typing import Optional, Callable
 

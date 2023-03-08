@@ -2,47 +2,54 @@
 
 PROTOCOL="https"
 HOST="127.0.0.1"
-PORT="8000"
+PORT=8000
+APPLICATION_PATH="webserver.webserver.asgi:application"
 
 cd webserver
 
-if ! command -v python3 -m pip show django &> /dev/null; then
-    python3 -m pip install django
-fi
-
 if [ ! -d "tls" ]; then
     PROTOCOL="http"
-elif ! command -v python3 -m pip show django-extensions &> /dev/null; then
-    python3 -m pip install django-extensions
 fi
+
+cd - &> /dev/null
 
 if ! command -v python3 -m pip show django &> /dev/null; then
     echo "django could not be found. Please install it (python3 -m pip install django) before running Web-Agent."
+
     exit
 elif ! command -v python3 -m pip show django-extensions &> /dev/null; then
     echo "django-extensions could not be found. Please install it (python3 -m pip install django-extensions) before running Web-Agent."
+
+    exit
+elif ! command -v python3 -m pip show daphne &> /dev/null; then
+    echo "daphne could not be found. Please install it (python3 -m pip install daphne) before running Web-Agent."
+
     exit
 elif [ ${PROTOCOL} == "https" ]; then
     if [ "${1}" == "--launch" ]; then
         sleep 2 && open ${PROTOCOL}://${HOST}:${PORT} &
     fi
 
-    cd tls
-    python3 find_key_and_cert.py
-    cd -
+    cd webserver/tls
 
-    KEY_PATH="tls/active/cert.pem"
-    CERT_PATH="tls/active/key.pem"
+    python3 find_key_and_cert.py
+
+    cd - &> /dev/null
+
+    KEY_PATH="webserver/tls/active/key.pem"
+    CERT_PATH="webserver/tls/active/cert.pem"
 
     if [ ! -f "${KEY_PATH}" ] || [ ! -f "${CERT_PATH}" ]; then
         echo "Could not find a valid certificate and key. The content will be served in plain HTTP."
-        python3 manage.py runserver --nostatic
+
+        daphne -b ${HOST} -p ${PORT} ${APPLICATION_PATH}
     else
-        python3 manage.py runserver_plus --cert tls/active/cert.pem --key-file tls/active/key.pem --nostatic
+        daphne -e ssl:${PORT}:privateKey=${KEY_PATH}:certKey=${CERT_PATH} ${APPLICATION_PATH}
     fi
 elif [ ${PROTOCOL} == "http" ]; then
     if [ "${1}" == "--launch" ]; then
         sleep 2 && open ${PROTOCOL}://${HOST}:${PORT} &
     fi
-    python3 manage.py runserver --nostatic
+
+    daphne -b ${HOST} -p ${PORT} ${APPLICATION_PATH}
 fi

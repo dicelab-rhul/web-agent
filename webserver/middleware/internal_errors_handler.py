@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.template.response import TemplateResponse
 
-from web_agent_server.views import handler500
+from webserver.web_agent_server.views import handler500
 
 from typing import Callable
 

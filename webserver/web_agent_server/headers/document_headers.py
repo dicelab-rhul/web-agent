@@ -2,7 +2,7 @@ from django.http import HttpRequest
 
 from typing import Any
 
-from web_agent_server.headers.headers import Headers
+from webserver.web_agent_server.headers.headers import Headers
 
 
 class DocumentHeaders(Headers):
