@@ -65,7 +65,6 @@ webserver/web_agent_server/static
 *.pem
 *.csr
 
-
 # Other stuff
 typings/
 lib/*.js
@@ -81,3 +80,4 @@ test.py
 __pycache__
 *.sqlite3
 teleora.sh
+experimental/
