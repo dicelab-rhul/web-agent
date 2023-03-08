@@ -44,4 +44,6 @@ cd webserver/tls
 ./gen_keys_and_certs.sh
 cd -
 
+pip install -r webserver/requirements.txt
+
 ./run.sh --launch

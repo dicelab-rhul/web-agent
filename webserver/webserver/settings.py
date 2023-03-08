@@ -28,19 +28,19 @@ INSTALLED_APPS: list[str] = [
 ]
 
 MIDDLEWARE: list[str] = [
-    "middleware.allow_requests.AllowRequestsMiddleware",
-    "middleware.csp_manager.CSPMiddleware",
+    "webserver.middleware.allow_requests.AllowRequestsMiddleware",
+    "webserver.middleware.csp_manager.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "middleware.security_headers.SecurityHeadersMiddleware",
-    "middleware.internal_errors_handler.InternalServerErrorMiddleware"
+    "webserver.middleware.security_headers.SecurityHeadersMiddleware",
+    "webserver.middleware.internal_errors_handler.InternalServerErrorMiddleware"
 ]
 
-ROOT_URLCONF: str = "webserver.urls"
+ROOT_URLCONF: str = "webserver.webserver.urls"
 
 TEMPLATES: list[dict[str, str | list[str] | bool | dict[str, list[str]]]] = [
     {

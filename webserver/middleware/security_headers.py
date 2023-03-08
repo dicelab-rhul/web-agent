@@ -1,8 +1,8 @@
 from django.http import HttpRequest, HttpResponse
 from django.conf import settings
 
-from web_agent_server.headers.document_headers import DocumentHeaders
-from web_agent_server.headers.static_subresources_headers import StaticSubResourcesHeaders
+from webserver.web_agent_server.headers.document_headers import DocumentHeaders
+from webserver.web_agent_server.headers.static_subresources_headers import StaticSubResourcesHeaders
 
 from typing import Callable, Any
 
