@@ -2,6 +2,10 @@
 
 Browser-based Teleo-Reactive agent development.
 
+## Python3 Virtual Environment
+
+Web-Agent requires a Python3 virtual environment to run the server. You have to create one before deploying the server the first time.
+
 ## How to run the system (production)
 
 ### The first time (to install the dependencies as well)
