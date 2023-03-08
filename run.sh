@@ -1,5 +1,15 @@
 #!/bin/bash
 
+INVENV=$(python3 -c 'import sys; print ("1" if sys.prefix != sys.base_prefix else "0")')
+
+if [[ ${INVENV} -eq 0 ]] ; then
+    echo "No virtual environment active, exiting..."
+
+    exit 1
+else
+    echo "Virtualenv active, proceeding."
+fi
+
 PROTOCOL="https"
 HOST="127.0.0.1"
 PORT=8000
@@ -21,7 +31,7 @@ elif ! command -v python3 -m pip show django-extensions &> /dev/null; then
     echo "django-extensions could not be found. Please install it (python3 -m pip install django-extensions) before running Web-Agent."
 
     exit
-elif ! command -v python3 -m pip show daphne &> /dev/null; then
+elif ! command -v daphne &> /dev/null; then
     echo "daphne could not be found. Please install it (python3 -m pip install daphne) before running Web-Agent."
 
     exit

@@ -3,6 +3,16 @@
 # This script is used to deploy the whole project.
 # It is used for quick deployment, i.e., it assumes that all the dependencies and X.509 certificates are already installed.
 
+INVENV=$(python3 -c 'import sys; print ("1" if sys.prefix != sys.base_prefix else "0")')
+
+if [[ ${INVENV} -eq 0 ]] ; then
+    echo "No virtual environment active, exiting..."
+
+    exit 1
+else
+    echo "Virtualenv active, proceeding."
+fi
+
 rm -rf static/js/*
 rm -rf static/json/envs.json
 rm -rf webserver/web_agent_server/static/*
@@ -40,4 +50,4 @@ find static/ -name "*.LICENSE.txt" -type f | xargs rm -f
 find webserver/web_agent_server/static/ -name "*.LICENSE.txt" -type f | xargs rm -f
 echo "Done."
 
-./run.sh --launch
+./run.sh $1
