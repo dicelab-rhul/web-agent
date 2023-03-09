@@ -1,4 +1,5 @@
 from pathlib import Path
+from secrets import token_urlsafe
 
 import os
 
@@ -6,11 +7,22 @@ import os
 # Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
 WEB_AGENT_DIR: Path = Path(BASE_DIR, "web_agent_server")
+SECRET_KEY_FILE: Path = Path(BASE_DIR, "secret_key.txt")
 
-# Quick-start development settings - unsuitable for production
+def __load_or_generate_key() -> str:
+    if SECRET_KEY_FILE.exists():
+        with open(SECRET_KEY_FILE, "r") as f:
+            return f.read()
+    else:
+        key: str = token_urlsafe(64)
+
+        with open(SECRET_KEY_FILE, "w") as f:
+            f.write(key)
+
+        return key
+
 # SECURITY WARNING: keep the secret key used in production secret!
-# TODO: Change this in production. This is just for testing purposes. It can be safely committed to the repo.
-SECRET_KEY: str = "cCqOwRaWU6d53sCjI8kh4m45kwm7EYNez_p5N6JqO2GTVMY1-g3zefTqQG-vsDArcBzvxIvrsZOQvEReC1bOfw"
+SECRET_KEY: str = __load_or_generate_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG: bool = False
