@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-from re import match
+from re import search
 
 import os
 
 
-INTERESTING_EXTENSIONS = [".py", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
-DIRECTORIES_TO_IGNORE = ["node_modules", ".git"]
-PATTERNS = [r"[ \t]+$", r"[ \t]+\n$"]
+INTERESTING_EXTENSIONS: list[str] = [".py", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
+DIRECTORIES_TO_IGNORE: list[str] = ["node_modules", ".git"]
+PATTERNS: list[str] = [r"[ \t]+\n", r"[ \t]+$", r"[ \t]+\n$", r"[ \t]+\n"]
 PROJECT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 LOG_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "WHITE_SPACES.md"))
 FILES_EXCLUSION_LIST: list[str] = [os.path.basename(__file__), os.path.basename(LOG_FILE)]
@@ -47,7 +47,7 @@ def __scan_file(d: str, f: str) -> list[str]:
     lines: list[str] = open(os.path.join(d, f)).readlines()
 
     for i in range(len(lines)):
-        if any(match(pattern, lines[i]) for pattern in PATTERNS) or __multiple_spaces_within_line(lines[i].strip()):
+        if any(search(pattern, lines[i]) for pattern in PATTERNS) or __multiple_spaces_within_line(lines[i].strip()):
             to_return.append(os.path.join(d, f) + ": line " + str(i + 1) + ".")
 
     return to_return

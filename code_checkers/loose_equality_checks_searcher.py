@@ -1,26 +1,19 @@
 #!/usr/bin/env python3
 
-'''
-Please run this file as ./loose_equality_checks_searcher.py from within its parent directory.
-Otherwise, the paths will not be generated/printed correctly.
-'''
-
-from typing import List
-
 import os
 
 
-INTERESTING_FILES_EXTENSIONS: List[str] = [".ts", ".tsx", ".js", ".cjs"]
-FILES_EXCLUSION_LIST: List[str] = [os.path.basename(__file__)]
-DIR_EXCLUSION_LIST: List[str] = ["node_modules", "static"]
+INTERESTING_FILES_EXTENSIONS: list[str] = [".ts", ".tsx", ".js", ".cjs"]
+FILES_EXCLUSION_LIST: list[str] = [os.path.basename(__file__)]
+DIR_EXCLUSION_LIST: list[str] = ["node_modules", "static"]
 OUTPUT_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "LOOSE_EQUALITY_CHECKS.md"))
-PATTERNS: List[str] = [" == ", " != "]
+PATTERNS: list[str] = [" == ", " != "]
 HEADER: str = "# List of loose equality checks"
 PROJECT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
 def main() -> None:
-    lines: List[str] = []
+    lines: list[str] = []
 
     for dir, _, files in os.walk(PROJECT_DIR):
         if os.path.basename(dir) in DIR_EXCLUSION_LIST or any(d in dir for d in DIR_EXCLUSION_LIST):
@@ -40,11 +33,11 @@ def main() -> None:
         f.flush()
 
 
-def __look_for_loose_equality_checks(path: str) -> List[str]:
-    to_add: List[str] = []
+def __look_for_loose_equality_checks(path: str) -> list[str]:
+    to_add: list[str] = []
     path_to_print: str = __get_relative_path(absolute_path=path)
     prefix: str = "* File [{}]({}) - line ".format(path_to_print, path_to_print)
-    lines: List[str] = []
+    lines: list[str] = []
 
     with open(path, "r") as f:
         lines = f.readlines()
@@ -59,7 +52,7 @@ def __look_for_loose_equality_checks(path: str) -> List[str]:
 
 
 def __get_relative_path(absolute_path: str) -> str:
-    tokens: List[str] = absolute_path.split(os.path.sep)
+    tokens: list[str] = absolute_path.split(os.path.sep)
     vw_top_dir: str = os.path.basename(PROJECT_DIR)
 
     while tokens[0] != vw_top_dir:
