@@ -249,7 +249,7 @@ export class VWPlatformDiv implements VWDiv {
 
     private addSpeedButtonListener(): void {
         document.getElementById(speedUpBtn.id).addEventListener("click", () => {
-            this.options.setSpeed(Math.min(0.999, this.options.getSpeed() + 0.1));
+            this.options.setSpeed(Math.min(commonConfig.maxSpeedModifier, this.options.getSpeed() + 0.1));
         });
     }
 
@@ -337,7 +337,7 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileRunning;
 
         this.hideInternalSimulationControls();
-
+        this.hideTeleoraEditor();
         this.showTooltips();
     }
 
@@ -354,7 +354,7 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhileStopped;
 
         this.showInternalSimulationControls();
-
+        this.unhideTeleoraEditor();
         this.showTooltips();
     }
 
@@ -371,7 +371,6 @@ export class VWPlatformDiv implements VWDiv {
         document.getElementById(guideBtn.id).hidden = guideBtn.hiddenWhilePaused;
 
         this.hideInternalSimulationControls();
-
         this.showTooltips();
     }
 
@@ -388,6 +387,14 @@ export class VWPlatformDiv implements VWDiv {
             document.getElementById(loadStateBtn.id).title = loadStateBtn.title;
             document.getElementById(guideBtn.id).title = guideBtn.title;
         }
+    }
+
+    private hideTeleoraEditor(): void {
+        document.getElementById(teleoraConfig.teleoraDivData.id).hidden = true;
+    }
+
+    private unhideTeleoraEditor(): void {
+        document.getElementById(teleoraConfig.teleoraDivData.id).hidden = false;
     }
 
     private replaceGridDiv(newGridDiv: VWGridDiv): void {
