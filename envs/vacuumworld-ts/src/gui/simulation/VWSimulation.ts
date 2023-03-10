@@ -270,11 +270,13 @@ export class VWSimulation {
         this.gridDiv.pack(); // Pack the new grid.
         this.gridDiv.show(); // Show the new grid.
 
-        await this.delay(1000 - this.options.getSpeed() * 1000);
+        const timeToWait: number = Math.max(0.0, 1000 - this.options.getSpeed() * 1000);
+
+        await this.delay(timeToWait);
     }
 
     private async executeCycleTriggers(): Promise<void> {
-        if (this.noTriggers() || this.environment.getCycleNumber() < 5) {
+        if (this.noTriggers() || this.environment.getCycleNumber() < config.safeCycles) {
             return;
         }
         else if (document.getElementById("cycle_trigger") === null) {

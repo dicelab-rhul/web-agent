@@ -6,9 +6,11 @@
     "maxNumberOfActionsPerActorPerCycle": 2,
     "maxNumberOfPhysicalActionsPerActorPerCycle": 1,
     "maxNumberOfCommunicativeActionsPerActorPerCycle": 1,
+    "maxSpeedModifier": 0.999,
     "senderIDSpoofingAllowed": true,
     "debug": true,
     "debugPrimes": [7, 11, 101],
+    "safeCycles": 5,
     "debugTest": true,
     "debugPrimesTest": [1, 1, 11],
     "versionNumber": "1.0.0"
