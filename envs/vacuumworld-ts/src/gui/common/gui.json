@@ -261,6 +261,7 @@
                                                 ],
                                                 "children": {
                                                     "gridCellImgData": {
+                                                        "id_prefix": "cell-img-",
                                                         "classes": [
                                                             "location-image",
                                                             "drop-zone"

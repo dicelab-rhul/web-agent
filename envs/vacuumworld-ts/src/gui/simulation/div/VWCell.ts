@@ -48,6 +48,7 @@ export class VWCell implements VWDiv {
     private createLocationImage(): void {
         this.displayedImage = document.createElement("img");
         this.displayedImage.src = this.getCellImageSrc();
+        this.displayedImage.id = gridCellImgData.id_prefix + `${this.locationAppearance.getCoord().getX()}-${this.locationAppearance.getCoord().getY()}`;
         this.displayedImage.classList.add(...gridCellImgData.classes);
     }
 
@@ -74,6 +75,8 @@ export class VWCell implements VWDiv {
 
     private addDragEnterListener(): void {
         this.displayedImage.addEventListener("dragenter", (event: DragEvent) => {
+            event.preventDefault();
+
             if (event.dataTransfer.getData("source") === draggableImagesData.classes[0] && (<HTMLElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 (<HTMLElement>event.target).classList.add("dragover");
 
@@ -88,12 +91,12 @@ export class VWCell implements VWDiv {
 
     private addDragLeaveListener(): void {
         this.displayedImage.addEventListener("dragleave", (event: DragEvent) => {
+            event.preventDefault();
+
+            document.getElementById(this.displayedImage.id).classList.remove("selected");
+
             if ((<HTMLElement>event.target).classList.contains(gridCellImgData.classes[1])) {
                 (<HTMLElement>event.target).classList.remove("dragover");
-
-                for (const element of document.getElementsByClassName("selected")) {
-                    element.classList.remove("selected");
-                }
 
                 this.clickCallback();
             }

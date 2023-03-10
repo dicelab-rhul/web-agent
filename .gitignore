@@ -78,6 +78,7 @@ envs/vacuumworld-ts/res/images/legacy
 test.js
 test.py
 __pycache__
+secret_key.txt
 *.sqlite3
 teleora.sh
 experimental/
