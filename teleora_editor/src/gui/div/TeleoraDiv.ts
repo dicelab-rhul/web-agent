@@ -1,6 +1,6 @@
 import { TeleoraEditorDiv } from "./TeleoraEditorDiv";
 import { TeleoraButtonsDiv } from "./TeleoraButtonsDiv";
-import { TeleoraTabMarkersDiv } from "./TeleoraTabsDiv";
+import { TeleoraTabMarkersDiv } from "./TeleoraTabMarkersDiv";
 
 import teleoraGUIData from "../gui.json";
 
