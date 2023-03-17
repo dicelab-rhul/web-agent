@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ENVS_DIR="${HOME}/envs"
 VENV_NAME="webagent_teleora"

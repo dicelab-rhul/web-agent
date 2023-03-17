@@ -2,9 +2,9 @@ import teleoraGUIData from "../gui.json";
 
 const teleoraTabMarkersDivData = teleoraGUIData.teleoraDivData.children.teleoraTabMarkersDivData;
 
-
+// TODO: Add a way to change the tabs names.
 export class TeleoraTabMarkersDiv {
-    private tabMarkersDiv: HTMLDivElement;
+    private div: HTMLDivElement;
     private tabCount: number;
     private clickCallback: (num: number) => void;
     private newTabCallback: () => void;
@@ -17,10 +17,10 @@ export class TeleoraTabMarkersDiv {
         this.newTabCallback = newTabCallback;
         this.closeTabCallback = closeTabCallback;
 
-        this.tabMarkersDiv = document.createElement("div");
+        this.div = document.createElement("div");
 
-        this.tabMarkersDiv.id = teleoraTabMarkersDivData.id;
-        this.tabMarkersDiv.classList.add(...teleoraTabMarkersDivData.classes);
+        this.div.id = teleoraTabMarkersDivData.id;
+        this.div.classList.add(...teleoraTabMarkersDivData.classes);
 
         this.addNewTabMarker();
 
@@ -51,7 +51,7 @@ export class TeleoraTabMarkersDiv {
 
         this.tabCount++;
 
-        this.tabMarkersDiv.insertBefore(tabMarker, this.tabMarkersDiv.lastChild);
+        this.div.insertBefore(tabMarker, this.div.lastChild);
     }
 
     public addNewTabMarker(): void {
@@ -63,11 +63,11 @@ export class TeleoraTabMarkersDiv {
 
         tabMarker.addEventListener("click", () => this.newTabCallback());
 
-        this.tabMarkersDiv.appendChild(tabMarker);
+        this.div.appendChild(tabMarker);
     }
 
     public highlightTabMarker(num: number): void {
-        const tabList: HTMLCollectionOf<HTMLDivElement> = this.tabMarkersDiv.children as HTMLCollectionOf<HTMLDivElement>;
+        const tabList: HTMLCollectionOf<HTMLDivElement> = this.div.children as HTMLCollectionOf<HTMLDivElement>;
 
         for (const element of tabList) {
             if (element.textContent !== "+") {
@@ -79,6 +79,6 @@ export class TeleoraTabMarkersDiv {
     }
 
     public getDiv(): HTMLDivElement {
-        return this.tabMarkersDiv;
+        return this.div;
     }
 }

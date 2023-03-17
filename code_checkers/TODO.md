@@ -4,6 +4,8 @@
 
 * File [TELEORA.md](/TELEORA.md): line 161: `TODO: other operators...`
 
+* File [teleora_editor/src/gui/div/TeleoraTabMarkersDiv.ts](/teleora_editor/src/gui/div/TeleoraTabMarkersDiv.ts): line 5: `// TODO: Add a way to change the tabs names.`
+
 * File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 70: `// TODO: Validate the file size.`
 
 * File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 105: `// TODO: Validate the file contents.`
