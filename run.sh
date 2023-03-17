@@ -3,7 +3,11 @@
 INVENV=$(python3 -c 'import sys; print ("1" if sys.prefix != sys.base_prefix else "0")')
 
 if [[ ${INVENV} -eq 0 ]] ; then
-    echo "No virtual environment active, exiting..."
+    echo "No virtual environment active."
+    echo "Either activate a virtual environment or run 'source virtualenv_manager.sh' to create and activate one."
+    echo "If you wish to use you own virtual environment, make sure it has django, django-extensions, Twisted[tls, http2], and daphne installed."
+    echo "Then you can run './run.sh [--launch]' to start the Web-Agent server.'"
+    echo "Exiting..."
 
     exit 1
 else
