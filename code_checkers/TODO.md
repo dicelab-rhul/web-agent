@@ -6,9 +6,7 @@
 
 * File [teleora_editor/src/gui/div/TeleoraTabMarkersDiv.ts](/teleora_editor/src/gui/div/TeleoraTabMarkersDiv.ts): line 5: `// TODO: Add a way to change the tabs names.`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 70: `// TODO: Validate the file size.`
-
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 105: `// TODO: Validate the file contents.`
+* File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 129: `// TODO: Validate the file contents.`
 
 * File [teleora_editor/src/gui/div/TeleoraEditorDiv.ts](/teleora_editor/src/gui/div/TeleoraEditorDiv.ts): line 24: `javascript() // TODO: Replace this with Teleora.`
 
@@ -30,7 +28,7 @@
 
 * File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 94: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](/envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts): line 146: `this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.`
+* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](/envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts): line 158: `// TODO: parse teleora file, rather than adding it to the options.`
 
 * File [webserver/web_agent_server/headers/headers.py](/webserver/web_agent_server/headers/headers.py): line 22: `# TODO: remove this once safari drops support for X-XSS-Protection.`
 

@@ -3,10 +3,13 @@ import { TeleoraButtonsDiv } from "./TeleoraButtonsDiv";
 import { TeleoraTabMarkersDiv } from "./TeleoraTabMarkersDiv";
 
 import teleoraGUIData from "../gui.json";
+import globalGUIConfig from "../../../../static/json/gui.json";
 
 const { teleoraDivData } = teleoraGUIData;
 const teleoraTabMarkersDivData = teleoraGUIData.teleoraDivData.children.teleoraTabMarkersDivData;
 const tabsLimit: number = teleoraDivData.tabsLimit;
+const maxFileSize: number = teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.maxFileSize;
+const errorDivData = globalGUIConfig.gui.errorDivData;
 
 export class TeleoraDiv {
     private div: HTMLDivElement;
@@ -57,24 +60,45 @@ export class TeleoraDiv {
     }
 
     public load(): void {
-        let fileInput: HTMLInputElement = document.createElement("input");
+        const fileInput: HTMLInputElement = document.createElement("input");
 
         fileInput.type = "file";
         fileInput.accept = teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.accept;
 
         fileInput.addEventListener("change", (event: Event) => {
-            let file: File = (event.target as HTMLInputElement).files[0];
+            const file: File = (event.target as HTMLInputElement).files[0];
+            const error: string = TeleoraDiv.validateFile(file);
 
-            let fileReader: FileReader = new FileReader();
+            if (error === "") {
+                const fileReader: FileReader = new FileReader();
 
-            // TODO: Validate the file size.
-            fileReader.addEventListener("load", (event: Event) => this.loadTeleoraFileToNewEditorTab(event));
-
-            fileReader.readAsText(file);
+                fileReader.addEventListener("load", (event: Event) => this.loadTeleoraFileToNewEditorTab(event));
+                fileReader.readAsText(file);
+            }
+            else {
+                document.getElementById(errorDivData.id).textContent = error;
+                document.getElementById(errorDivData.id).hidden = false;
+            }
         });
 
         fileInput.click();
         fileInput.remove();
+    }
+
+    private static validateFile(file: File): string {
+        let error: string = "";
+
+        if (file === null || file === undefined) {
+            error = "No file was selected.";
+        }
+        else if (!file.name.endsWith(teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.accept)) {
+            error = "The file does not appear to be a Teleora file. Please check the extention and/or the contents of the file.";
+        }
+        else if (file.size > maxFileSize) {
+            error = `The file is too large: the limit is ${maxFileSize} bytes (or ${Math.round(maxFileSize / 1024 / 1024 * 100) / 100} megabytes).`;
+        }
+
+        return error;
     }
 
     private loadTeleoraFileToNewEditorTab(event: Event): void {

@@ -33,6 +33,11 @@ const { minEnvDim, maxEnvDim } = commonConfig;
 const { platformDivData } = guiConfig;
 const { runBtn, pauseBtn, resumeBtn, stopBtn, resetBtn, speedUpBtn, toggleTeleoraEditorBtn, saveStateBtn, loadStateBtn, guideBtn } = externalSimulationControlsDivData.children;
 const teleoraButtonsData = teleoraConfig.teleoraDivData.children.teleoraButtonsDivData.children;
+const teleoraFileExtension: string = teleoraConfig.teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.accept;
+const teleoraFileMaxSize: number = teleoraConfig.teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.maxFileSize;
+const stateFileExtension: string = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.stateToLoadInputDivData.children.stateToLoadInputData.accept;
+const stateFileMaxSize: number = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.stateToLoadInputDivData.children.stateToLoadInputData.maxFileSize;
+const errorDivData = globalGUIConfig.gui.errorDivData;
 
 export class VWPlatformDiv implements VWDiv {
     private div: HTMLDivElement; // Will have ID "platform_div";
@@ -127,26 +132,53 @@ export class VWPlatformDiv implements VWDiv {
 
     private loadState(): void {
         const stateToLoadInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.stateToLoadInputDivData.children.stateToLoadInputData;
-        const file = (<HTMLInputElement>document.getElementById(stateToLoadInputData.id)).files[0];
-        const reader = new FileReader();
+        const file: File = (<HTMLInputElement>document.getElementById(stateToLoadInputData.id)).files[0];
+        const error: string = VWPlatformDiv.validateFile(file, stateFileExtension, stateFileMaxSize);
 
-        reader.onload = (e) => {
-            this.options.setStateToLoad(JSON.parse(<string>e.target.result));
+        if (error === "") {
+            const reader: FileReader = new FileReader();
+
+            reader.addEventListener("load", (event: Event) => this.options.setStateToLoad(JSON.parse((event.target as FileReader).result as string)));
+            reader.readAsText(file);
         }
-
-        reader.readAsText(file);
+        else {
+            document.getElementById(errorDivData.id).textContent = error;
+            document.getElementById(errorDivData.id).hidden = false;
+        }
     }
 
     private loadTeleora(): void {
         const teleoraInputData = guiConfig.platformDivData.children.optionsDialogDivData.children.optionsDialogData.children.teleoraInputDivData.children.teleoraInputData;
-        const file = (<HTMLInputElement>document.getElementById(teleoraInputData.id)).files[0];
-        const reader = new FileReader();
+        const file: File = (<HTMLInputElement>document.getElementById(teleoraInputData.id)).files[0];
+        const error: string = VWPlatformDiv.validateFile(file, teleoraFileExtension, teleoraFileMaxSize);
 
-        reader.onload = (e) => {
-            this.options.setTeleora(<string>e.target.result); // TODO: parse teleora file.
+        if (error === "") {
+            const reader: FileReader = new FileReader();
+
+            // TODO: parse teleora file, rather than adding it to the options.
+            reader.addEventListener("load", (event: Event) => this.options.setTeleora((event.target as FileReader).result as string));
+            reader.readAsText(file);
+        }
+        else {
+            document.getElementById(errorDivData.id).textContent = error;
+            document.getElementById(errorDivData.id).hidden = false;
+        }
+    }
+
+    private static validateFile(file: File, mandatoryExtention: string, maxFileSize: number): string {
+        let error: string = "";
+
+        if (file === null || file === undefined) {
+            error = "No file was selected.";
+        }
+        else if (!file.name.endsWith(mandatoryExtention)) {
+            error = "The file does not appear to be a valid. Please check the extention and/or the contents of the file.";
+        }
+        else if (file.size > maxFileSize) {
+            error = `The file is too large: the limit is ${maxFileSize} bytes (or ${Math.round(maxFileSize / 1024 / 1024 * 100) / 100} megabytes).`;
         }
 
-        reader.readAsText(file);
+        return error;
     }
 
     private start(): void {

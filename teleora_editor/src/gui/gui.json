@@ -48,6 +48,7 @@
                         "text": "Load",
                         "title": "Load a Teleora file in a new Teleora tab",
                         "accept": ".tel",
+                        "maxFileSize": 5000000,
                         "classes": [
                             "teleora_button"
                         ]
