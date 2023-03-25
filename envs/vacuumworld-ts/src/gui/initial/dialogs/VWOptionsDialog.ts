@@ -5,8 +5,10 @@ import { VWInitialViewButton } from "../buttons/VWInitialViewButton";
 
 import guiConfig from "../../common/gui.json";
 import vwActions from "../../../model/actions/vwactions.json";
+import teleoraGUIConfig from "../../../../../../teleora_editor/src/gui/gui.json";
 
 const { optionsDialogData } = guiConfig.platformDivData.children.optionsDialogDivData.children;
+const teleoraFileExtension: string = teleoraGUIConfig.teleoraDivData.children.teleoraButtonsDivData.children.teleoraLoadButtonData.accept;
 
 export class VWOptionsDialog implements VWPackable {
     private dialog: HTMLDialogElement; // Will have ID "options_dialog";
@@ -137,7 +139,7 @@ export class VWOptionsDialog implements VWPackable {
 
         this.teleoraSelectorDiv = VWHTMLUtils.createDivWithLabel(teleoraInputDivData.id, teleoraInputData.id, teleoraInputLabelData.text, teleoraInputDivData.classes, teleoraInputLabelData.classes);
 
-        let teleoraSelector: HTMLInputElement = VWHTMLUtils.createFileInput(teleoraInputData.id, teleoraInputData.accept, teleoraInputData.classes);
+        let teleoraSelector: HTMLInputElement = VWHTMLUtils.createFileInput(teleoraInputData.id, teleoraFileExtension, teleoraInputData.classes);
 
         teleoraSelector.addEventListener("change", this.teleoraInputCallback);
 

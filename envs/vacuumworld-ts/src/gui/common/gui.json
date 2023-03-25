@@ -110,6 +110,7 @@
                                     "stateToLoadInputData": {
                                         "id": "state_to_load_upload_input",
                                         "accept": ".json",
+                                        "maxFileSize": 5000000,
                                         "classes": [
                                             "option_subdiv"
                                         ]
@@ -203,7 +204,6 @@
                                     },
                                     "teleoraInputData": {
                                         "id": "teleora_upload_input",
-                                        "accept": ".tel",
                                         "classes": [
                                             "option_subdiv"
                                         ]
