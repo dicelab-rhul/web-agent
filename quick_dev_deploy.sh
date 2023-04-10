@@ -2,20 +2,22 @@
 
 # This script is used to deploy the whole project.
 # It is used for quick deployment, i.e., it assumes that all the dependencies and X.509 certificates are already installed.
-
 INVENV=$(python3 -c 'import sys; print ("1" if sys.prefix != sys.base_prefix else "0")')
 
-if [[ ${INVENV} -eq 0 ]] ; then
-    echo "No virtual environment active."
-    echo "Either activate a virtual environment or run 'source virtualenv_manager.sh' to create and activate one."
-    echo "If you wish to use you own virtual environment, make sure it has django, django-extensions, Twisted[tls, http2], and daphne installed."
-    echo "Then you can run './quick_dev_deploy.sh [--launch]' to deploy and start the Web-Agent server.'"
-    echo "Exiting..."
-
-    exit 1
-else
-    echo "Virtualenv active, proceeding."
+# is there an activate virtual environment? 
+if [[ ${INVENV} -eq 0 ]]; then 
+    # is there an active conda environment?
+    if [[ "$CONDA_DEFAULT_ENV" == "" ]] || [[ "$CONDA_DEFAULT_ENV" == "base" ]]; then 
+        echo "No virtual environment active."
+        echo "Either activate a virtual environment or run 'source virtualenv_manager.sh' to create and activate one."
+        echo "If you wish to use you own virtual environment, make sure it has django, django-extensions, Twisted[tls, http2], daphne installed."
+        echo "Then you can run './deploy.sh [--launch]' to deploy and start the Web-Agent server.'"
+        echo "Exiting..."
+        exit 1
+    fi
 fi
+echo "Python virtual environment active, proceeding..."
+
 
 rm -rf static/js/*
 rm -rf static/json/envs.json
