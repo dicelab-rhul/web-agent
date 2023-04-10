@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-ENVS_DIR="${HOME}/envs"
 VENV_NAME="webagent_teleora"
+ENVS_DIR="${HOME}/envs"
 VENV_PATH="${ENVS_DIR}/${VENV_NAME}"
 
-if [ ! -d "${VENV_PATH}" ]; then
+if [ ! -d "${VENV_PATH}" ]; then # create venv environment
     mkdir -p ${ENVS_DIR}
     python3 -m venv ${VENV_PATH}
     source ${VENV_PATH}/bin/activate
