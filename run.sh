@@ -21,11 +21,19 @@ if [[ ${INVENV} -eq 0 ]]; then
 fi
 echo "Python virtual environment active, proceeding..."
 
+# Determine the operating system to ensure cross-platform "open" for URLS
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     opener=xdg-open;;
+    Darwin*)    opener=open;;
+    *)          echo "Unsupported operating system: ${unameOut}" && exit 1;;
+esac
 
 cd webserver
 
 if [ ! -d "tls" ]; then
     PROTOCOL="http"
+    echo "tls not found, using HTTP protocol."
 fi
 
 cd - &> /dev/null
@@ -44,8 +52,7 @@ elif ! command -v daphne &> /dev/null; then
     exit
 elif [ ${PROTOCOL} == "https" ]; then
     if [ "${1}" == "--launch" ]; then
-        #sleep 2 && open ${PROTOCOL}://${HOST}:${PORT} &
-        sleep 2 && xdg-open ${PROTOCOL}://${HOST}:${PORT} &
+        sleep 2 && ${opener} ${PROTOCOL}://${HOST}:${PORT} &
     fi
 
     cd webserver/tls
@@ -59,16 +66,13 @@ elif [ ${PROTOCOL} == "https" ]; then
 
     if [ ! -f "${KEY_PATH}" ] || [ ! -f "${CERT_PATH}" ]; then
         echo "Could not find a valid certificate and key. The content will be served in plain HTTP."
-
         daphne -b ${HOST} -p ${PORT} ${APPLICATION_PATH}
     else
         daphne -e ssl:${PORT}:privateKey=${KEY_PATH}:certKey=${CERT_PATH} ${APPLICATION_PATH}
     fi
 elif [ ${PROTOCOL} == "http" ]; then
     if [ "${1}" == "--launch" ]; then
-        #sleep 2 && open ${PROTOCOL}://${HOST}:${PORT} &
-        sleep 2 && firefox ${PROTOCOL}://${HOST}:${PORT} &
+        sleep 2 && ${opener} ${PROTOCOL}://${HOST}:${PORT} &
     fi
-
     daphne -b ${HOST} -p ${PORT} ${APPLICATION_PATH}
 fi
