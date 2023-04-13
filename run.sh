@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
-PROTOCOL="https"
-HOST="127.0.0.1"
-PORT=8000
-APPLICATION_PATH="webserver.webserver.asgi:application"
-
 INVENV=$(python3 -c 'import sys; print ("1" if sys.prefix != sys.base_prefix else "0")')
 
-# Is there an activate virtual environment? 
-if [[ ${INVENV} -eq 0 ]]; then 
+# Is there an activate virtual environment?
+if [[ ${INVENV} -eq 0 ]]; then
     # Alternatively, is there an active conda environment?
-    if [[ ${CONDA_DEFAULT_ENV} == "" ]] || [[ ${CONDA_DEFAULT_ENV} == "base" ]]; then 
+    if [[ ${CONDA_DEFAULT_ENV} == "" ]] || [[ ${CONDA_DEFAULT_ENV} == "base" ]]; then
         echo "No virtual environment active."
         echo "Either activate a virtual environment or run 'source virtualenv_manager.sh' to create and activate one."
         echo "If you wish to use you own virtual environment, make sure it has django, django-extensions, Twisted[tls, http2], daphne installed."
@@ -23,13 +18,27 @@ fi
 
 echo "Python virtual environment active, proceeding..."
 
-# Determine the operating system to ensure cross-platform "open" for URLS
-unameOut="$(uname -s)"
-case "${unameOut}" in
-    Linux*)     opener=xdg-open;;
-    Darwin*)    opener=open;;
-    *)          echo "Unsupported operating system: ${unameOut}" && exit 1;;
-esac
+PROTOCOL="https"
+HOST="127.0.0.1"
+PORT=8000
+APPLICATION_PATH="webserver.webserver.asgi:application"
+OPENER=""
+
+for OPENER_CANDIDATE in "xdg-open" "open"; do
+    if command -v ${OPENER_CANDIDATE} &> /dev/null; then
+        OPENER=${OPENER_CANDIDATE}
+
+        break
+    fi
+done
+
+function open_browser() {
+    if [ "${OPENER}" == "" ]; then
+        echo "'xdg-open' and 'open' could not be found. Please open ${PROTOCOL}://${HOST}:${PORT} in your browser manually."
+    else
+        ${OPENER} ${PROTOCOL}://${HOST}:${PORT} &
+    fi
+}
 
 cd webserver
 
@@ -53,10 +62,6 @@ elif ! command -v daphne &> /dev/null; then
 
     exit
 elif [ ${PROTOCOL} == "https" ]; then
-    if [ "${1}" == "--launch" ]; then
-        sleep 2 && ${opener} ${PROTOCOL}://${HOST}:${PORT} &
-    fi
-
     cd webserver/tls
 
     python3 find_key_and_cert.py
@@ -66,6 +71,10 @@ elif [ ${PROTOCOL} == "https" ]; then
     KEY_PATH="webserver/tls/active/key.pem"
     CERT_PATH="webserver/tls/active/cert.pem"
 
+    if [ "${1}" == "--launch" ]; then
+        sleep 2 && open_browser &
+    fi
+
     if [ ! -f "${KEY_PATH}" ] || [ ! -f "${CERT_PATH}" ]; then
         echo "Could not find a valid certificate and key. The content will be served in plain HTTP."
         daphne -b ${HOST} -p ${PORT} ${APPLICATION_PATH}
@@ -74,7 +83,8 @@ elif [ ${PROTOCOL} == "https" ]; then
     fi
 elif [ ${PROTOCOL} == "http" ]; then
     if [ "${1}" == "--launch" ]; then
-        sleep 2 && ${opener} ${PROTOCOL}://${HOST}:${PORT} &
+        sleep 2 && open_browser &
     fi
+
     daphne -b ${HOST} -p ${PORT} ${APPLICATION_PATH}
 fi
