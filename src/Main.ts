@@ -58,10 +58,12 @@ export class Main {
     }
 
     private static getResourcesPaths(envPath: string): ResourcePaths {
+        const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
+
         return {
-            favicon: `/static/${envPath}/res/images/favicon.ico`,
-            envStyle: `/static/${envPath}/dist/css/style.css`,
-            envScript: `/static/${envPath}/dist/js/main.js`
+            favicon: debug ? `/${envPath}/res/images/favicon.ico`: `/static/${envPath}/res/images/favicon.ico`,
+            envStyle: debug ? `/${envPath}/dist/css/style.css`: `/static/${envPath}/dist/css/style.css`,
+            envScript: debug ? `/${envPath}/dist/js/main.js`: `/static/${envPath}/dist/js/main.js`
         };
     }
 
@@ -202,7 +204,8 @@ export class Main {
             throw new Error("The choice path is empty.");
         }
 
-        const imgPath: string = `/static/${choicePath}/res/images/choice.png`;
+        const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
+        const imgPath: string = debug ? `/${choicePath}/res/images/choice.png`: `/static/${choicePath}/res/images/choice.png`;
 
         let choiceDiv: HTMLDivElement = document.getElementById(choiceDivData.id) as HTMLDivElement;
         let choice: HTMLImageElement = document.createElement("img");
@@ -219,8 +222,8 @@ export class Main {
 
             Main.loadSubContainerDiv(leftContainerDivData.id, leftContainerDivData.classes);
             Main.loadSubContainerDiv(rightContainerDivData.id, rightContainerDivData.classes);
-            Main.loadEnvironmentDiv(choicePath);
             Main.loadTeleoraDiv();
+            Main.loadEnvironmentDiv(choicePath);
             Main.disableFurtherScriptsLoading();
         });
     }
@@ -298,9 +301,11 @@ export class Main {
     }
 
     private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
+        const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
+
         return {
-            teleoraScript: `/static/${teleoraData.editor}/dist/js/main.js`,
-            teleoraStyle: `/static/${teleoraData.editor}/dist/css/style.css`,
+            teleoraScript: debug ? `/${teleoraData.editor}/dist/js/main.js`: `/static/${teleoraData.editor}/dist/js/main.js`,
+            teleoraStyle: debug ? `/${teleoraData.editor}/dist/css/style.css`: `/static/${teleoraData.editor}/dist/css/style.css`
         }
     }
 

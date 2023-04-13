@@ -1,3 +1,4 @@
+import { VWColour } from "../../model/common/VWColour";
 import { VWUserDifficulty } from "../../model/common/VWUserDifficulty";
 import { VWEnvironmentJSON } from "../../model/environment/VWEnvironment";
 import { VWExistenceChecker } from "../../model/utils/VWExistenceChecker";
@@ -10,6 +11,7 @@ export class VWOptions {
     private maxNumberOfCycles: number;
     private efforts: Map<string, bigint>;
     private teleora: any; // TODO: Add Teleora type.
+    private teleoraFunctions: Map<VWColour, (...args: any[]) => any>; // For each agent colour, minimally `revise()` and `decide()`.
     private userDifficulty: VWUserDifficulty;
 
     public constructor() {
@@ -24,6 +26,7 @@ export class VWOptions {
         this.maxNumberOfCycles = undefined; // No limit.
         this.efforts = new Map<string, bigint>(); // Will be filled with the default efforts.
         this.teleora = undefined; // No Teleora file.
+        this.teleoraFunctions = new Map<VWColour, (...args: any[]) => any>(); // Will be filled with the Teleora functions.
         this.userDifficulty = VWUserDifficulty.BASIC;
     }
 
@@ -93,6 +96,15 @@ export class VWOptions {
 
     public setTeleora(teleora: any): void { // TODO: Add Teleora type.
         this.teleora = teleora;
+    }
+
+    public getTeleoraFunctions(): Map<VWColour, (...args: any[]) => any> {
+        return this.teleoraFunctions;
+    }
+
+    public setTeleoraFunctions(teleoraFunctions: Map<VWColour, (...args: any[]) => any>): void {
+        // TODO: validate the functions.
+        this.teleoraFunctions = VWExistenceChecker.validateExistence(teleoraFunctions); // Individual functions can be undefined.
     }
 
     public getUserDifficulty(): VWUserDifficulty {

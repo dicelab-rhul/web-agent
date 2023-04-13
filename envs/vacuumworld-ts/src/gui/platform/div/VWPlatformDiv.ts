@@ -65,8 +65,19 @@ export class VWPlatformDiv implements VWDiv {
             this.gridDiv = new VWGridDiv();
             this.options = new VWOptions();
             this.internalSimulationControlsDiv = new VWInternalSimulationControlsDiv(this.options.getUserDifficulty(), this.options.areTooltipsActive(), this.toggleUserDifficulty.bind(this), this.enlargeEnvironmentAndGrid.bind(this), this.shrinkEnvironmentAndGrid.bind(this));
+
+            this.setTeleoraUseButtonListener();
+
             this.packed = false;
         }
+    }
+
+    private setTeleoraUseButtonListener(): void {
+        document.getElementById(teleoraButtonsData.teleoraUseButtonData.id).addEventListener("click", () => this.parseTeleoraCode());
+    }
+
+    private parseTeleoraCode(): void {
+        // TODO: implement this method: load the content of the active tab, parse it, and save it in the VWOptions.
     }
 
     private toggleUserDifficulty(): void {

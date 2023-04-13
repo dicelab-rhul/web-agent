@@ -22,13 +22,17 @@
 
 * File [envs/vacuumworld-ts/src/model/actor/factories/VWActorFactory.ts](/envs/vacuumworld-ts/src/model/actor/factories/VWActorFactory.ts): line 66: `// TODO: integrate with teleora.`
 
-* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 12: `private teleora: any; // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 13: `private teleora: any; // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 90: `public getTeleora(): any { // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 93: `public getTeleora(): any { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 94: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 97: `public setTeleora(teleora: any): void { // TODO: Add Teleora type.`
 
-* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](/envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts): line 158: `// TODO: parse teleora file, rather than adding it to the options.`
+* File [envs/vacuumworld-ts/src/gui/common/VWOptions.ts](/envs/vacuumworld-ts/src/gui/common/VWOptions.ts): line 106: `// TODO: validate the functions.`
+
+* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](/envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts): line 80: `// TODO: implement this method: load the content of the active tab, parse it, and save it in the VWOptions.`
+
+* File [envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts](/envs/vacuumworld-ts/src/gui/platform/div/VWPlatformDiv.ts): line 169: `// TODO: parse teleora file, rather than adding it to the options.`
 
 * File [webserver/web_agent_server/headers/headers.py](/webserver/web_agent_server/headers/headers.py): line 22: `# TODO: remove this once safari drops support for X-XSS-Protection.`
 

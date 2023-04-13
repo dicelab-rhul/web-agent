@@ -200,7 +200,9 @@ export class VWCell implements VWDiv {
             return this.getCellImageSrcIfDirtIsPresent();
         }
         else {
-            return `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
+            const debugServer: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
+
+            return debugServer ? `/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
         }
     }
 
@@ -210,16 +212,18 @@ export class VWCell implements VWDiv {
         const orientation: string = actorOrientation.toString().toLowerCase();
         const colour: string = actorColour.toString().toLowerCase();
         const debugPath: string = VWCell.debug ? "debug/" : "";
+        const debugServer: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
 
-        return `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
+        return debugServer ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
     }
 
     private getCellImageSrcIfDirtIsPresent(): string {
         const dirtColour: VWColour = this.locationAppearance.getDirtAppearance().orElseThrow().getColour();
         const colour: string = dirtColour.toString().toLowerCase();
         const debugPath: string = VWCell.debug ? "debug/" : "";
+        const debugServer: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
 
-        return `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
+        return debugServer ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
     }
 
     public pack(): void {
