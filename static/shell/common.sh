@@ -34,7 +34,7 @@ function copy_env_files_to_webserver() {
     cp -r res ../../webserver/web_agent_server/static/$dir/
 }
 
-function deploy_sub_module() {
+function deploy_sub_module_with_npm() {
     if [[ ${FULL_DEPLOY} == true ]]; then
         npm prune && npm install
     fi
@@ -46,9 +46,20 @@ function deploy_sub_module() {
     fi
 }
 
+function deploy_sub_module() {
+    echo "Deploying ${dir}..."
+
+    deploy_sub_module_with_npm
+
+    echo "Done."
+    echo
+}
+
 function deploy_envs() {
     for dir in envs/*/; do
         cd $dir
+
+        rm -rf dist/js/*
 
         deploy_sub_module
         copy_env_files_to_webserver
@@ -66,7 +77,7 @@ function copy_teleora_files_to_webserver() {
 function deploy_teleora_editor() {
     cd teleora_editor
 
-    ./$(basename ${DEPLOYMENT_SCRIPT})
+    deploy_sub_module
     copy_teleora_files_to_webserver
 
     cd - &> /dev/null
@@ -75,10 +86,11 @@ function deploy_teleora_editor() {
 function build_main_page() {
     echo "Deploying the main page..."
 
-    deploy_sub_module
+    deploy_sub_module_with_npm
     copy_main_page_files_to_webserver
 
     echo "Done."
+    echo
 }
 
 function copy_main_page_files_to_webserver() {
