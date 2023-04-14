@@ -63,19 +63,19 @@ The optional `--launch` flag will automatically open the system in your default 
 * Create a child directory (let's say `new_env`) in `envs`.
 
 * Make sure that `new_env` has minimally the following structure:\
-    | `new_env`\
-    |---- `dist`\
-    |-------- `css`\
+    | `new_env/`\
+    |---- `dist/`\
+    |-------- `css/`\
     |------------ `style.css`\
-    |-------- `js`\
-    |---- `node_modules`\
-    |---- `res`\
-    |-------- `images`\
+    |-------- `js/`\
+    |---- `node_modules/`\
+    |---- `res/`\
+    |-------- `images/`\
     |------------ `choice.png`\
     |------------ `favicon.ico`\
-    |---- `src`\
+    |---- `src/`\
     |-------- `main.ts`\
-    |---- `webpack-config`\
+    |---- `webpack-config/`\
     |-------- `webpack.dev_config.cjs`\
     |-------- `webpack.prod_config.cjs`\
     |-------- `webpack.shared_config.cjs`\
