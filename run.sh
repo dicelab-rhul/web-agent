@@ -2,9 +2,6 @@
 
 source static/shell/common.sh
 
-INVENV=$(python3 -c 'import sys; print ("1" if sys.prefix != sys.base_prefix else "0")')
-
-# Is there an active Python3 Virtual Environment?
 check_for_venv $0
 
 echo "Python3 Virtual Environment active, proceeding..."
