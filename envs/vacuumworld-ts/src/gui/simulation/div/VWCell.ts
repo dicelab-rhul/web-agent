@@ -1,3 +1,4 @@
+import { VacuumWorld } from "../../VacuumWorld";
 import { VWColour } from "../../../model/common/VWColour";
 import { VWCoord } from "../../../model/common/VWCoord";
 import { VWDirection } from "../../../model/common/VWDirection";
@@ -5,8 +6,8 @@ import { VWOrientation } from "../../../model/common/VWOrientation";
 import { VWLocationAppearance } from "../../../model/environment/VWLocationAppearance";
 import { VWExistenceChecker } from "../../../model/utils/VWExistenceChecker";
 import { VWDiv } from "../../common/VWDiv";
-import envData from "../../../../../../static/json/envs.json";
 
+import envData from "../../../../../../static/json/envs.json";
 import guiConfig from "../../common/gui.json";
 
 const { gridCellDivData } = guiConfig.platformDivData.children.gridDivData.children.gridTableData.children.gridRowData.children.gridCellData.children;
@@ -200,9 +201,7 @@ export class VWCell implements VWDiv {
             return this.getCellImageSrcIfDirtIsPresent();
         }
         else {
-            const debugServer: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
-
-            return debugServer ? `/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
+            return VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
         }
     }
 
@@ -212,18 +211,16 @@ export class VWCell implements VWDiv {
         const orientation: string = actorOrientation.toString().toLowerCase();
         const colour: string = actorColour.toString().toLowerCase();
         const debugPath: string = VWCell.debug ? "debug/" : "";
-        const debugServer: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
 
-        return debugServer ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
+        return VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
     }
 
     private getCellImageSrcIfDirtIsPresent(): string {
         const dirtColour: VWColour = this.locationAppearance.getDirtAppearance().orElseThrow().getColour();
         const colour: string = dirtColour.toString().toLowerCase();
         const debugPath: string = VWCell.debug ? "debug/" : "";
-        const debugServer: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
 
-        return debugServer ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
+        return VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
     }
 
     public pack(): void {

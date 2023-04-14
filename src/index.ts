@@ -1,3 +1,5 @@
 import { Main } from "./Main";
 
-window.addEventListener("DOMContentLoaded", () => Main.main());
+const serverless: boolean = document.getElementById("serverless_flag") !== null && document.getElementById("serverless_flag").getAttribute("serverless") === "true";
+
+window.addEventListener("DOMContentLoaded", () => Main.main(serverless));
