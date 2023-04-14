@@ -13,6 +13,7 @@ const rightContainerDivData = containerDivData.children.rightContainerDivData;
 const errorDivData = globalGUIConfig.gui.errorDivData;
 
 export class VacuumWorld {
+    public static SERVERLESS_MODE: boolean = false;
     private constructor() {}
 
     public static run(): void {
@@ -21,8 +22,9 @@ export class VacuumWorld {
         if (VWExistenceChecker.allArgumentsExist(envPath)) {
             document.title = title;
 
-            const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
-            let platformDiv: VWPlatformDiv = new VWPlatformDiv(debug ? `/${envPath}/res/images/start_menu.png`: `/static/${envPath}/res/images/start_menu.png`);
+            VacuumWorld.setMode();
+
+            let platformDiv: VWPlatformDiv = new VWPlatformDiv(VacuumWorld.SERVERLESS_MODE ? `/${envPath}/res/images/start_menu.png`: `/static/${envPath}/res/images/start_menu.png`);
 
             platformDiv.pack();
 
@@ -44,5 +46,9 @@ export class VacuumWorld {
 
             document.getElementById(errorDivData.id).hidden = false;
         }
+    }
+
+    private static setMode(): void {
+        VacuumWorld.SERVERLESS_MODE = document.getElementById("serverless_flag") !== null && document.getElementById("serverless_flag").getAttribute("serverless") === "true";
     }
 }

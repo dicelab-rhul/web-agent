@@ -1,3 +1,4 @@
+import { VacuumWorld } from "../VacuumWorld";
 import { VWActorFactory } from "../../model/actor/factories/VWActorFactory";
 import { VWColour } from "../../model/common/VWColour";
 import { VWCoord } from "../../model/common/VWCoord";
@@ -280,8 +281,7 @@ export class VWSimulation {
             return;
         }
         else if (document.getElementById("cycle_trigger") === null) {
-            const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
-            const path: string = debug ? `/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`: `/static/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`;
+            const path: string = VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`: `/static/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`;
 
             const trigger: HTMLAudioElement = document.createElement(Base64.decode("YXVkaW8=")) as HTMLAudioElement;
 

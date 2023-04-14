@@ -23,9 +23,11 @@ type TeleoraResourcePaths = {
 
 export class Main {
     private static NONCE: string = undefined;
+    private static SERVERLESS_MODE: boolean = false;
     private constructor() {}
 
-    public static main(): void {
+    public static main(serverlessMode: boolean): void {
+        Main.setMode(serverlessMode);
         Main.setNonce();
         Main.setTitle();
         Main.loadCharset();
@@ -34,6 +36,15 @@ export class Main {
         Main.loadStyle("/static/css/index.css"); // This is the main style of the page.
         Main.loadChoiceDiv();
         Main.createErrorDiv();
+    }
+
+    public static setMode(serverlessMode: boolean): void {
+        if (serverlessMode === null || serverlessMode === undefined || !serverlessMode) {
+            Main.SERVERLESS_MODE = false;
+        }
+        else {
+            Main.SERVERLESS_MODE = true;
+        }
     }
 
     public static setNonce(): void {
@@ -58,12 +69,10 @@ export class Main {
     }
 
     private static getResourcesPaths(envPath: string): ResourcePaths {
-        const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
-
         return {
-            favicon: debug ? `/${envPath}/res/images/favicon.ico`: `/static/${envPath}/res/images/favicon.ico`,
-            envStyle: debug ? `/${envPath}/dist/css/style.css`: `/static/${envPath}/dist/css/style.css`,
-            envScript: debug ? `/${envPath}/dist/js/main.js`: `/static/${envPath}/dist/js/main.js`
+            favicon: Main.SERVERLESS_MODE ? `/${envPath}/res/images/favicon.ico`: `/static/${envPath}/res/images/favicon.ico`,
+            envStyle: Main.SERVERLESS_MODE ? `/${envPath}/dist/css/style.css`: `/static/${envPath}/dist/css/style.css`,
+            envScript: Main.SERVERLESS_MODE ? `/${envPath}/dist/js/main.js`: `/static/${envPath}/dist/js/main.js`
         };
     }
 
@@ -204,8 +213,7 @@ export class Main {
             throw new Error("The choice path is empty.");
         }
 
-        const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
-        const imgPath: string = debug ? `/${choicePath}/res/images/choice.png`: `/static/${choicePath}/res/images/choice.png`;
+        const imgPath: string = Main.SERVERLESS_MODE ? `/${choicePath}/res/images/choice.png`: `/static/${choicePath}/res/images/choice.png`;
 
         let choiceDiv: HTMLDivElement = document.getElementById(choiceDivData.id) as HTMLDivElement;
         let choice: HTMLImageElement = document.createElement("img");
@@ -301,11 +309,9 @@ export class Main {
     }
 
     private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
-        const debug: boolean = document.getElementById("debug") !== null && document.getElementById("debug").getAttribute("debug") === "true";
-
         return {
-            teleoraScript: debug ? `/${teleoraData.editor}/dist/js/main.js`: `/static/${teleoraData.editor}/dist/js/main.js`,
-            teleoraStyle: debug ? `/${teleoraData.editor}/dist/css/style.css`: `/static/${teleoraData.editor}/dist/css/style.css`
+            teleoraScript: Main.SERVERLESS_MODE ? `/${teleoraData.editor}/dist/js/main.js`: `/static/${teleoraData.editor}/dist/js/main.js`,
+            teleoraStyle: Main.SERVERLESS_MODE ? `/${teleoraData.editor}/dist/css/style.css`: `/static/${teleoraData.editor}/dist/css/style.css`
         }
     }
 
