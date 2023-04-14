@@ -63,27 +63,23 @@ The optional `--launch` flag will automatically open the system in your default 
 * Create a child directory (let's say `new_env`) in `envs`.
 
 * Make sure that `new_env` has minimally the following structure:\
-    | `new_env`\
-    |---- `dist`\
-    |-------- `css`\
+    | `new_env/`\
+    |---- `dist/`\
+    |-------- `css/`\
     |------------ `style.css`\
-    |-------- `js`\
-    |---- `node_modules`\
-    |---- `res`\
-    |-------- `images`\
+    |-------- `js/`\
+    |---- `node_modules/`\
+    |---- `res/`\
+    |-------- `images/`\
     |------------ `choice.png`\
     |------------ `favicon.ico`\
-    |---- `src`\
+    |---- `src/`\
     |-------- `main.ts`\
-    |---- `webpack-config`\
+    |---- `webpack-config/`\
     |-------- `webpack.dev_config.cjs`\
     |-------- `webpack.prod_config.cjs`\
     |-------- `webpack.shared_config.cjs`\
-    |---- `deploy.sh`\
-    |---- `dev_deploy.sh`\
     |---- `package.json`\
-    |---- `quick_deploy.sh`\
-    |---- `quick_dev_deploy.sh`\
     |---- `tsconfig.json`
 
 * Make sure that `new_env/res/images/choice.png` is a `200x200` pixel image (it will be used as a clickable image in the environment selection view).
