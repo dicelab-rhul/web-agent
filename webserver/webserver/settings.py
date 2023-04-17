@@ -12,16 +12,32 @@ WEB_AGENT_DIR: Path = Path(BASE_DIR, "web_agent_server")
 SECRET_KEY_FILE: Path = Path(BASE_DIR, "secret_key.txt")
 
 def __load_or_generate_key() -> str:
-    if SECRET_KEY_FILE.exists():
-        with open(SECRET_KEY_FILE, "r") as f:
-            return f.read()
-    else:
-        key: str = token_urlsafe(64)
+    key: str = __load_secret_key()
 
-        with open(SECRET_KEY_FILE, "w") as f:
-            f.write(key)
+    if key == "":
+        __create_secret_key_file()
 
-        return key
+        key = __load_secret_key()
+
+    return key
+
+def __load_secret_key() -> str:
+    try:
+        if SECRET_KEY_FILE.exists():
+            with open(SECRET_KEY_FILE, "r") as f:
+                return f.read()
+        else:
+            return ""
+    except Exception as e:
+        raise IOError("Could not load the secret key file.") from e
+
+def __create_secret_key_file() -> None:
+    try:
+        if not SECRET_KEY_FILE.exists():
+            with open(SECRET_KEY_FILE, "w") as f:
+                f.write(token_urlsafe(64))
+    except Exception as e:
+        raise IOError("Could not create the secret key file.") from e
 
 SECRET_KEY: str = __load_or_generate_key()
 
