@@ -16,9 +16,52 @@
         "webpack-merge": "^5.8.0"
     },
     "devDependencies": {
+        "@parcel/config-default": "^2.8.3",
         "@types/dompurify": "^2.4.0",
         "@types/trusted-types": "^2.0.2",
+        "buffer": "^5.7.1",
         "dompurify": "^2.4.3",
+        "parcel": "^1.12.4",
+        "parcel-bundler": "^1.3.1",
+        "parcel-reporter-multiple-static-file-copier": "^1.0.5",
         "trusted-types": "^2.0.0"
-    }
+    },
+    "multipleStaticFileCopier": [
+        {
+            "origin": "static/css",
+            "destination": "parcel_dist/css"
+        },
+        {
+            "origin": "static/json",
+            "destination": "parcel_dist/json"
+        },
+        {
+            "origin": "static/images",
+            "destination": "parcel_dist/images"
+        },
+        {
+            "origin": "envs/example-env-ts/dist/css",
+            "destination": "parcel_dist/envs/example-env-ts/dist/css"
+        },
+        {
+            "origin": "envs/example-env-ts/res",
+            "destination": "parcel_dist/envs/example-env-ts/res"
+        },
+        {
+            "origin": "envs/vacuumworld-ts/dist/css",
+            "destination": "parcel_dist/envs/vacuumworld-ts/dist/css"
+        },
+        {
+            "origin": "envs/vacuumworld-ts/res",
+            "destination": "parcel_dist/envs/vacuumworld-ts/res"
+        },
+        {
+            "origin": "teleora_editor/dist/css",
+            "destination": "parcel_dist/teleora_editor/dist/css"
+        },
+        {
+            "origin": "teleora_editor/dist/images",
+            "destination": "parcel_dist/teleora_editor/dist/images"
+        }
+    ]
 }

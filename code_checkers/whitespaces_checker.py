@@ -6,12 +6,12 @@ import os
 
 
 INTERESTING_EXTENSIONS: list[str] = [".py", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
-DIRECTORIES_TO_IGNORE: list[str] = ["node_modules", ".git"]
+DIRECTORIES_TO_IGNORE: list[str] = ["node_modules", ".git", "parcel_dist"]
 PATTERNS: list[str] = [r"[ \t]+\n", r"[ \t]+$", r"[ \t]+\n$", r"[ \t]+\n"]
 PROJECT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 LOG_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "WHITE_SPACES.md"))
 FILES_EXCLUSION_LIST: list[str] = [os.path.basename(__file__), os.path.basename(LOG_FILE)]
-
+NAMED_FILES_EXCLUSION_LIST: list[str] = ["package-lock.json"]
 
 def main() -> None:
     lines: list[str] = []
@@ -36,7 +36,7 @@ def __scan_files(d: str, files: list[str]) -> list[str]:
     lines: list[str] = []
 
     for f in files:
-        if os.path.join(d, f) not in FILES_EXCLUSION_LIST and any(f.endswith(ext) for ext in INTERESTING_EXTENSIONS):
+        if f not in NAMED_FILES_EXCLUSION_LIST and os.path.join(d, f) not in FILES_EXCLUSION_LIST and any(f.endswith(ext) for ext in INTERESTING_EXTENSIONS):
             lines += __scan_file(d, f)
 
     return lines
