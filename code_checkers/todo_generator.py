@@ -3,7 +3,7 @@
 import os
 
 
-INTERESTING_FILES_EXTENSIONS: list[str] = [".ts", ".tsx", ".js", ".jsx", ".cjs", ".cjsx", ".html", ".css", ".json", ".py", ".md", ".sh"]
+INTERESTING_FILES_EXTENSIONS: list[str] = [".ts", ".tsx", ".jsx", ".cjs", ".cjsx", ".html", ".css", ".json", ".py", ".md", ".sh"]
 TODO_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "TODO.md"))
 FILES_EXCLUSION_LIST: list[str] = [os.path.basename(__file__), os.path.basename(TODO_FILE)]
 NAMED_FILES_EXCLUSION_LIST: list[str] = ["package-lock.json"]

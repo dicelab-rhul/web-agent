@@ -21,7 +21,7 @@ export class VacuumWorld {
         if (VWExistenceChecker.allArgumentsExist(envPath)) {
             document.title = title;
 
-            let platformDiv: VWPlatformDiv = new VWPlatformDiv(`/${envPath}/res/images/start_menu.png`);
+            let platformDiv: VWPlatformDiv = new VWPlatformDiv(`/static/${envPath}/res/images/start_menu.png`);
 
             platformDiv.pack();
 

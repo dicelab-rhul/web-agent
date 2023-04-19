@@ -44,7 +44,7 @@ export class VWDraggableBodiesDiv implements VWDiv {
         const draggableBodiesActorImgNames: string[] = ["green_north", "orange_north", "white_north", "user_north"];
         const draggableBodiesDirtImgNames: string[] = ["green_dirt", "orange_dirt"];
         const draggableBodiesImgSuffix: string = ".png";
-        const draggableBodiesImgPrefix: string = `/${envData["vacuumworld-ts"]}/res/images/locations/`;
+        const draggableBodiesImgPrefix: string = `/static/${envData["vacuumworld-ts"]}/res/images/locations/`;
         const actor: string = "actor/";
         const dirt: string = "dirt/";
         const allImagesPaths: string[] = VWDraggableBodiesDiv.createAllImagesPaths(draggableBodiesActorImgNames, draggableBodiesDirtImgNames, draggableBodiesImgSuffix, draggableBodiesImgPrefix, actor, dirt);

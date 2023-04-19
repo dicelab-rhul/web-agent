@@ -31,7 +31,7 @@ export class Main {
         Main.loadCharset();
         Main.createAndHideSimulationControlsDiv();
         Main.createContainerDiv();
-        Main.loadStyle("/css/index.css"); // This is the main style of the page.
+        Main.loadStyle("/static/css/index.css"); // This is the main style of the page.
         Main.loadChoiceDiv();
         Main.createErrorDiv();
     }
@@ -59,9 +59,9 @@ export class Main {
 
     private static getResourcesPaths(envPath: string): ResourcePaths {
         return {
-            favicon: `/${envPath}/res/images/favicon.ico`,
-            envStyle: `/${envPath}/dist/css/style.css`,
-            envScript: `/${envPath}/src/main.js`
+            favicon: `/static/${envPath}/res/images/favicon.ico`,
+            envStyle: `/static/${envPath}/dist/css/style.css`,
+            envScript: `/static/${envPath}/dist/js/main.js`
         };
     }
 
@@ -202,7 +202,7 @@ export class Main {
             throw new Error("The choice path is empty.");
         }
 
-        const imgPath: string = `/${choicePath}/res/images/choice.png`;
+        const imgPath: string = `/static/${choicePath}/res/images/choice.png`;
 
         let choiceDiv: HTMLDivElement = document.getElementById(choiceDivData.id) as HTMLDivElement;
         let choice: HTMLImageElement = document.createElement("img");
@@ -299,8 +299,8 @@ export class Main {
 
     private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
         return {
-            teleoraScript: `/${teleoraData.editor}/src/main.js`,
-            teleoraStyle: `/${teleoraData.editor}/dist/css/style.css`
+            teleoraScript: `/static/${teleoraData.editor}/dist/js/main.js`,
+            teleoraStyle: `/static/${teleoraData.editor}/dist/css/style.css`
         }
     }
 

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "description": "",
-    "main": "dist/main.js",
+    "main": "dist/js/main.js",
     "scripts": {
         "build": "webpack --config webpack_config/webpack.prod-config.cjs",
         "dev-build": "webpack --config webpack_config/webpack.dev-config.cjs"

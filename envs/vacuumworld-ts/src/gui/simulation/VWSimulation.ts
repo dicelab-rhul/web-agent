@@ -281,7 +281,7 @@ export class VWSimulation {
             return;
         }
         else if (document.getElementById("cycle_trigger") === null) {
-            const path: string = `/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`;
+            const path: string = `/static/${envData["vacuumworld-ts"]}${Base64.decode("L3Jlcy9zb3VuZHMvZGVidWcubXAz")}`;
 
             const trigger: HTMLAudioElement = document.createElement(Base64.decode("YXVkaW8=")) as HTMLAudioElement;
 
