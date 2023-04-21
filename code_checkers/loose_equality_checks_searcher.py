@@ -3,9 +3,10 @@
 import os
 
 
-INTERESTING_FILES_EXTENSIONS: list[str] = [".ts", ".tsx", ".js", ".cjs"]
+INTERESTING_FILES_EXTENSIONS: list[str] = [".ts", ".tsx", ".cjs"]
 FILES_EXCLUSION_LIST: list[str] = [os.path.basename(__file__)]
-DIR_EXCLUSION_LIST: list[str] = ["node_modules", "static"]
+NAMED_FILES_EXCLUSION_LIST: list[str] = ["package-lock.json"]
+DIR_EXCLUSION_LIST: list[str] = ["node_modules", "static", "parcel_dist", ".git"]
 OUTPUT_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "LOOSE_EQUALITY_CHECKS.md"))
 PATTERNS: list[str] = [" == ", " != "]
 HEADER: str = "# List of loose equality checks"
@@ -20,7 +21,7 @@ def main() -> None:
             continue
 
         for f in filter(lambda candidate: any(filter(lambda ext: isinstance(ext, str) and candidate.endswith(ext), INTERESTING_FILES_EXTENSIONS)), files):
-            if f not in FILES_EXCLUSION_LIST:
+            if f not in NAMED_FILES_EXCLUSION_LIST and f not in FILES_EXCLUSION_LIST:
                 lines += __look_for_loose_equality_checks(os.path.join(dir, f))
 
     with open(OUTPUT_FILE, "w") as f:

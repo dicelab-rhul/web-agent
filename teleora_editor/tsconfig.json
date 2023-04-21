@@ -8,7 +8,6 @@
         "allowSyntheticDefaultImports": true
     },
     "exclude": [
-        "./dist",
-        "./webpack-config"
+        "./dist"
     ]
 }

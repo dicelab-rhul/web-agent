@@ -201,7 +201,7 @@ export class VWCell implements VWDiv {
             return this.getCellImageSrcIfDirtIsPresent();
         }
         else {
-            return VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
+            return `/static/${envData["vacuumworld-ts"]}/res/images/locations/empty.png`;
         }
     }
 
@@ -212,7 +212,7 @@ export class VWCell implements VWDiv {
         const colour: string = actorColour.toString().toLowerCase();
         const debugPath: string = VWCell.debug ? "debug/" : "";
 
-        return VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
+        return `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}actor/${colour}_${orientation}.png`;
     }
 
     private getCellImageSrcIfDirtIsPresent(): string {
@@ -220,7 +220,7 @@ export class VWCell implements VWDiv {
         const colour: string = dirtColour.toString().toLowerCase();
         const debugPath: string = VWCell.debug ? "debug/" : "";
 
-        return VacuumWorld.SERVERLESS_MODE ? `/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`: `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
+        return `/static/${envData["vacuumworld-ts"]}/res/images/locations/${debugPath}dirt/${colour}_dirt.png`;
     }
 
     public pack(): void {

@@ -75,7 +75,9 @@ function copy_teleora_files_to_webserver() {
 }
 
 function deploy_teleora_editor() {
-    cd teleora_editor
+    dir="teleora_editor"
+
+    cd $dir
 
     deploy_sub_module
     copy_teleora_files_to_webserver
@@ -132,6 +134,8 @@ function deploy_web_agent() {
     deploy_teleora_editor
     build_main_page
     post_build
+
+    killall -9 npm &> /dev/null
 }
 
 function deploy_and_run_web_agent() {
