@@ -48,7 +48,7 @@ pull.sh
 
 # Parcel stuff
 .parcel-cache
-experimental/dist
+parcel_dist
 
 # JS dist files
 envs/*/dist/js
@@ -81,4 +81,3 @@ __pycache__
 secret_key.txt
 *.sqlite3
 teleora.sh
-experimental/

@@ -40,7 +40,7 @@
 
 * File [webserver/web_agent_server/headers/document_headers.py](/webserver/web_agent_server/headers/document_headers.py): line 17: `# TODO: keep an eye on TypeScript support for non-string values in DOM sinks. so that this CSP can be enforced.`
 
-* File [webserver/web_agent_server/csp/xss_mitigating_csp.py](/webserver/web_agent_server/csp/xss_mitigating_csp.py): line 31: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
+* File [webserver/web_agent_server/csp/xss_mitigating_csp.py](/webserver/web_agent_server/csp/xss_mitigating_csp.py): line 32: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 
 * File [webserver/web_agent_server/csp/isolation_based_csp.py](/webserver/web_agent_server/csp/isolation_based_csp.py): line 12: `# TODO: keep an eye on 'report-to' support in Firefox and bugfixes in Chromium, so that 'report-uri' can be replaced by 'report-to'.`
 

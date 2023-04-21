@@ -23,11 +23,9 @@ type TeleoraResourcePaths = {
 
 export class Main {
     private static NONCE: string = undefined;
-    private static SERVERLESS_MODE: boolean = false;
     private constructor() {}
 
-    public static main(serverlessMode: boolean): void {
-        Main.setMode(serverlessMode);
+    public static main(): void {
         Main.setNonce();
         Main.setTitle();
         Main.loadCharset();
@@ -36,15 +34,6 @@ export class Main {
         Main.loadStyle("/static/css/index.css"); // This is the main style of the page.
         Main.loadChoiceDiv();
         Main.createErrorDiv();
-    }
-
-    public static setMode(serverlessMode: boolean): void {
-        if (serverlessMode === null || serverlessMode === undefined || !serverlessMode) {
-            Main.SERVERLESS_MODE = false;
-        }
-        else {
-            Main.SERVERLESS_MODE = true;
-        }
     }
 
     public static setNonce(): void {
@@ -70,9 +59,9 @@ export class Main {
 
     private static getResourcesPaths(envPath: string): ResourcePaths {
         return {
-            favicon: Main.SERVERLESS_MODE ? `/${envPath}/res/images/favicon.ico`: `/static/${envPath}/res/images/favicon.ico`,
-            envStyle: Main.SERVERLESS_MODE ? `/${envPath}/dist/css/style.css`: `/static/${envPath}/dist/css/style.css`,
-            envScript: Main.SERVERLESS_MODE ? `/${envPath}/dist/js/main.js`: `/static/${envPath}/dist/js/main.js`
+            favicon: `/static/${envPath}/res/images/favicon.ico`,
+            envStyle: `/static/${envPath}/dist/css/style.css`,
+            envScript: `/static/${envPath}/dist/js/main.js`
         };
     }
 
@@ -213,7 +202,7 @@ export class Main {
             throw new Error("The choice path is empty.");
         }
 
-        const imgPath: string = Main.SERVERLESS_MODE ? `/${choicePath}/res/images/choice.png`: `/static/${choicePath}/res/images/choice.png`;
+        const imgPath: string = `/static/${choicePath}/res/images/choice.png`;
 
         let choiceDiv: HTMLDivElement = document.getElementById(choiceDivData.id) as HTMLDivElement;
         let choice: HTMLImageElement = document.createElement("img");
@@ -310,8 +299,8 @@ export class Main {
 
     private static getTeleoraResourcesPaths(): TeleoraResourcePaths {
         return {
-            teleoraScript: Main.SERVERLESS_MODE ? `/${teleoraData.editor}/dist/js/main.js`: `/static/${teleoraData.editor}/dist/js/main.js`,
-            teleoraStyle: Main.SERVERLESS_MODE ? `/${teleoraData.editor}/dist/css/style.css`: `/static/${teleoraData.editor}/dist/css/style.css`
+            teleoraScript: `/static/${teleoraData.editor}/dist/js/main.js`,
+            teleoraStyle: `/static/${teleoraData.editor}/dist/css/style.css`
         }
     }
 

@@ -10,6 +10,7 @@ class XSSMitigatingCSP(CSP):
             "'sha256-qVvPl0vp1SoXFHXl+VfRXjyKNAjlZvJDeXDMCnMbSeM='", # CodeMirror-injected style.
             "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='", # CodeMirror-injected style.
             "'sha256-dd4J3UnQShsOmqcYi4vN5BT3mGZB/0fOwBA72rsguKc='", # :host { display: none }
+            "'sha256-Bq7iGKALBKzJuxe6jQVlbFsFCv3VfRu5AnLR0tfs2N4='"  # CodeMirror-injected style.
         ]
 
         self.__attr_styles_hashes: list[str] = [
