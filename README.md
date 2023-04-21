@@ -58,6 +58,12 @@ user@machine:~$ ./run.sh [--launch]
 
 The optional `--launch` flag will automatically open the system in your default browser.
 
+## How to run the system (development with dynamic reloading)
+
+```console
+user@machine:~$ ./watch.sh
+```
+
 ## How to add a new environment to the deployment pipeline
 
 * Create a child directory (let's say `new_env`) in `envs`.
