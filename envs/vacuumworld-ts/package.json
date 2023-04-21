@@ -29,6 +29,5 @@
             "source": "./src/main.ts",
             "distDir": "./dist/js"
         }
-    },
-    "multipleStaticFileCopier": []
+    }
 }

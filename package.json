@@ -18,66 +18,13 @@
         "@parcel/config-default": "^2.8.3",
         "buffer": "^5.7.1",
         "parcel": "^2.8.3",
-        "parcel-reporter-multiple-static-file-copier": "^1.0.5"
+        "parcel-reporter-multiple-static-file-copier": "^1.0.5",
+        "process": "^0.11.10"
     },
     "targets": {
         "web-agent": {
             "source": "./src/index.ts",
             "distDir": "./static/js"
         }
-    },
-    "multipleStaticFileCopier": [
-        {
-            "origin": "static/js",
-            "destination": "parcel_dist/static/js"
-        },
-        {
-            "origin": "static/css",
-            "destination": "parcel_dist/static/css"
-        },
-        {
-            "origin": "static/json",
-            "destination": "parcel_dist/static/json"
-        },
-        {
-            "origin": "static/images",
-            "destination": "parcel_dist/static/images"
-        },
-        {
-            "origin": "envs/example-env-ts/dist/js",
-            "destination": "parcel_dist/static/envs/example-env-ts/dist/js"
-        },
-        {
-            "origin": "envs/example-env-ts/dist/css",
-            "destination": "parcel_dist/static/envs/example-env-ts/dist/css"
-        },
-        {
-            "origin": "envs/example-env-ts/res",
-            "destination": "parcel_dist/static/envs/example-env-ts/res"
-        },
-        {
-            "origin": "envs/vacuumworld-ts/dist/js",
-            "destination": "parcel_dist/static/envs/vacuumworld-ts/dist/js"
-        },
-        {
-            "origin": "envs/vacuumworld-ts/dist/css",
-            "destination": "parcel_dist/static/envs/vacuumworld-ts/dist/css"
-        },
-        {
-            "origin": "envs/vacuumworld-ts/res",
-            "destination": "parcel_dist/static/envs/vacuumworld-ts/res"
-        },
-        {
-            "origin": "teleora_editor/dist/js",
-            "destination": "parcel_dist/static/teleora_editor/dist/js"
-        },
-        {
-            "origin": "teleora_editor/dist/css",
-            "destination": "parcel_dist/static/teleora_editor/dist/css"
-        },
-        {
-            "origin": "teleora_editor/dist/images",
-            "destination": "parcel_dist/static/teleora_editor/dist/images"
-        }
-    ]
+    }
 }
