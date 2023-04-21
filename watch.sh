@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+if ! command -v parcel &> /dev/null; then
+    echo "parcel could not be found. Please install it before deploying Web-Agent."
+
+    exit
+fi
+
+mkdir -p parcel_dist
+
+# This is necessary because `rm` is aliased to `rm -i` on some systems.
+/bin/rm -rf parcel_dist/*
+
 mkdir -p parcel_dist/static/css/
 mkdir -p parcel_dist/static/images/
 mkdir -p parcel_dist/static/js/
