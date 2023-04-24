@@ -1,6 +1,6 @@
 import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 
-// TODO: should this class be moved to a separate npm module?
+// TODO: move VWQueue to a separate npm module
 export class VWQueue<T> {
     private queue: T[];
 
