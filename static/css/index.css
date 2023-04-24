@@ -26,6 +26,9 @@ body {
     margin: 5pt;
     width: 10%;
     border: 5px solid black;
+    max-width: 200px;
+    max-height: 200px;
+    aspect-ratio: 1;
 }
 
 .choice:hover {
