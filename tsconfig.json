@@ -11,6 +11,7 @@
         "./envs",
         "./teleora_editor",
         "./webserver",
-        "./static"
+        "./static",
+        "./parcel_dist"
     ]
 }

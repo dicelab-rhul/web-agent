@@ -71,7 +71,6 @@ lib/*.js
 test/*.js
 *.map
 *.bak
-vw.sh
 static/json/envs.json
 package-lock.json
 envs/vacuumworld-ts/res/images/legacy
@@ -80,4 +79,3 @@ test.py
 __pycache__
 secret_key.txt
 *.sqlite3
-teleora.sh
