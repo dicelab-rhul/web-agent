@@ -14,6 +14,7 @@ const errorDivData = globalGUIConfig.gui.errorDivData;
 export class TeleoraDiv {
     private div: HTMLDivElement;
     private editorDivList: HTMLDivElement[]; // The tabs that are not currently displayed.
+    private selectedEditorNumber: number; // The number of the tab that is currently displayed.
     private tabMarkersDiv: TeleoraTabMarkersDiv;
     private buttonsDiv: TeleoraButtonsDiv;
 
@@ -32,6 +33,8 @@ export class TeleoraDiv {
 
         this.div.appendChild(editorDiv.getDiv());
 
+        this.selectedEditorNumber = 0;
+
         this.tabMarkersDiv = new TeleoraTabMarkersDiv(this.editorDivList, this.displayTab.bind(this), this.addTab.bind(this), this.removeTab.bind(this));
 
         this.div.appendChild(this.tabMarkersDiv.getDiv());
@@ -48,7 +51,7 @@ export class TeleoraDiv {
     }
 
     public save(): void {
-        const lines: string[] = Array.from(this.editorDivList[0].getElementsByClassName("cm-line")).map((line: HTMLDivElement) => line.textContent);
+        const lines: string[] = Array.from(this.editorDivList[this.selectedEditorNumber].getElementsByClassName("cm-line")).map((line: HTMLDivElement) => line.textContent);
         const blob: Blob = new Blob([lines.join("\n")], {type:"application/teleora"});
         const url: string = URL.createObjectURL(blob);
         const link: HTMLAnchorElement = document.createElement("a");
@@ -155,6 +158,9 @@ export class TeleoraDiv {
 
             // Display the new tab.
             this.div.replaceChild(editorDiv.getDiv(), this.div.firstChild);
+
+            // Update the selected editor number.
+            this.selectedEditorNumber += 1;
         }
         else {
             console.log("You have reached the tab limit.");
@@ -167,6 +173,9 @@ export class TeleoraDiv {
 
         // Hightlight the tab marker.
         this.tabMarkersDiv.highlightTabMarker(num);
+
+        // Update the selected editor number.
+        this.selectedEditorNumber = num;
     }
 
     public removeTab(num: number): void {
@@ -183,6 +192,8 @@ export class TeleoraDiv {
 
         this.tabMarkersDiv = newMarkersDiv;
 
-        this.displayTab(Math.min(num, this.editorDivList.length - 1));
+        const tabIndexToDisplay: number = Math.min(num, this.editorDivList.length - 1);
+
+        this.displayTab(tabIndexToDisplay);
     }
 }

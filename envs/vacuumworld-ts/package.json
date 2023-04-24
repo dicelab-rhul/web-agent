@@ -9,18 +9,10 @@
     },
     "dependencies": {
         "@types/uuid": "^9.0.0",
-        "fs": "0.0.1-security",
         "js-base64": "^3.7.4",
-        "path": "^0.12.7",
-        "path-browserify": "^1.0.1",
-        "process": "^0.11.10",
-        "queue-typescript": "^1.0.1",
-        "typescript": "^5.0.4",
         "uuid": "^9.0.0"
     },
     "devDependencies": {
-        "@parcel/config-default": "^2.8.3",
-        "buffer": "^5.7.1",
         "parcel": "^2.8.3"
     },
     "targets": {

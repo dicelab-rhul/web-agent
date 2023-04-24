@@ -1,4 +1,4 @@
-// TODO: should this classes be moved to a separate npm module?
+// TODO: move JOptional to a separate npm module
 
 import { VWExistenceChecker } from "../utils/VWExistenceChecker";
 

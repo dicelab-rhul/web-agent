@@ -6,13 +6,13 @@
 
 * File [teleora_editor/src/gui/div/TeleoraTabMarkersDiv.ts](/teleora_editor/src/gui/div/TeleoraTabMarkersDiv.ts): line 5: `// TODO: Add a way to change the tabs names.`
 
-* File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 129: `// TODO: Validate the file contents.`
+* File [teleora_editor/src/gui/div/TeleoraDiv.ts](/teleora_editor/src/gui/div/TeleoraDiv.ts): line 132: `// TODO: Validate the file contents.`
 
 * File [teleora_editor/src/gui/div/TeleoraEditorDiv.ts](/teleora_editor/src/gui/div/TeleoraEditorDiv.ts): line 24: `javascript() // TODO: Replace this with Teleora.`
 
-* File [envs/vacuumworld-ts/src/model/common/JOptional.ts](/envs/vacuumworld-ts/src/model/common/JOptional.ts): line 1: `// TODO: should this classes be moved to a separate npm module?`
+* File [envs/vacuumworld-ts/src/model/common/JOptional.ts](/envs/vacuumworld-ts/src/model/common/JOptional.ts): line 1: `// TODO: move JOptional to a separate npm module`
 
-* File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](/envs/vacuumworld-ts/src/model/common/VWQueue.ts): line 3: `// TODO: should this class be moved to a separate npm module?`
+* File [envs/vacuumworld-ts/src/model/common/VWQueue.ts](/envs/vacuumworld-ts/src/model/common/VWQueue.ts): line 3: `// TODO: move VWQueue to a separate npm module`
 
 * File [envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts](/envs/vacuumworld-ts/src/model/actor/mind/core/VWAbstractMindCore.ts): line 77: `throw new Error("Not yet implemented."); // TODO: implement, and, in doing so, integrate Teleora.`
 
