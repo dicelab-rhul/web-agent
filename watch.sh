@@ -6,38 +6,50 @@ if ! command -v parcel &> /dev/null; then
     exit
 fi
 
-mkdir -p parcel_dist
+PARCEL_DIST_DIR="parcel_dist"
+PARCEL_CACHE_DIR=".parcel-cache"
+EXAMPLE_ENV_DIR="envs/example-env-ts"
+VACUUMWORLD_DIR="envs/vacuumworld-ts"
+TELEORA_DIR="teleora_editor"
+
+rm -rf ${PARCEL_CACHE_DIR} &>/dev/null
+rm -rf ${EXAMPLE_ENV_DIR}/${PARCEL_CACHE_DIR} &>/dev/null
+rm -rf ${VACUUMWORLD_DIR}/${PARCEL_CACHE_DIR} &>/dev/null
+rm -rf ${TELEORA_DIR}/${PARCEL_CACHE_DIR} &>/dev/null
+rm -rf ${PARCEL_DIST_DIR} &>/dev/null
+
+mkdir -p ${PARCEL_DIST_DIR}
 
 # This is necessary because `rm` is aliased to `rm -i` on some systems.
-/bin/rm -rf parcel_dist/*
+/bin/rm -rf ${PARCEL_DIST_DIR}/*
 
-mkdir -p parcel_dist/static/css/
-mkdir -p parcel_dist/static/images/
-mkdir -p parcel_dist/static/js/
-mkdir -p parcel_dist/static/json/
-mkdir -p parcel_dist/static/envs/example-env-ts/dist/
-mkdir -p parcel_dist/static/envs/vacuumworld-ts/dist/
-mkdir -p parcel_dist/static/teleora_editor/dist/
-mkdir -p parcel_dist/envs/example-env-ts/src/
-mkdir -p parcel_dist/envs/vacuumworld-ts/src/
-mkdir -p parcel_dist/envs/vacuumworld-ts/res/
-mkdir -p parcel_dist/teleora_editor/
+mkdir -p ${PARCEL_DIST_DIR}/static/css/
+mkdir -p ${PARCEL_DIST_DIR}/static/images/
+mkdir -p ${PARCEL_DIST_DIR}/static/js/
+mkdir -p ${PARCEL_DIST_DIR}/static/json/
+mkdir -p ${PARCEL_DIST_DIR}/static/${EXAMPLE_ENV_DIR}/dist/
+mkdir -p ${PARCEL_DIST_DIR}/static/${VACUUMWORLD_DIR}/dist/
+mkdir -p ${PARCEL_DIST_DIR}/static/${TELEORA_DIR}/dist/
+mkdir -p ${PARCEL_DIST_DIR}/${EXAMPLE_ENV_DIR}/src/
+mkdir -p ${PARCEL_DIST_DIR}/${VACUUMWORLD_DIR}/src/
+mkdir -p ${PARCEL_DIST_DIR}/${VACUUMWORLD_DIR}/res/
+mkdir -p ${PARCEL_DIST_DIR}/${TELEORA_DIR}/
 
-cd parcel_dist/static/envs/example-env-ts/dist
-ln -s ../../../../envs/example-env-ts/src js
-ln -s ../../../../envs/example-env-ts/dist/css css
+cd ${PARCEL_DIST_DIR}/static/${EXAMPLE_ENV_DIR}/dist
+ln -s ../../../../${EXAMPLE_ENV_DIR}/src js
+ln -s ../../../../${EXAMPLE_ENV_DIR}/dist/css css
 cd - &>/dev/null
-cd parcel_dist/static/envs/vacuumworld-ts/dist
-ln -s ../../../../envs/vacuumworld-ts/src js
-ln -s ../../../../envs/vacuumworld-ts/dist/css css
+cd ${PARCEL_DIST_DIR}/static/${VACUUMWORLD_DIR}/dist
+ln -s ../../../../${VACUUMWORLD_DIR}/src js
+ln -s ../../../../${VACUUMWORLD_DIR}/dist/css css
 cd - &>/dev/null
-cd parcel_dist/static/teleora_editor/dist
-ln -s ../../../teleora_editor/src js
-ln -s ../../../teleora_editor/dist/css css
+cd ${PARCEL_DIST_DIR}/static/${TELEORA_DIR}/dist
+ln -s ../../../${TELEORA_DIR}/src js
+ln -s ../../../${TELEORA_DIR}/dist/css css
 cd - &>/dev/null
 
-cp favicon.ico parcel_dist/static/images/
-cp -r envs/example-env-ts/res parcel_dist/static/envs/example-env-ts
-cp -r envs/vacuumworld-ts/res parcel_dist/static/envs/vacuumworld-ts
+cp favicon.ico ${PARCEL_DIST_DIR}/static/images/
+cp -r ${EXAMPLE_ENV_DIR}/res ${PARCEL_DIST_DIR}/static/${EXAMPLE_ENV_DIR}
+cp -r ${VACUUMWORLD_DIR}/res ${PARCEL_DIST_DIR}/static/${VACUUMWORLD_DIR}
 
-parcel envs/example-env-ts/src/main.ts envs/example-env-ts/dist/css/style.css envs/vacuumworld-ts/src/main.ts envs/vacuumworld-ts/dist/css/style.css teleora_editor/src/main.ts teleora_editor/dist/css/style.css static/css/index.css index.html --dist-dir parcel_dist
+parcel ${EXAMPLE_ENV_DIR}/src/main.ts ${EXAMPLE_ENV_DIR}/dist/css/style.css ${VACUUMWORLD_DIR}/src/main.ts ${VACUUMWORLD_DIR}/dist/css/style.css ${TELEORA_DIR}/src/main.ts ${TELEORA_DIR}/dist/css/style.css static/css/index.css index.html --dist-dir ${PARCEL_DIST_DIR}
