@@ -81,10 +81,6 @@ user@machine:~$ ./watch.sh
     |------------ `favicon.ico`\
     |---- `src/`\
     |-------- `main.ts`\
-    |---- `webpack-config/`\
-    |-------- `webpack.dev_config.cjs`\
-    |-------- `webpack.prod_config.cjs`\
-    |-------- `webpack.shared_config.cjs`\
     |---- `package.json`\
     |---- `tsconfig.json`
 
@@ -111,7 +107,7 @@ user@machine:~$ ./watch.sh
 
   * Make sure to propagate the `nonce` attribute from your main script. Otherwise, your script/style tags will be ungracefully blocked by the Content Security Policy.
 
-* Have a look at `envs/example-env-ts` for a concrete example (including the content of the relevant scripts / configuration files).
+* Have a look at `envs/example-env-ts` for a concrete example.
 
 ## Teleora
 
