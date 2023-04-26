@@ -2,6 +2,7 @@
     "name": "web-agent",
     "version": "1.0.0",
     "description": "",
+    "license": "UNLICENSED",
     "scripts": {
         "build": "parcel build",
         "dev-build": "parcel build --no-optimize"
@@ -20,5 +21,6 @@
             "source": "./src/index.ts",
             "distDir": "./static/js"
         }
-    }
+    },
+    "packageManager": "yarn@3.5.0"
 }

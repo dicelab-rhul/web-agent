@@ -6,7 +6,7 @@ import os
 INTERESTING_FILES_EXTENSIONS: list[str] = [".ts", ".tsx", ".cjs"]
 FILES_EXCLUSION_LIST: list[str] = [os.path.basename(__file__)]
 NAMED_FILES_EXCLUSION_LIST: list[str] = ["package-lock.json"]
-DIR_EXCLUSION_LIST: list[str] = ["node_modules", "static", "parcel_dist", ".git"]
+DIR_EXCLUSION_LIST: list[str] = ["node_modules", "static", "parcel_dist", ".git", ".yarn"]
 OUTPUT_FILE: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "LOOSE_EQUALITY_CHECKS.md"))
 PATTERNS: list[str] = [" == ", " != "]
 HEADER: str = "# List of loose equality checks"
