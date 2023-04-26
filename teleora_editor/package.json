@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "description": "",
+    "license": "UNLICENSED",
     "scripts": {
         "build": "parcel build",
         "dev-build": "parcel build --no-optimize"
@@ -12,12 +13,14 @@
         "codemirror": "^6.0.1"
     },
     "devDependencies": {
-        "parcel": "^2.8.3"
+        "parcel": "^2.8.3",
+        "process": "^0.11.10"
     },
     "targets": {
         "teleora-editor": {
             "source": "./src/main.ts",
             "distDir": "./dist/js"
         }
-    }
+    },
+    "packageManager": "yarn@3.5.0"
 }

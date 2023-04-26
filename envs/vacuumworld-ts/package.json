@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "description": "An agent platform with cleaning robots, pieces of dirt, and human users engaging in the practice of fly tipping.",
+    "license": "UNLICENSED",
     "scripts": {
         "build": "parcel build",
         "dev-build": "parcel build --no-optimize"
@@ -13,6 +14,7 @@
         "uuid": "^9.0.0"
     },
     "devDependencies": {
+        "buffer": "^5.5.0",
         "parcel": "^2.8.3"
     },
     "targets": {
@@ -20,5 +22,6 @@
             "source": "./src/main.ts",
             "distDir": "./dist/js"
         }
-    }
+    },
+    "packageManager": "yarn@3.5.0"
 }

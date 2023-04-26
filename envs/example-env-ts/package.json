@@ -3,11 +3,11 @@
     "version": "1.0.0",
     "type": "module",
     "description": "",
+    "license": "UNLICENSED",
     "scripts": {
         "build": "parcel build",
         "dev-build": "parcel build --no-optimize"
     },
-    "dependencies": {},
     "devDependencies": {
         "parcel": "^2.8.3"
     },
@@ -16,5 +16,6 @@
             "source": "./src/main.ts",
             "distDir": "./dist/js"
         }
-    }
+    },
+    "packageManager": "yarn@3.5.0"
 }

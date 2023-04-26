@@ -73,6 +73,8 @@ test/*.js
 *.bak
 static/json/envs.json
 package-lock.json
+yarn.lock
+.yarn
 envs/vacuumworld-ts/res/images/legacy
 test.js
 test.py

@@ -1,3 +1,14 @@
+PACKAGE_MANAGER=yarn
+
+function check_for_package_manager() {
+    if ! command -v ${PACKAGE_MANAGER} &> /dev/null; then
+        echo "${PACKAGE_MANAGER} could not be found."
+        echo "Please install ${PACKAGE_MANAGER} and try again."
+        echo "Exiting..."
+        exit 1
+    fi
+}
+
 function print_no_venv_message() {
     echo "No Python3 Virtual Environment active."
     echo "Either activate a Python3 Virtual Environment or run 'source virtualenv_manager.sh' to create and activate one."
@@ -34,22 +45,23 @@ function copy_env_files_to_webserver() {
     cp -r res ../../webserver/web_agent_server/static/$dir/
 }
 
-function deploy_sub_module_with_npm() {
+function deploy_sub_module_with_package_manager() {
     if [[ ${FULL_DEPLOY} == true ]]; then
-        npm prune && npm install
+        #${PACKAGE_MANAGER} prune && ${PACKAGE_MANAGER} install
+        ${PACKAGE_MANAGER} install
     fi
 
     if [[ ${DEV_DEPLOY} == true ]]; then
-        npm run dev-build
+        ${PACKAGE_MANAGER} run dev-build
     else
-        npm run build
+        ${PACKAGE_MANAGER} run build
     fi
 }
 
 function deploy_sub_module() {
     echo "Deploying ${dir}..."
 
-    deploy_sub_module_with_npm
+    deploy_sub_module_with_package_manager
 
     echo "Done."
     echo
@@ -88,7 +100,7 @@ function deploy_teleora_editor() {
 function build_main_page() {
     echo "Deploying the main page..."
 
-    deploy_sub_module_with_npm
+    deploy_sub_module_with_package_manager
     copy_main_page_files_to_webserver
 
     echo "Done."
@@ -135,13 +147,14 @@ function deploy_web_agent() {
     build_main_page
     post_build
 
-    killall -9 npm &> /dev/null
+    killall -9 ${PACKAGE_MANAGER} &> /dev/null
 }
 
 function deploy_and_run_web_agent() {
     DEPLOYMENT_SCRIPT=$1
     LAUNCH=$2
 
+    check_for_package_manager
     deploy_web_agent
 
     ./run.sh ${LAUNCH}
