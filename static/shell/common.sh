@@ -1,3 +1,4 @@
+# Global variable, so that it is easy to switch bwtween package managers (e.g., yarn vs. npm).
 PACKAGE_MANAGER=yarn
 
 function check_for_package_manager() {
@@ -38,16 +39,17 @@ function remove_previously_deployed_files_from_webserver() {
 }
 
 function copy_env_files_to_webserver() {
+    DIR=$1
+
     # Copy the environment files to the webserver directory
-    mkdir -p ../../webserver/web_agent_server/static/$dir/
-    cp -r dist ../../webserver/web_agent_server/static/$dir/
-    find ../../webserver/web_agent_server/static/$dir/ -name "*.LICENSE.txt" -type f | xargs rm -f
-    cp -r res ../../webserver/web_agent_server/static/$dir/
+    mkdir -p ../../webserver/web_agent_server/static/${DIR}/
+    cp -r dist ../../webserver/web_agent_server/static/${DIR}/
+    find ../../webserver/web_agent_server/static/${DIR}/ -name "*.LICENSE.txt" -type f | xargs rm -f
+    cp -r res ../../webserver/web_agent_server/static/${DIR}/
 }
 
 function deploy_sub_module_with_package_manager() {
     if [[ ${FULL_DEPLOY} == true ]]; then
-        #${PACKAGE_MANAGER} prune && ${PACKAGE_MANAGER} install
         ${PACKAGE_MANAGER} install
     fi
 
@@ -59,7 +61,9 @@ function deploy_sub_module_with_package_manager() {
 }
 
 function deploy_sub_module() {
-    echo "Deploying ${dir}..."
+    DIR=$1
+
+    echo "Deploying ${DIR}..."
 
     deploy_sub_module_with_package_manager
 
@@ -68,31 +72,33 @@ function deploy_sub_module() {
 }
 
 function deploy_envs() {
-    for dir in envs/*/; do
-        cd $dir
+    for DIR in envs/*/; do
+        cd ${DIR}
 
         rm -rf dist/js/*
 
-        deploy_sub_module
-        copy_env_files_to_webserver
+        deploy_sub_module ${DIR}
+        copy_env_files_to_webserver ${DIR}
 
         cd - &> /dev/null
     done
 }
 
 function copy_teleora_files_to_webserver() {
-    mkdir -p ../webserver/web_agent_server/static/teleora_editor/
-    cp -r dist ../webserver/web_agent_server/static/teleora_editor/
-    find ../webserver/web_agent_server/static/teleora_editor/ -name "*.LICENSE.txt" -type f | xargs rm -f
+    DIR=$1
+
+    mkdir -p ../webserver/web_agent_server/static/${DIR}/
+    cp -r dist ../webserver/web_agent_server/static/${DIR}/
+    find ../webserver/web_agent_server/static/${DIR}/ -name "*.LICENSE.txt" -type f | xargs rm -f
 }
 
 function deploy_teleora_editor() {
-    dir="teleora_editor"
+    DIR="teleora_editor"
 
-    cd $dir
+    cd ${DIR}
 
-    deploy_sub_module
-    copy_teleora_files_to_webserver
+    deploy_sub_module ${DIR}
+    copy_teleora_files_to_webserver ${DIR}
 
     cd - &> /dev/null
 }
@@ -133,6 +139,8 @@ function post_build() {
 }
 
 function deploy_web_agent() {
+    DEPLOYMENT_SCRIPT=$1
+
     # Is there an active Python3 Virtual Environment?
     check_for_venv ${DEPLOYMENT_SCRIPT}
 
@@ -155,7 +163,7 @@ function deploy_and_run_web_agent() {
     LAUNCH=$2
 
     check_for_package_manager
-    deploy_web_agent
+    deploy_web_agent ${DEPLOYMENT_SCRIPT}
 
     ./run.sh ${LAUNCH}
 }
