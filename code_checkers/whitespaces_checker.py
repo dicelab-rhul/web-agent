@@ -5,7 +5,7 @@ from re import search
 import os
 
 
-INTERESTING_EXTENSIONS: list[str] = [".py", ".cjs", ".jsx", ".ts", ".tsx", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
+INTERESTING_EXTENSIONS: list[str] = [".py", ".ts", ".html", ".css", ".json", ".md", ".txt", ".sh", ".gitignore"]
 DIRECTORIES_TO_IGNORE: list[str] = ["node_modules", ".git", "parcel_dist", ".yarn"]
 PATTERNS: list[str] = [r"[ \t]+\n", r"[ \t]+$", r"[ \t]+\n$", r"[ \t]+\n"]
 PROJECT_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
