@@ -1,0 +1,11 @@
+{
+    "hostname": "127.0.0.1",
+    "port": 27017,
+    "username": "web_agent",
+    "db_password_file": "/etc/web_agent/db_password.txt",
+    "db_name": "web_agent",
+    "csp_reports_collection": "csp_reports",
+    "coop_reports_collection": "coop_reports",
+    "coep_reports_collection": "coep_reports",
+    "max_reports": 100
+}
