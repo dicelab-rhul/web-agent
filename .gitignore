@@ -75,6 +75,7 @@ static/json/envs.json
 package-lock.json
 yarn.lock
 .yarn
+.yarnrc.yml
 envs/vacuumworld-ts/res/images/legacy
 test.js
 test.py
