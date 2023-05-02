@@ -1,5 +1,7 @@
 # Global variable, so that it is easy to switch bwtween package managers (e.g., yarn vs. npm).
 PACKAGE_MANAGER=yarn
+LOCK_FILE=yarn.lock
+YML_RC_FILE=yarnrc.yml
 
 function check_for_package_manager() {
     if ! command -v ${PACKAGE_MANAGER} &> /dev/null; then
@@ -50,6 +52,12 @@ function copy_env_files_to_webserver() {
 
 function deploy_sub_module_with_package_manager() {
     if [[ ${FULL_DEPLOY} == true ]]; then
+        rm -f ${YML_RC_FILE}
+
+        ${PACKAGE_MANAGER} set version latest
+
+        touch ${LOCK_FILE}
+
         ${PACKAGE_MANAGER} install
     fi
 
