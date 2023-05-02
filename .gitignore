@@ -80,4 +80,5 @@ test.js
 test.py
 __pycache__
 secret_key.txt
+db_password.txt
 *.sqlite3
