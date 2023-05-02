@@ -1,7 +1,7 @@
 # Global variable, so that it is easy to switch bwtween package managers (e.g., yarn vs. npm).
 PACKAGE_MANAGER=yarn
 LOCK_FILE=yarn.lock
-YML_RC_FILE=yarnrc.yml
+YML_RC_FILE=.yarnrc.yml
 
 function check_for_package_manager() {
     if ! command -v ${PACKAGE_MANAGER} &> /dev/null; then
