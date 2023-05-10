@@ -92,9 +92,9 @@ goal({A | B}) : A > 0 -> subgoal(B)
 The following input will *expand* the above goal.
 ```
 >> goal({-1,0,1}
-goal({-1 | { 0, 1}) : -1 > 0  (FAIL)
-goal({ 0 | {-1, 1}) :  0 > 0  (FAIL) 
-goal({ 1 | {-1, 0}) :  1 > 1  (SUCCESS)
+goal({-1 | { 0, 1}}) : -1 > 0  (FAIL)
+goal({ 0 | {-1, 1}}) :  0 > 0  (FAIL) 
+goal({ 1 | {-1, 0}}) :  1 > 1  (SUCCESS)
 ``` 
 The possible permutations of the `ulist` are checked in no particular order until one succeeds. The use as above can be seen as a kind of _existence_ operator. 
 
