@@ -50,7 +50,15 @@ navigate(Map) : ... -> ...
 Example unpacking lists: 
 ```
 goal(X) :-> subgoal(X)
+
 subgoal([A,B]) : A > 0, B > 0 -> action
+subgoal([]): -> idle
+
+goal(X) : { true -> subgoal(X) } 
+subgoal(Y) : { 
+    Y = [A, B], A > 0, B > 0 -> action,
+    Y = [] -> idle
+} 
 ```
 Assuming `X` is a list with two elements, it will be unpacked into `A` and `B` in `subgoal`. If the list length is not known the pipe operator `|` may be used.
 ```
